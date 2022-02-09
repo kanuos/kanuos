@@ -6,3 +6,9 @@
 *, *::after, *::before {
   font-family: 'Poppins', sans-serif;
 }
+
+
+a, a:visited, a:focus,
+button, button:visited, button:focus {
+  @apply focus:outline-none outline-none ring-0;
+}

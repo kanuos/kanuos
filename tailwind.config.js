@@ -5,7 +5,7 @@ module.exports = {
   ],
   theme: {
       fontFamily : {
-        'special' : ['Comforter', 'sans-serif']
+        'special' : ['Shadows Into Light', 'sans-serif']
       },
       extend : {
         colors : {
