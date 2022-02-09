@@ -70,6 +70,6 @@ export const DescHeader = props => {
     )
 }
 
-const JoinLine = () => (
+export const JoinLine = () => (
     <span className="h-8 w-0.5 bg-primary ml-0.5"></span>
 )
