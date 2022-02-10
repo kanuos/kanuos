@@ -14,57 +14,60 @@ import {IoCalendarOutline, IoPricetagOutline} from 'react-icons/io5'
  */
 
 export const DescHeader = props => {
-    const {name, tags, date, back='/', descType} = props;
+    const {name, tags, date, back='/', descType, projectMode=false} = props;
     return (
-            <header className='flex flex-col items-start justify-start gap-1.5 pt-16 pb-10 w-full max-w-4xl mx-auto'>
-                <Link href={back}>
-                    <a className='text-xs font-semibold text-dark opacity-50 focus:opacity-100 hover:opacity-100 capitalize'>
-                        <small>
-                        &lt; back to {descType}
-                        </small>
-                    </a>
-                </Link>
-    
-                <h1 className="font-special text-4xl md:text-5xl mt-6 text-dark">{name}</h1>
+            <header className='flex flex-col items-start justify-start gap-1.5 pt-16 pb-10 w-full'>
+                <section className="h-auto w-full max-w-3xl mr-auto">
 
-                <JoinLine />
+                    <Link href={back}>
+                        <a className='text-xs font-semibold text-dark opacity-50 focus:opacity-100 hover:opacity-100 capitalize'>
+                            <small>
+                            &lt; back to {descType}
+                            </small>
+                        </a>
+                    </Link>
+        
+                    <h1 className={(projectMode ? 'text-5xl md:text-7xl' : 'text-4xl md:text-5xl') + " font-special mt-6 text-dark "}>{name}</h1>
 
-                <ul className="flex flex-col items-start text-xs gap-y-0.5">
-                    <li className="inline-flex items-center justify-start gap-x-0.5 text-dark opacity-60">
-                        <IoCalendarOutline />
-                        <small className="capitalize">
-                            Created on
-                        </small>
-                    </li>
-                    <li>
-                        <small className="font-semibold capitalize text-dark opacity-70">
-                            {new Date(date).toDateString()}
-                        </small>
-                    </li>
-                </ul>
+                    <JoinLine />
 
-                <JoinLine />
+                    <ul className="flex flex-col items-start text-xs gap-y-0.5">
+                        <li className="inline-flex items-center justify-start gap-x-0.5 text-dark opacity-60">
+                            <IoCalendarOutline />
+                            <small className="capitalize">
+                                Created on
+                            </small>
+                        </li>
+                        <li>
+                            <small className="font-semibold capitalize text-dark opacity-70">
+                                {new Date(date).toDateString()}
+                            </small>
+                        </li>
+                    </ul>
 
-                <ul className="flex flex-col items-start gap-y-0.5">
-                    <li className="inline-flex items-center justify-start gap-x-0.5 text-dark opacity-60 text-xs">
-                        <IoPricetagOutline />
-                        <small className="capitalize">
-                            Tags
-                        </small>
-                    </li>
-                    <li className="text-xs sm:text-sm">
-                        <ul className="flex flex-wrap gap-x-4 gap-y-1 items-start justify-start">
-                            {tags.map(tag => (
-                                <li key={tag}>
-                                    <small className="font-semibold text-dark opacity-70">
-                                        {tag}
-                                    </small>
-                                </li>
-                            ))}
-                        </ul>
-                    </li>
-                </ul>
+                    <JoinLine />
 
+                    <ul className="flex flex-col items-start gap-y-0.5">
+                        <li className="inline-flex items-center justify-start gap-x-0.5 text-dark opacity-60 text-xs">
+                            <IoPricetagOutline />
+                            <small className="capitalize">
+                                Tags
+                            </small>
+                        </li>
+                        <li className="text-xs sm:text-sm">
+                            <ul className="flex flex-wrap gap-x-4 gap-y-1 items-start justify-start">
+                                {tags.map(tag => (
+                                    <li key={tag}>
+                                        <small className="font-semibold text-dark opacity-70">
+                                            {tag}
+                                        </small>
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    </ul>
+
+                </section>
 
             </header>
     )
