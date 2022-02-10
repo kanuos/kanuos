@@ -24,7 +24,7 @@ export const Step = ({step}) => {
 
 const TextStep = ({text}) => {
     return (
-        <p className='text-sm leading-relaxed whitespace-pre-line my-1'>{text}</p>
+        <p className='text-sm leading-relaxed whitespace-pre-line my-2'>{text}</p>
     )
 }
 

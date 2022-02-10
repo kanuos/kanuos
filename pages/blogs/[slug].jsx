@@ -1,50 +1,14 @@
-// import : built in
-import Image from 'next/image';
-
-// import : external
-import ReactMarkdown from 'react-markdown';
-
 // import : internal
 import { HeadComponent } from '../../components/Head'
-import { DescHeader } from '../../components/public/DescHeader';
-import { Signature } from '../../components/public/Signature';
-import { CLIENT_TYPE } from '../../utils';
+import { BlogDetailBody } from '../../components/content/BlogDetailBody';
+
 
 const BlogDetail = () => {
   return (
     <>
     <HeadComponent title={blog.name} />
     {/* navbar goes here */}
-    <main className='px-8 md:px-16 h-auto w-full min-h-screen relative'>
-        {/* background image */}
-        <Image layout='fill' src="/hero.jpg" className='fixed left-0 top-0 h-screen w-screen object-cover pointer-events-none opacity-30' />
-        
-        <div className="relative h-full w-full">
-            <DescHeader 
-                name={blog.name}
-                date={blog.date}
-                tags = {blog.tags}
-                back={CLIENT_TYPE.blog.url}
-                descType={CLIENT_TYPE.blog.name} />
-
-            <section className='w-full max-w-4xl mx-auto flex flex-col items-start justify-start gap-y-6 opacity-80 text-dark'>
-                <p className='leading-relaxed first-letter:text-6xl md:text-lg'>
-                    {blog.desc}
-                </p>
-                <article className='prose whitespace-pre-line prose-headings:font-special w-full max-w-4xl'>
-                    {console.log(blog.page.toString())}
-                   <ReactMarkdown children={blog.page}></ReactMarkdown>
-                </article>
-            </section>
-            
-            <section className="py-10">
-                <Signature />
-            </section>
-
-        </div>
-
-
-    </main>
+    <BlogDetailBody blog={blog} />
     </>
   )
 }
@@ -55,44 +19,74 @@ export default BlogDetail
 
 
 
+
 const blog = {
     name : `How I implement JWT for authorization`,
     date : Date.now(),
     tags : ['Express', 'PostgreSQL', 'Session', 'EJS', 'Tailwind'],
     desc : `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`,
-    page : "## h1 header \n\n"+ 
+    page : [
+        {
+            segmentHeading : 'The Problem',
+            content: [
+            {
+                type : 'text',
+                content : `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`
+            },
+            {
+                type : 'quote',
+                content : `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`
+            },
+            ]
+        },
+        {
+            segmentHeading : 'Breaking down the problem',
+            content: [
+            {
+                type : 'text',
+                content : `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`
+            },
+            {
+                type : 'quote',
+                content : `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`
+            },
+            ]
+        },
+        {
+            segmentHeading : 'Solution',
+            content: [
+            {
+                type : 'text',
+                content : `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero dui, accumsan ultricies cursus sed, efficitur in augue. Vestibulum ante ligula, pharetra et nulla mattis, consectetur eleifend nisi. Donec rhoncus neque ac augue luctus, eget condimentum eros tempus. Maecenas in magna in odio ultrices laoreet. Quisque quis rutrum nunc. Etiam fermentum ultricies lacinia. Pellentesque vel mollis libero. Aenean mollis ante justo, sit amet rutrum erat luctus at. In odio risus, cursus et porta et, dignissim eget felis. Quisque dolor risus, aliquet eu sollicitudin semper, luctus congue arcu. Nam quis sodales tortor, ac ullamcorper lorem. Nam ac egestas dui. Maecenas scelerisque massa turpis, nec laoreet libero vulputate a.
 
-    
-"Paragraphs are separated by a blank line.\n" +     
-    "2nd paragraph. *Italic*, **bold**, and . Itemized lists \n" +
-    "look like:\n"+
-    
-"* this one\n"+
-"* that one\n"+
-"* the other one\n"+
-    
-    "Note that --- not considering the asterisk --- the actual text\n"+
-    "content starts at 4-columns in.\n"+
-    
-    "> Block quotes are\n"+
-    "> written like so.\n"+
-    ">\n"+
-    "> They can span multiple paragraphs,\n"+
-    "> if you like.\n\n"+
-    
-    "Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., \"it's all\n"+
-    "in chapters 12--14\"). Three dots ... will be converted to an ellipsis.\n"+
-    "Unicode is supported. ☺\n\n\n"+
-    
-    
-    "~~~python\n"+
-    "import time\n" +
-    "# Quick, count to ten\n" +
-    "for i in range(10):\n" + 
-    "    # (but not *too* quick)\n"+
-    "    time.sleep(0.5)\n"+
-    "    print i\n"+
-    "~~~"
-    
+Mauris varius pharetra arcu. Cras at eros quis ligula sodales gravida. Quisque lobortis aliquet tortor eu finibus. Etiam tempus gravida urna, sed facilisis velit. Donec tristique ac justo at malesuada. Ut sodales leo felis, non vehicula magna sodales accumsan. Suspendisse nunc ex, rutrum non tristique id, fringilla id lacus. Praesent consectetur luctus mauris, eu tempor eros cursus eget. Curabitur dui quam, gravida eget justo eu, tempus tempus felis. Donec semper quam sed felis fringilla mattis. Fusce quis feugiat elit, et aliquet ipsum. Integer sollicitudin risus vel varius sodales.
+
+Pellentesque sit amet odio sed felis finibus pharetra et id erat. Curabitur maximus est at metus pharetra imperdiet. Donec diam turpis, interdum vel nisi at, ornare scelerisque quam. Curabitur fermentum lacinia eros quis blandit. Etiam fringilla risus ipsum, eget consequat nibh pellentesque quis. Phasellus ultrices vel dui ac porttitor. Etiam porta condimentum urna, molestie venenatis sem congue nec. Fusce pellentesque lacinia egestas. Praesent ac varius tellus. Donec nec velit sit amet dolor finibus finibus. Fusce quam orci, fermentum finibus porttitor at, blandit vitae purus. Etiam rutrum tempus libero ut suscipit.
+
+Morbi eu hendrerit leo. Maecenas sed metus bibendum, cursus diam at, blandit diam. Phasellus eget enim sit amet quam commodo ultrices. Nam neque diam, iaculis eu tincidunt a, commodo ac erat. Ut at ultrices arcu, id semper sapien. Nulla eu dictum ligula. Sed varius nibh dolor, quis facilisis lectus pellentesque sit amet. Aliquam semper feugiat cursus. Nam volutpat vulputate justo in pellentesque. Mauris fringilla gravida diam.
+
+Cras at nisi ut elit sagittis elementum. Donec pellentesque, arcu vel gravida consequat, velit justo eleifend neque, eu venenatis libero urna et elit. Nunc a bibendum massa. Praesent ullamcorper, lectus vitae cursus accumsan, mauris libero mattis risus, vel vestibulum arcu dolor nec ipsum. Maecenas et lacinia elit, eget lacinia dolor. Curabitur eu viverra nulla. In nec tristique urna.`
+            },
+            {
+                type : 'code',
+                code : `def is_even(n):\n\treturn n % 2 == 0`,
+                filename : 'index.py',
+                language : 'python'
+            },
+            ]
+        },
+    ],
+    outro : {
+        heading : 'conclusion',
+        text : `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis ipsum totam rem ut, tempora architecto quas dolore suscipit blanditiis molestiae quisquam sed ullam earum facilis asperiores culpa minima accusantium possimus, recusandae voluptatem debitis similique quod. Libero iste recusandae nam culpa quasi aliquid, deserunt sunt non necessitatibus optio dolor accusantium natus.`,
+        demo : `https://www.netlify.com/`,
+    },
+    isPublic : true,
+    user : {
+        name : 'sounak mukherjee',
+        link : { text : '@kanuos', url : 'https://www.github.com/kanuos'},
+        about : `Libero iste recusandae nam culpa quasi aliquid, deserunt sunt non necessitatibus optio dolor accusantium natus.`
+    }
     
 }

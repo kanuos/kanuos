@@ -29,13 +29,13 @@ export const ProjectDetailBody = ({project}) => {
                 back={CLIENT_TYPE.project.url}
                 descType={CLIENT_TYPE.project.name} />
 
-                <section className='w-full max-w-2xl mr-auto flex flex-col items-start justify-start gap-y-2 opacity-70 text-dark'>
-                    <p className='leading-relaxed text-sm md:text-base'>
+                <section className='w-full max-w-2xl mr-auto flex flex-col items-start justify-start gap-y-2 text-dark'>
+                    <p className='leading-relaxed text-sm md:text-base opacity-70'>
                         {project.desc}
                     </p>
                     <JoinLine />
                     <ul className="flex flex-col items-start gap-y-0.5">
-                        <li className="inline-flex items-center justify-start gap-x-0.5 text-dark">
+                        <li className="inline-flex items-center justify-start gap-x-0.5 text-dark opacity-70">
                             <IoGlassesOutline className='text-xl' />
                             <small className="capitalize text-xs">
                                 Difficulty

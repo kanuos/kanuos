@@ -27,9 +27,8 @@ export const DescHeader = props => {
                         </a>
                     </Link>
         
-                    <h1 className={(projectMode ? 'text-5xl md:text-7xl' : 'text-4xl md:text-5xl') + " font-special mt-6 text-dark "}>{name}</h1>
+                    <h1 className={(projectMode ? 'text-5xl md:text-7xl' : 'text-4xl md:text-5xl') + " font-special font-semibold my-6 text-dark "}>{name}</h1>
 
-                    <JoinLine />
 
                     <ul className="flex flex-col items-start text-xs gap-y-0.5">
                         <li className="inline-flex items-center justify-start gap-x-0.5 text-dark opacity-60">
@@ -74,5 +73,5 @@ export const DescHeader = props => {
 }
 
 export const JoinLine = () => (
-    <span className="h-8 w-0.5 bg-primary ml-0.5"></span>
+    <span className="h-8 my-1 block w-0.5 bg-primary ml-0.5"></span>
 )
