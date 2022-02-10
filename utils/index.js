@@ -8,3 +8,13 @@ export const CLIENT_TYPE = {
         url : '/projects'
     },
 }
+
+
+export const STEP_TYPE = {
+    text        : 'text',
+    code        : 'code',
+    subheading  : 'subheading',
+    quote       : 'quote',
+    image       : 'image',
+    reference   : 'reference',
+}
