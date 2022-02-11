@@ -1,7 +1,3 @@
-// import : built in
-import Image from 'next/image';
-
-
 // import : external
 import { IoCheckmarkCircleOutline, IoGlassesOutline, IoLinkOutline } from 'react-icons/io5';
 
@@ -16,9 +12,7 @@ import { CLIENT_TYPE } from '../../utils';
 
 export const ProjectDetailBody = ({project}) => {
   return (
-    <main className='px-8 md:px-16 h-auto w-full min-h-screen relative'>
-        {/* background image */}
-        <Image layout='fill' src="/hero.jpg" className='fixed left-0 top-0 h-screen w-screen object-cover pointer-events-none opacity-30' />
+    <main className='px-8 md:px-16 h-auto w-full min-h-screen relative main-light'>
         
         <div className="relative h-full w-full max-w-4xl mx-auto">
             <DescHeader 

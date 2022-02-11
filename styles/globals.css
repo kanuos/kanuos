@@ -12,3 +12,15 @@ a, a:visited, a:focus,
 button, button:visited, button:focus {
   @apply focus:outline-none outline-none ring-0;
 }
+
+
+.main-light {
+  background-image: linear-gradient(to right, rgba(255,255,255,.75), rgba(255,255,255,.75)) , url(/hero.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+}
+@media screen and (min-width : 1024px) {
+  .main-light {
+    background-image: linear-gradient(to right, rgba(255,255,255,.8), rgba(255,255,255,.8)) , url(/hero.jpg);
+  }
+}

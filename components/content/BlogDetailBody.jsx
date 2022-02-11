@@ -1,15 +1,11 @@
-// import : built in
-import Image from 'next/image';
-
 
 // import : external
-import { IoCheckmarkCircleOutline, IoGlassesOutline, IoLinkOutline } from 'react-icons/io5';
+import {  IoLinkOutline } from 'react-icons/io5';
 
 
 // import : internal
 import { DescHeader, JoinLine } from '../public/DescHeader';
 import { Signature } from '../public/Signature';
-import { PageSegment } from '../public/PageComponents';
 import { CLIENT_TYPE } from '../../utils';
 import { Step } from '../public/PageStepComponent';
 
@@ -17,9 +13,8 @@ import { Step } from '../public/PageStepComponent';
 
 export const BlogDetailBody = ({blog}) => {
   return (
-    <main className='px-8 md:px-16 h-auto w-full min-h-screen relative'>
+    <main className='px-8 md:px-16 h-auto w-full min-h-screen relative main-light'>
         {/* background image */}
-        <Image layout='fill' src="/hero.jpg" className='fixed left-0 top-0 h-screen w-screen object-cover pointer-events-none opacity-30' />
         
         <div className="relative h-full w-full max-w-4xl mx-auto">
             <DescHeader 
