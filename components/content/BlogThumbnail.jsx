@@ -49,6 +49,18 @@ export const BlogThumbnail = ({data, index}) => {
                     ))}
                 </ul>
             </div>
+            <ul className="text-sm mt-2 group-even:text-right group-odd:text-left">
+                <li>
+                    <span className="text-xs font-semibold capitalize transition-all group-hover:text-primary">
+                        published on
+                    </span>
+                </li>
+                <li className="text-xs font-semibold opacity-75">
+                    <small>
+                        {data.date}
+                    </small>
+                </li>
+            </ul>
             <Link href={PUBLIC_URLS.blogs.url + '/' + data._id}>
                 <motion.a 
                     variants={btnVariants}
@@ -57,8 +69,7 @@ export const BlogThumbnail = ({data, index}) => {
                     <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark">
                         Read blog
                     </span>
-                    <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full -translate-x-full peer-hover:translate-x-0 z-0 duration-300">
-                    </span>
+                    <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300"></span>
                 </motion.a>
             </Link>
         </article>

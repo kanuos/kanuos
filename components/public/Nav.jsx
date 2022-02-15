@@ -3,12 +3,12 @@ import { useEffect, useState } from "react"
 import { SocialLinks } from "./SocialLinks";
 
 import { JoinLine } from "./DescHeader";
-import { PUBLIC_URLS } from "../../utils";
+import { ADMIN_URLS, PUBLIC_URLS } from "../../utils";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 
-export const NavBar = () => {
+export const NavBar = ({left=false, type='public'}) => {
     const [showMenu, setShowMenu] = useState(false);
 
     return (
@@ -16,11 +16,11 @@ export const NavBar = () => {
         <motion.nav 
             whileHover={{ scale: 1.1}}
             onClick={() => setShowMenu(prev => !prev)}
-            className={"fixed z-40 top-4 right-4 h-10 w-10 p-2 flex flex-col items-center justify-center gap-1.5 cursor-pointer group rounded-full " + (showMenu ? "" : "bg-light filter hover:drop-shadow-md")}>
+            className={"fixed z-40 flex flex-col items-center justify-center gap-y-1 cursor-pointer group rounded-full top-4 " + (left ? 'left-4' : 'right-4')}>
             <motion.span 
                 animate={showMenu ? {
                     rotate: 45,
-                    y: 4,
+                    y: 3,
                     transition : { type : 'spring', stiffness : 400}
                 } : 
                 {
@@ -29,7 +29,7 @@ export const NavBar = () => {
                     transition : { type : 'spring', stiffness : 400}
                     
                 }}
-                className={"w-6 rounded h-[3px] group-hover:bg-primary transition-colors " + (showMenu ? "bg-primary" : "bg-dark")}></motion.span>
+                className={"w-6 rounded h-1 group-hover:bg-primary transition-colors " + (showMenu ? "bg-primary" : "bg-dark")}></motion.span>
             <motion.span 
                 animate={showMenu ? {
                     rotate: -45,
@@ -41,37 +41,38 @@ export const NavBar = () => {
                     y: 0,
                     transition : { type : 'spring', stiffness : 400}
                 }}
-                className={"w-6 rounded h-[3px] group-hover:bg-primary transition-colors " + (showMenu ? "bg-primary" : "bg-dark")}></motion.span>
+                className={"w-6 rounded h-1 group-hover:bg-primary transition-colors " + (showMenu ? "bg-primary" : "bg-dark")}></motion.span>
         </motion.nav>
         <AnimatePresence>
-            <NavMenu showMenu={showMenu} />
+            <NavMenu showMenu={showMenu} type={type} />
         </AnimatePresence>
         </>
   )
 }
 
 
-const NavMenu = ({ showMenu }) => {
+const NavMenu = ({ showMenu, type='public' }) => {
     const currentPath = useRouter().pathname;
     const [currentPathDesc, setCurrentPathDesc] = useState('');
     const [hoverText, setHoverText] = useState('');
 
+    const URLS = type === 'public' ? PUBLIC_URLS : ADMIN_URLS
+
+    
     function handleMouseIn(key) {
-        setHoverText(_ => PUBLIC_URLS[key])
+        setHoverText(_ => URLS[key])
     }
 
     function handleMouseOut() {
         setHoverText(prev => ({...prev, desc : ''}))
     }
-
+    
     useEffect(() => {
-        console.log({hoverText : hoverText.desc, currentPathDesc : currentPathDesc.desc})
-    }, [hoverText, currentPathDesc])
-
-    useEffect(() => {
-        const [k] =  Object.entries(PUBLIC_URLS).find(([_, v]) => v.url === currentPath)
-        setCurrentPathDesc(_ => PUBLIC_URLS[k])
-        setHoverText(_ => PUBLIC_URLS[k])
+        const k =  Object.entries(URLS).find(([_, v]) => v.url === currentPath)?.[0]
+        if (k) {
+            setCurrentPathDesc(_ => URLS[k])
+            setHoverText(_ => URLS[k])
+        }
     }, [currentPath])
 
     const variants = {
@@ -102,7 +103,7 @@ const NavMenu = ({ showMenu }) => {
             <div
             className="h-full p-4 flex flex-col items-center justify-center">
                 {/* message section */}
-                <div className="px-10 pt-8 md:pt-16 h-fit max-w-xl md:max-w-lg mx-auto">
+                {type === 'public' ? <div className="px-10 pt-8 md:pt-16 h-fit max-w-xl md:max-w-lg mx-auto">
                     <section className="w-full h-fit flex flex-col items-center justify-center md:bg-light md:filter md:drop-shadow-2xl md:rounded-md md:items-start">
                         <div className="bg-light filter drop-shadow-2xl py-3 px-6 w-fit rounded-md flex items-center flex-col justify-center gap-2.5 md:flex-row md:bg-transparent md:p-2 md:gap-x-4">
                             <img 
@@ -138,15 +139,22 @@ const NavMenu = ({ showMenu }) => {
                         </div>
                     </section>
                 </div>
-
+                : 
+                <h2 className="text-5xl mb-5 font-special font-semibold">
+                    Admin Menu
+                </h2>
+                }           
 
                 {/* list items */}
                 <div className="py-8 md:py-0 w-full text-dark">
                     <ul className="h-full w-full flex flex-col items-center justify-start gap-y-8 md:max-w-sm md:mx-auto md:pt-12 md:border-l-2 md:border-dark md:border-opacity-20 md:items-start">
-                        {Object.entries(PUBLIC_URLS).map(([key, valueObj]) => {
+                        {Object.entries(URLS).map(([key, valueObj]) => {
                         let isActive;
-                        if (valueObj.url === '/' && currentPath === '/'){
-                            isActive = true;
+                        console.log(valueObj.url, currentPath)
+                        if (valueObj.url === '/'){
+                            if (currentPath === valueObj.url){
+                                isActive = true;
+                            }
                         }
                         else {
                             isActive = currentPath.startsWith(valueObj.url)
@@ -167,14 +175,14 @@ const NavMenu = ({ showMenu }) => {
                             )
                         }
                         return(
-                            <li key={key} className="capitalize flex items-center justify-center w-full md:w-fit md:pl-2 md:relative md:flex-col md:items-start">
+                            <li key={key} className="capitalize flex items-center justify-center w-full md:w-fit md:pl-2 md:relative md:flex-col md:items-start group">
                                 <Link href={valueObj.url}>
                                     <a 
                                         onMouseEnter={() => handleMouseIn(key)}
                                         onMouseLeave={handleMouseOut}
                                         className="font-special text-xl transition-all hover:underline hover:tracking-widest peer md:hover:no-underline md:pl-4">{valueObj.name}</a>
                                 </Link>
-                                <p className="hidden md:peer-hover:block font-semibold md:w-full opacity-60 md:ml-8 md:mt-2 md:text-xs">
+                                <p className="hidden md:group-hover:block font-semibold md:w-full opacity-60 md:ml-8 md:mt-2 md:text-xs">
                                     {valueObj.desc}
                                 </p>
                             </li>
@@ -185,10 +193,10 @@ const NavMenu = ({ showMenu }) => {
 
                 
                 {/* social section */}
-                <section className="flex flex-col items-center justify-center gap-2 mt-auto bg-light filter drop-shadow-2xl py-2 px-6 w-fit rounded-md ">
+                {type === 'public' && <section className="flex flex-col items-center justify-center gap-2 mt-auto bg-light filter drop-shadow-2xl py-2 px-6 w-fit rounded-md ">
                     <p className="text-xs uppercase"><small>follow me</small></p>
                     <SocialLinks />
-                </section>
+                </section>}
             </div>
         </motion.section>
         </AnimatePresence>
