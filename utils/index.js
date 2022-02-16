@@ -7,6 +7,10 @@ export const CLIENT_TYPE = {
         name : 'projects',
         url : '/projects'
     },
+    design : {
+        name : 'designs',
+        url : '/designs'
+    },
 }
 
 
@@ -48,5 +52,61 @@ export const PUBLIC_URLS = {
         name : 'designs',
         url : '/designs',
         desc : "Wireframing, sketching, prototyping of UI/UX designs for various applications viz. social media platforms, shopping cart apps, landing pages and much more. Check out the list of published UI/UX designs here."
+    },
+}
+
+
+const ADMIN_PATH = '/admin'
+
+
+export const ADMIN_URLS = {
+    setting : {
+        name : 'profile settings',
+        url : ADMIN_PATH + '/setting',
+        desc: 'Change password/security question, site metadata and more'
+    },
+    portfolio : {
+        name : 'portfolio management',
+        url : ADMIN_PATH + '/portfolio',
+        desc: 'Update portfolio metadata viz. name, email, social accounts, about me, bio, project showcase etc'
+    },
+    new : {
+        name : 'new content',
+        url : ADMIN_PATH + '/new-content',
+        desc: 'Create new blog, project, design...'
+    },
+    projects : {
+        name : 'projects',
+        url : ADMIN_PATH + '/projects',
+        desc: 'list of all projects in tabular manner, create/read/delete/edit project in ADMIN mode'
+    },
+    blogs : {
+        name : 'blogs',
+        url : ADMIN_PATH + '/blogs',
+        desc: 'list of all blogs in tabular manner, create/read/delete/edit blog in ADMIN mode'
+    },
+    designs : {
+        name : 'designs',
+        url : ADMIN_PATH + '/designs',
+        desc: 'list of all designs in tabular manner, create/read/delete/edit design in ADMIN mode'
+    },
+}
+
+
+export const PUBLIC_LIST_TYPES = {
+    blogs : {
+        title : 'My Blogs',
+        desc : `Here's a list of all my blogs, code solutions, programming solutions and concepts and more..`,
+        type: 'blogs'
+    },
+    projects : {
+        title : 'My Projects',
+        desc : `Here's a list of all my front-end projects, CSS UI/UX recreations, static page creations, full stack projects, backend projects, API creation and lot more`,
+        type: 'projects'
+    },
+    designs : {
+        title : 'My Designs',
+        desc : `Here's a list of all my UI/UX designs for landing pages, website designs, app designs, different products and more`,
+        type: 'designs'
     },
 }

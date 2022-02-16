@@ -24,19 +24,19 @@ export const Step = ({step}) => {
 
 const TextStep = ({text}) => {
     return (
-        <p className='text-sm md:text-base leading-relaxed whitespace-pre-line my-2'>{text}</p>
+        <p className='text-sm leading-relaxed whitespace-pre-line my-2'>{text}</p>
     )
 }
 
 const SubHeadingStep = ({text}) => {
     return (
-        <h2 className='font-semibold w-full block my-4 text-sm md:text-base capitalize'>{text}</h2>
+        <h2 className='font-semibold w-full block my-4 text-sm capitalize'>{text}</h2>
     )
 }
 
 const QuoteStep = ({text}) => {
     return (
-        <blockquote className='my-8 pl-4 italic text-sm md:text-base opacity-75 border-l-4 border-dark'>{text}</blockquote>
+        <blockquote className='my-8 pl-4 italic font-semibold text-sm border-l-4 border-dark'>{text}</blockquote>
     )
 }
 

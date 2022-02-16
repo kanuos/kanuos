@@ -40,7 +40,7 @@ export default BlogList;
 const blogList = [
     {
         _id : 1,
-        title : 'How I implement JWT for authorization',
+        name : 'How I implement JWT for authorization',
         desc : `Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quis ipsa amet, odio cupiditate voluptatibus nihil doloremque dolores nam suscipit temporibus cumque aut, sunt iure ad corporis harum delectus libero, laborum voluptas? Voluptates, odio omnis odit laudantium tempora animi maiores iusto delectus necessitatibus nulla autem recusandae alias, esse illo magnam.
         `,
         tags : ['Access Token', 'Refresh Token', 'JsonWebToken', 'Authorization'],
@@ -48,7 +48,7 @@ const blogList = [
     },
     {
         _id : 2,
-        title : 'LeetCode Solution : Two Sum',
+        name : 'LeetCode Solution : Two Sum',
         desc : `Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quis ipsa amet, odio cupiditate voluptatibus nihil doloremque dolores nam suscipit temporibus cumque aut, sunt iure ad corporis harum delectus libero, laborum voluptas? Voluptates, odio omnis odit laudantium tempora animi maiores iusto delectus necessitatibus nulla autem recusandae alias, esse illo magnam.
         `,
         tags : ['LeetCode', 'Dynamic Problem', 'Optimization'],

@@ -3,13 +3,13 @@
 // import : internal
 import { ProjectDetailBody } from '../../components/content/ProjectDetailBody';
 import { HeadComponent } from '../../components/Head'
-
+import { NavBar } from '../../components/public/Nav'
 
 const ProjectDetail = () => {
   return (
     <>
     <HeadComponent title={project.name} />
-    {/* navbar goes here */}
+    <NavBar />
     <ProjectDetailBody project={project} />
     </>
   )
@@ -23,7 +23,7 @@ export default ProjectDetail
 const project = {
     name : `Moovey`,
     date : Date.now(),
-    tags : ['Express', 'PostgreSQL', 'Session', 'EJS', 'Tailwind'],
+    category : 'Full Stack Project',
     desc : `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.`,
     difficulty: 'intermediate',
     prerequisites : [

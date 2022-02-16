@@ -11,7 +11,7 @@ export const DesignThumbnail = ({data}) => {
         <article 
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            className="text-dark md:col-span-4 lg:odd:col-span-3 lg:even:col-span-3 lg:odd:row-span-4 lg:even:row-span-5 flex flex-col gap-y-2 relative h-[50vh] min-h-[15rem] md:h-full w-full flex-grow group overflow-hidden rounded-md hover:shadow-2xl max-w-lg">
+            className="text-dark md:col-span-4 lg:odd:col-span-3 lg:even:col-span-3 lg:odd:row-span-4 lg:even:row-span-5 flex flex-col gap-y-2 relative h-96 md:h-[50vh] md:min-h-[25rem] lg:h-full w-full flex-grow group overflow-hidden rounded-md hover:shadow-2xl max-w-lg">
             <img 
                 src={data.thumbnail} 
                 alt={data.title + "'s thumbnail"} 

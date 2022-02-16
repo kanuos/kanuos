@@ -15,12 +15,12 @@ const ProjectList = () => {
     <NavBar />
     <div className='main-light h-full w-full'>
         <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-black selection:text-light'>
-            <PublicHeader data={{...PUBLIC_LIST_TYPES.projects, count : blogList.length}} />
+            <PublicHeader data={{...PUBLIC_LIST_TYPES.projects, count : projectList.length}} />
             <main className='flex flex-col my-20 gap-20'>
-                {blogList.map((blog, index) => (
+                {projectList.map((project, index) => (
                     <ProjectThumbnail 
-                        key={blog._id} 
-                        data={blog} 
+                        key={project._id} 
+                        data={project} 
                         index={index + 1} />
                 ))}
             </main>
@@ -36,7 +36,7 @@ const ProjectList = () => {
 export default ProjectList;
 
 
-const blogList = [
+const projectList = [
     {
         _id : 1,
         title : 'Moovey',

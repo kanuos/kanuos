@@ -31,7 +31,7 @@ export const BlogThumbnail = ({data, index}) => {
                 <small>Blog : #{index}</small>
             </p>
             <h3 className="font-special font-semibold group-hover:tracking-wide transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right">
-                {data.title}
+                {data.name}
             </h3>
             <div className="filter grayscale group-hover:grayscale-0 transition-all">
                 <JoinLine />

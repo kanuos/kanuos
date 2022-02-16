@@ -16,7 +16,7 @@ export const NavBar = ({left=false, type='public'}) => {
         <motion.nav 
             whileHover={{ scale: 1.1}}
             onClick={() => setShowMenu(prev => !prev)}
-            className={"fixed z-40 flex flex-col items-center justify-center gap-y-1 cursor-pointer group rounded-full top-4 " + (left ? 'left-4' : 'right-4')}>
+            className={"fixed z-40 flex flex-col items-center justify-center gap-y-1 cursor-pointer group rounded-full top-4 bg-light h-10 w-10 " + (left ? 'left-2' : 'right-2')}>
             <motion.span 
                 animate={showMenu ? {
                     rotate: 45,

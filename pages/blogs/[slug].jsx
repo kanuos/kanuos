@@ -1,13 +1,13 @@
 // import : internal
 import { HeadComponent } from '../../components/Head'
 import { BlogDetailBody } from '../../components/content/BlogDetailBody';
-
+import { NavBar } from '../../components/public/Nav'
 
 const BlogDetail = () => {
   return (
     <>
     <HeadComponent title={blog.name} />
-    {/* navbar goes here */}
+    <NavBar />
     <BlogDetailBody blog={blog} />
     </>
   )
