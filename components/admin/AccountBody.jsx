@@ -1,0 +1,132 @@
+// imports : built in
+import { useEffect, useMemo, useState } from "react"
+
+// imports : external
+import { motion } from "framer-motion"
+
+// imports : internal
+import { getEmptyState, LOGIN_STEPS, REGISTER_STEPS } from "../../utils"
+import { InputField } from "../public/InputField"
+import { JoinLine } from "../public/DescHeader"
+
+export const LoginBody = () => {
+  function handleLogin(cred) {
+    console.log({cred})
+  }
+  return (
+    <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
+      <AccountBody type="login" fields={LOGIN_STEPS} cb={handleLogin}/>
+    </div>
+  )
+}
+
+
+
+export const RegisterBody = () => {
+  function handleRegister(cred) {
+    console.log({cred})
+  }
+  return (
+    <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
+      <AccountBody type="Register" fields={REGISTER_STEPS} cb={handleRegister}/>
+    </div>
+  )
+}
+
+
+
+
+
+const AccountBody = ({type, fields, cb}) => {
+  const [currentStep, setCurrentStep] = useState(fields[0].field)
+  const [accountDetail, setAccountDetail] = useState(null);
+  const [canSubmit, setCanSubmit] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const getInitialState = useMemo(() => getEmptyState(fields), [fields])
+
+  useEffect(() => {
+      setAccountDetail(getInitialState)
+  }, [])
+
+  useEffect(() => {
+      if (!accountDetail) return
+      const values = Object.values(accountDetail)
+      let index = values.findIndex(v => v.trim() === '')
+      
+      const permission = fields.flatMap(({field, constraints}) => {
+          return Object.values(constraints).map(({check}) => check(accountDetail[field]))
+      }).every(Boolean)
+
+
+      setCanSubmit(permission)
+      if (index !== -1){
+          setCurrentStep(_ => fields[index]?.field)
+      }
+
+  }, [accountDetail, canSubmit])
+
+  function updateState(data){
+      setAccountDetail(prev => ({...prev, ...data}))
+  }
+
+  const variant = {
+    show : { x : 0, opacity : 1, transition : { type : 'spring', when: 'beforeChildren', staggerChildren: .25}},
+    hide : { x : '-100%', opacity : 0, transition : { type : 'spring', when: 'afterChildren'}},
+  }
+  
+  
+  return (
+    <main className="p-10 h-auto flex flex-col items-center justify-center gap-12">
+        <h1 className="font-special text-4xl md:text-5xl capitalize">
+          {type}
+        </h1>
+        <JoinLine />
+        <div className="flex flex-col items-start gap-y-10 w-full">
+            {accountDetail && 
+                fields.map(({field, desc, constraints}) => {
+                    const active = (accountDetail[field].trim().length > 0 ||(field === currentStep));
+                    return (
+                        <motion.section 
+                            key={field} 
+                            variants={variant}
+                            initial={'hide'}
+                            animate={active ? 'show' : 'hide'}
+                            className="w-full flex flex-col items-start gap-y-4 relative after:left-4 after:h-10 after:bg-secondary after:w-0.5 after:absolute after:-top-10 first-of-type:after:hidden">
+                            {accountDetail[field].trim().length === 0 && 
+                                <p className="text-xs font-semibold py-1">
+                                    {desc}
+                                </p>}
+                            <motion.div 
+                                variants={variant}
+                                className="w-full">
+                                <InputField 
+                                    name={field} 
+                                    setEditMode={setEditMode}
+                                    value={accountDetail[field]} 
+                                    constraints={constraints}
+                                    getData={updateState}/>
+                            </motion.div>
+                        </motion.section>
+                    )
+                }
+            )}
+            <motion.button
+                onClick={() => cb(accountDetail)}
+                variants={variant}
+                animate={(canSubmit && !editMode) ? 'show' : 'hide'}
+                className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer select-none">
+                    <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark">
+                        {type}
+                    </span>
+                    <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300">
+                    </span>
+            </motion.button>
+            
+        </div>
+
+    </main>
+    )
+}
+
+
+// TODO: link components to API

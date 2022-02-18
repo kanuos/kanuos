@@ -53,6 +53,11 @@ export const PUBLIC_URLS = {
         url : '/designs',
         desc : "Wireframing, sketching, prototyping of UI/UX designs for various applications viz. social media platforms, shopping cart apps, landing pages and much more. Check out the list of published UI/UX designs here."
     },
+    contact : {
+        name : 'contact me',
+        url : '/contact',
+        desc : "To work with me for UI/UX designing and development, full-stack development etc connect with me via email or the in-app messenger. "
+    },
 }
 
 
@@ -110,3 +115,176 @@ export const PUBLIC_LIST_TYPES = {
         type: 'designs'
     },
 }
+
+
+export function getEmptyState(steps) {
+    const obj = {}
+    steps.forEach(({field}) => obj[field] = '')
+    return obj;
+}
+
+export const LOGIN_STEPS = [
+    {
+        field : 'email',
+        desc : `Admin email ID`,
+        constraints : {
+            empty : {
+                message : "Email must be non-empty",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            valid : {
+                message : "Email must be valid",
+                check(value){
+                    let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                    return re.test(value)
+                }
+            },
+        }      
+    },
+    {
+        field : 'password',
+        desc : `Admin password`,
+        constraints : {
+            empty : {
+                message : "Password cannot be empty",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            min : {
+                message : "Password must be at least 6 characters long",
+                check(value){
+                    return value.trim().length >= 6
+                }
+            },
+        }
+            
+    },
+]
+
+export const REGISTER_STEPS = [
+    ...LOGIN_STEPS, 
+    {
+        field : 'question',
+        desc : `Security question`,
+        constraints : {
+            empty : {
+                message : "Question cannot be empty",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            min : {
+                message : "Question must be at least 6 characters long",
+                check(value){
+                    return value.trim().length >= 6
+                }
+            },
+            max : {
+                message : "Question must be at most 100 characters long",
+                check(value){
+                    return value.trim().length <= 100
+                }
+            },
+        }   
+    },
+    {
+        field : 'answer',
+        desc : `Security answer`,
+        constraints : {
+            empty : {
+                message : "Answer cannot be empty",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            min : {
+                message : "Answer must be at least 6 characters long",
+                check(value){
+                    return value.trim().length >= 6
+                }
+            },
+            max : {
+                message : "Answer must be at most 100 characters long",
+                check(value){
+                    return value.trim().length <= 100
+                }
+            },
+        }   
+    },
+]
+
+
+export const MESSAGE_STEPS = [
+    {
+        field : 'name',
+        desc : `Let's start off with your name`,
+        constraints : {
+            empty : {
+                message : "Your name must not be empty",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            min : {
+                message : "Your name must have at least 2 characters",
+                check(value){
+                    return value.trim().length >= 2
+                }
+            },
+            alpha : {
+                message : "Your name can only contain characters from the English alphabet",
+                check(value){
+                    const re = /^[a-zA-Z]+[\sa-zA-Z]*$/g
+                    return re.test(value.trim())
+                }
+            },
+        }    
+    },
+    {
+        field : 'email',
+        desc : `Your email ID where I can mail you`,
+        constraints : {
+            empty : {
+                message : "Email must be non-empty",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            valid : {
+                message : "Email must be valid",
+                check(value){
+                    let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                    return re.test(value)
+                }
+            },
+        }      
+    },
+    {
+        field : 'message',
+        desc : `Please type in your message →`,
+        constraints : {
+            empty : {
+                message : "Message body required",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            min : {
+                message : "Maximum of 700 characters allowed",
+                check(value){
+                    const temp = value.trim();
+                    return temp.length < 700 && temp.length > 0 
+                }
+            },
+            max : {
+                message : "Message body must be at least 20 characters",
+                check(value){
+                    return value.trim().length > 20 
+                }
+            },
+        }        
+    },
+]

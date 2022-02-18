@@ -7,6 +7,7 @@ import { JoinLine } from '../public/DescHeader';
 import { SocialLinks } from '../public/SocialLinks';
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import { PUBLIC_URLS } from '../../utils';
 
 const PORTFOLIO_PROJECT_CATEGORIES = {
     all : 'all', front : 'front end', full : 'full stack'
@@ -158,11 +159,13 @@ export const Portfolio = ({portfolio}) => {
                 <p className='text-sm my-4 whitespace-pre-line opacity-70'>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum excepturi dolorum ratione odit, necessitatibus velit tempora alias exercitationem minus? Ducimus magni dicta nam vel deleniti.
                 </p>
-                <button className='h-32 w-32 my-20 mx-auto block bg-dark text-light uppercase rounded-full p-8 relative before:absolute before:h-full before:w-full before:inset-0 before:bg-dark before:rounded-full before:opacity-0 hover:before:animate-ping hover:before:opacity-50 before:pointer-events-none z-10 before:z-0'>
-                    <span className="w-max text-center text-xs tracking-widest">
-                        contact me
-                    </span>
-                </button>
+                <Link href={PUBLIC_URLS.contact.url}>
+                    <a className='h-32 w-32 my-20 mx-auto block text-center bg-dark text-light uppercase rounded-full p-8 relative before:absolute before:h-full before:w-full before:inset-0 before:bg-dark before:rounded-full before:opacity-0 hover:before:animate-ping hover:before:opacity-50 before:pointer-events-none z-10 before:z-0'>
+                        <span className="w-max text-center text-xs tracking-widest">
+                            contact me
+                        </span>
+                    </a>
+                </Link>
                 <div className="mt-auto">
                     <SocialLinks />
                 </div>
