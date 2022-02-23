@@ -214,3 +214,10 @@ export const PAGE_CONTENT = {
         // text, subheading, quote, image, reference, typography, color, flow
     },
 }
+
+
+
+
+export const API_ROUTES = {
+    tags : '/api/tags/'
+}

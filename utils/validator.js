@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 
-const TagValidator = Joi.object({
+export const TagValidator = Joi.object({
     _id : Joi.any(),
     tag : Joi.string().trim().required()
 })
@@ -89,7 +89,3 @@ export const ProjectValidator = CommonFields.keys({
     }).length(2),
     chapters : Joi.array().items(SegmentValidator),
 })
-
-
-
-
