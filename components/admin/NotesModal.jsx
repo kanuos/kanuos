@@ -40,7 +40,6 @@ export const NotesModal = ({closeAddModal, getNote, notes, init = null}) => {
                 </span>
             }
             {Object.keys(NOTES_TEMPLATE).map(name => {
-                console.log(name)
                 if (name !== 'isComplete') {
                     return (
                         <StringField 

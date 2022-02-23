@@ -89,3 +89,12 @@ export const ProjectValidator = CommonFields.keys({
     }).length(2),
     chapters : Joi.array().items(SegmentValidator),
 })
+
+
+export const NoteValidator = Joi.object({
+    _id : Joi.any(),
+    __v : Joi.any(),
+    title : Joi.string().trim().required().lowercase(),
+    feature : Joi.string().trim().required(),
+    isComplete : Joi.bool().default(false)
+})

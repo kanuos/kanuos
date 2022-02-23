@@ -8,10 +8,12 @@ import { FcApproval, FcCloseUpMode } from 'react-icons/fc';
 import { NotesModal } from '../../../components/admin/NotesModal';
 import { HeadComponent } from '../../../components/Head'
 import { NavBar } from '../../../components/public/Nav';
+import { getAllNotes } from '../../../database/notes';
+import axios from 'axios';
+import { API_ROUTES } from '../../../utils/admin'
 
-
-const NotesAdminPage = () => {
-    const [notes, setNotes] = useState([]);
+const NotesAdminPage = ({allNotes}) => {
+    const [notes, setNotes] = useState(allNotes ? JSON.parse(allNotes) : []);
     const [editMode, setEditMode] = useState(false);
     const [editID, setEditID] = useState(null);
     const [modal, setModal] = useState(false);
@@ -25,19 +27,37 @@ const NotesAdminPage = () => {
         setModal(() => false)
     }
 
-    function addNote(note) {
-        if(editMode) {
-            setNotes(prev => prev.map(el => {
-                if (el._id === editID._id) {
-                    return note;
-                }
-                return el
-            }))
-            setEditMode(false)
-            setEditID(null)
-            return
+    async function addNote(note) {
+        note.isComplete = Boolean(note.isComplete)
+        try {
+            if(editMode) {
+                const {editedNote} = (await axios({
+                    url : `${API_ROUTES.notes}?note=${note._id}`,
+                    data : note,
+                    method : 'PATCH'
+                })).data;
+                setNotes(prev => prev.map(el => {
+                    if (el._id === editedNote._id) {
+                        return note;
+                    }
+                    return el
+                }))
+                setEditMode(false)
+                setEditID(null)
+                return
+            }
+            const {newNote} = (await axios({
+                url : API_ROUTES.notes,
+                data : note,
+                method : 'POST'
+            })).data;
+
+            setNotes(prev => [...prev, newNote])
+            
+        } 
+        catch (error) {
+            alert(error)    
         }
-        setNotes(prev => [...prev, {...note, _id : Date.now()}])
     }
 
 
@@ -47,10 +67,21 @@ const NotesAdminPage = () => {
         openAddModal()
     }
 
-    function handleDelete(note) {
-        let confirmDelete = confirm('Confirm delete?');
-        if (confirmDelete) {
-            setNotes(prev => prev.filter(n => n._id !== note._id))
+    async function handleDelete(noteID) {
+        try {
+            let confirmDelete = confirm('Confirm delete?');
+            if (confirmDelete) {
+                const {deletedNote} = (await axios({
+                    method : 'DELETE',
+                    url : `${API_ROUTES.notes}?note=${noteID}`
+                })).data;
+                if (!deletedNote) throw 'Note not found'
+                setNotes(prev => prev.filter(n => n._id !== deletedNote._id))
+            }
+            
+        } 
+        catch (error) {
+            alert(error)
         }
     }
 
@@ -104,7 +135,7 @@ const NotesAdminPage = () => {
                                     </button>
                                 </li>
                                 <li className='text-dark hover:text-primary py-0.5 px-3 border-current border rounded'>
-                                    <button onClick={() => handleDelete(n)}>
+                                    <button onClick={() => handleDelete(n._id)}>
                                         <small>
                                             Delete
                                         </small>
@@ -131,3 +162,22 @@ const NotesAdminPage = () => {
 
 
 export default NotesAdminPage;
+
+
+export async function getServerSideProps() {
+    try {
+        const notes = await getAllNotes();
+        return {
+            props : {
+                allNotes : JSON.stringify(notes)
+            }
+        }
+    } 
+    catch (error) {
+        return {
+            props : {
+                allNotes : []
+            }
+        }
+    }
+}
