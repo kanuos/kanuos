@@ -13,11 +13,12 @@ const INIT_PAGE = {
 }
 
 
-export const PageField = ({name, init=null, getData, contentType, handleDeleteChapter}) => {
+export const PageField = ({name, init=null, getData, contentType, handleDeleteChapter, editData}) => {
   const [currentStepData, setCurrentStepData] = useState({...INIT_STEP});
   const [currentStepType, setCurrentStepType] = useState('')
   const [page, setPage] = useState({...INIT_PAGE});
   const [editStepIndex, setEditStepIndex] = useState(NaN);
+  const [editChapter, setEditChapter] = useState(null);
 
  
   function handleStepData({k, v}) {
@@ -55,11 +56,22 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
   }
 
   function handleAddChapter() {
-      page.index = Date.now();
-      getData(page)
+      if (editChapter) {
+          editData(page)
+          setEditChapter(null);
+      }
+      else {
+          page.index = Date.now();
+          getData(page)
+      }
       setCurrentStepData({...INIT_STEP})
       setPage({...INIT_PAGE})
       setCurrentStepType('')
+  }
+
+  function handleEditChapter(chapter) {
+    setEditChapter(chapter);
+    setPage({...chapter})
   }
 
   function handleEditStep(step, i){
@@ -75,12 +87,32 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
     }
   }, [currentStepType])
 
+  function escapeEditChapterMode() {
+    setEditChapter(null);
+    setCurrentStepData({...INIT_STEP});
+    setCurrentStepType('')
+    setPage({...INIT_PAGE});
+  }
+
   return (
     <div className="flex flex-col w-full bg-light p-4 filter drop-shadow-xl rounded-md">
     {init && init.length > 0 && <div className='mb-4'>
         <span className="text-xs capitalize font-semibold text-secondary">Chapters</span>
         <ul className="flex flex-col items-stretch justify-start gap-y-4">
-            {init.map((el, i) => (
+            {init.map((el, i) => {
+            if (el.index === editChapter?.index) {
+                return (
+                    <li key={i} className="w-full p-4 bg-light rounded-md filter drop-shadow-xl">
+                    <section className="w-full flex opacity-20 pointer-events-none justify-between items-center px-2">
+                        <span className="font-semibold font-special text-lg capitalize">
+                        Chapter {el.heading} in Edit Mode
+                        </span>
+                        <IoLockClosed />
+                    </section>
+                </li>    
+                )
+            }
+            return (
                 <li key={i} className="w-full p-4 bg-light rounded-md filter drop-shadow-xl">
                     <details className="w-full">
                     <summary className="w-full flex justify-between items-center px-2">
@@ -88,7 +120,7 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
                         Chapter {i + 1} : {el.heading}
                         </span>
                         <div className="flex items-center justify-center gap-x-2">
-                            <button onClick={() => console.log(el, i)} className="hover:text-primary">
+                            <button onClick={() => handleEditChapter(el)} className="hover:text-primary">
                             <IoMagnetOutline />
                             </button>
 
@@ -97,12 +129,12 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
                             </button>
                         </div>
                     </summary>
-                    <p className="text-xs my-2 w-full font-semibold break-words">
-                        {JSON.stringify(el.steps)}
+                    <p className="text-xs my-2 w-full font-semibold break-words whitespace-pre-line">
+                        {JSON.stringify(el.steps, null, 4)}
                     </p>
                     </details>
                 </li>
-            ))}
+            )})}
         </ul>
     </div>}
       
@@ -149,8 +181,8 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
                     </button>
                 </div>
             </summary>
-            <p className="text-xs my-2 w-full font-semibold break-words">
-                {JSON.stringify(step.value)}
+            <p className="text-xs my-2 w-full font-semibold break-words whitespace-pre-line">
+                {JSON.stringify(step.value, null, 4)}
             </p>
             </details>
         )})}
@@ -208,15 +240,25 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
         </div>
     </div>
 
-        {Boolean(page.heading.length * page.steps.length) && 
-        <button 
-            onClick={handleAddChapter}
-            className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
-                <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
-                    Add Chapter 
-                </span>
-                <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
-        </button>}
+    {Boolean(page.heading.length * page.steps.length) && 
+    <button 
+        onClick={handleAddChapter}
+        className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
+            <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+                {editChapter ? 'Edit' : 'Add'} Chapter 
+            </span>
+            <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+    </button>}
+
+    {editChapter && 
+    <button 
+        onClick={escapeEditChapterMode}
+        className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
+            <small className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+                Exit Edit Chapter Mode  
+            </small>
+            <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+    </button>}
 
       </div>
     </div>

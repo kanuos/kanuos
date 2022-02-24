@@ -31,6 +31,16 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
         const newChapters = state[fieldKey].filter(el => el.index !== chapter.index);
         setState(prev => ({...prev, [fieldKey] : newChapters}))
     }
+
+    function handleEditChapter(chapter, fieldKey) {
+        const updatedStateChapters = state[fieldKey].map(el => {
+            if (el.index === chapter.index) {
+                return chapter
+            }
+            return el;
+        })
+        setState(prev => ({...prev, [fieldKey] : updatedStateChapters}))
+    }
  
     useEffect(() => {
         setState(getEmptyTemplate(type))
@@ -147,6 +157,7 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                                     name={field.key}
                                     handleDeleteChapter={c => handleDeleteChapter(c, field.key)}
                                     getData={c => handleAddChapterToState(c, field.key)}
+                                    editData={c => handleEditChapter(c, field.key)}
                                     init={state[field.key]}/>
                             }
                             
