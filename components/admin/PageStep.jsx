@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { PAGE_CONTENT } from '../../utils/admin';
 import {StringField, ImageInput, ObjectStepInput} from './InputField';
 
-import { IoRemoveCircleOutline } from 'react-icons/io5'
+import { IoMagnetOutline, IoCloseCircleOutline, IoLockClosed } from 'react-icons/io5'
 import { LAYOUTS } from '../../utils/admin'
 
 const INIT_STEP = {
@@ -17,6 +17,7 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
   const [currentStepData, setCurrentStepData] = useState({...INIT_STEP});
   const [currentStepType, setCurrentStepType] = useState('')
   const [page, setPage] = useState({...INIT_PAGE});
+  const [editStepIndex, setEditStepIndex] = useState(NaN);
 
  
   function handleStepData({k, v}) {
@@ -24,6 +25,18 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
   }
 
   function handleAddStep() {
+    if (!isNaN(editStepIndex)) {
+        setPage(prev => ({...prev, steps : prev.steps.map((st, i) => {
+            if (i === editStepIndex){
+                return currentStepData
+            }
+            return st;
+        })}))
+        setCurrentStepData({...INIT_STEP})
+        setCurrentStepType('') 
+        setEditStepIndex(NaN);
+        return
+    }
     setPage(prev => ({...prev, steps : [...prev.steps, currentStepData]}))
     setCurrentStepData({...INIT_STEP})
     setCurrentStepType('')
@@ -49,6 +62,19 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
       setCurrentStepType('')
   }
 
+  function handleEditStep(step, i){
+    setEditStepIndex(i);
+    setCurrentStepData({...step})
+    setCurrentStepType(step.key)
+  }
+
+  useEffect(() => {
+    if (currentStepType === ''){
+        setEditStepIndex(NaN)
+        setCurrentStepData({...INIT_STEP})
+    }
+  }, [currentStepType])
+
   return (
     <div className="flex flex-col w-full bg-light p-4 filter drop-shadow-xl rounded-md">
     {init && init.length > 0 && <div className='mb-4'>
@@ -61,9 +87,15 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
                         <span className="font-semibold font-special text-lg cursor-pointer hover:text-secondary capitalize">
                         Chapter {i + 1} : {el.heading}
                         </span>
-                        <button onClick={() => handleDeleteChapter(el)} className="hover:text-primary">
-                        <IoRemoveCircleOutline />
-                        </button>
+                        <div className="flex items-center justify-center gap-x-2">
+                            <button onClick={() => console.log(el, i)} className="hover:text-primary">
+                            <IoMagnetOutline />
+                            </button>
+
+                            <button onClick={() => handleDeleteChapter(el)} className="hover:text-primary">
+                            <IoCloseCircleOutline />
+                            </button>
+                        </div>
                     </summary>
                     <p className="text-xs my-2 w-full font-semibold break-words">
                         {JSON.stringify(el.steps)}
@@ -88,21 +120,40 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
         <span className="text-xs capitalize font-semibold">
             steps
         </span>
-        {Object.values(page.steps).map((step, i) => (
+        {Object.values(page.steps).map((step, i) => {
+            if (i === editStepIndex) {
+            return (
+            <div key={i} className="w-full p-4 bg-light rounded drop-shadow-xl filter relative after:absolute after:w-0.5 after:h-4 mb-4 after:bg-primary after:left-4 after:-bottom-4">
+                <section className="w-full flex justify-between items-center px-2 opacity-20 cursor-not-allowed pointer-events-none">
+                    <span className="font-semibold font-special text-lg cursor-pointer hover:text-secondary">
+                    Edit Mode On : {step.key} field
+                    </span>
+                    <IoLockClosed />
+                </section>
+            </div>
+             )   
+            }
+            return (
             <details key={i} className="w-full p-4 bg-light rounded drop-shadow-xl filter relative after:absolute after:w-0.5 after:h-4 mb-4 after:bg-primary after:left-4 after:-bottom-4">
             <summary className="w-full flex justify-between items-center px-2">
                 <span className="font-semibold font-special text-lg cursor-pointer hover:text-secondary">
                 Step {i} : {step.key} field
                 </span>
-                <button onClick={() => handleDeleteStep(step)} className="hover:text-primary">
-                <IoRemoveCircleOutline />
-                </button>
+                <div className="flex items-center justify-center gap-x-2">
+                    <button onClick={() => handleEditStep(step, i)} className="hover:text-secondary">
+                    <IoMagnetOutline />
+                    </button>
+
+                    <button onClick={() => handleDeleteStep(step)} className="hover:text-primary">
+                    <IoCloseCircleOutline />
+                    </button>
+                </div>
             </summary>
             <p className="text-xs my-2 w-full font-semibold break-words">
                 {JSON.stringify(step.value)}
             </p>
             </details>
-        ))}
+        )})}
         
         <div className="w-full bg-light p-4 rounded-md filter drop-shadow-xl">
             <label htmlFor="step" className="text-xs capitalize font-semibold">type</label>
@@ -141,17 +192,15 @@ export const PageField = ({name, init=null, getData, contentType, handleDeleteCh
                 setValue={handleAddObject} 
             />}
             
-            {/* 
-            {layout, name, init=null, setValue}
-            */}
+            
             {['link', 'code'].includes(currentStepType) && 
             <>
                 <ObjectStepInput
                     key={currentStepType}
                     layout={LAYOUTS[currentStepType]}
-                    init={null}
+                    init={!isNaN(editStepIndex) ? currentStepData.value : null}
                     name={currentStepType} 
-                    setValue={({value}) => handleAddObject({key : 'obj', value})} /> 
+                    setValue={({value}) => handleAddObject({key : currentStepType, value})} /> 
             </>}
             
 

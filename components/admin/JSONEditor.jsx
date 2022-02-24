@@ -22,6 +22,15 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
     function handleAddChapterToState(chapter, fieldKey) {
         setState(prev => ({...prev, [fieldKey] : [...prev[fieldKey], chapter]}))
     }
+    
+    function handleDeleteChapter(chapter, fieldKey) {
+        const permissionGranted = confirm(`Delete chapter?`);
+        if (!permissionGranted) 
+            return
+
+        const newChapters = state[fieldKey].filter(el => el.index !== chapter.index);
+        setState(prev => ({...prev, [fieldKey] : newChapters}))
+    }
  
     useEffect(() => {
         setState(getEmptyTemplate(type))
@@ -136,8 +145,8 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                                 <PageField 
                                     contentType={type}
                                     name={field.key}
-                                    handleDeleteChapter={c => console.log("delete chapter", c)} // TODO: delete chapter
-                                    getData={chapter => handleAddChapterToState(chapter, field.key)}
+                                    handleDeleteChapter={c => handleDeleteChapter(c, field.key)}
+                                    getData={c => handleAddChapterToState(c, field.key)}
                                     init={state[field.key]}/>
                             }
                             

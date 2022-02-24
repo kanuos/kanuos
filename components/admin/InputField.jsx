@@ -60,7 +60,7 @@ export const ArrayField = ({name, init=[], getData}) => {
         getData({k : name, v : [...init, {text : sanitizedItem}]})
       } 
       catch (error) {
-        console.log(error.message)
+        alert(error.message)
         
       }
   }
@@ -164,19 +164,31 @@ export const ObjectStepInput = props => {
   }
 
   useEffect(() => {
-    if (init) {
+    if (init && Object.keys(init).length > 0) {
       setStep(prev => ({...prev, ...init}))
       return
     }
     // if no init data
-    let obj = {};
-    layout.forEach(key => obj[key.trim()] = '');
-    setStep(() => obj)
-  }, [])
+    resetStep()
+  }, [init])
 
   function handleSubmitStep() {
     setValue({key : name, value : step})
   }
+
+  function handleClearStep() {
+    const grantPermission = confirm(`Confirm clear ${name} with data : ${JSON.stringify(step)}`);
+    if (!grantPermission) return;
+    setValue({key : name, value : resetStep()})
+  }
+
+  function resetStep() {
+    let obj = {};
+    layout.forEach(key => obj[key.trim()] = '');
+    setStep(() => obj)
+    return obj
+  }
+
 
   return (
       <div className="flex flex-col w-full p-4 bg-light drop-shadow-xl filter rounded-md">
@@ -195,14 +207,23 @@ export const ObjectStepInput = props => {
           ))}
   
           {Object.values(step).every(el => el.trim().length > 0) &&
-          <button
-            onClick={handleSubmitStep}
-            className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer transition-all">
-            <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
-            {(init && (JSON.stringify(init) === JSON.stringify(step))) ? `Update ${name}` : `Add ${name}`} 
-            </span>
-            <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
-        </button>}
+          <div className="flex items-center justify-around w-full">
+            <button
+              onClick={handleSubmitStep}
+              className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer transition-all">
+              <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+              {(init && (JSON.stringify(init) === JSON.stringify(step))) ? `Update ${name}` : `Add ${name}`} 
+              </span>
+              <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+            </button>
+            
+            <button
+              onClick={handleClearStep}
+              className="capitalize text-xs w-max mx-auto mt-4 rounded-md cursor-pointer transition-all py-1.5 px-6 block text-primary  hover:shadow-xl border-2 border-transparent hover:border-current font-semibold">
+                Reset {name} 
+          </button>
+
+          </div>}
       </div>
     </div>
 )}
