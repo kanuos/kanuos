@@ -6,6 +6,25 @@ export const LAYOUTS = {
     color : ['name', 'hex'],
 }
 
+
+
+export const ADMIN_SELECT_OPTIONS = {
+    difficulty : {
+        beginner : 'beginner',
+        intermediate : 'intermediate',
+        advance : 'advance',
+    },
+    category : {
+        front : "front end project",
+        back : "server side project",
+        full : "full stack project",
+        mobile : "mobile app project",
+        console : "console project",
+    }
+}
+
+
+
 export const CONTENT_TYPE = {
     blog : {
         name : 'blog',
@@ -133,10 +152,16 @@ export const CONTENT_TYPE = {
                 }
             },
             {
+                key : 'category',
+                type : 'select',
+                required : false,
+                option : ADMIN_SELECT_OPTIONS.category,
+            },
+            {
                 key : 'difficulty',
                 type : 'select',
                 required : false,
-                option : ['beginner', 'intermediate', 'advance'],
+                option : ADMIN_SELECT_OPTIONS.difficulty,
             },
             {
                 key : 'chapters',

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { IoCheckmarkDone,  IoSend } from "react-icons/io5"
+import { IoCheckmarkDone,  IoSend, IoEllipseOutline, IoCheckmarkCircleSharp } from "react-icons/io5"
 import Textarea from "react-textarea-autosize"
 
 export const StringField = ({name, value='', setValue}) => {
@@ -228,3 +228,33 @@ export const ObjectStepInput = props => {
     </div>
 )}
 
+
+
+export const SelectInput = props => {
+  const {name, options, value, setValue} = props;
+  return (
+    <section className="flex flex-col items-start justify-start gap-2 bg-light p-4 filter drop-shadow-xl rounded-md">
+      <span className="text-xs capitalize font-semibold">{name}</span>
+      <div className="mt-2 w-full flex flex-col items-start gap-y-2">
+        {Object.keys(options).map(o => (
+          <label 
+            htmlFor={o} 
+            value={o} 
+            key={o} 
+            className="text-xs inline-flex items-center justify-start gap-x-1.5 cursor-pointer">
+            <input 
+              id={o}
+              type="radio" 
+              name={name} 
+              checked={o === value}
+              onChange={() => setValue({k : name, v : o})} 
+              className="appearance-none"/>
+            {o === value ? <IoCheckmarkCircleSharp className="text-lg text-secondary" /> : <IoEllipseOutline className="text-lg" />}
+            <small 
+              className={"font-semibold capitalize " + (value === o ? 'text-secondary' : 'text-dark opacity-75 hover:opacity-100')}>{o}</small>
+          </label>
+        ))}
+      </div>
+    </section>
+  )
+}

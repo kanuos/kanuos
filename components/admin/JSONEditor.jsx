@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { StringField, ConstArrField, SlugField, ArrayField, ObjectStepInput } from "./InputField";
+import { StringField, ConstArrField, SlugField, ArrayField, ObjectStepInput, SelectInput } from "./InputField";
 import { CONTENT_TYPE, getEmptyTemplate } from "../../utils/admin";
 import { PageField } from "./PageStep";
 
@@ -159,6 +159,14 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                                     getData={c => handleAddChapterToState(c, field.key)}
                                     editData={c => handleEditChapter(c, field.key)}
                                     init={state[field.key]}/>
+                            }
+                            
+                            {['select'].includes(field.type) && 
+                                <SelectInput 
+                                    name={field.key} 
+                                    value={state?.[field.key]}
+                                    setValue={handleStateUpdate}
+                                    options={field.option} />
                             }
                             
                         </div>
