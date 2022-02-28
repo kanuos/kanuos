@@ -244,6 +244,8 @@ export const PAGE_CONTENT = {
 
 
 export const API_ROUTES = {
-    tags : '/api/tags/',
-    notes : `/api/notes/`
+    tags : '/api/tags',
+    notes : `/api/notes`,
+    blogs : `/api/blogs`,
+    messages : `/api/messages`,
 }

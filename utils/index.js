@@ -62,6 +62,7 @@ export const PUBLIC_URLS = {
 
 
 const ADMIN_PATH = '/admin'
+export const ADMIN_NEW_CONTENT = ADMIN_PATH + '/new-content';
 
 
 export const ADMIN_URLS = {
@@ -74,11 +75,6 @@ export const ADMIN_URLS = {
         name : 'portfolio management',
         url : ADMIN_PATH + '/portfolio',
         desc: 'Update portfolio metadata viz. name, email, social accounts, about me, bio, project showcase etc'
-    },
-    new : {
-        name : 'new content',
-        url : ADMIN_PATH + '/new-content',
-        desc: 'Create new blog, project, design...'
     },
     projects : {
         name : 'projects',
@@ -94,6 +90,21 @@ export const ADMIN_URLS = {
         name : 'designs',
         url : ADMIN_PATH + '/designs',
         desc: 'list of all designs in tabular manner, create/read/delete/edit design in ADMIN mode'
+    },
+    inbox : {
+        name : 'inbox',
+        url : ADMIN_PATH + '/inbox',
+        desc: 'list of all messages in tabular manner, create/read/delete/edit design in ADMIN mode'
+    },
+    notes : {
+        name : 'notes',
+        url : ADMIN_PATH + '/notes',
+        desc: 'list of all plans and ideas in tabular manner, create/read/delete/edit design in ADMIN mode'
+    },
+    tags : {
+        name : 'tags',
+        url : ADMIN_PATH + '/tags',
+        desc: 'list of all tags in tabular manner, create/read/delete/edit design in ADMIN mode'
     },
 }
 
