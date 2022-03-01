@@ -29,31 +29,15 @@ const SegmentValidator = Joi.object({
                     href : Joi.string().required().uri(),
                 }).length(2),
             ]
-        // value : Joi.object({
-        //     subHeading : Joi.string().trim(),
-        //     text : Joi.string().trim(),
-        //     code : Joi.object({
-        //         file : Joi.string().trim(),
-        //         language : Joi.string().trim(),
-        //         code : Joi.string().trim(),
-        //     }),
-        //     quote : Joi.string().trim(),
-        //     image : Joi.string().trim(),
-        //     reference : Joi.object({
-        //         label : Joi.string().trim(),
-        //         href : Joi.string().trim(),
-        //     })
-        // })
-    
-    })).min(1),         
+    })),         
 })
 
 
 const CommonFields = Joi.object().keys({
     _id : Joi.any(),
     __v : Joi.any(),
-    title : Joi.string().required().trim().min(1).lowercase(),
-    desc : Joi.string().required().trim().min(1).lowercase(),
+    title : Joi.string().required().trim().min(1),
+    desc : Joi.string().required().trim().min(1),
     date : Joi.date().allow('').default(Date.now()),
     tags : Joi.array().items(TagValidator).min(1),
     isPublic : Joi.bool().default(false),
@@ -75,7 +59,7 @@ const BlogValidator = CommonFields.keys({
         heading : Joi.string().trim(),
         text : Joi.string().trim(),
     }).length(2).required(),
-    page : Joi.array().items(SegmentValidator),
+    page : Joi.array().items(SegmentValidator).min(1).required(),
 })
 
 
@@ -96,7 +80,7 @@ const ProjectValidator = CommonFields.keys({
         heading : Joi.string().trim(),
         text : Joi.string().trim(),
     }).length(2),
-    chapters : Joi.array().items(SegmentValidator),
+    chapters : Joi.array().items(SegmentValidator).min(1).required(),
 })
 
 

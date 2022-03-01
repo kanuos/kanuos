@@ -14,18 +14,20 @@ import {IoCalendarClearOutline, IoPricetagOutline} from 'react-icons/io5'
  */
 
 export const DescHeader = props => {
-    const {name, tags, date, back='/', descType} = props;
+    const {name, tags, date, back='/', descType, adminMode} = props;
     return (
             <header className='flex flex-col items-start justify-start gap-1.5 pt-16 pb-10 w-full'>
                 <section className="h-auto w-full max-w-3xl mx-auto">
 
+                    {
+                    !adminMode && 
                     <Link href={back}>
                         <a className='text-xs font-semibold text-dark opacity-50 focus:opacity-100 hover:opacity-100 capitalize'>
                             <small>
                             &lt; back to {descType}
                             </small>
                         </a>
-                    </Link>
+                    </Link>}
         
                     <h1 className={"text-4xl md:text-5xl font-special my-6 text-dark "}>{name}</h1>
 
@@ -53,12 +55,12 @@ export const DescHeader = props => {
                                 Tags
                             </small>
                         </li>
-                        <li className="text-xs sm:text-sm">
-                            <ul className="flex flex-wrap gap-x-4 gap-y-1 items-start justify-start">
+                        <li className="text-xs sm:text-sm w-full">
+                            <ul className="flex flex-wrap gap-x-4 gap-y-1 w-full items-start justify-start">
                                 {tags.map(tag => (
-                                    <li key={tag}>
-                                        <small className="font-semibold text-dark">
-                                            {tag}
+                                    <li key={tag._id}>
+                                        <small className="font-semibold block capitalize text-primary">
+                                            {tag.tag}
                                         </small>
                                     </li>
                                 ))}

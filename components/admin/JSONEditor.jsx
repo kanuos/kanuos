@@ -3,13 +3,10 @@ import { StringField, ConstArrField, SlugField, ArrayField, ObjectStepInput, Sel
 import { CONTENT_TYPE, getEmptyTemplate } from "../../utils/admin";
 import { PageField } from "./PageStep";
 
-import { BlogValidator, ProjectValidator } from '../../utils/validator'
-
 export const JSON_EDITOR_STATE = 'json-editor'
 
 export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
     const [state, setState] = useState({});
-    const [permissionToSubmit, setPermissionToSubmit] = useState(false);
 
     function handleStateUpdate({k, v}){
         setState(prev => ({...prev, [k] : v}))
@@ -47,56 +44,30 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
         setState(prev => ({...prev, tags, date : new Date().toDateString()}))
     }, [type])
 
-    useEffect(() => {
-        const permission = Object.values(CONTENT_TYPE[type].fields).flatMap(({key, required, check}) => {
-            if (required) {
-                return Object.values(check).map(cb => {
-                    return cb(state[key])
-                })
-            }
-            return Infinity
-        }).filter(el => el !== Infinity).every(Boolean)
-        setPermissionToSubmit(permission);
-
-        if (Object.keys(state).length !== 0) {
-            sessionStorage.setItem(JSON_EDITOR_STATE, JSON.stringify(state))
-        }
-    }, [state])
     
     useEffect(() => {
-        const currentStateInSessionStorage = JSON.parse(sessionStorage.getItem(JSON_EDITOR_STATE));
         if (initData && Object.keys(initData).length > 0) {
             setState(() => ({...initData}))
             return
         }
+        const currentStateInSessionStorage = JSON.parse(sessionStorage.getItem(JSON_EDITOR_STATE));
         if (currentStateInSessionStorage) {
-            setState(() => ({...currentStateInSessionStorage}))
+            setState(() => ({...currentStateInSessionStorage, tags : [...tags]}))
         }
+
     }, [])
 
-    function handleSendContentToPage() {
-        try {
-            // validate fields
-            let validator;
-            switch(type) {
-                case 'blog':
-                    validator = BlogValidator.validate(state)
-                    console.log(validator, type, state)
-                    break
-                case 'project':
-                    state.difficulty = 'beginner'
-                    state.category = 'full stack'
-                    validator = ProjectValidator.validate(state)
-                    console.log(validator, type, state)
-                    break
-            }
-            // TODO: check whether title is unique
-            getContent(state);
-            
-        } 
-        catch (error) {
-            
+
+    useEffect(() => {
+        if (Object.keys(state).length){
+            sessionStorage.setItem(JSON_EDITOR_STATE, JSON.stringify(state));
         }
+    }, [state])
+
+
+
+    function handleSendContentToPage() {
+        getContent(state);
     }
 
     return (
@@ -114,8 +85,8 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                         </button>
                     )}
                 </div>
-                <h1 className="font-special text-4xl md:text-5xl capitalize mb-10">
-                    New {type}
+                <h1 className="font-special text-4xl md:text-5xl capitalize my-10">
+                    {Boolean(initData) ? `Edit ${type}` : `New ${type}`}
                 </h1>
             
                 {CONTENT_TYPE[type]?.fields?.map((field, i) => {
@@ -172,12 +143,9 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                         </div>
                     )
                 })}
-            
-                
-
+                            
             </section>
-            {permissionToSubmit && 
-                <button 
+            <button 
                 onClick={handleSendContentToPage}
                 className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
                     <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
@@ -185,7 +153,7 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                     </span>
                     <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
             </button>
-            }
+            
         </div>
   )
 }

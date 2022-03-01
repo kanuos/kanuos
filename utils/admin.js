@@ -1,3 +1,4 @@
+
 export const LAYOUTS = {
     link : ['label', 'href'],
     outro : ['heading', 'text'],
@@ -32,77 +33,37 @@ export const CONTENT_TYPE = {
             {
                 key : 'title',
                 type : 'string',
-                required : true,
-                check : {
-                    empty(value='') {
-                        return value.trim().length > 0
-                    },
-                    min(value='') {
-                        return value.trim().length > 3
-                    },
-                    max(value='') {
-                        return value.trim().length < 100
-                    },
-                }
             },
             {
                 key : 'slug',
                 type : 'slug',
-                required : false,
             },
             {
                 key : 'desc',
                 type : 'string',
-                required : true,
-                check : {
-                    empty(value='') {
-                        return value.trim().length > 0
-                    },
-                    min(value='') {
-                        return value.trim().length > 10
-                    },
-                    max(value='') {
-                        return value.trim().length < 1000
-                    },
-                }
             },
             {
                 key : 'tags',
                 type : 'tags',
-                required : true,
-                check : {
-                    empty(value=[]) {
-                        return value.length > 0 && value.every(Boolean)
-                    },
-                }
             },
             {
                 key : 'page',
                 type : 'page',
-                required : true,
-                check : {
-                    empty(heading='', value=[]) {
-                        return heading.length > 0 && value.every(Boolean)
-                    },
-                }
             },
             {
                 key : 'repo',
                 type : 'obj',
                 layout : LAYOUTS.link,
-                required : false
             },
             {
                 key : 'demo',
                 type : 'obj',
                 layout : LAYOUTS.link,
-                required : false
             },
             {
                 key : 'outro',
                 type : 'obj',
                 layout : LAYOUTS.outro,
-                required : false
             },
         ]
     },
@@ -217,7 +178,7 @@ export const CONTENT_TYPE = {
 
 export function getEmptyTemplate(type) {
     let obj = {};
-    CONTENT_TYPE[type].fields.forEach(el => {
+    CONTENT_TYPE[type]?.fields.forEach(el => {
         if (el.type === 'obj') {
             obj[el.key] = {}
             el.layout.forEach(item => obj[el.key][item] = '')
@@ -241,6 +202,15 @@ export const PAGE_CONTENT = {
 }
 
 
+/**
+ * 
+ * @param {string} type content type. can be anything [blog, project, design]
+ * @param {id} id Mongoose ObjectID as param
+ * @returns admin edit content url for respective type and id
+ */
+export const ADMIN_EDIT_URL = (type, id) => `/admin/edit-content/${type}?id=${id}`
+    
+    
 
 
 export const API_ROUTES = {
