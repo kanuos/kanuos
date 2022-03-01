@@ -1,11 +1,12 @@
-// Create new content page
+// Edit existing content page
 // import : internal
 import axios from 'axios';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
 // import : external
-import { IoLockClosedOutline, IoLockOpenOutline, IoPencilOutline, IoRemoveCircle } from 'react-icons/io5';
+import { IoLockClosedOutline, IoLockOpenOutline, IoPencilOutline, IoRemoveCircle, IoReturnDownBackOutline } from 'react-icons/io5';
 
 // import : internal components
 import { JSONEditor, JSON_EDITOR_STATE } from '../../../components/admin/JSONEditor';
@@ -14,16 +15,21 @@ import { BlogDetailBody } from '../../../components/content/BlogDetailBody';
 import { ProjectDetailBody } from '../../../components/content/ProjectDetailBody';
 import { HeadComponent } from '../../../components/Head'
 import { NavBar } from '../../../components/public/Nav';
+
+// import : internal 
+import { getIndividualProject } from "../../../database/projects"
 import { getIndividualBlog } from '../../../database/blogs';
 import { getAllTags } from '../../../database/tags';
 import { ADMIN_URLS } from '../../../utils';
-
-// import : internal 
-import { ADMIN_EDIT_URL, API_ROUTES, CONTENT_TYPE } from '../../../utils/admin';
+import { API_ROUTES, CONTENT_TYPE } from '../../../utils/admin';
 import { ContentValidators } from "../../../utils/validator"
 
 
 const SESSION_NAME = `sounak_admin`;
+
+
+
+
 
 const EditCMS = ({allTags, data, contentType}) => {
   const [type, setType] = useState('');
@@ -53,8 +59,11 @@ const EditCMS = ({allTags, data, contentType}) => {
   }, [isPublic])
 
   useEffect(() => {
+    const parsedData = JSON.parse(data)
     setType(contentType);
-    setContent(JSON.parse(data))
+    setContent(parsedData);
+    setTags(parsedData.tags);
+    setIsPublic(parsedData.isPublic)
   }, [])
 
   useEffect(() => {
@@ -181,8 +190,20 @@ const EditCMS = ({allTags, data, contentType}) => {
                 </span>
                 <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
             </button>
-          
         </section>
+
+        {
+        ADMIN_URLS[type + 's']?.url && 
+        <Link href={ADMIN_URLS[type + 's']?.url}>
+          <a
+            className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
+              <span className="inline-flex items-center justify-center gap-1 py-1.5 px-6 z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+                <IoReturnDownBackOutline />
+                  Go back to all {type}s 
+              </span>
+              <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+          </a>
+        </Link>}
 
       </div>}
 
@@ -209,44 +230,44 @@ const EditCMS = ({allTags, data, contentType}) => {
           
 
           
-        {step === 3 && 
-          <div className="border-t pt-1 flex flex-col items-center justify-center gap-6">
-          <p className='text-center capitalize font-special text-xl'>
-            access status
+    {step === 3 && 
+      <div className="border-t pt-1 flex flex-col items-center justify-center gap-6">
+      <p className='text-center capitalize font-special text-xl'>
+        access status
+      </p>
+      <label htmlFor="public" className='text-sm cursor-pointer group'>
+          <p className='flex flex-col gap-2 items-center justify-center'>
+          {isPublic ? 
+            <>
+              <IoLockOpenOutline className='text-3xl group-hover:animate-bounce inline-block'/>
+              <span className='text-xs font-semibold text-primary'>Public</span>
+            </>
+            : 
+            <>
+              <IoLockClosedOutline className='text-3xl group-hover:animate-bounce inline-block'/>
+              <span className='text-xs font-semibold text-primary'>Private</span>
+            </>
+          }
           </p>
-          <label htmlFor="public" className='text-sm cursor-pointer group'>
-              <p className='flex flex-col gap-2 items-center justify-center'>
-              {isPublic ? 
-                <>
-                  <IoLockOpenOutline className='text-3xl group-hover:animate-bounce inline-block'/>
-                  <span className='text-xs font-semibold text-primary'>Public</span>
-                </>
-                : 
-                <>
-                  <IoLockClosedOutline className='text-3xl group-hover:animate-bounce inline-block'/>
-                  <span className='text-xs font-semibold text-primary'>Private</span>
-                </>
-              }
-              </p>
-          </label>
-          <input 
-            type="checkbox" 
-            checked={isPublic} 
-            id="public"
-            className='appearance-none'
-            onChange={() => setIsPublic(prev => !prev)}/>
+      </label>
+      <input 
+        type="checkbox" 
+        checked={isPublic} 
+        id="public"
+        className='appearance-none'
+        onChange={() => setIsPublic(prev => !prev)}/>
 
-          <button 
-            onClick={handleSubmitToServer}
-            className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
-              <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
-                  Submit {type} 
-              </span>
-              <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
-          </button>
+      <button 
+        onClick={handleSubmitToServer}
+        className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
+          <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+              Submit {type} 
+          </span>
+          <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+      </button>
 
-          </div>
-        }
+      </div>
+    }
 
           
 
@@ -271,6 +292,10 @@ export async function getServerSideProps(ctx) {
     switch(query.toLowerCase()) {
       case CONTENT_TYPE.blog.name : 
         content = await getIndividualBlog(true, id);
+        break;
+
+      case CONTENT_TYPE.project.name : 
+        content = await getIndividualProject(true, id);
         break;
 
       default:

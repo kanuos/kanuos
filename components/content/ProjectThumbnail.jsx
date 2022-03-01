@@ -4,8 +4,9 @@ import { PUBLIC_URLS } from "../../utils"
 import { JoinLine } from "../public/DescHeader"
 import { AnimatePresence, motion } from "framer-motion"
 import { IoRemoveOutline, IoAddOutline, IoGameControllerOutline, IoPricetagOutline, IoCodeSlashOutline, IoCubeOutline } from "react-icons/io5"
+import { ADMIN_EDIT_URL } from "../../utils/admin"
 
-export const ProjectThumbnail = ({data, index}) => {
+export const ProjectThumbnail = ({data, index, adminMode=false}) => {
     const [hovered, setHovered] = useState(false)
     const [showMD, setShowMD] = useState(false)
 
@@ -69,6 +70,9 @@ export const ProjectThumbnail = ({data, index}) => {
             opacity : 0,
         }
     }
+
+
+    const projectURL = adminMode ? ADMIN_EDIT_URL("project", data._id) : (PUBLIC_URLS.projects.url + '/' + data.title)
 
     return (
         <article 
@@ -139,7 +143,7 @@ export const ProjectThumbnail = ({data, index}) => {
                                     {data.techStack.map((stack, i) => (
                                         <li key={i}>
                                             <small className="text-xs opacity-80">
-                                                {stack}
+                                                {stack.text}
                                             </small>
                                         </li>
                                     ))}
@@ -175,10 +179,10 @@ export const ProjectThumbnail = ({data, index}) => {
                     </small>
                 </li>
                 <li className="text-xs font-semibold text-dark group-hover:text-primary">
-                    {data.date}
+                    {new Date(data.date).toDateString()}
                 </li>
             </ul>
-            <Link href={PUBLIC_URLS.projects.url + '/' + data._id}>
+            <Link href={projectURL}>
                 <motion.a 
                     variants={btnVariants}
                     animate={hovered ? 'show' : 'hide'}

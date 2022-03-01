@@ -1,6 +1,9 @@
-import "../index";
-import { NoteModel } from "../Models";
+import conn from "../Models";
 import { isValidObjectId } from "mongoose";
+
+const NoteModel = conn.models.note
+
+
 
 export async function getAllNotes() {
   const notes = await NoteModel.find({});

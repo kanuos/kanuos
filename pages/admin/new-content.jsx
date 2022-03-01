@@ -86,10 +86,12 @@ const ContentCMS = ({allTags}) => {
       if (error) {
         throw error.details[0].message;
       }
-
+      
       
       // submit data
       let URL = API_ROUTES[type + 's'];
+      
+      
       const {data, err} = (await axios({
         url : URL,
         method : 'POST',
@@ -151,7 +153,7 @@ const ContentCMS = ({allTags}) => {
           
           <button 
             onClick={() => setStep(2)}
-            className="capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer group">
+            className="capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer group w-max mx-auto">
             <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
                 &larr; Prev 
             </span>
@@ -162,7 +164,7 @@ const ContentCMS = ({allTags}) => {
             <BlogDetailBody blog={content} adminMode={true} />
           )}
           {type === CONTENT_TYPE.project.name && (
-            <ProjectDetailBody project={content} />
+            <ProjectDetailBody project={content} adminMode={true} />
           )}
 
           <div className="border-t pt-1 flex flex-col items-center justify-center gap-6">
@@ -228,8 +230,3 @@ export async function getServerSideProps() {
     }
   }
 }
-
-const allTags = [
-  'react', 'vue', 'express', 'django', 'nodejs', 'jwt', 'access token', 'refresh token',
-  'python', 'golang', 'tailwind', 'bootstrap', 'material design', 'session', 'authorization',
-].map((el, i) => ({_id: i, tag : el}))

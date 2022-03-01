@@ -85,7 +85,7 @@ const TagsAdminPage = ({allTags}) => {
             <button onClick={handleAddTag} 
               className="capitalize text-xs w-max  mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
                 <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
-                  Add Step 
+                  Add Tag 
                 </span>
                 <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
             </button>

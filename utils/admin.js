@@ -73,100 +73,52 @@ export const CONTENT_TYPE = {
             {
                 key : 'title',
                 type : 'string',
-                required : true,
-                check : {
-                    empty(value='') {
-                        return value.trim().length > 0
-                    },
-                    min(value='') {
-                        return value.trim().length > 3
-                    },
-                    max(value='') {
-                        return value.trim().length < 100
-                    },
-                }
             },
             {
                 key : 'desc',
                 type : 'string',
-                required : true,
-                check : {
-                    empty(value='') {
-                        return value.trim().length > 0
-                    },
-                    min(value='') {
-                        return value.trim().length > 10
-                    },
-                    max(value='') {
-                        return value.trim().length < 1000
-                    },
-                }
             },
             {
                 key : 'tags',
                 type : 'tags',
-                required : true,
-                check : {
-                    empty(value=[]) {
-                        return value.length > 0 && value.every(Boolean)
-                    },
-                }
             },
             {
                 key : 'category',
                 type : 'select',
-                required : false,
                 option : ADMIN_SELECT_OPTIONS.category,
             },
             {
                 key : 'difficulty',
                 type : 'select',
-                required : false,
                 option : ADMIN_SELECT_OPTIONS.difficulty,
             },
             {
                 key : 'chapters',
                 type : 'page',
-                required : true,
-                check : {
-                    empty(value=[]) {
-                        return value.length > 0 && value.every(Boolean)
-                    },
-                }
             },
             {
                 key : 'prerequisites',
                 type : 'array',
-                required : true,
-                check : {
-                    empty(value=[]) {
-                        return value.length > 0 && value.every(Boolean)
-                    },
-                }
             },
             {
                 key : 'techStack',
                 type : 'array',
-                required : true,
-                check : {
-                    empty(value=[]) {
-                        return value.length > 0 && value.every(Boolean)
-                    },
-                }
             },
             {
                 key : 'repo',
                 type : 'obj',
                 layout : LAYOUTS.link,
-                required : false
             },
             {
                 key : 'demo',
                 type : 'obj',
                 layout : LAYOUTS.link,
-                required : false
             },
-
+            {
+                key : 'outro',
+                type : 'obj',
+                layout : LAYOUTS.outro,
+            },
         ]
     },
     design : {
@@ -218,4 +170,5 @@ export const API_ROUTES = {
     notes : `/api/notes`,
     blogs : `/api/blogs`,
     messages : `/api/messages`,
+    projects : `/api/projects`,
 }

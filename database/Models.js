@@ -1,4 +1,5 @@
-import { Schema, model, models} from 'mongoose'
+import { Schema } from 'mongoose';
+import conn from "./index"
 
 // Tag Schema for maintaining tags for references to other content models
 const TagSchema = new Schema({
@@ -104,20 +105,81 @@ const MessageSchema = new Schema({
 })
 
 
+// Project Schema for CRUD operations of Projects
+const ProjectSchema = new Schema({
+    title : {
+        type : String,
+        required: true,
+        unique : true,
+    },
+    desc : {
+        type : String,
+        required: true,
+    },
+    tags : [
+        {
+            type : Schema.Types.ObjectId,
+            ref : 'tag'
+        }
+    ],
+    date : {
+        type : Date,
+        default: Date.now
+    },
+    chapters : [
+        {
+            type: Object
+        }
+    ],
+    prerequisites : [
+        {
+            type: Object
+        }
+    ],
+    techStack : [
+        {
+            type: Object
+        }
+    ],
+    difficulty : {
+        type: String,
+        required : true
+    },
+    category : {
+        type: String,
+        required : true
+    },
+    repo : {
+        type: Object
+    },
+    demo : {
+        type: Object
+    },
+    outro : {
+        type: Object
+    },
+    isPublic : {
+        type: Boolean,
+        default : false
+    },
+    user : {
+        // User Model ref 
+        type: Object
+    },
+})
+
+
+const models = conn.models;
+
+
+!models.tag && conn.model('tag', TagSchema)
+!models.note &&conn.model('note', NoteSchema)
+!models.blog && conn.model('blog', BlogSchema)
+!models.project && conn.model('project', ProjectSchema)
+!models.message && conn.model('message', MessageSchema)
 
 
 
 
 
-
-
-
-
-
-
-
-
-export const TagModel = models.tag || model('tag', TagSchema);
-export const NoteModel = models.note || model('note', NoteSchema);
-export const BlogModel = models.blog || model('blog', BlogSchema);
-export const MessageModel = models.message || model('message', MessageSchema);
+export default conn;

@@ -236,22 +236,22 @@ export const SelectInput = props => {
     <section className="flex flex-col items-start justify-start gap-2 bg-light p-4 filter drop-shadow-xl rounded-md">
       <span className="text-xs capitalize font-semibold">{name}</span>
       <div className="mt-2 w-full flex flex-col items-start gap-y-2">
-        {Object.keys(options).map(o => (
+        {Object.entries(options).map(([k, v]) => (
           <label 
-            htmlFor={o} 
-            value={o} 
-            key={o} 
+            htmlFor={k} 
+            value={v} 
+            key={k} 
             className="text-xs inline-flex items-center justify-start gap-x-1.5 cursor-pointer">
             <input 
-              id={o}
+              id={k}
               type="radio" 
               name={name} 
-              checked={o === value}
-              onChange={() => setValue({k : name, v : o})} 
+              checked={v === value}
+              onChange={() => setValue({k : name, v : v})} 
               className="appearance-none"/>
-            {o === value ? <IoCheckmarkCircleSharp className="text-lg text-secondary" /> : <IoEllipseOutline className="text-lg" />}
+            {v === value ? <IoCheckmarkCircleSharp className="text-lg text-secondary" /> : <IoEllipseOutline className="text-lg" />}
             <small 
-              className={"font-semibold capitalize " + (value === o ? 'text-secondary' : 'text-dark opacity-75 hover:opacity-100')}>{o}</small>
+              className={"font-semibold capitalize " + (value === v ? 'text-secondary' : 'text-dark opacity-75 hover:opacity-100')}>{v}</small>
           </label>
         ))}
       </div>

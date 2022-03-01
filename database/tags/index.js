@@ -1,7 +1,7 @@
 import { isValidObjectId } from 'mongoose'
-import "../index";
-import { TagModel } from "../Models";
+import conn from "../Models";
 
+const TagModel = conn.models.tag;
 
 /**
  * 

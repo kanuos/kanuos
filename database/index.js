@@ -1,12 +1,21 @@
-import { connect } from 'mongoose';
+import { createConnection, connections } from 'mongoose';
 
 const {MONGO_URI} = process.env;
 
-(function () {
-    connect(MONGO_URI)
-    .then(() => console.log('connected to DB'))
-    .catch(() => {
-        console.log(`Couldn't connect to DB server. Exiting ...`)
-        process.exit(1)
-    })
-})()
+
+console.log("total connection : " ,connections.length)
+console.log("connections : " ,connections.map(c => c.name))
+
+let conn;
+
+const existingConn = connections[1];
+
+if (existingConn?.readyState) {
+    conn = existingConn;
+}
+else {
+    conn = createConnection(MONGO_URI, { maxPoolSize : 25})
+}
+
+
+export default conn;

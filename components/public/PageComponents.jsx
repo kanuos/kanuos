@@ -105,7 +105,7 @@ export const PageSegment = ({segment, index}) => {
                 </li>
                 <li className="flex w-full items-center justify-between">
                     <span className="font-semibold text-sm">
-                        {segment.segmentHeading}
+                        {segment.heading}
                     </span>
                     <button onClick={() => setShow(prev => !prev)} className="text-lg opacity-50 text-dark hover:opacity-100 hover:scale-105 transition-all">
                         {!show ? <IoChevronDownCircleOutline /> : <IoChevronUpCircleOutline />}
@@ -118,14 +118,14 @@ export const PageSegment = ({segment, index}) => {
                 <IoCheckmarkCircleSharp className="text-xl text-secondary absolute -left-6 top-1/3 -translate-y-1/2" />
             }
             <motion.section 
-                className="p-4 filter border-t border-current overflow-hidden"
+                className="p-4 overflow-hidden"
                 animate={show ? 'show' : 'hide'}
                 variants={variants.wrapper}>
 
                     <motion.article 
                         animate={show ? 'show' : 'hide'}
                         variants={variants.body}>
-                        {segment.content.map((step, i) => (
+                        {segment.steps.map((step, i) => (
                             <Step step={step} key={i} />
                         ))}
                     </motion.article>

@@ -1,7 +1,7 @@
-import '../index';
 import { isValidObjectId } from 'mongoose'
-import { BlogModel } from '../Models'
+import conn from '../Models'
 
+const BlogModel = conn.models.blog;
 
 
 /**

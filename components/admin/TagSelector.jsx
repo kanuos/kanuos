@@ -10,7 +10,7 @@ export const TagSelector = ({ handleTag, tag, next, allTags, prev }) => {
         <JoinLine />
         <ul className="flex flex-wrap gap-4 items-center justify-start">
           {allTags.map(t => {
-            let isPresent = tag.find(existingTag => existingTag._id === t._id && existingTag.tag === t.tag)
+            let isPresent = Boolean(tag.find(selected => selected._id === t._id));
             return (
             <li key={t._id}
               onClick={() => handleTag(t)} 

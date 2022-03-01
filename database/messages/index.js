@@ -1,6 +1,9 @@
-import "../index";
 import { isValidObjectId } from "mongoose";
-import { MessageModel } from "../Models";
+import conn from "../Models";
+
+const MessageModel = conn.models.message;
+
+
 
 /**
  *
