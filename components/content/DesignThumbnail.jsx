@@ -11,7 +11,7 @@ export const DesignThumbnail = ({data, adminMode}) => {
 
     return (
         <article 
-            className="text-dark bg-light md:col-span-4 lg:odd:col-span-3 lg:even:col-span-3 lg:odd:row-span-4 lg:even:row-span-5 flex flex-col gap-y-2 relative h-full min-h-[28rem] lg:h-full flex-grow group overflow-hidden rounded-md drop-shadow-lg filter hover:drop-shadow-2xl w-full">
+            className="text-dark bg-light md:col-span-4 lg:odd:col-span-3 lg:even:col-span-3 lg:odd:row-span-4 lg:even:row-span-5 flex flex-col gap-y-2 relative h-full min-h-[28rem] lg:h-full flex-grow group overflow-hidden rounded-md shadow-lg hover:shadow-2xl w-full">
             <img 
                 src={data.thumbnail} 
                 alt={data.title + "'s thumbnail"} 
