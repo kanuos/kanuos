@@ -1,7 +1,6 @@
 // Create new content page
 // import : internal
 import axios from 'axios';
-import { route } from 'next/dist/server/router';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 
@@ -14,12 +13,14 @@ import { SelectContentType } from '../../components/admin/SelectContentType';
 import { TagSelector } from '../../components/admin/TagSelector';
 import { BlogDetailBody } from '../../components/content/BlogDetailBody';
 import { ProjectDetailBody } from '../../components/content/ProjectDetailBody';
+import { DesignDetailBody } from "../../components/content/DesignDetailBody"
 import { HeadComponent } from '../../components/Head'
 import { NavBar } from '../../components/public/Nav';
-import { getAllTags } from '../../database/tags';
-import { ADMIN_URLS } from '../../utils';
+
 
 // import : internal 
+import { getAllTags } from '../../database/tags';
+import { ADMIN_URLS } from '../../utils';
 import { API_ROUTES, CONTENT_TYPE } from '../../utils/admin';
 import { ContentValidators } from "../../utils/validator"
 
@@ -90,8 +91,7 @@ const ContentCMS = ({allTags}) => {
       
       // submit data
       let URL = API_ROUTES[type + 's'];
-      
-      
+            
       const {data, err} = (await axios({
         url : URL,
         method : 'POST',
@@ -112,6 +112,7 @@ const ContentCMS = ({allTags}) => {
 
     } 
     catch (error) {
+      console.log(error)
       alert(error)
     }
   }
@@ -165,6 +166,9 @@ const ContentCMS = ({allTags}) => {
           )}
           {type === CONTENT_TYPE.project.name && (
             <ProjectDetailBody project={content} adminMode={true} />
+          )}
+          {type === CONTENT_TYPE.design.name && (
+            <DesignDetailBody design={content} adminMode={true} />
           )}
 
           <div className="border-t pt-1 flex flex-col items-center justify-center gap-6">

@@ -59,7 +59,7 @@ export async function getServerSideProps() {
         console.log(error)
         return {
             props : {
-                allBlogs : []
+                allBlogs : JSON.stringify([])
             }
         }
     }

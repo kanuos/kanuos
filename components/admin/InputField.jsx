@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { IoCheckmarkDone,  IoSend, IoEllipseOutline, IoCheckmarkCircleSharp } from "react-icons/io5"
+import { IoCheckmarkDone,  IoSend, IoEllipseOutline, IoCheckmarkCircleSharp, IoMagnetOutline, IoCloseCircleOutline } from "react-icons/io5"
 import Textarea from "react-textarea-autosize"
 
 export const StringField = ({name, value='', setValue}) => {
@@ -225,6 +225,111 @@ export const ObjectStepInput = props => {
 
           </div>}
       </div>
+    </div>
+)}
+
+
+
+export const ObjectArrayStepInput = props => {
+  const {layout, name, init=[], setValue} = props;
+  
+  const SUMMARY_FIELDS = {
+    typography : 'family',
+    colorPalette : 'hex',
+    tools : 'string',
+    userFlowSteps: 'title',
+    externalResources: 'poster',
+  };
+
+  const [state, setState] = useState(init);
+  const [step, setStep] = useState({});
+
+  function handleSubmitStep() {
+    setValue({key : name , value : state})
+    resetStep()
+  }
+
+  function resetStep() {
+    let obj = {};
+    layout.forEach(key => obj[key.trim()] = '');
+    setStep(() => obj)
+    return obj
+  }
+
+  function handleSetValue({key, value}) {
+    // check for unique fields
+    const checkByField = SUMMARY_FIELDS[key];
+    const currentFields = state.map(el => {
+      return el[checkByField]
+    })
+    const newValue = value[checkByField]?.toLowerCase();
+    if (!newValue) return;
+    if (!Boolean(newValue.trim())) {
+      alert(`Empty ${key} cannot be added!`)
+      return;
+    }
+    if (currentFields.includes(newValue)) {
+      alert(`${key} "${newValue}" already added!`)
+      return;
+    }
+    setState(prev => [...prev, {...value, [checkByField] : newValue}])
+    resetStep()
+  }
+
+  function handleDeleteField(el) {
+    const grantPermission = confirm(`Confirm clear : ${JSON.stringify(el)}`);
+    if (!grantPermission) return;
+    const filteredList = state.filter(item => item !== el)
+    setState(_ => filteredList)
+    setValue({key : name , value : filteredList})
+    resetStep()
+  }
+
+  return (
+    <div className="flex flex-col w-full bg-light p-4 rounded-md filter drop-shadow-xl">
+      <div className="flex flex-col items-start justify-start w-full">
+        {state.length > 0 && 
+        <div className='mb-4 w-full'>
+          <span className="text-xs capitalize font-semibold text-secondary">{name}</span>
+          <ul className="flex flex-col items-stretch justify-start gap-y-4 w-full">
+              {state.map((el, i) => {
+              return (
+                  <li key={i} className="w-full p-4 bg-light rounded-md filter drop-shadow-xl">
+                      <details className="w-full focus:outline-none border-none">
+                      <summary className="w-full flex justify-between items-center focus:outline-none border-none">
+                          <p className="cursor-pointer hover:text-secondary capitalize grow w-full flex items-center justify-start gap-x-2 break-words">
+                          {SUMMARY_FIELDS[name] === 'hex' && 
+                            <span style={{backgroundColor : el[SUMMARY_FIELDS[name]]}} className="h-4 w-4 rounded-full filter drop-shadow-lg block"></span>}
+                            <span className="font-semibold font-special ">
+                              {el[SUMMARY_FIELDS[name]].slice(0, 70)} {el[SUMMARY_FIELDS[name]].length > 70 && '...'}
+                            </span>
+                          </p>
+                          <button 
+                            onClick={() => handleDeleteField(el)}   
+                            className="hover:text-primary grow">
+                              <IoCloseCircleOutline />
+                          </button>
+                      </summary>
+                      <p className="text-xs my-2 w-full font-semibold break-words whitespace-pre-line">
+                          {JSON.stringify(el, null, 4)}
+                      </p>
+                      </details>
+                  </li>
+              )})}
+          </ul>
+        </div>}
+
+        <ObjectStepInput name={name} layout={layout} init={step} setValue={handleSetValue} />
+
+      </div>
+      { (state.length !== init.length) &&
+      <button onClick={handleSubmitStep}
+        className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer transition-all">
+        <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+            Add to {name}
+        </span>
+        <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+      </button>}
     </div>
 )}
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { StringField, ConstArrField, SlugField, ArrayField, ObjectStepInput, SelectInput } from "./InputField";
+import { StringField, ConstArrField, SlugField, ArrayField, ObjectStepInput, SelectInput, ObjectArrayStepInput, ImageInput } from "./InputField";
 import { CONTENT_TYPE, getEmptyTemplate } from "../../utils/admin";
 import { PageField } from "./PageStep";
 
@@ -140,6 +140,38 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                                     options={field.option} />
                             }
                             
+                            {(['objArr'].includes(field.type)) && 
+                                <ObjectArrayStepInput 
+                                    key={JSON.stringify(state)}
+                                    layout={field.layout}
+                                    init={state?.[field.key]}
+                                    setValue={({key, value}) => handleStateUpdate({k : key, v : value})}
+                                    name={field.key}/>
+                            }
+                            
+                            {['image'].includes(field.type) && 
+                                <div className="w-full flex flex-col items-stretch bg-light drop-shadow-xl filter rounded-md relative group overflow-hidden">
+                                {Boolean(state[field.key]) ? 
+                                <>
+                                    <img 
+                                        className="h-full w-full object-cover block shadow-xl transition-all group-hover:grayscale group-hover:rotate-12 group-hover:scale-150"
+                                        src={state[field.key]}  />
+                                    <button 
+                                        onClick={() => setState(prev => ({...prev, [field.key] : ''}))}
+                                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center overflow-hidden cursor-pointer transition-all">
+                                        <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+                                            Change {field.key} 
+                                        </span>
+                                        <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+                                    </button>
+                                </>
+                                : 
+                                <ImageInput 
+                                    name={field.key} 
+                                    setValue={({key, value}) => handleStateUpdate({k : key, v : value})} />
+                                }
+                                </div>
+                            }
                         </div>
                     )
                 })}

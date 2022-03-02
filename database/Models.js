@@ -169,6 +169,69 @@ const ProjectSchema = new Schema({
 })
 
 
+// Design Schema for CRUD operations of Designs
+const DesignSchema = new Schema({
+    title : {
+        type : String,
+        required: true,
+        unique : true,
+    },
+    desc : {
+        type : String,
+        required: true,
+    },
+    tags : [
+        {
+            type : Schema.Types.ObjectId,
+            ref : 'tag'
+        }
+    ],
+    date : {
+        type : Date,
+        default: Date.now
+    },
+    thumbnail : {
+        type : String,
+        required: true,
+    },
+    typography : [
+        {
+            type: Object
+        }
+    ],
+    colorPalette : [
+        {
+            type: Object
+        }
+    ],
+    userFlowSteps : [
+        {
+            type: Object
+        }
+    ],
+    tools : [
+        {
+            type: Object
+        }
+    ],
+    externalResources : [
+        {
+            type: Object
+        }
+    ],
+    isPublic : {
+        type: Boolean,
+        default : false
+    },
+    user : {
+        // User Model ref 
+        type: Object
+    },
+})
+
+
+
+
 const models = conn.models;
 
 
@@ -177,6 +240,7 @@ const models = conn.models;
 !models.blog && conn.model('blog', BlogSchema)
 !models.project && conn.model('project', ProjectSchema)
 !models.message && conn.model('message', MessageSchema)
+!models.design && conn.model('design', DesignSchema)
 
 
 

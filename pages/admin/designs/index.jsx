@@ -1,17 +1,18 @@
-// ADMIN Project list
-import { getAllProjects } from "../../../database/projects";
-import { ProjectThumbnail } from '../../../components/content/ProjectThumbnail'
+// ADMIN design list
+import { DesignThumbnail } from '../../../components/content/DesignThumbnail'
 import { IoAddCircle } from 'react-icons/io5'
 import { HeadComponent } from "../../../components/Head";
 import { NavBar } from "../../../components/public/Nav";
 import Link from "next/link";
 import { ADMIN_NEW_CONTENT } from "../../../utils";
+import { getAllDesigns } from '../../../database/designs';
 
-const ProjectsAdminPage = ({allProjects}) => {
-    allProjects = allProjects ? JSON.parse(allProjects) : []
+
+const DesignAdminPage = ({allDesigns}) => {
+    allDesigns = allDesigns ? JSON.parse(allDesigns) : []
     return (
     <>
-        <HeadComponent title="ADMIN | Project Management" />
+        <HeadComponent title="ADMIN | Designs Management" />
         <NavBar type='admin' left={true}/>
         <main className="min-h-screen h-full p-16 main-light text-dark z-10 relative">
             <h1 className="text-center mb-20 flex flex-col items-center justify-center gap-y-4">
@@ -19,16 +20,12 @@ const ProjectsAdminPage = ({allProjects}) => {
                     Admin
                 </small>
                 <span className="text-3xl md:text-5xl font-special font-semibold capitalize">
-                    Project List View
+                    Design List View
                 </span>
             </h1>
             <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-3xl mx-auto">
-            {allProjects?.map((project, index) => (
-                <ProjectThumbnail 
-                    key={project._id} 
-                    data={project} 
-                    adminMode={true}
-                    index={index + 1} />
+            {allDesigns?.map((design, index) => (
+                <DesignThumbnail key={index} data={design} adminMode={true} />
             ))}
             </div>
         </main>
@@ -43,15 +40,16 @@ const ProjectsAdminPage = ({allProjects}) => {
     )
 }
     
-export default ProjectsAdminPage;
+export default DesignAdminPage;
     
     
 export async function getServerSideProps() {
     try {
-        const projects = await getAllProjects(true);
+        const designs = await getAllDesigns(true);
+        if (!designs || designs.length === 0) throw 'No designs found'
         return {
             props : {
-                allProjects : JSON.stringify(projects)
+                allDesigns : JSON.stringify(designs)
             }
         }
     } 
@@ -59,7 +57,7 @@ export async function getServerSideProps() {
         console.log(error)
         return {
             props : {
-                allProjects : JSON.stringify([])
+                allDesigns : JSON.stringify([])
             }
         }
     }

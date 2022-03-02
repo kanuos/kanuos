@@ -5,6 +5,8 @@ export const LAYOUTS = {
     code : ['language', 'code', 'file'],
     typography : ['family', 'desc'],
     color : ['name', 'hex'],
+    externalResources : ['poster', 'photographer', 'courtesy'],
+    userFlowSteps : ['page', 'title', 'about']
 }
 
 
@@ -122,8 +124,50 @@ export const CONTENT_TYPE = {
         ]
     },
     design : {
-        name : 'design'
-        // TODO: fields
+        name : 'design',
+        fields : [
+            {
+                key : 'title',
+                type : 'string',
+            },
+            {
+                key : 'desc',
+                type : 'string',
+            },
+            {
+                key : 'tags',
+                type : 'tags',
+            },
+            {
+                key : 'thumbnail',
+                type : 'image',
+            },
+            {
+                key : 'typography',
+                type : 'objArr',
+                layout : LAYOUTS.typography
+            },
+            {
+                key : 'colorPalette',
+                type : 'objArr',
+                layout : LAYOUTS.color
+            },
+            {
+                key : 'externalResources',
+                type : 'objArr',
+                layout : LAYOUTS.externalResources
+            },
+            {
+                key : 'userFlowSteps',
+                type : 'objArr',
+                layout : LAYOUTS.userFlowSteps
+            },
+            {
+                key : 'tools',
+                type : 'array',
+            },
+            
+        ]
     },
 }
 
@@ -131,11 +175,11 @@ export const CONTENT_TYPE = {
 export function getEmptyTemplate(type) {
     let obj = {};
     CONTENT_TYPE[type]?.fields.forEach(el => {
-        if (el.type === 'obj') {
+        if (['obj'].includes(el.type)) {
             obj[el.key] = {}
             el.layout.forEach(item => obj[el.key][item] = '')
         }
-        else if (["array", "page"].includes(el.type)) {
+        else if (["array", "page", "objArr"].includes(el.type)) {
             obj[el.key] = []
         }
         else {
@@ -148,9 +192,6 @@ export function getEmptyTemplate(type) {
 export const PAGE_CONTENT = {
     blog :  [ 'text', 'subheading', 'quote', 'image', 'link', 'code'],
     project :  [ 'text', 'subheading', 'quote', 'image', 'link', 'code'],
-    design : {
-        // text, subheading, quote, image, reference, typography, color, flow
-    },
 }
 
 
@@ -171,4 +212,5 @@ export const API_ROUTES = {
     blogs : `/api/blogs`,
     messages : `/api/messages`,
     projects : `/api/projects`,
+    designs : `/api/designs`,
 }
