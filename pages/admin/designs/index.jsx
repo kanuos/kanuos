@@ -23,7 +23,7 @@ const DesignAdminPage = ({allDesigns}) => {
                     Design List View
                 </span>
             </h1>
-            <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 grid-flow-row gap-10 w-full mb-20">
             {allDesigns?.map((design, index) => (
                 <DesignThumbnail key={index} data={design} adminMode={true} />
             ))}

@@ -13,6 +13,7 @@ import { JSONEditor, JSON_EDITOR_STATE } from '../../../components/admin/JSONEdi
 import { TagSelector } from '../../../components/admin/TagSelector';
 import { BlogDetailBody } from '../../../components/content/BlogDetailBody';
 import { ProjectDetailBody } from '../../../components/content/ProjectDetailBody';
+import { DesignDetailBody } from '../../../components/content/DesignDetailBody';
 import { HeadComponent } from '../../../components/Head'
 import { NavBar } from '../../../components/public/Nav';
 
@@ -23,6 +24,7 @@ import { getAllTags } from '../../../database/tags';
 import { ADMIN_URLS } from '../../../utils';
 import { API_ROUTES, CONTENT_TYPE } from '../../../utils/admin';
 import { ContentValidators } from "../../../utils/validator"
+import { getIndividualDesign } from '../../../database/designs';
 
 
 const SESSION_NAME = `sounak_admin`;
@@ -161,8 +163,13 @@ const EditCMS = ({allTags, data, contentType}) => {
       {type === CONTENT_TYPE.blog.name && Object.keys(content).length > 0 &&(
         <BlogDetailBody blog={content} adminMode={true} />
       )}
+
       {type === CONTENT_TYPE.project.name && (
-        <ProjectDetailBody project={content} />
+        <ProjectDetailBody project={content} adminMode={true} />
+      )}
+
+      {type === CONTENT_TYPE.design.name && (
+        <DesignDetailBody design={content} adminMode={true} />
       )}
 
       {step === 0 && 
@@ -298,6 +305,10 @@ export async function getServerSideProps(ctx) {
         content = await getIndividualProject(true, id);
         break;
 
+      case CONTENT_TYPE.design.name : 
+        content = await getIndividualDesign(true, id);
+        break;
+
       default:
         content = null;
     }
@@ -323,24 +334,3 @@ export async function getServerSideProps(ctx) {
   }
 }
 
-
-
-
-/*
-Step 0 :  
-  show preview of existing content with edit and delete btn
-
-delete Mode
-  go to content list page
-
-edit Mode
-Step 1:
-  select tags
-
-Step 2:
-  JSON editor
-
-Step 3:
-  Preview mode with new data and make changes button
-
-*/

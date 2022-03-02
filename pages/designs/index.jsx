@@ -16,7 +16,7 @@ const DesignList = () => {
     <div className='main-light h-full w-full'>
         <div className='px-12 py-20 w-full flex flex-col items-center justify-start mx-auto select-text selection:bg-black selection:text-light h-full'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.designs, count : designList.length}} />
-            <main className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 grid-flow-row gap-8 w-full mb-20'>
+            <main className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 grid-flow-row gap-10 w-full mb-20'>
                 {designList.map(design => (
                     <DesignThumbnail key={design._id} data={design} />
                 ))}
