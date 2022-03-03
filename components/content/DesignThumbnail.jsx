@@ -1,13 +1,13 @@
 import Link from "next/link"
 
-import { PUBLIC_URLS } from "../../utils"
+import { formatURLParamString, PUBLIC_URLS } from "../../utils"
 import { JoinLine } from "../public/DescHeader"
 import { motion } from "framer-motion"
 import { ADMIN_EDIT_URL } from "../../utils/admin"
 
 
 export const DesignThumbnail = ({data, adminMode}) => {
-    const designURL = adminMode ? ADMIN_EDIT_URL("design", data._id) : (PUBLIC_URLS.designs.url + '/' + data.title)
+    const designURL = adminMode ? ADMIN_EDIT_URL("design", data._id) : (PUBLIC_URLS.designs.url + '/' + formatURLParamString(data.title))
 
     return (
         <article 

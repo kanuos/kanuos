@@ -14,7 +14,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
     
     return (
     <main className='h-auto w-full min-h-screen main-light text-dark pb-20 select-text selection:bg-dark selection:text-light'>
-        <header className='h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto pt-16 pb-8 px-8 md:px-16'>
+        <header className='h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto py-8 px-8 md:px-16'>
             {!adminMode && 
             <Link href={PUBLIC_URLS.designs.url}>
             <a className='text-xs font-semibold opacity-50 focus:opacity-100 hover:opacity-100 capitalize mb-4'>
@@ -23,7 +23,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                 </small>
             </a>
             </Link>}
-            <div className="relative h-fit w-fit flex flex-col items-start justify-center">
+            <div className={"relative h-fit w-fit flex flex-col items-start justify-center " + (adminMode ? '' : 'mt-10')}>
                 <p className="mb-4 uppercase text-xs font-semibold text-primary">
                     <small>
                         ui/ux design

@@ -299,3 +299,22 @@ export const MESSAGE_STEPS = [
         }        
     },
 ]
+
+
+/**
+ * 
+ * @param {string} str string with spaces viz blog title, project title etc
+ * @returns a url safe string
+ */
+export function formatURLParamString(str) {
+    return str.trim().split(' ').join('+');
+}
+
+/**
+ * 
+ * @param {string} str string with plus viz blog title, project title etc
+ * @returns a db title string
+ */
+export function deFormatURLParamString(str) {
+    return str.split('+').join(' ');
+}

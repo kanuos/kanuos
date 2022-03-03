@@ -6,9 +6,10 @@ import { NavBar } from '../../components/public/Nav';
 import { PUBLIC_LIST_TYPES } from '../../utils';
 import { ListLoader } from '../../components/public/ListLoader';
 import { DesignThumbnail } from '../../components/content/DesignThumbnail';
+import { getAllDesigns } from '../../database/designs'
 
-
-const DesignList = () => {
+const DesignList = ({designList}) => {
+designList = JSON.parse(designList)
   return (
     <>
     <HeadComponent title="Sounak Mukherjee's Ui/UX Designs" />
@@ -32,45 +33,21 @@ const DesignList = () => {
 
 export default DesignList;
 
-const designList = [
-    {
-        _id : 1,
-        title : 'football.io',
-        thumbnail : `https://images.unsplash.com/photo-1517747614396-d21a78b850e8`
-    },
-    {
-        _id : 2,
-        title : 'Instacart clone',
-        thumbnail : `https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9`
-    },
-    {
-        _id : 3,
-        title : 'Pizza App',
-        thumbnail : `https://images.unsplash.com/photo-1604382354936-07c5d9983bd3`
-    },
-    {
-        _id : 4,
-        title : 'Freelancer',
-        thumbnail : `https://images.unsplash.com/photo-1596003906949-67221c37965c`
-    },
-    {
-        _id : 5,
-        title : 'Chef Tribe',
-        thumbnail : `https://images.unsplash.com/photo-1505576399279-565b52d4ac71`
-    },
-    {
-        _id : 6,
-        title : 'Travellion',
-        thumbnail : `https://images.unsplash.com/photo-1510784722466-f2aa9c52fff6`
-    },
-    {
-        _id : 7,
-        title : 'Crypto',
-        thumbnail : `https://images.unsplash.com/photo-1523961131990-5ea7c61b2107`
-    },
-    {
-        _id : 8,
-        title : 'Sounak',
-        thumbnail : `https://images.unsplash.com/photo-1584967918940-a7d51b064268`
-    },
-]
+export async function getStaticProps(){
+    let designList;
+    try {
+        designList = await getAllDesigns(false);
+    } 
+    catch (error) {
+        console.log(error)
+        designList = []
+    }
+    finally {
+        return {
+            props : {
+                designList : JSON.stringify(designList)
+            },
+            revalidate : 10
+        }
+    }
+}
