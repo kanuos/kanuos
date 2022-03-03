@@ -5,12 +5,12 @@ import { PublicHeader } from '../../components/public/Header';
 import { NavBar } from '../../components/public/Nav';
 import { PUBLIC_LIST_TYPES } from '../../utils';
 import { BlogThumbnail } from '../../components/content/BlogThumbnail';
-import { JoinLine } from '../../components/public/DescHeader';
 import { ListLoader } from '../../components/public/ListLoader';
+import { getAllBlogs } from '../../database/blogs'
 
-
-const BlogList = () => {
-  return (
+const BlogList = ({blogList}) => {
+    blogList = JSON.parse(blogList);
+    return (
     <>
     <HeadComponent title="Sounak Mukherjee's Blogs" />
     <NavBar />
@@ -36,22 +36,21 @@ const BlogList = () => {
 
 export default BlogList;
 
-
-const blogList = [
-    {
-        _id : 1,
-        name : 'How I implement JWT for authorization',
-        desc : `Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quis ipsa amet, odio cupiditate voluptatibus nihil doloremque dolores nam suscipit temporibus cumque aut, sunt iure ad corporis harum delectus libero, laborum voluptas? Voluptates, odio omnis odit laudantium tempora animi maiores iusto delectus necessitatibus nulla autem recusandae alias, esse illo magnam.
-        `,
-        tags : ['Access Token', 'Refresh Token', 'JsonWebToken', 'Authorization'],
-        date : new Date().toDateString()
-    },
-    {
-        _id : 2,
-        name : 'LeetCode Solution : Two Sum',
-        desc : `Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quis ipsa amet, odio cupiditate voluptatibus nihil doloremque dolores nam suscipit temporibus cumque aut, sunt iure ad corporis harum delectus libero, laborum voluptas? Voluptates, odio omnis odit laudantium tempora animi maiores iusto delectus necessitatibus nulla autem recusandae alias, esse illo magnam.
-        `,
-        tags : ['LeetCode', 'Dynamic Problem', 'Optimization'],
-        date : new Date().toDateString()
+export async function getStaticProps() {
+    let blogList;
+    try {
+        blogList = await getAllBlogs(false);
+    } 
+    catch (error) {
+        console.log(error);
+        blogList = []
     }
-]
+    finally {
+        return {
+            props : {
+                blogList : JSON.stringify(blogList)
+            },
+            revalidate : 5
+        }
+    }
+}
