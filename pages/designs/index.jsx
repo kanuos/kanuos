@@ -17,12 +17,23 @@ designList = JSON.parse(designList)
     <div className='main-light h-full w-full'>
         <div className='px-12 py-20 w-full flex flex-col items-center justify-start mx-auto select-text selection:bg-black selection:text-light h-full'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.designs, count : designList.length}} />
+        {
+            designList.length > 0 ?
+            <>
             <main className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 grid-flow-row gap-10 w-full mb-20'>
                 {designList.map(design => (
                     <DesignThumbnail key={design._id} data={design} />
                 ))}
             </main>
             <ListLoader />
+            </>
+            :
+            <main className="h-[30vh] flex flex-col items-center justify-center">
+                <p className='opacity-75'>
+                    No designs found!
+                </p>
+            </main>
+        }
         </div>
     </div>
     </>

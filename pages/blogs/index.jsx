@@ -17,15 +17,26 @@ const BlogList = ({blogList}) => {
     <div className='main-light h-full w-full'>
         <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-black selection:text-light'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.blogs, count : blogList.length}} />
-            <main className='flex flex-col my-20 gap-20'>
-                {blogList.map((blog, index) => (
-                    <BlogThumbnail 
-                        key={blog._id} 
-                        data={blog} 
-                        index={index + 1} />
-                ))}
+        {
+            blogList.length > 0 ?
+            <>
+                <main className='flex flex-col my-20 gap-20'>
+                    {blogList.map((blog, index) => (
+                        <BlogThumbnail 
+                            key={blog._id} 
+                            data={blog} 
+                            index={index + 1} />
+                    ))}
+                </main>
+                <ListLoader />
+            </>
+            :
+            <main className="h-[30vh] flex flex-col items-center justify-center">
+                <p className='opacity-75'>
+                    No blogs found!
+                </p>
             </main>
-            <ListLoader />
+        }
         </div>
     </div>
     </>
