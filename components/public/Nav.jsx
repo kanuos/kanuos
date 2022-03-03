@@ -172,7 +172,7 @@ const RightPanel = ({urls, currentPath, isAdmin, setText}) => {
 
     return (
         <section className="w-full grow h-full flex flex-col p-4 items-center justify-center text-dark md:w-1/2">
-            <ul className={"h-fit mt-10 md:mt-0 md:h-full w-max mx-auto flex flex-col justify-center gap-6 md:gap-10 px-4 " + (isAdmin ? "items-center" : "items-start")}>
+            <ul className={"h-fit md:h-full mt-10 md:mt-0 w-max mx-auto flex flex-col justify-center gap-6 md:gap-10 px-4 " + (isAdmin ? "items-center" : "items-start")}>
             {Object.entries(urls).map(([key, valueObj]) => {
                 let isActive;
                 
@@ -216,7 +216,7 @@ const RightPanel = ({urls, currentPath, isAdmin, setText}) => {
                 )
                 })}
             </ul>
-            { isAdmin && 
+            { !isAdmin && 
             <button className="flex md:hidden items-center gap-2 mt-auto text-sm group">
                 <GrSun className="transition-all opacity-50 group-hover:opacity-100"/> 
                     <small className="capitalize font-semibold transition-all opacity-50 group-hover:opacity-100">
