@@ -143,7 +143,7 @@ const EditCMS = ({allTags, data, contentType}) => {
   return (
     <>
     <HeadComponent title='Admin | Content CMS' />
-    <NavBar type="admin" />
+    <NavBar type="admin" left={true} />
     <main className='h-full min-h-screen p-10 main-light text-dark'>
 
     {[0, 3].includes(step) && 

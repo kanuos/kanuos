@@ -120,7 +120,7 @@ const ContentCMS = ({allTags}) => {
   return (
     <>
     <HeadComponent title='Admin | Content CMS' />
-    <NavBar type="admin" />
+    <NavBar type="admin" left={true} />
     <main className='h-full min-h-screen px-10 py-20 main-light text-dark'>
       
       {step === 0 && 
