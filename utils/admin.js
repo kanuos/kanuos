@@ -214,3 +214,20 @@ export const API_ROUTES = {
     projects : `/api/projects`,
     designs : `/api/designs`,
 }
+
+
+export const AUTH_ROUTES = {
+    register    : `/api/auth/register`,
+    login    : `/api/auth/login`,
+    logout    : `/api/auth/logout`,
+}
+
+
+export const COOKIE_OPTIONS = {
+    maxAge : 1000 * 60 * 60 * 24,
+    httpOnly : true,
+    sameSite : 'strict',
+}
+
+
+export const JWT_COOKIE_NAME = 'sounak'

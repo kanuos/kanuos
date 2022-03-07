@@ -8,10 +8,42 @@ import { motion } from "framer-motion"
 import { getEmptyState, LOGIN_STEPS, REGISTER_STEPS } from "../../utils"
 import { InputField } from "../public/InputField"
 import { JoinLine } from "../public/DescHeader"
+import { AUTH_ROUTES } from "../../utils/admin"
+import { AuthValidators } from '../../utils/validator'
+import axios from "axios"
+import { AUTH_STATUSES } from "../../pages/admin"
 
-export const LoginBody = () => {
-  function handleLogin(cred) {
-    console.log({cred})
+async function adminAuthCB(type, credentials){
+  try {
+    const URL = AUTH_ROUTES[type], 
+          validator = AuthValidators[type];
+
+    const {error, value} = validator.validate(credentials);
+
+    if (error) throw error.details[0].message;
+
+    const {data, err} = (await axios({
+      url : URL,
+      method : 'POST',
+      data : value,
+      withCredentials : true
+    })).data;
+
+    if (err) throw data;
+
+    return data; 
+  } 
+  catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+export const LoginBody = ({setStatus}) => {
+  async function handleLogin(cred) {
+      await adminAuthCB('login', cred)
+      setStatus(AUTH_STATUSES.loggedIn)
   }
   return (
     <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
@@ -22,9 +54,10 @@ export const LoginBody = () => {
 
 
 
-export const RegisterBody = () => {
-  function handleRegister(cred) {
-    console.log({cred})
+export const RegisterBody = ({setStatus}) => {
+  async function handleRegister(cred) {
+      await adminAuthCB('register', cred);
+      setStatus(AUTH_STATUSES.notLoggedIn)
   }
   return (
     <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
@@ -76,10 +109,15 @@ const AccountBody = ({type, fields, cb}) => {
   
   
   return (
-    <main className="p-10 h-auto flex flex-col items-center justify-center gap-12">
-        <h1 className="font-special text-4xl md:text-5xl capitalize">
-          {type}
-        </h1>
+    <main className="p-10 h-auto flex flex-col items-center justify-center gap-6">
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-xs">
+            <small className="text-secondary font-semibold">ADMIN</small>
+          </p>
+          <h1 className="font-special text-4xl md:text-5xl capitalize">
+            {type}
+          </h1>
+        </div>
         <JoinLine />
         <div className="flex flex-col items-start gap-y-10 w-full">
             {accountDetail && 
@@ -127,6 +165,3 @@ const AccountBody = ({type, fields, cb}) => {
     </main>
     )
 }
-
-
-// TODO: link components to API

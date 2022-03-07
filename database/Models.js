@@ -1,249 +1,250 @@
-import { Schema } from 'mongoose';
-import conn from "./index"
+import { Schema } from "mongoose";
+import conn from "./index";
 
 // Tag Schema for maintaining tags for references to other content models
 const TagSchema = new Schema({
-    tag : {
-        type: String,
-        unique: true,
-        required: true
-    }
-})
-
+  tag: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+});
 
 // Note Schema for notes and future ideas plans
 const NoteSchema = new Schema({
-    title : {
-        type : String,
-        unique : true,
-        required :  true
-    },
-    feature : {
-        type : String,
-        required :  true
-    },
-    isComplete : {
-        type: Boolean,
-        default: false
-    }
-})
-
+  title: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  feature: {
+    type: String,
+    required: true,
+  },
+  isComplete: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 // Blog Schema for CRUD operations of Blogs
 const BlogSchema = new Schema({
-    title : {
-        type : String,
-        required: true,
-        unique : true,
+  title: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  desc: {
+    type: String,
+    required: true,
+  },
+  tags: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "tag",
     },
-    slug : {
-        type : String,
-        required: true,
-        unique: true,
+  ],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  page: [
+    {
+      type: Object,
     },
-    desc : {
-        type : String,
-        required: true,
-    },
-    tags : [
-        {
-            type : Schema.Types.ObjectId,
-            ref : 'tag'
-        }
-    ],
-    date : {
-        type : Date,
-        default: Date.now
-    },
-    page : [
-        {
-            type: Object
-        }
-    ],
-    repo : {
-        type: Object
-    },
-    demo : {
-        type: Object
-    },
-    outro : {
-        type: Object
-    },
-    isPublic : {
-        type: Boolean,
-        default : false
-    },
-    user : {
-        // User Model ref 
-        type: Object
-    },
-})
-
+  ],
+  repo: {
+    type: Object,
+  },
+  demo: {
+    type: Object,
+  },
+  outro: {
+    type: Object,
+  },
+  isPublic: {
+    type: Boolean,
+    default: false,
+  },
+  user: {
+    // User Model ref
+    type: Object,
+  },
+});
 
 // Message schema for incoming client messages and admin management of the same
 const MessageSchema = new Schema({
-    name : {
-        type : String,
-        required : true
-    },
-    email : {
-        type : String,
-        required : true
-    },
-    message : {
-        type : String,
-        required : true
-    },
-    isRead : {
-        type : Boolean,
-        default : false
-    },
-    date : {
-        type : Date,
-        default : Date.now
-    },
-})
-
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  isRead: {
+    type: Boolean,
+    default: false,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 // Project Schema for CRUD operations of Projects
 const ProjectSchema = new Schema({
-    title : {
-        type : String,
-        required: true,
-        unique : true,
+  title: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  desc: {
+    type: String,
+    required: true,
+  },
+  tags: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "tag",
     },
-    desc : {
-        type : String,
-        required: true,
+  ],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  chapters: [
+    {
+      type: Object,
     },
-    tags : [
-        {
-            type : Schema.Types.ObjectId,
-            ref : 'tag'
-        }
-    ],
-    date : {
-        type : Date,
-        default: Date.now
+  ],
+  prerequisites: [
+    {
+      type: Object,
     },
-    chapters : [
-        {
-            type: Object
-        }
-    ],
-    prerequisites : [
-        {
-            type: Object
-        }
-    ],
-    techStack : [
-        {
-            type: Object
-        }
-    ],
-    difficulty : {
-        type: String,
-        required : true
+  ],
+  techStack: [
+    {
+      type: Object,
     },
-    category : {
-        type: String,
-        required : true
-    },
-    repo : {
-        type: Object
-    },
-    demo : {
-        type: Object
-    },
-    outro : {
-        type: Object
-    },
-    isPublic : {
-        type: Boolean,
-        default : false
-    },
-    user : {
-        // User Model ref 
-        type: Object
-    },
-})
-
+  ],
+  difficulty: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  repo: {
+    type: Object,
+  },
+  demo: {
+    type: Object,
+  },
+  outro: {
+    type: Object,
+  },
+  isPublic: {
+    type: Boolean,
+    default: false,
+  },
+  user: {
+    // User Model ref
+    type: Object,
+  },
+});
 
 // Design Schema for CRUD operations of Designs
 const DesignSchema = new Schema({
-    title : {
-        type : String,
-        required: true,
-        unique : true,
+  title: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  desc: {
+    type: String,
+    required: true,
+  },
+  tags: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "tag",
     },
-    desc : {
-        type : String,
-        required: true,
+  ],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  thumbnail: {
+    type: String,
+    required: true,
+  },
+  typography: [
+    {
+      type: Object,
     },
-    tags : [
-        {
-            type : Schema.Types.ObjectId,
-            ref : 'tag'
-        }
-    ],
-    date : {
-        type : Date,
-        default: Date.now
+  ],
+  colorPalette: [
+    {
+      type: Object,
     },
-    thumbnail : {
-        type : String,
-        required: true,
+  ],
+  userFlowSteps: [
+    {
+      type: Object,
     },
-    typography : [
-        {
-            type: Object
-        }
-    ],
-    colorPalette : [
-        {
-            type: Object
-        }
-    ],
-    userFlowSteps : [
-        {
-            type: Object
-        }
-    ],
-    tools : [
-        {
-            type: Object
-        }
-    ],
-    externalResources : [
-        {
-            type: Object
-        }
-    ],
-    isPublic : {
-        type: Boolean,
-        default : false
+  ],
+  tools: [
+    {
+      type: Object,
     },
-    user : {
-        // User Model ref 
-        type: Object
+  ],
+  externalResources: [
+    {
+      type: Object,
     },
-})
+  ],
+  isPublic: {
+    type: Boolean,
+    default: false,
+  },
+  user: {
+    // User Model ref
+    type: Object,
+  },
+});
 
-
-
+// User Schema for admin
+const UserSchema = new Schema({
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
 
 const models = conn.models;
 
-
-!models.tag && conn.model('tag', TagSchema)
-!models.note &&conn.model('note', NoteSchema)
-!models.blog && conn.model('blog', BlogSchema)
-!models.project && conn.model('project', ProjectSchema)
-!models.message && conn.model('message', MessageSchema)
-!models.design && conn.model('design', DesignSchema)
-
-
-
-
+!models.tag && conn.model("tag", TagSchema);
+!models.note && conn.model("note", NoteSchema);
+!models.blog && conn.model("blog", BlogSchema);
+!models.project && conn.model("project", ProjectSchema);
+!models.message && conn.model("message", MessageSchema);
+!models.design && conn.model("design", DesignSchema);
+!models.user && conn.model("user", UserSchema);
 
 export default conn;

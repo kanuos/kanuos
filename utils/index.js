@@ -159,55 +159,7 @@ export const LOGIN_STEPS = [
 ]
 
 export const REGISTER_STEPS = [
-    ...LOGIN_STEPS, 
-    {
-        field : 'question',
-        desc : `Security question`,
-        constraints : {
-            empty : {
-                message : "Question cannot be empty",
-                check(value){
-                    return value.trim().length > 0
-                }
-            },
-            min : {
-                message : "Question must be at least 6 characters long",
-                check(value){
-                    return value.trim().length >= 6
-                }
-            },
-            max : {
-                message : "Question must be at most 100 characters long",
-                check(value){
-                    return value.trim().length <= 100
-                }
-            },
-        }   
-    },
-    {
-        field : 'answer',
-        desc : `Security answer`,
-        constraints : {
-            empty : {
-                message : "Answer cannot be empty",
-                check(value){
-                    return value.trim().length > 0
-                }
-            },
-            min : {
-                message : "Answer must be at least 6 characters long",
-                check(value){
-                    return value.trim().length >= 6
-                }
-            },
-            max : {
-                message : "Answer must be at most 100 characters long",
-                check(value){
-                    return value.trim().length <= 100
-                }
-            },
-        }   
-    },
+    ...LOGIN_STEPS,
 ]
 
 
@@ -323,4 +275,9 @@ export const NAV_LINK_DESCRIPTIONS = {
     
     '/contact' : `Have a project idea in mind? Want to work with me or hire me? Please feel free to send me a message. I will get back to you ASAP!`,
     
+}
+
+
+export const ADMIN_AUTH_PAGES = {
+    signIn : `${ADMIN_PATH}/auth/login`,
 }

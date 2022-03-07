@@ -134,7 +134,8 @@ const DesignValidator = CommonFields.keys({
         page: Joi.string().trim().uri().required(),
         title: Joi.string().trim().required(),
         about: Joi.string().trim().required(),
-      }))
+      })
+    )
     .min(1),
 
   externalResources: Joi.array()
@@ -145,7 +146,8 @@ const DesignValidator = CommonFields.keys({
         poster: Joi.string().trim().uri().required(),
         photographer: Joi.string().trim().required(),
         courtesy: Joi.string().trim().uri().required(),
-      }))
+      })
+    )
     .min(1),
 
   tools: Joi.array().min(1),
@@ -192,8 +194,23 @@ export const MessageValidator = Joi.object({
   }),
 });
 
+const LoginValidator = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .trim()
+    .required(),
+  password: Joi.string().trim().required().min(6),
+});
+
+const RegisterValidator = LoginValidator.keys();
+
 export const ContentValidators = {
   blog: BlogValidator,
   project: ProjectValidator,
   design: DesignValidator,
+};
+
+export const AuthValidators = {
+  login: LoginValidator,
+  register: RegisterValidator,
 };

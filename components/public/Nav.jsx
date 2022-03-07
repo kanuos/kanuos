@@ -189,7 +189,7 @@ const RightPanel = ({urls, currentPath, isAdmin, setText}) => {
                         <li key={key} className="capitalize w-fit text-sm md:text-base">
                             <Link href={valueObj.url}>
                                 <a className={`flex items-center justify-center gap-x-2 relative before:h-1.5 before:w-1.5 before:rounded-full before:bg-secondary before:absolute before:top-1/2 before:-right-4 font-semibold before:-translate-y-1/2 md:font-normal`}>
-                                    <LinkIcon type={valueObj.name} />
+                                    <LinkIcon type={valueObj.name} isActive={true} />
                                     <span>
                                         {valueObj.name}
                                     </span>
@@ -228,43 +228,52 @@ const RightPanel = ({urls, currentPath, isAdmin, setText}) => {
 }
 
 
-const LinkIcon = ({type}) => {
+const LinkIcon = ({type, isActive}) => {
     let icon;
     switch(type.toLowerCase()) {
         case 'home':
-            icon = <GrHomeRounded className="text-xs opacity-50 group-hover:opacity-100" />
+            icon = <GrHomeRounded 
+                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
         
         case 'projects':
-            icon = <GrCode className="text-sm opacity-50 group-hover:opacity-100" />
+            icon = <GrCode 
+                className={"text-sm " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         case 'blogs':
-            icon = <GrCatalog className="text-xs opacity-50 group-hover:opacity-100" />
+            icon = <GrCatalog 
+                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         case 'designs':
-            icon = <GrGrow className="text-sm opacity-50 group-hover:opacity-100" />
+            icon = <GrGrow 
+                className={"text-sm " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         case 'contact me':
-            icon = <GrMailOption className="text-xs opacity-50 group-hover:opacity-100" />
+            icon = <GrMailOption 
+                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         case 'inbox':
-            icon = <GrArchive className="text-xs opacity-50 group-hover:opacity-100" />
+            icon = <GrArchive 
+                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         case 'notes':
-            icon = <GrClipboard className="text-xs opacity-50 group-hover:opacity-100" />
+            icon = <GrClipboard 
+                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         case 'tags':
-            icon = <GrTag className="text-xs opacity-50 group-hover:opacity-100" />
+            icon = <GrTag 
+                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         case 'dashboard':
-            icon = <GrGremlin className="text-xs opacity-50 group-hover:opacity-100" />
+            icon = <GrGremlin 
+                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
             break;
 
         default :
