@@ -58,12 +58,13 @@ export const PUBLIC_URLS = {
 
 const ADMIN_PATH = '/admin'
 export const ADMIN_NEW_CONTENT = ADMIN_PATH + '/new-content';
+export const ADMIN_ACCOUNT = ADMIN_PATH + '/';
 
 
 export const ADMIN_URLS = {
     dashboard : {
         name : 'dashboard',
-        url : ADMIN_PATH + '/'
+        url : ADMIN_PATH + '/dashboard'
     },
     projects : {
         name : 'projects',

@@ -4,17 +4,32 @@
 
 
 import { deleteBlogFromDB, editIndividualBlog } from "../../../database/blogs";
+
+import { JWT_COOKIE_NAME } from "../../../utils/admin";
 import { ContentValidators } from "../../../utils/validator";
+import { getPayloadFromToken } from '../../../utils/encrypt'
 
 export default async function (req, res) {
     let blogValidator;
     try {
+        const cookie = req.cookies;
+        
+        if (!cookie) throw 'Not logged in'
+        const authCookie = cookie[JWT_COOKIE_NAME];
+        if (!authCookie){
+            throw 'Not logged in'
+        }
+        const tokenPayloadObject = await getPayloadFromToken(authCookie);
+        if (!tokenPayloadObject.payload) {
+            throw 'Unauthorized'
+        }
+        const user = tokenPayloadObject.payload;
+        
         const { method, body, query : {id} } = req;
-        // TODO: auth session 
 
         switch(method.toLowerCase()) {
             case 'delete':
-                const deletedBlog = await deleteBlogFromDB(id);
+                const deletedBlog = await deleteBlogFromDB(id, user._id);
                 return res.json({
                     data: deletedBlog,
                     err : false
@@ -29,7 +44,7 @@ export default async function (req, res) {
                 if (blogValidator.error) throw blogValidator.error.details[0].message;
                 
                 // try to update the blog with sanitized data
-                const updatedBlog = editIndividualBlog(id, blogValidator.value);
+                const updatedBlog = editIndividualBlog(id, blogValidator.value, user._id);
 
                 return res.json({
                     data : updatedBlog,

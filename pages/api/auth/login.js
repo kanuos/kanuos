@@ -1,6 +1,6 @@
 // LOGIN API
 // method allwowed : POST
-import { serialize, parse } from 'cookie'
+import { serialize } from 'cookie'
 
 import { loginAdmin } from "../../../database/user";
 import { COOKIE_OPTIONS, JWT_COOKIE_NAME } from '../../../utils/admin';
@@ -11,15 +11,11 @@ import { AuthValidators } from "../../../utils/validator";
 export default async function (req, res) {
     try {
         const { method, body } = req;    
-        
-        if (req.headers.cookie){
-            const authCookie = parse(req.headers.cookie)[JWT_COOKIE_NAME];
-            if (authCookie){
-                const tokenPayloadObject = await getPayloadFromToken(authCookie);
-                if (tokenPayloadObject.payload) {
-                    console.log(tokenPayloadObject.payload, Date.now())
-                    throw 'Already logged in!'
-                }
+        const authCookie = req.cookies[JWT_COOKIE_NAME];
+        if (authCookie){
+            const tokenPayloadObject = await getPayloadFromToken(authCookie);
+            if (tokenPayloadObject.payload) {
+                throw 'Already logged in!'
             }
         }
         
@@ -29,7 +25,6 @@ export default async function (req, res) {
         // validate incoming credentials
         const {error, value} = AuthValidators.login.validate(body);
         if (error) throw error.details[0].message;
-
         // get admin with credentials from db
         const adminFromDB = await loginAdmin(value);
         if (!adminFromDB) throw 'Admin not found!'

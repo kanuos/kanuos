@@ -3,8 +3,20 @@
 import { addNewNote, deleteExistingNote, editExistingNote } from '../../../database/notes';
 import { NoteValidator } from '../../../utils/validator'
 
+import { parse } from "cookie";
+import { JWT_COOKIE_NAME } from "../../../utils/admin";
+import { getPayloadFromToken } from '../../../utils/encrypt'
 
-export default async function(req, res) {
+export default async function (req, res) {
+    const authCookie = parse(req.headers.cookie)[JWT_COOKIE_NAME];
+    if (!authCookie){
+        throw 'Not logged in'
+    }
+    const tokenPayloadObject = await getPayloadFromToken(authCookie);
+    if (!tokenPayloadObject.payload) {
+        throw 'Unauthorized'
+    }
+
     try {
         const {method, body, query} = req;
         switch(method.toLowerCase()){

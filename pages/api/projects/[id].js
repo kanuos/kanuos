@@ -3,17 +3,35 @@
 // ADMIN only access routes
 
 import { deleteProjectFromDB, editIndividualProject } from "../../../database/projects"
+
+import { JWT_COOKIE_NAME } from "../../../utils/admin";
 import { ContentValidators } from "../../../utils/validator";
+import { getPayloadFromToken } from '../../../utils/encrypt'
 
 export default async function (req, res) {
     let projectValidator;
+    
     try {
-        const { method, body, query : {id} } = req;
-        // TODO: auth session 
+        
+        const { method, body, cookies,  query : {id} } = req;
+
+        const authCookie = cookies?.[JWT_COOKIE_NAME];
+        
+        if (!authCookie){
+            throw 'Not logged in'
+        }
+
+        const tokenPayloadObject = await getPayloadFromToken(authCookie);
+        
+        if (!tokenPayloadObject.payload) {
+            throw 'Unauthorized'
+        }
+        
+        const user = tokenPayloadObject.payload;
 
         switch(method.toLowerCase()) {
             case 'delete':
-                const deletedProject = await deleteProjectFromDB(id);
+                const deletedProject = await deleteProjectFromDB(id, user._id);
                 return res.json({
                     data: deletedProject,
                     err : false
@@ -28,7 +46,7 @@ export default async function (req, res) {
                 if (projectValidator.error) throw projectValidator.error.details[0].message;
                 
                 // try to update the project with sanitized data
-                const updatedProject = editIndividualProject(id, projectValidator.value);
+                const updatedProject = await editIndividualProject(id, projectValidator.value, user._id);
 
                 return res.json({
                     data : updatedProject,

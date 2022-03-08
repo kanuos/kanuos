@@ -40,7 +40,7 @@ export async function isValidPassword(password, hash) {
 
 export async function generateAccessToken(email, _id){
     const token = sign({email, _id}, SECRET, {
-        expiresIn : '1d'
+        expiresIn : '10h'
     })
     return token;
 }

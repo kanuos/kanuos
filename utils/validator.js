@@ -67,30 +67,21 @@ const BlogValidator = CommonFields.keys({
 });
 
 const ProjectValidator = CommonFields.keys({
-  techStack: Joi.array()
-    .items(
+  techStack: Joi.array().items(
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         text: Joi.string().trim().required(),
-      })
-        .max(2)
-        .min(1)
-    )
-    .min(1),
-  difficulty: Joi.string().lowercase().required().default("beginner"),
-  category: Joi.string().required(),
-  prerequisites: Joi.array()
-    .items(
+      }).required()).min(1).required(),
+  difficulty: Joi.string().trim().lowercase().required().default("beginner"),
+  category: Joi.string().trim().required(),
+  prerequisites: Joi.array().items(
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         text: Joi.string().trim(),
-      })
-        .max(2)
-        .min(1)
-    )
-    .min(1),
+      }).required()
+    ).min(1).required(),
   outro: Joi.object({
     heading: Joi.string().trim(),
     text: Joi.string().trim(),
@@ -98,7 +89,15 @@ const ProjectValidator = CommonFields.keys({
   chapters: Joi.array().items(SegmentValidator).min(1).required(),
 });
 
-const DesignValidator = CommonFields.keys({
+const DesignValidator = Joi.object().keys({
+  _id: Joi.any(),
+  __v: Joi.any(),
+  title: Joi.string().required().trim().min(1),
+  desc: Joi.string().required().trim().min(1),
+  date: Joi.date().allow("").default(Date.now()),
+  tags: Joi.array().items(TagValidator).min(1),
+  isPublic: Joi.bool().default(false),
+  user: Joi.any(),
   thumbnail: Joi.string().required().trim().uri(),
   typography: Joi.array()
     .items(
@@ -107,9 +106,7 @@ const DesignValidator = CommonFields.keys({
         __v: Joi.any(),
         family: Joi.string().trim(),
         desc: Joi.string().trim(),
-      })
-        .max(2)
-        .min(1)
+      }).required()
     )
     .min(1),
 
@@ -120,9 +117,7 @@ const DesignValidator = CommonFields.keys({
         __v: Joi.any(),
         name: Joi.string().trim(),
         hex: Joi.string().trim(),
-      })
-        .max(2)
-        .min(1)
+      }).required()
     )
     .min(1),
 
@@ -134,7 +129,7 @@ const DesignValidator = CommonFields.keys({
         page: Joi.string().trim().uri().required(),
         title: Joi.string().trim().required(),
         about: Joi.string().trim().required(),
-      })
+      }).required()
     )
     .min(1),
 
@@ -146,7 +141,7 @@ const DesignValidator = CommonFields.keys({
         poster: Joi.string().trim().uri().required(),
         photographer: Joi.string().trim().required(),
         courtesy: Joi.string().trim().uri().required(),
-      })
+      }).required()
     )
     .min(1),
 

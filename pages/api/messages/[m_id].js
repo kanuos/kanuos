@@ -4,13 +4,23 @@
 // Access : ADMIN
 import { deleteMessageFromDB, toggleMessageReadStatus } from '../../../database/messages';
 
+import { parse } from "cookie";
+import { JWT_COOKIE_NAME } from "../../../utils/admin";
+import { getPayloadFromToken } from '../../../utils/encrypt'
 
-export default async function(req, res) {
+export default async function (req, res) {
+    const authCookie = parse(req.headers.cookie)[JWT_COOKIE_NAME];
+    if (!authCookie){
+        throw 'Not logged in'
+    }
+    const tokenPayloadObject = await getPayloadFromToken(authCookie);
+    if (!tokenPayloadObject.payload) {
+        throw 'Unauthorized'
+    }
     try {
         // destructure the incoming req object
         const {method, query : {m_id}, body : {isRead}} = req;
         
-        // TODO: authorization
         
         switch(method.toLowerCase()) {
             case 'delete':

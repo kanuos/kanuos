@@ -72,14 +72,15 @@ export async function projectUniqueConstraint(projectData) {
 /**
  * 
  * @param {ObjectID} projectID unique project id == mongoose objectID
+ * @param {ObjectID} user unique admin mongoose objectID
  * @returns deleted project or throws error
  */
- export async function deleteProjectFromDB(projectID) {
+ export async function deleteProjectFromDB(projectID, user) {
     // check if projectID is valid
     if (!isValidObjectId(projectID)) throw 'Invalid project ID'
     
     // delete project
-    const deletedproject = await ProjectModel.findByIdAndDelete(projectID);
+    const deletedproject = await ProjectModel.findOneAndDelete({_id : projectID, user});
     
     if (!deletedproject)   throw `project with id ${projectID} doesn't exist`
 
@@ -113,13 +114,14 @@ export async function projectUniqueConstraint(projectData) {
  * 
  * @param {ObjectId} projectID mongoose ObjectID that represents project ID
  * @param {sanitized project object} projectData a fully sanitized and validated project object
+ * @param {ObjectId} user mongoose ObjectID that represents admin user
  * @returns updated project 
  * @description
  * receives a project Id and a sanitized project object to update the project with projectID in database
  * on success it returns the updated project
  * on error it throws errors
  */
- export async function editIndividualProject(projectID, projectData) {
+ export async function editIndividualProject(projectID, projectData, user) {
     // check if project id is valid 
     if (!isValidObjectId(projectID)) throw 'Invalid project ID ' + projectID
     
@@ -128,7 +130,16 @@ export async function projectUniqueConstraint(projectData) {
     // throw error with suggestive message
     // on success return the updated project
 
-    const updatedProject = await ProjectModel.findByIdAndUpdate(projectID, projectData, { new : true, upsert : false });
+    const updatedProject = await ProjectModel.findOneAndUpdate(
+        {
+            _id : projectID,
+            user
+        }, 
+        projectData, 
+        { 
+            new : true, 
+            upsert : false 
+        });
 
     if (!updatedProject) throw `project with ID ${projectID} doesn't exist`
 

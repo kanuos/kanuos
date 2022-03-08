@@ -54,20 +54,20 @@ export async function addDesignToDB(design) {
   return newDesign;
 }
 
-export async function deleteDesignFromDB(id) {
+export async function deleteDesignFromDB(id, user) {
   if (!isValidObjectId(id)) throw "Invalid Design ID";
 
-  const deletedDesign = await DesignModel.findByIdAndRemove(id);
+  const deletedDesign = await DesignModel.findOneAndRemove({_id : id, user});
 
   if (!deletedDesign) throw `Design by ID ${id} not found`;
 
   return deletedDesign;
 }
 
-export async function updateDesignByID(id, design) {
+export async function updateDesignByID(id, design, user) {
   if (!isValidObjectId(id)) throw "Invalid Design ID";
 
-  const updatedDesign = await DesignModel.findByIdAndUpdate(id, design, {
+  const updatedDesign = await DesignModel.findOneAndUpdate({_id : id, user}, design, {
     new: true,
     upsert: false,
   });

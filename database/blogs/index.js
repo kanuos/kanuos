@@ -80,14 +80,15 @@ export async function blogUniqueConstraint(blogData) {
 /**
  * 
  * @param {ObjectID} blogID unique blog id == mongoose objectID
+ * @param {ObjectID} user admin id == mongoose objectID
  * @returns deleted blog or throws error
  */
- export async function deleteBlogFromDB(blogID) {
+ export async function deleteBlogFromDB(blogID, user) {
     // check if blogID is valid
     if (!isValidObjectId(blogID)) throw 'Invalid Blog ID'
     
     // delete blog
-    const deletedBlog = await BlogModel.findByIdAndDelete(blogID);
+    const deletedBlog = await BlogModel.findOneAndDelete({_id : blogID, user});
     
     if (!deletedBlog)   throw `Blog with id ${blogID} doesn't exist`
 
@@ -120,6 +121,7 @@ export async function blogUniqueConstraint(blogData) {
 /**
  * 
  * @param {ObjectId} blogID mongoose ObjectID that represents blog ID
+ * @param {ObjectId} user mongoose ObjectID that represents admin
  * @param {sanitized blog object} blogData a fully sanitized and validated blog object
  * @returns updated blog 
  * @description
@@ -127,7 +129,7 @@ export async function blogUniqueConstraint(blogData) {
  * on success it returns the updated blog
  * on error it throws errors
  */
- export async function editIndividualBlog(blogID, blogData) {
+ export async function editIndividualBlog(blogID, blogData, user) {
     // check if blog id is valid 
     if (!isValidObjectId(blogID)) throw 'Invalid Blog ID ' + blogID
     
@@ -136,7 +138,7 @@ export async function blogUniqueConstraint(blogData) {
     // throw error with suggestive message
     // on success return the updated blog
 
-    const updatedBlog = await BlogModel.findByIdAndUpdate(blogID, blogData, { new : true, upsert : false });
+    const updatedBlog = await BlogModel.findByIdAndUpdate({_id : blogID, user}, blogData, { new : true, upsert : false });
 
     if (!updatedBlog) throw `Blog with ID ${blogID} doesn't exist`
 

@@ -72,8 +72,8 @@ const BlogSchema = new Schema({
     default: false,
   },
   user: {
-    // User Model ref
-    type: Object,
+    type: Schema.Types.ObjectId,
+    ref : 'user'
   },
 });
 
@@ -159,8 +159,8 @@ const ProjectSchema = new Schema({
     default: false,
   },
   user: {
-    // User Model ref
-    type: Object,
+    type: Schema.Types.ObjectId,
+    ref : 'user'
   },
 });
 
@@ -219,8 +219,8 @@ const DesignSchema = new Schema({
     default: false,
   },
   user: {
-    // User Model ref
-    type: Object,
+    type: Schema.Types.ObjectId,
+    ref : 'user'
   },
 });
 

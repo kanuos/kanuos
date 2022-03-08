@@ -222,11 +222,13 @@ export const AUTH_ROUTES = {
     logout    : `/api/auth/logout`,
 }
 
+const COOKIE_MAX_AGE = 1000 * 60 * 60 *24;
 
 export const COOKIE_OPTIONS = {
-    maxAge : 1000 * 60 * 60 * 24,
+    maxAge : COOKIE_MAX_AGE,
     httpOnly : true,
     sameSite : 'strict',
+    path : '/'
 }
 
 
