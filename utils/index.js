@@ -59,6 +59,7 @@ export const PUBLIC_URLS = {
 const ADMIN_PATH = '/admin'
 export const ADMIN_NEW_CONTENT = ADMIN_PATH + '/new-content';
 export const ADMIN_ACCOUNT = ADMIN_PATH + '/';
+export const ADMIN_RESET = ADMIN_PATH + '/password-reset';
 
 
 export const ADMIN_URLS = {
@@ -118,6 +119,7 @@ export function getEmptyState(steps) {
     return obj;
 }
 
+
 export const LOGIN_STEPS = [
     {
         field : 'email',
@@ -161,6 +163,29 @@ export const LOGIN_STEPS = [
 
 export const REGISTER_STEPS = [
     ...LOGIN_STEPS,
+]
+
+export const RESET_PASSWORD_STEPS = [
+    ...LOGIN_STEPS,
+    {
+        field : 'secret',
+        desc : `Admin secret`,
+        constraints : {
+            empty : {
+                message : "secret cannot be empty",
+                check(value){
+                    return value.trim().length > 0
+                }
+            },
+            min : {
+                message : "secret must be at least 6 characters long",
+                check(value){
+                    return value.trim().length >= 6
+                }
+            },
+        }
+            
+    },
 ]
 
 
@@ -278,7 +303,3 @@ export const NAV_LINK_DESCRIPTIONS = {
     
 }
 
-
-export const ADMIN_AUTH_PAGES = {
-    signIn : `${ADMIN_PATH}/auth/login`,
-}

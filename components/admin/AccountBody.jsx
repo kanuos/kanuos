@@ -1,17 +1,20 @@
 // imports : built in
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, useContext } from "react"
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 // imports : external
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import axios from "axios"
 
 // imports : internal
-import { getEmptyState, LOGIN_STEPS, REGISTER_STEPS } from "../../utils"
+import { ADMIN_RESET, ADMIN_ACCOUNT, getEmptyState, LOGIN_STEPS, REGISTER_STEPS, RESET_PASSWORD_STEPS } from "../../utils"
 import { InputField } from "../public/InputField"
 import { JoinLine } from "../public/DescHeader"
 import { AUTH_ROUTES } from "../../utils/admin"
 import { AuthValidators } from '../../utils/validator'
-import axios from "axios"
-import { AUTH_STATUSES } from "../../pages/admin"
+import { AdminAuthContext } from "../../contexts/AdminAuthContext"
+
 
 async function adminAuthCB(type, credentials){
   try {
@@ -34,16 +37,17 @@ async function adminAuthCB(type, credentials){
     return data; 
   } 
   catch (error) {
-    console.log(error)
+    alert(error)
   }
 }
 
 
 
-export const LoginBody = ({setStatus}) => {
+export const LoginBody = () => {
+  const { handleAdminContextStatus } = useContext(AdminAuthContext);
   async function handleLogin(cred) {
-      await adminAuthCB('login', cred)
-      setStatus(AUTH_STATUSES.loggedIn)
+    const admin = await adminAuthCB('login', cred);
+    handleAdminContextStatus(admin);
   }
   return (
     <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
@@ -53,11 +57,25 @@ export const LoginBody = ({setStatus}) => {
 }
 
 
+export const PasswordReset = () => {
+  const r = useRouter();
+  async function handleReset(cred) {
+    const success = await adminAuthCB('reset', cred);
+    if (success) {
+      r.push(ADMIN_ACCOUNT)
+    }
+  }
+  return (
+    <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
+      <AccountBody type="password reset" fields={RESET_PASSWORD_STEPS} cb={handleReset}/>
+    </div>
+  )
+}
 
-export const RegisterBody = ({setStatus}) => {
+
+export const RegisterBody = () => {
   async function handleRegister(cred) {
-      await adminAuthCB('register', cred);
-      setStatus(AUTH_STATUSES.notLoggedIn)
+    await adminAuthCB('register', cred);
   }
   return (
     <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
@@ -117,11 +135,20 @@ const AccountBody = ({type, fields, cb}) => {
           <h1 className="font-special text-4xl md:text-5xl capitalize">
             {type}
           </h1>
+          {type === 'login' && 
+            <Link href={ADMIN_RESET}>
+              <a className="text-xs mt-4 opacity-20 hover:opacity-100 transition-all">
+                <small>
+                  Click here to reset!
+                </small>
+              </a>
+            </Link>
+          }
         </div>
         <JoinLine />
         <div className="flex flex-col items-start gap-y-10 w-full">
             {accountDetail && 
-                fields.map(({field, desc, constraints}) => {
+                fields.map(({field, desc, constraints}, i) => {
                     const active = (accountDetail[field].trim().length > 0 ||(field === currentStep));
                     return (
                         <motion.section 
@@ -139,6 +166,8 @@ const AccountBody = ({type, fields, cb}) => {
                                 className="w-full">
                                 <InputField 
                                     name={field} 
+                                    index={i + 1}
+                                    total={fields.length}
                                     setEditMode={setEditMode}
                                     value={accountDetail[field]} 
                                     constraints={constraints}

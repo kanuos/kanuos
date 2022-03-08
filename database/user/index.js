@@ -77,3 +77,25 @@ export async function loginAdmin(user) {
     return existingAdmin
 }
 
+
+export async function updatePassword(user) {
+    // query the user collection to check user uniqueness
+    const existingAdmin = await getAdminUser(user.email);
+
+    // if admin email isnt registered throw error
+    if (!existingAdmin) throw `Admin doesn't exists`
+
+    // hash the password 
+    const hashedPassword = await hashPassword(user.password);
+
+    // replace plain text password with the hashedPassword
+    user.password = hashedPassword;
+
+    // add new user to DB
+    const updatedUser = await UserModel.findOneAndUpdate({email : user.email}, {...user}, { new : true});
+
+    // error in creating admin
+    if (!updatedUser) throw `Admin couldn't be added.`
+
+    return updatedUser;
+}

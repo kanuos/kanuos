@@ -220,6 +220,7 @@ export const AUTH_ROUTES = {
     register    : `/api/auth/register`,
     login    : `/api/auth/login`,
     logout    : `/api/auth/logout`,
+    reset    : `/api/auth/reset`,
 }
 
 const COOKIE_MAX_AGE = 1000 * 60 * 60 *24;

@@ -199,6 +199,10 @@ const LoginValidator = Joi.object({
 
 const RegisterValidator = LoginValidator.keys();
 
+const ResetValidator = LoginValidator.keys({
+  secret : Joi.string().trim().required()
+});
+
 export const ContentValidators = {
   blog: BlogValidator,
   project: ProjectValidator,
@@ -208,4 +212,5 @@ export const ContentValidators = {
 export const AuthValidators = {
   login: LoginValidator,
   register: RegisterValidator,
+  reset: ResetValidator,
 };
