@@ -13,7 +13,7 @@ import { getPayloadFromToken } from "./encrypt";
  * @returns { boolean } whether active user is admin or not
  */
 export async function isAdminMiddleware(req, res) {
-    let loggedAsAdmin, error;
+    let loggedAsAdmin, error, user;
     try {
         const authToken = req.cookies?.[JWT_COOKIE_NAME];
 
@@ -37,14 +37,16 @@ export async function isAdminMiddleware(req, res) {
         // valid token
         loggedAsAdmin = true;
         error = false;
+        user = payload
     } 
     catch (err) {
         loggedAsAdmin = false;
         error = err.message
+        user = null
     }
     finally {
         return {
-            loggedAsAdmin, error
+            loggedAsAdmin, error, user
         }
     }
 }

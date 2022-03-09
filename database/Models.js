@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { ADMIN_SELECT_OPTIONS } from "../utils/admin";
 import conn from "./index";
 
 // Tag Schema for maintaining tags for references to other content models
@@ -142,10 +143,12 @@ const ProjectSchema = new Schema({
   difficulty: {
     type: String,
     required: true,
+    enum : [...Object.values(ADMIN_SELECT_OPTIONS.difficulty)]
   },
   category: {
     type: String,
     required: true,
+    enum : [...Object.values(ADMIN_SELECT_OPTIONS.category)]
   },
   repo: {
     type: Object,

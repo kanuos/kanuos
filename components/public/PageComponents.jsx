@@ -77,7 +77,7 @@ export const PageSegment = ({segment, index}) => {
         },
     }
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(true)
     const [isComplete, setIsComplete] = useState(false)
 
     async function toggleReadStatus() {

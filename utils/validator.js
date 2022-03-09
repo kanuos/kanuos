@@ -29,7 +29,7 @@ const SegmentValidator = Joi.object({
         }).length(2),
       ],
     })
-  ),
+  ).required().min(1),
 });
 
 const CommonFields = Joi.object().keys({
@@ -38,7 +38,7 @@ const CommonFields = Joi.object().keys({
   title: Joi.string().required().trim().min(1),
   desc: Joi.string().required().trim().min(1),
   date: Joi.date().allow("").default(Date.now()),
-  tags: Joi.array().items(TagValidator).min(1),
+  tags: Joi.array().items(TagValidator).min(1).required(),
   isPublic: Joi.bool().default(false),
   user: Joi.any(),
   repo: Joi.any().allow(
@@ -96,28 +96,28 @@ const DesignValidator = Joi.object().keys({
   title: Joi.string().required().trim().min(1),
   desc: Joi.string().required().trim().min(1),
   date: Joi.date().allow("").default(Date.now()),
-  tags: Joi.array().items(TagValidator).min(1),
+  tags: Joi.array().items(TagValidator).min(1).required(),
   isPublic: Joi.bool().default(false),
   user: Joi.any(),
   thumbnail: Joi.string().required().trim().uri(),
-  typography: Joi.array()
+  typography: Joi.array().required()
     .items(
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        family: Joi.string().trim(),
-        desc: Joi.string().trim(),
+        family: Joi.string().trim().required(),
+        desc: Joi.string().trim().required(),
       }).required()
     )
     .min(1),
 
-  colorPalette: Joi.array()
+  colorPalette: Joi.array().required()
     .items(
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        name: Joi.string().trim(),
-        hex: Joi.string().trim(),
+        name: Joi.string().trim().required(),
+        hex: Joi.string().trim().required(),
       }).required()
     )
     .min(1),
@@ -131,10 +131,10 @@ const DesignValidator = Joi.object().keys({
         title: Joi.string().trim().required(),
         about: Joi.string().trim().required(),
       }).required()
-    )
+    ).required()
     .min(1),
 
-  externalResources: Joi.array()
+  externalResources: Joi.array().required()
     .items(
       Joi.object({
         _id: Joi.any(),
@@ -150,7 +150,7 @@ const DesignValidator = Joi.object().keys({
     _id: Joi.any(),
     __v: Joi.any(),
     text: Joi.string().trim().required(),
-  }).required()).min(1),
+  }).required()).min(1).required(),
 });
 
 export const NoteValidator = Joi.object({

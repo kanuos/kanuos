@@ -1,27 +1,17 @@
 //  PROJECT API
 
 import { addProjectToDB, projectUniqueConstraint } from "../../../database/projects";
-import { parse } from "cookie";
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
+import { isAdminMiddleware } from "../../../utils/authLib";
 import { ContentValidators } from "../../../utils/validator";
-import { getPayloadFromToken } from '../../../utils/encrypt'
+
 
 export default async function (req, res) {
     
     let projectValidator;
     try {
-        const { method, body, cookies } = req;
-        
-        const authCookie = cookies?.[JWT_COOKIE_NAME];
-        if (!authCookie){
-            throw 'Not logged in'
-        }
-        const tokenPayloadObject = await getPayloadFromToken(authCookie);
-        if (!tokenPayloadObject.payload) {
-            throw 'Unauthorized || expired token'
-        }
-
-        const user = tokenPayloadObject.payload;
+        const { method, body } = req;
+        const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) throw error
 
         switch(method.toLowerCase()) {
             case 'post':

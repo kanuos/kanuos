@@ -1,10 +1,8 @@
 // Auth API :: register
 
-import { parse } from "cookie";
 import { registerUser } from "../../../database/user";
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
-import { getPayloadFromToken } from "../../../utils/encrypt";
 import { AuthValidators } from "../../../utils/validator";
+import { isAdminMiddleware } from "../../../utils/authLib"
 
 
 
@@ -12,16 +10,8 @@ export default async function(req, res) {
     try {
         const {body, method} = req;
         
-        if (req.headers.cookie){
-            const authCookie = parse(req.headers.cookie)[JWT_COOKIE_NAME];
-            if (authCookie){
-                const tokenPayloadObject = await getPayloadFromToken(authCookie);
-                if (tokenPayloadObject.payload) {
-                    console.log(tokenPayloadObject.payload, Date.now())
-                    throw 'Already logged in!'
-                }
-            }
-        }
+        const { loggedAsAdmin } = await isAdminMiddleware(req, res);
+        if (loggedAsAdmin) throw 'Already logged in!'
 
         // only post method allowed
         switch(method.toLowerCase()) {

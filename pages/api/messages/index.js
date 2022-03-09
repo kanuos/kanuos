@@ -5,25 +5,12 @@
 
 import { addNewMessageToDB, getAllMessagesFromDB } from '../../../database/messages';
 import { MessageValidator } from '../../../utils/validator'
-
-import { parse } from "cookie";
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
-import { getPayloadFromToken } from '../../../utils/encrypt'
+import { isAdminMiddleware } from '../../../utils/authLib'
 
 export default async function (req, res) {
-    const authCookie = parse(req.headers.cookie)[JWT_COOKIE_NAME];
-    if (!authCookie){
-        throw 'Not logged in'
-    }
-    const tokenPayloadObject = await getPayloadFromToken(authCookie);
-    if (!tokenPayloadObject.payload) {
-        throw 'Unauthorized'
-    }
-
     try {
         // destructure the incoming req object
         const {method, body} = req;
-        
         
         switch(method.toLowerCase()) {
             case 'post':
@@ -45,6 +32,9 @@ export default async function (req, res) {
             case 'get':
                 // access : private
                 // ADMIN mode only
+                const authStatus = await isAdminMiddleware(req, res);
+                if (!authStatus.loggedAsAdmin) throw authStatus.error
+
                 // return all messages from DB
                 const allMessages = await getAllMessagesFromDB();
                 

@@ -3,7 +3,7 @@
 import { serialize } from 'cookie'
 
 import { COOKIE_OPTIONS, JWT_COOKIE_NAME } from '../../../utils/admin';
-
+import { isAdminMiddleware } from "../../../utils/authLib"
 
 export default async function (req, res) {
     try {
@@ -13,10 +13,10 @@ export default async function (req, res) {
         // only allow post methods to log admin
         if (method.toLowerCase() !== 'get') throw 'Invalid method'
         
-        const authCookie = req.cookies?.[JWT_COOKIE_NAME];
+        // only logged in admin can log out
+        const { loggedAsAdmin } = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) throw 'Already logged out :)'
 
-        if (!authCookie) throw 'Already logged out'
-    
         const cookie = serialize(JWT_COOKIE_NAME, '', 
             { 
                 ...COOKIE_OPTIONS,

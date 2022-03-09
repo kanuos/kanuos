@@ -3,31 +3,18 @@
 // ADMIN only access routes
 
 import { deleteProjectFromDB, editIndividualProject } from "../../../database/projects"
-
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
+import { isAdminMiddleware } from "../../../utils/authLib"
 import { ContentValidators } from "../../../utils/validator";
-import { getPayloadFromToken } from '../../../utils/encrypt'
+
 
 export default async function (req, res) {
     let projectValidator;
     
     try {
         
-        const { method, body, cookies,  query : {id} } = req;
-
-        const authCookie = cookies?.[JWT_COOKIE_NAME];
-        
-        if (!authCookie){
-            throw 'Not logged in'
-        }
-
-        const tokenPayloadObject = await getPayloadFromToken(authCookie);
-        
-        if (!tokenPayloadObject.payload) {
-            throw 'Unauthorized'
-        }
-        
-        const user = tokenPayloadObject.payload;
+        const { method, body, query : {id} } = req;
+        const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) throw error
 
         switch(method.toLowerCase()) {
             case 'delete':

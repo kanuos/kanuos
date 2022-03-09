@@ -8,23 +8,14 @@ import { deleteBlogFromDB, editIndividualBlog } from "../../../database/blogs";
 import { JWT_COOKIE_NAME } from "../../../utils/admin";
 import { ContentValidators } from "../../../utils/validator";
 import { getPayloadFromToken } from '../../../utils/encrypt'
+import { isAdminMiddleware } from "../../../utils/authLib"
 
 export default async function (req, res) {
     let blogValidator;
     try {
-        const cookie = req.cookies;
-        
-        if (!cookie) throw 'Not logged in'
-        const authCookie = cookie[JWT_COOKIE_NAME];
-        if (!authCookie){
-            throw 'Not logged in'
-        }
-        const tokenPayloadObject = await getPayloadFromToken(authCookie);
-        if (!tokenPayloadObject.payload) {
-            throw 'Unauthorized'
-        }
-        const user = tokenPayloadObject.payload;
-        
+        const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) throw error
+
         const { method, body, query : {id} } = req;
 
         switch(method.toLowerCase()) {
@@ -44,7 +35,7 @@ export default async function (req, res) {
                 if (blogValidator.error) throw blogValidator.error.details[0].message;
                 
                 // try to update the blog with sanitized data
-                const updatedBlog = editIndividualBlog(id, blogValidator.value, user._id);
+                const updatedBlog = await editIndividualBlog(id, blogValidator.value, user._id);
 
                 return res.json({
                     data : updatedBlog,

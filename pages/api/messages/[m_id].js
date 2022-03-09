@@ -3,24 +3,15 @@
 // query m_id → mongoose ObjectID
 // Access : ADMIN
 import { deleteMessageFromDB, toggleMessageReadStatus } from '../../../database/messages';
-
-import { parse } from "cookie";
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
-import { getPayloadFromToken } from '../../../utils/encrypt'
+import { isAdminMiddleware } from '../../../utils/authLib'
 
 export default async function (req, res) {
-    const authCookie = parse(req.headers.cookie)[JWT_COOKIE_NAME];
-    if (!authCookie){
-        throw 'Not logged in'
-    }
-    const tokenPayloadObject = await getPayloadFromToken(authCookie);
-    if (!tokenPayloadObject.payload) {
-        throw 'Unauthorized'
-    }
     try {
         // destructure the incoming req object
         const {method, query : {m_id}, body : {isRead}} = req;
         
+        const { loggedAsAdmin, error } = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) throw error
         
         switch(method.toLowerCase()) {
             case 'delete':

@@ -2,22 +2,14 @@
 
 import { addNewNote, deleteExistingNote, editExistingNote } from '../../../database/notes';
 import { NoteValidator } from '../../../utils/validator'
-
-import { parse } from "cookie";
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
-import { getPayloadFromToken } from '../../../utils/encrypt'
+import { isAdminMiddleware } from '../../../utils/authLib'
 
 export default async function (req, res) {
-    const authCookie = parse(req.headers.cookie)[JWT_COOKIE_NAME];
-    if (!authCookie){
-        throw 'Not logged in'
-    }
-    const tokenPayloadObject = await getPayloadFromToken(authCookie);
-    if (!tokenPayloadObject.payload) {
-        throw 'Unauthorized'
-    }
-
     try {
+        const { loggedAsAdmin, error } = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) throw error
+
+
         const {method, body, query} = req;
         switch(method.toLowerCase()){
             case 'post':

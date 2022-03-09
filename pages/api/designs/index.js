@@ -1,26 +1,13 @@
 // Design API
 
 import { addDesignToDB } from "../../../database/designs";
-
-import { parse } from "cookie";
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
+import { isAdminMiddleware } from "../../../utils/authLib"
 import { ContentValidators } from "../../../utils/validator";
-import { getPayloadFromToken } from '../../../utils/encrypt'
 
 export default async function (req, res) {
     try {
-        const cookie = req.cookies;
-        
-        if (!cookie) throw 'Not logged in'
-        const authCookie = cookie[JWT_COOKIE_NAME];
-        if (!authCookie){
-            throw 'Not logged in'
-        }
-        const tokenPayloadObject = await getPayloadFromToken(authCookie);
-        if (!tokenPayloadObject.payload) {
-            throw 'Unauthorized'
-        }
-        const user = tokenPayloadObject.payload;
+        const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) throw error
 
         const {method, body} = req;
         
@@ -33,8 +20,6 @@ export default async function (req, res) {
                 if (error) throw error.details[0].message;
 
                 const design = {...value, user};
-
-                console.log(design)
 
                 const newDesign = await addDesignToDB(design);
 

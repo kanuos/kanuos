@@ -6,17 +6,17 @@ import { loginAdmin } from "../../../database/user";
 import { COOKIE_OPTIONS, JWT_COOKIE_NAME } from '../../../utils/admin';
 import { generateAccessToken, getPayloadFromToken } from "../../../utils/encrypt";
 import { AuthValidators } from "../../../utils/validator";
+import { isAdminMiddleware } from '../../../utils/authLib'
 
 
 export default async function (req, res) {
     try {
-        const { method, body } = req;    
-        const authCookie = req.cookies[JWT_COOKIE_NAME];
-        if (authCookie){
-            const tokenPayloadObject = await getPayloadFromToken(authCookie);
-            if (tokenPayloadObject.payload) {
-                throw 'Already logged in!'
-            }
+        const { method, body } = req;
+        
+        const authStatus = await isAdminMiddleware(req, res);
+        // cannot allow logged user to attempt to log in
+        if (authStatus.loggedAsAdmin) {
+            throw 'Already logged in'
         }
         
         // only allow post methods to log admin
