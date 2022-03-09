@@ -1,30 +1,22 @@
 // DISPLAY ADMIN PAGES
 //  LOGIN | REGISTER | DASHBOARD PAGE
 
-import { useState, useContext, useEffect } from 'react';
+import { useState } from 'react';
+
 import { LoginBody, RegisterBody } from '../../components/admin/AccountBody';
 import { HeadComponent } from '../../components/Head'
-import { AdminAuthContext } from '../../contexts/AdminAuthContext';
-import { getAdminUser } from '../../database/user';
-
-import { useRouter } from 'next/router'
 import { ADMIN_URLS } from '../../utils';
+import { getAdminUser } from '../../database/user'
+import { isAdminMiddleware } from '../../utils/authLib'
+
 
 const AdminHomePage = ({adminFromDB}) => {
-  const { admin } = useContext(AdminAuthContext);
   adminFromDB = JSON.parse(adminFromDB);
   const [existingAdmin, setExistingAdmin] = useState(adminFromDB);
-  const router = useRouter()
-
-  useEffect(() => {
-    if (admin) {
-      router.replace(ADMIN_URLS.dashboard.url)
-    }
-  }, [admin])
 
   return (
   <>
-      <HeadComponent title="Admin HomePage" />
+      <HeadComponent title="Admin Account" />
       {
         existingAdmin ?  
           <LoginBody />
@@ -37,26 +29,32 @@ const AdminHomePage = ({adminFromDB}) => {
 
 export default AdminHomePage;
 
-/*
-  if no user            => show register page
-  if user found   
-      
-      if logged out     => show login page
-      if logged in      => show dashboard page
-*/
 
-export async function getServerSideProps() {
-  let admin = null;
+export async function getServerSideProps({req, res}) {
+  
   try {
-    admin = await getAdminUser();
+    const {loggedAsAdmin} = await isAdminMiddleware(req, res);
+
+    if (loggedAsAdmin) {
+      return {
+        redirect : {
+            destination : ADMIN_URLS.dashboard.url,
+            permanent : false
+        }
+      }
+    }
+    const admin = await getAdminUser();
+    return {
+        props : { adminFromDB : JSON.stringify(admin)}
+      }
   } 
+  
   catch (error) {
     console.log(error)
-  }
-  finally {
     return {
-      props : { adminFromDB : JSON.stringify(admin)}
+      props : { adminFromDB : JSON.stringify({})}
     }
   }
+  
 
 }

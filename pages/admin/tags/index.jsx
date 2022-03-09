@@ -10,8 +10,9 @@ import { HeadComponent } from '../../../components/Head'
 import { JoinLine } from '../../../components/public/DescHeader';
 import { NavBar } from '../../../components/public/Nav';
 import { getAllTags } from '../../../database/tags';
+import { ADMIN_ACCOUNT } from '../../../utils';
 import { API_ROUTES } from '../../../utils/admin';
-
+import { isAdminMiddleware } from "../../../utils/authLib"
 
 const TagsAdminPage = ({allTags}) => {
     const [current, setCurrent] = useState('');
@@ -117,22 +118,32 @@ const TagsAdminPage = ({allTags}) => {
 export default TagsAdminPage;
 
 
-export async function getServerSideProps(){
+
+export async function getServerSideProps({req, res}) {
+  let allTags;
   try {
-    const tags = await getAllTags();
-    if (!tags) throw 'No tags found'
-    
+    const {loggedAsAdmin} = await isAdminMiddleware(req, res);
+    if (!loggedAsAdmin) {
+      return {
+        redirect : {
+            destination : ADMIN_ACCOUNT,
+            permanent : false
+        }
+      }
+    }
+    allTags = await getAllTags();
     return {
       props : {
-        allTags : JSON.stringify(tags)
+        allTags : JSON.stringify(allTags)
       }
     }
   } 
   catch (error) {
+    allTags = [];
     return {
       props : {
-        allTags : JSON.stringify([])
+        allTags : JSON.stringify(allTags)
       }
-    }  
+    }
   }
 }

@@ -5,7 +5,8 @@ import { IoAddCircle } from 'react-icons/io5'
 import { HeadComponent } from "../../../components/Head";
 import { NavBar } from "../../../components/public/Nav";
 import Link from "next/link";
-import { ADMIN_NEW_CONTENT } from "../../../utils";
+import { ADMIN_ACCOUNT, ADMIN_NEW_CONTENT } from "../../../utils";
+import { isAdminMiddleware } from "../../../utils/authLib"
 
 const BlogsAdminPage = ({allBlogs}) => {
     allBlogs = allBlogs ? JSON.parse(allBlogs) : []
@@ -46,8 +47,19 @@ const BlogsAdminPage = ({allBlogs}) => {
 export default BlogsAdminPage;
     
     
-export async function getServerSideProps() {
+export async function getServerSideProps({req, res}) {
     try {
+        const { loggedAsAdmin } = await isAdminMiddleware(req, res);
+
+        if (!loggedAsAdmin) {
+            return {
+                redirect : {
+                    destination : ADMIN_ACCOUNT,
+                    permanent : false
+                }
+            }
+        }
+
         const blogs = await getAllBlogs(true);
         return {
             props : {

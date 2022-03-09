@@ -20,9 +20,10 @@ import { NavBar } from '../../components/public/Nav';
 
 // import : internal 
 import { getAllTags } from '../../database/tags';
-import { ADMIN_URLS } from '../../utils';
+import { ADMIN_ACCOUNT, ADMIN_URLS } from '../../utils';
 import { API_ROUTES, CONTENT_TYPE } from '../../utils/admin';
 import { ContentValidators } from "../../utils/validator"
+import { isAdminMiddleware } from "../../utils/authLib"
 
 
 const SESSION_NAME = `sounak_admin`;
@@ -218,15 +219,27 @@ const ContentCMS = ({allTags}) => {
 
 export default ContentCMS;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req, res}) {
   let allTags;
   try {
+    const {loggedAsAdmin} = await isAdminMiddleware(req, res);
+    if (!loggedAsAdmin) {
+      return {
+        redirect : {
+            destination : ADMIN_ACCOUNT,
+            permanent : false
+        }
+      }
+    }
     allTags = await getAllTags();
+    return {
+      props : {
+        allTags : JSON.stringify(allTags)
+      }
+    }
   } 
   catch (error) {
     allTags = [];
-  }
-  finally {
     return {
       props : {
         allTags : JSON.stringify(allTags)

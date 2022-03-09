@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import axios from "axios"
 
 // imports : internal
-import { ADMIN_RESET, ADMIN_ACCOUNT, getEmptyState, LOGIN_STEPS, REGISTER_STEPS, RESET_PASSWORD_STEPS } from "../../utils"
+import { ADMIN_RESET, ADMIN_ACCOUNT, getEmptyState, LOGIN_STEPS, REGISTER_STEPS, RESET_PASSWORD_STEPS, ADMIN_URLS } from "../../utils"
 import { InputField } from "../public/InputField"
 import { JoinLine } from "../public/DescHeader"
 import { AUTH_ROUTES } from "../../utils/admin"
@@ -43,8 +43,12 @@ async function adminAuthCB(type, credentials){
 
 
 export const LoginBody = () => {
+  const r = useRouter();
   async function handleLogin(cred) {
-    const admin = await adminAuthCB('login', cred);
+    const success = await adminAuthCB('login', cred);
+    if (success){
+      r.push(ADMIN_URLS.dashboard.url)
+    }
   }
   return (
     <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">
@@ -70,9 +74,12 @@ export const PasswordReset = () => {
 }
 
 
-export const RegisterBody = () => {
+export const RegisterBody = ({onSuccess}) => {
   async function handleRegister(cred) {
-    await adminAuthCB('register', cred);
+    const success = await adminAuthCB('register', cred);
+    if (success) {
+      onSuccess(success)
+    }
   }
   return (
     <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">

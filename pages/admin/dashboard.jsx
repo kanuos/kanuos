@@ -5,6 +5,8 @@ import { HeadComponent } from '../../components/Head';
 
 // import : internal 
 import { getAllTags } from '../../database/tags';
+import { isAdminMiddleware } from '../../utils/authLib';
+import { ADMIN_ACCOUNT } from '../../utils';
 
 const AdminDashboard = ({allTags}) => {
 
@@ -24,19 +26,33 @@ const AdminDashboard = ({allTags}) => {
 
 export default AdminDashboard;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req, res}) {
   let allTags;
   try {
+    const {loggedAsAdmin} = await isAdminMiddleware(req, res);
+    if (!loggedAsAdmin) {
+      return {
+        redirect : {
+            destination : ADMIN_ACCOUNT,
+            permanent : false
+        }
+      }
+    }
     allTags = await getAllTags();
+    return {
+      props : {
+        allTags : JSON.stringify(allTags)
+      }
+    }
   } 
   catch (error) {
     allTags = [];
-  }
-  finally {
     return {
       props : {
         allTags : JSON.stringify(allTags)
       }
     }
   }
+  
+  
 }

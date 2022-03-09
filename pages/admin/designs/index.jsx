@@ -4,8 +4,9 @@ import { IoAddCircle } from 'react-icons/io5'
 import { HeadComponent } from "../../../components/Head";
 import { NavBar } from "../../../components/public/Nav";
 import Link from "next/link";
-import { ADMIN_NEW_CONTENT } from "../../../utils";
+import { ADMIN_NEW_CONTENT, ADMIN_ACCOUNT } from "../../../utils";
 import { getAllDesigns } from '../../../database/designs';
+import { isAdminMiddleware } from '../../../utils/authLib'
 
 
 const DesignAdminPage = ({allDesigns}) => {
@@ -43,8 +44,19 @@ const DesignAdminPage = ({allDesigns}) => {
 export default DesignAdminPage;
     
     
-export async function getServerSideProps() {
+export async function getServerSideProps({req, res}) {
     try {
+        const { loggedAsAdmin } = await isAdminMiddleware(req, res);
+
+        if (!loggedAsAdmin) {
+            return {
+                redirect : {
+                    destination : ADMIN_ACCOUNT,
+                    permanent : false
+                }
+            }
+        }
+
         const designs = await getAllDesigns(true);
         if (!designs || designs.length === 0) throw 'No designs found'
         return {

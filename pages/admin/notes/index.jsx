@@ -11,6 +11,8 @@ import { NavBar } from '../../../components/public/Nav';
 import { getAllNotes } from '../../../database/notes';
 import axios from 'axios';
 import { API_ROUTES } from '../../../utils/admin'
+import { ADMIN_ACCOUNT } from '../../../utils';
+import { isAdminMiddleware } from "../../../utils/authLib"
 
 const NotesAdminPage = ({allNotes}) => {
     const [notes, setNotes] = useState(allNotes ? JSON.parse(allNotes) : []);
@@ -164,9 +166,20 @@ const NotesAdminPage = ({allNotes}) => {
 export default NotesAdminPage;
 
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req, res}) {
     try {
+        const {loggedAsAdmin} = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) {
+          return {
+            redirect : {
+                destination : ADMIN_ACCOUNT,
+                permanent : false
+            }
+          }
+        }
+        
         const notes = await getAllNotes();
+
         return {
             props : {
                 allNotes : JSON.stringify(notes)

@@ -8,6 +8,8 @@ import { NavBar } from '../../../components/public/Nav';
 import { getAllMessagesFromDB } from '../../../database/messages'
 import axios from 'axios';
 import { API_ROUTES } from '../../../utils/admin'
+import { ADMIN_ACCOUNT } from '../../../utils';
+import { isAdminMiddleware } from '../../../utils/authLib'
 
 const InboxAdminPage = ({allMessages}) => {
     const [messages, setMessages] = useState(allMessages ? JSON.parse(allMessages) : []);
@@ -131,10 +133,19 @@ const InboxAdminPage = ({allMessages}) => {
 export default InboxAdminPage;
 
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req, res}) {
     try {
+        const {loggedAsAdmin} = await isAdminMiddleware(req, res);
+        if (!loggedAsAdmin) {
+          return {
+            redirect : {
+                destination : ADMIN_ACCOUNT,
+                permanent : false
+            }
+          }
+        }
         const messages = await getAllMessagesFromDB();
-        console.log(messages)
+        
         return {
             props : {
                 allMessages : JSON.stringify(messages)
@@ -144,7 +155,7 @@ export async function getServerSideProps() {
     catch (error) {
         return {
             props : {
-                allMessages : []
+                allMessages : JSON.stringify([])
             }
         }
     }
