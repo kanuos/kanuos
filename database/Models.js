@@ -32,12 +32,13 @@ const BlogSchema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   slug: {
     type: String,
     required: true,
     unique: true,
+    index: true
   },
   desc: {
     type: String,
@@ -107,6 +108,7 @@ const ProjectSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    index : true
   },
   desc: {
     type: String,
@@ -170,6 +172,7 @@ const DesignSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    index: true
   },
   desc: {
     type: String,
@@ -230,6 +233,7 @@ const UserSchema = new Schema({
     type: String,
     unique: true,
     required: true,
+    index: true
   },
   password: {
     type: String,
