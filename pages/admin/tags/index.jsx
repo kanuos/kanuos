@@ -95,11 +95,11 @@ const TagsAdminPage = ({allTags}) => {
           <ul className="flex flex-wrap gap-4 items-center justify-start w-full pt-4 border-t">
           {tags.sort((a,b) => a._id - b._id).map(t => (
             <li key={t._id}
-              className="text-sm py-1 px-2 border-2 border-current font-semibold rounded-md uppercase inline-flex items-center justify-between gap-x-4 transition-all hover:bg-dark hover:text-light text-dark">
+              className="text-sm py-1 px-2 border bg-light border-current font-semibold rounded-md uppercase inline-flex items-center justify-between gap-x-4 transition-all hover:bg-dark hover:text-light text-dark hover:shadow-lg group">
                 <small className='mr-4'>
                   {t.tag}
                 </small>
-                <button onClick={() => handleDelete(t)} className='text-primary hover:scale-125'>
+                <button onClick={() => handleDelete(t)} className='text-primary group-hover:opacity-100 opacity-0 hover:scale-125'>
                 <IoCloseCircleSharp />
                 </button>
             </li>
