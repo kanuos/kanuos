@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
-import { IoFootsteps } from 'react-icons/io5';
+import { IoFootsteps, IoLinkOutline } from 'react-icons/io5';
 import { FaQuoteLeft } from 'react-icons/fa';
-import { STEP_TYPE } from '../../utils'
+import { isValidURL, STEP_TYPE } from '../../utils'
+import { highlightAll } from 'prismjs';
+import 'prismjs/components/prism-markup-templating';
+import "prismjs/components/prism-python"
+import "prismjs/components/prism-jsx"
+import "prismjs/components/prism-django"
+
 
 export const Step = ({step}) => {
     const {key, value} = step;
     switch(key.toLowerCase()) {
         case STEP_TYPE.code:
-            return <CodeStep code={value.code} file={value.filename} language={value.language} /> 
+            return <CodeStep code={value.code} file={value.file} language={value.language} /> 
 
         case STEP_TYPE.quote:
             return <QuoteStep text={value?.trim()} /> 
@@ -21,9 +27,9 @@ export const Step = ({step}) => {
         case STEP_TYPE.image:
             return <ImageStep url={value?.trim()} />
 
-        case STEP_TYPE.reference:
-            // TODO: link item
-            break
+        case STEP_TYPE.link:
+            return <AnchorStep href={value?.href} label={value?.label} />
+            
         default:
             return <></>
     }
@@ -32,7 +38,7 @@ export const Step = ({step}) => {
 
 const TextStep = ({text}) => {
     return (
-        <p className='text-sm leading-relaxed opacity-80 break-words whitespace-pre-line my-2'>{text}</p>
+        <p className='text-sm leading-relaxed opacity-75 break-words whitespace-pre-line my-2'>{text}</p>
     )
 }
 
@@ -57,13 +63,16 @@ const QuoteStep = ({text}) => {
 }
 
 const CodeStep = ({code, file, language}) => {
+    useEffect(() => {
+        highlightAll()
+    }, [])
     return (
-        <section>
-            <span>
-                {file}
-            </span>
-            <pre>
-                {code}
+        <section className='flex flex-col items-stretch my-6'>
+            {Boolean(file) && <span className='opacity-50 block'>
+                Filename : {file}
+            </span>}
+            <pre className='scrollbar-thin rounded-md whitespace-pre-line'>
+                <code className={` language-${language} `}>{code.trim()}</code>
             </pre>
         </section>
     )
@@ -76,19 +85,23 @@ const ImageStep =({url}) => {
         setValid(isValidURL(url))
     }, [])
     
-    function isValidURL(href) {
-        try {
-            new URL(href)
-            return true;
-        } 
-        catch (error) {
-            return false;
-        }
-    }
+    
 
     if (!valid) return <></>
 
     return <img src={url} className="w-full h-auto block object-cover drop-shadow-2xl"/>
 }
 
-// TODO: code step, external-reference step
+const AnchorStep = ({label, href}) => {
+    
+    if (!isValidURL(href)) {
+        return <></>
+    }
+
+    return (
+        <p className='text-sm leading-relaxed flex gap-x-2 items-center group w-max'>
+            <IoLinkOutline className='group-hover:text-secondary transition-all'/>
+            <a href={href} className='border-b-2 border-secondary group-hover:border-primary inline group-hover:opacity-100 opacity-75 group-hover:italic break-words transition-all'>{label} </a>
+        </p>
+    )
+}

@@ -35,7 +35,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                     {design.title}
                 </h1>
                 <JoinLine />
-                <p className="text-sm mt-2 leading-relaxed">{design.desc}</p>
+                <p className="text-sm mt-2 leading-relaxed opacity-75">{design.desc}</p>
             </div>
         </header>
         <div className="relative h-full w-full px-8 md:px-16 my-16 max-w-4xl mx-auto">

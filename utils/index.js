@@ -20,7 +20,7 @@ export const STEP_TYPE = {
     subheading  : 'subheading',
     quote       : 'quote',
     image       : 'image',
-    reference   : 'reference',
+    link        : 'link',
 }
 
 
@@ -303,3 +303,14 @@ export const NAV_LINK_DESCRIPTIONS = {
     
 }
 
+
+
+export function isValidURL(href) {
+    try {
+        new URL(href)
+        return true;
+    } 
+    catch (error) {
+        return false;
+    }
+}
