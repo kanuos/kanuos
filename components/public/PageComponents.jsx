@@ -96,7 +96,7 @@ export const PageSegment = ({segment, index}) => {
         <motion.section 
             variants={variants.section}
             animate={show ? 'show' : 'hide'}
-            className='text-sm md:text-base w-full shadow-lg bg-light text-dark rounded relative'>
+            className='text-sm md:text-base w-full shadow-lg bg-light text-dark rounded relative ml-6'>
             <ul className="text-xs flex flex-col items-start gap-1 p-4">
                 <li>
                     <small className="opacity-50 font-semibold">
@@ -113,9 +113,9 @@ export const PageSegment = ({segment, index}) => {
                 </li>
             </ul>
             { !isComplete ? 
-                <IoRadioButtonOnOutline className="text-xl text-primary absolute -left-6 top-1/3 -translate-y-1/2" />
+                <IoRadioButtonOnOutline className="text-xl text-primary absolute -left-8 top-0" />
                 :
-                <IoCheckmarkCircleSharp className="text-xl text-secondary absolute -left-6 top-1/3 -translate-y-1/2" />
+                <IoCheckmarkCircleSharp className="text-xl text-secondary absolute -left-8 top-0" />
             }
             <motion.section 
                 className="p-4 overflow-hidden"
@@ -125,7 +125,7 @@ export const PageSegment = ({segment, index}) => {
                     <motion.article 
                         animate={show ? 'show' : 'hide'}
                         variants={variants.body}>
-                        {segment.steps.map((step, i) => (
+                        {segment.steps?.map((step, i) => (
                             <Step step={step} key={i} />
                         ))}
                     </motion.article>

@@ -1,5 +1,5 @@
 // imports : built in
-import { useEffect, useMemo, useState, useContext } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -13,7 +13,6 @@ import { InputField } from "../public/InputField"
 import { JoinLine } from "../public/DescHeader"
 import { AUTH_ROUTES } from "../../utils/admin"
 import { AuthValidators } from '../../utils/validator'
-import { AdminAuthContext } from "../../contexts/AdminAuthContext"
 
 
 async function adminAuthCB(type, credentials){
@@ -44,10 +43,8 @@ async function adminAuthCB(type, credentials){
 
 
 export const LoginBody = () => {
-  const { handleAdminContextStatus } = useContext(AdminAuthContext);
   async function handleLogin(cred) {
     const admin = await adminAuthCB('login', cred);
-    handleAdminContextStatus(admin);
   }
   return (
     <div className="flex flex-col items-center justify-center main-light h-full min-h-screen">

@@ -72,7 +72,8 @@ const ProjectValidator = CommonFields.keys({
         _id: Joi.any(),
         __v: Joi.any(),
         text: Joi.string().trim().required(),
-      }).required()).min(1).required(),
+      }).required())
+      .min(1).required(),
   difficulty: Joi.string().trim().lowercase().required().default("beginner"),
   category: Joi.string().trim().required(),
   prerequisites: Joi.array().items(
@@ -145,7 +146,11 @@ const DesignValidator = Joi.object().keys({
     )
     .min(1),
 
-  tools: Joi.array().min(1),
+  tools: Joi.array().items(Joi.object({
+    _id: Joi.any(),
+    __v: Joi.any(),
+    text: Joi.string().trim().required(),
+  }).required()).min(1),
 });
 
 export const NoteValidator = Joi.object({

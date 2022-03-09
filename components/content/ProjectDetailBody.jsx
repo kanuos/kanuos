@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 // import : external
 import { IoCheckmarkCircleOutline, IoGameControllerOutline, IoLinkOutline, IoPricetagOutline, IoGitCommitOutline, IoGitBranchOutline } from 'react-icons/io5';
 
@@ -7,13 +9,14 @@ import { DescHeader, JoinLine } from '../public/DescHeader';
 import { Signature } from '../public/Signature';
 import { PageSegment } from '../public/PageComponents';
 import { CLIENT_TYPE } from '../../utils';
-import { Step } from '../public/PageStepComponent';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 
 export const ProjectDetailBody = ({project, adminMode=false}) => {
+    const { isDarkMode } = useContext(ThemeContext)
     console.log(project)
     return (
-        <main className='px-8 md:px-16 h-auto w-full min-h-screen relative main-light select-text selection:bg-dark selection:text-light'>
+        <main className={'px-8 md:px-16 h-auto w-full min-h-screen relative select-text selection:bg-dark selection:text-light ' + (isDarkMode ? "main-dark" : "main-light")}>
             
             <div className="relative h-full w-full max-w-3xl mx-auto">
                 <DescHeader 
@@ -25,12 +28,12 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                     adminMode={adminMode}
                     descType={CLIENT_TYPE.project.name} />
 
-                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 text-dark mb-10'>
-                        <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter:font-special first-letter:uppercase float-left'>
+                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 my-10'>
+                        <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter:font-special first-letter:uppercase float-left opacity-75'>
                             {project.desc}
                         </p>
                         <ul className="flex flex-col items-start gap-y-0.5 mt-4">
-                            <li className="inline-flex items-center justify-start gap-x-2 text-dark text-xs">
+                            <li className="inline-flex items-center justify-start gap-x-2 text-xs">
                                 <IoGameControllerOutline className='text-sm' />
                                 <small className="capitalize">
                                     Difficulty
@@ -44,7 +47,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                         </ul>
                         <JoinLine />
                         <ul className="flex flex-col items-start gap-y-0.5 mb-4">
-                            <li className="inline-flex items-center justify-start gap-x-2 text-dark text-xs">
+                            <li className="inline-flex items-center justify-start gap-x-2 text-xs">
                                 <IoPricetagOutline className='text-sm' />
                                 <small className="capitalize">
                                     Category
@@ -58,7 +61,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                         </ul>
                     </section>
             
-                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 text-dark py-16'>
+                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 py-10'>
                         <h2 className='text-2xl inline-flex items-center justify-start'>
                             <span className='capitalize font-special font-semibold'>
                                 Project Tech stack used
@@ -66,7 +69,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                         </h2>
                         <JoinLine />
                         <ul className="flex flex-col items-start gap-y-4">
-                            {project.techStack.map((t, i) => (
+                            {project.techStack?.map((t, i) => (
                                 <li key={i} className="flex items-start justify-start gap-2">
                                     <IoGitCommitOutline />
                                     <span className='text-xs grow block'>
@@ -77,7 +80,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                         </ul>
                     </section>
 
-                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 text-dark py-16'>
+                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 py-10'>
                         <h2 className='text-2xl inline-flex items-center justify-start'>
                             <span className='capitalize font-special font-semibold'>
                                 Prerequisites
@@ -97,7 +100,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                     </section>
             
             
-                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 text-dark py-16 mb-10'>
+                    <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-10 py-10 mb-10'>
                         <h2 className='inline-flex items-center justify-start gap-x-2'>
                             <span className='text-2xl capitalize font-special font-semibold'>
                                 Chapters
@@ -106,8 +109,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                                 ({project.chapters.length})
                             </small>
                         </h2>
-                        <JoinLine />
-                        <ul className="flex flex-col items-start w-full gap-y-12 relative after:absolute after:h-full after:top-0 after:-left-4 after:w-0.5 after:bg-dark after:bg-opacity-10 after:z-0">
+                        <ul className={"flex flex-col items-start w-full gap-y-12 relative after:absolute after:h-full after:top-0 after:-left-0 after:w-0.5 after:bg-opacity-10 after:z-0 " + (isDarkMode ? "after:bg-light" : "after:bg-dark")}>
                             {project.chapters.map((chapter, i) => (
                                 <li key={i} className="flex items-center justify-start gap-x-1 w-full z-10">
                                     <PageSegment segment={chapter} index={i+1} />
@@ -117,13 +119,13 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                     </section>
 
 
-                    <section className='w-full mx-auto flex flex-col items-start justify-start text-dark gap-y-1'>
-                        <h2 className='text-2xl text-dark capitalize font-special font-semibold'>
+                    <section className='w-full mx-auto flex flex-col items-start justify-start gap-y-1'>
+                        <h2 className='text-2xl capitalize font-special font-semibold'>
                             {project?.outro?.heading}
                         </h2>
                         <JoinLine />
                         <section className='text-sm  w-full break-words'>
-                            <p className='leading-relaxed text-sm  '>
+                            <p className='leading-relaxed text-sm opacity-75 '>
                                 {project.outro?.text}
                             </p>
                                 <ul className="flex flex-col gap-y-4 my-4">

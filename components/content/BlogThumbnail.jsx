@@ -29,8 +29,8 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
         <article 
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            className="text-dark flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto">
-            <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50">
+            className="flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto">
+            <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
                 <small>Blog : #{index}</small>
             </p>
             <h3 className="font-special font-semibold group-hover:tracking-wide transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right">
@@ -39,7 +39,7 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
             <div className="filter grayscale group-hover:grayscale-0 transition-all">
                 <JoinLine />
             </div>
-            <p className="text-sm opacity-70 group-even:text-right group-odd:text-left group-hover:opacity-80 leading-relaxed">
+            <p className="text-sm opacity-70 group-even:text-right group-odd:text-left group-hover:opacity-75 leading-relaxed">
                 {data.desc?.slice(0, 250)} <span className="text-primary text-lg font-semibold">.....</span>
             </p>
             <div className="flex group-odd:items-start group-even:items-end flex-col gap-2 justify-start mt-3 w-full">

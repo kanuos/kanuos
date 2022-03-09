@@ -32,13 +32,13 @@ export const Step = ({step}) => {
 
 const TextStep = ({text}) => {
     return (
-        <p className='text-sm leading-relaxed break-words text-dark whitespace-pre-line my-2'>{text}</p>
+        <p className='text-sm leading-relaxed opacity-80 break-words whitespace-pre-line my-2'>{text}</p>
     )
 }
 
 const SubHeadingStep = ({text}) => {
     return (
-        <h2 className='font-semibold w-full break-words flex items-center justify-start gap-x-2 text-sm text-dark capitalize mt-10 mb-4'>
+        <h2 className='font-semibold w-full break-words flex items-center justify-start gap-x-2 text-sm capitalize mt-10 mb-4'>
             <IoFootsteps /> 
             <span>
                 {text}
@@ -50,7 +50,7 @@ const SubHeadingStep = ({text}) => {
 const QuoteStep = ({text}) => {
     return (
         <article className='my-14'>
-            <FaQuoteLeft className='text-2xl text-dark' />
+            <FaQuoteLeft className='text-2xl' />
             <blockquote className='p-4 break-words whitespace-pre-line font-semibold text-sm leading-relaxed tracking-wide bg-gradient-to-b from-primary to-dark via-purple-700 text-transparent bg-clip-text border-b'>{text}</blockquote>
         </article>
     )

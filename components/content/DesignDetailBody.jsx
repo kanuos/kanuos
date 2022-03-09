@@ -1,3 +1,5 @@
+
+import { useContext } from 'react';
 // import : external
 import {  IoDiscSharp, IoCalendarOutline, IoPricetagOutline, IoLeafOutline, IoColorFillOutline, IoRocketOutline, IoMapSharp, IoCameraOutline } from 'react-icons/io5';
 import { motion } from 'framer-motion'
@@ -7,13 +9,13 @@ import { JoinLine } from '../public/DescHeader';
 import { Signature } from '../public/Signature';
 import Link from 'next/link';
 import { PUBLIC_URLS } from '../../utils';
-
+import { ThemeContext } from '../../contexts/ThemeContext'
 
 
 export const DesignDetailBody = ({design, adminMode=false}) => {
-    
+    const { isDarkMode } = useContext(ThemeContext)
     return (
-    <main className='h-auto w-full min-h-screen main-light text-dark pb-20 select-text selection:bg-dark selection:text-light'>
+    <main className={'h-auto w-full min-h-screen pb-20 select-text selection:bg-dark selection:text-light ' + (isDarkMode ? 'main-dark' : 'main-light')}>
         <header className='h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto py-8 px-8 md:px-16'>
             {!adminMode && 
             <Link href={PUBLIC_URLS.designs.url}>
@@ -38,7 +40,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
         </header>
         <div className="relative h-full w-full px-8 md:px-16 my-16 max-w-4xl mx-auto">
             
-            <ul className="flex flex-col items-start justify-around gap-y-14 h-full relative before:h-full before:absolute before:w-0.5 before:bg-dark before:top-0 before:left-0 before:bg-opacity-10 ">
+            <ul className={"flex flex-col items-start justify-around gap-y-14 h-full relative before:h-full before:absolute before:w-0.5 before:top-0 before:left-0 " + (isDarkMode ? "before:bg-light before:bg-opacity-20" : "before:bg-dark before:bg-opacity-10")}>
 
                 <li className='pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2'>
                     <p className="flex items-center justify-start gap-x-1">
@@ -163,7 +165,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                     <ul className='text-xs w-full flex flex-col items-start mt-10 gap-y-20'>
                         {design.externalResources.map(({poster, courtesy, photographer}, i) => (
                             <li key={i} className="flex flex-col items-center group">
-                                <span className="text-dark font-special text-3xl">
+                                <span className="font-special text-3xl">
                                     #{(i + 1).toString().padStart(2, '0')}
                                 </span>
                                 <JoinLine />
@@ -189,6 +191,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                     </ul>
                 </li>
 
+                <li className='pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2'></li>
             </ul>
         
         </div>

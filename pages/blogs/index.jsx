@@ -1,4 +1,6 @@
 // BLOG LIST PAGE
+
+import { useContext } from 'react'
 // import : internal
 import { HeadComponent } from '../../components/Head'
 import { PublicHeader } from '../../components/public/Header';
@@ -8,13 +10,18 @@ import { BlogThumbnail } from '../../components/content/BlogThumbnail';
 import { ListLoader } from '../../components/public/ListLoader';
 import { getAllBlogs } from '../../database/blogs'
 
+import { ThemeContext } from '../../contexts/ThemeContext'
+
+
 const BlogList = ({blogList}) => {
     blogList = JSON.parse(blogList);
+    const {isDarkMode} = useContext(ThemeContext);
+
     return (
     <>
     <HeadComponent title="Sounak Mukherjee's Blogs" />
     <NavBar />
-    <div className='main-light h-full w-full'>
+    <div className={'h-full w-full min-h-screen ' + (isDarkMode ? 'main-dark' : 'main-light')}>
         <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-black selection:text-light'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.blogs, count : blogList.length}} />
         {
@@ -31,9 +38,12 @@ const BlogList = ({blogList}) => {
                 <ListLoader />
             </>
             :
-            <main className="h-[30vh] flex flex-col items-center justify-center">
-                <p className='opacity-75'>
-                    No blogs found!
+            <main className="h-[30vh] flex flex-col items-center justify-center gap-2">
+                <img src='/error.png' className='h-20 w-20 object-cover' />
+                <p className='p-4 rounded-md bg-light text-dark filter drop-shadow-xl'>
+                    <span className="text-sm">
+                        No blogs found!
+                    </span>
                 </p>
             </main>
         }

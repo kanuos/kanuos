@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 
 // import : external
 import {  IoLinkOutline, IoGitBranchOutline } from 'react-icons/io5';
@@ -9,11 +10,12 @@ import { Signature } from '../public/Signature';
 import { CLIENT_TYPE } from '../../utils';
 import { Step } from '../public/PageStepComponent';
 
-
+import { ThemeContext } from '../../contexts/ThemeContext'
 
 export const BlogDetailBody = ({blog, adminMode=false}) => {
+    const { isDarkMode } = useContext(ThemeContext)
     return (
-    <main className='px-8 md:px-16 h-auto w-full min-h-screen relative main-light select-text selection:bg-dark selection:text-light pb-20'>
+    <main className={'px-8 md:px-16 h-auto w-full min-h-screen relative select-text selection:bg-dark selection:text-light pb-20 ' + (isDarkMode ? 'main-dark' : 'main-light')}>
         {/* background image */}
         
         <div className="relative h-full w-full max-w-3xl mx-auto">
@@ -25,20 +27,20 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                 back={CLIENT_TYPE.blog.url}
                 descType={CLIENT_TYPE.blog.name} />
 
-                <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2  text-dark'>
+                <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2'>
                     <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter:font-special first-letter:uppercase float-left'>
                         {blog.desc}
                     </p>
                 </section>
         
         
-                <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-6 text-dark mt-16'>
+                <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-6 mt-16'>
                     <ul className="flex flex-col items-start w-full gap-y-12">
                         {blog.page?.map((segment, i) => (
                         <li key={i} className="flex items-center justify-start gap-x-1 my-6 w-full z-10">
                             <section 
                                 className='text-sm  w-full rounded relative pb-6'>
-                                <h2 className='text-2xl text-dark capitalize opacity-80 font-special font-semibold'>
+                                <h2 className='text-2xl capitalize font-special font-semibold'>
                                     {segment?.heading}
                                 </h2>
                                 <div className="ml-2">
@@ -55,15 +57,15 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                     </ul>
                 </section>
 
-                <section className='w-full mx-auto flex flex-col items-start justify-start text-dark'>
-                    <h2 className='text-2xl text-dark capitalize opacity-80 font-special font-semibold'>
+                <section className='w-full mx-auto flex flex-col items-start justify-start'>
+                    <h2 className='text-2xl capitalize font-special font-semibold'>
                         {blog?.outro?.heading}
                     </h2>
                     <div className="ml-1">
                         <JoinLine />
                     </div>
                     <section className='text-sm  w-full break-words'>
-                        <p className='leading-relaxed text-sm  '>
+                        <p className='leading-relaxed text-sm opacity-75'>
                             {blog.outro?.text}
                         </p>
                             <ul className="flex flex-col gap-y-4 my-4">

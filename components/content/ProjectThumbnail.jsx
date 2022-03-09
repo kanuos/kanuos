@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { useState } from "react"
-import { PUBLIC_URLS } from "../../utils"
+import { formatURLParamString, PUBLIC_URLS } from "../../utils"
 import { JoinLine } from "../public/DescHeader"
 import { AnimatePresence, motion } from "framer-motion"
 import { IoRemoveOutline, IoAddOutline, IoGameControllerOutline, IoPricetagOutline, IoCodeSlashOutline, IoCubeOutline } from "react-icons/io5"
@@ -72,14 +72,14 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
     }
 
 
-    const projectURL = adminMode ? ADMIN_EDIT_URL("project", data._id) : (PUBLIC_URLS.projects.url + '/' + data.title)
+    const projectURL = adminMode ? ADMIN_EDIT_URL("project", data._id) : (PUBLIC_URLS.projects.url + '/' + formatURLParamString(data.title))
 
     return (
         <article 
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            className="text-dark flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto">
-            <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50">
+            className="flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto">
+            <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
                 <small>Project : #{index}</small>
             </p>
             <h3 className="font-special font-semibold group-hover:tracking-wide transition-all text-2xl md:text-3xl group-odd:text-left group-even:text-right">
@@ -88,7 +88,7 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
             <div className="filter grayscale group-hover:grayscale-0">
                 <JoinLine />
             </div>
-            <p className="text-sm opacity-70 group-even:text-right group-odd:text-left group-hover:opacity-80 leading-relaxed">
+            <p className="text-sm opacity-70 group-even:text-right group-odd:text-left group-hover:opacity-75 leading-relaxed">
                 {data.desc?.slice(0, 150)}
             </p>
             <section className="bg-white rounded-md p-4 w-full mt-4 filter shadow-lg">
@@ -113,7 +113,7 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
                     className='w-full'>
                     <motion.ul 
                         variants={metadataVariants.body}     
-                        className="text-xs flex mt-2 border-t flex-col items-start gap-4 py-4">
+                        className="text-xs flex mt-2 border-t flex-col items-start gap-4 py-4 text-dark">
                         <li className="w-full">
                             <ul className="flex flex-col items-start gap-4">
                                 <li className="flex items-center justify-start gap-1">
@@ -142,7 +142,7 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
                                     <ul className="flex flex-col ml-4 items-start gap-y-2 list-inside list-disc">
                                     {data.techStack.map((stack, i) => (
                                         <li key={i}>
-                                            <small className="text-xs opacity-80">
+                                            <small className="text-xs opacity-75">
                                                 {stack.text}
                                             </small>
                                         </li>
@@ -178,7 +178,7 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
                         Project Date
                     </small>
                 </li>
-                <li className="text-xs font-semibold text-dark group-hover:text-primary">
+                <li className="text-xs font-semibold group-hover:text-primary">
                     {new Date(data.date).toDateString()}
                 </li>
             </ul>

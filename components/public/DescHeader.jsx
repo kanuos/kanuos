@@ -22,18 +22,18 @@ export const DescHeader = props => {
                     {
                     !adminMode && 
                     <Link href={back}>
-                        <a className='text-xs font-semibold text-dark opacity-50 focus:opacity-100 hover:opacity-100 capitalize'>
+                        <a className='text-xs font-semibold opacity-50 focus:opacity-100 hover:opacity-100 capitalize'>
                             <small>
                             &lt; back to {descType}
                             </small>
                         </a>
                     </Link>}
         
-                    <h1 className={"text-4xl md:text-5xl font-special my-6 text-dark "}>{name}</h1>
+                    <h1 className={"text-4xl md:text-5xl font-special my-6 "}>{name}</h1>
 
 
                     <ul className="flex flex-col items-start text-xs gap-y-0.5">
-                        <li className="inline-flex items-center justify-start gap-x-2 text-dark text-xs">
+                        <li className="inline-flex items-center justify-start gap-x-2 text-xs">
                             <IoCalendarClearOutline className="text-sm"/>
                             <small className="capitalize">
                                 Published on
@@ -49,7 +49,7 @@ export const DescHeader = props => {
                     <JoinLine />
 
                     {tags && <ul className="flex flex-col items-start gap-y-0.5">
-                        <li className="inline-flex items-center justify-start gap-x-2 text-dark text-xs">
+                        <li className="inline-flex items-center justify-start gap-x-2 text-xs">
                             <IoPricetagOutline className="text-sm"/>
                             <small className="capitalize">
                                 Tags
