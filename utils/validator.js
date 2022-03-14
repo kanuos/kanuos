@@ -11,25 +11,28 @@ const SegmentValidator = Joi.object({
   __v: Joi.any(),
   heading: Joi.string().trim().required(),
   index: Joi.any(),
-  steps: Joi.array().items(
-    Joi.object({
-      _id: Joi.any(),
-      __v: Joi.any(),
-      key: Joi.string().trim().required(),
-      value: [
-        Joi.string().trim().required(),
-        Joi.object({
-          code: Joi.string().required(),
-          language: Joi.string().required(),
-          file: Joi.string().required(),
-        }).length(3),
-        Joi.object({
-          label: Joi.string().required(),
-          href: Joi.string().required().uri(),
-        }).length(2),
-      ],
-    })
-  ).required().min(1),
+  steps: Joi.array()
+    .items(
+      Joi.object({
+        _id: Joi.any(),
+        __v: Joi.any(),
+        key: Joi.string().trim().required(),
+        value: [
+          Joi.string().trim().required(),
+          Joi.object({
+            code: Joi.string().required(),
+            language: Joi.string().required(),
+            file: Joi.string().required(),
+          }).length(3),
+          Joi.object({
+            label: Joi.string().required(),
+            href: Joi.string().required().uri(),
+          }).length(2),
+        ],
+      })
+    )
+    .required()
+    .min(1),
 });
 
 const CommonFields = Joi.object().keys({
@@ -67,22 +70,28 @@ const BlogValidator = CommonFields.keys({
 });
 
 const ProjectValidator = CommonFields.keys({
-  techStack: Joi.array().items(
+  techStack: Joi.array()
+    .items(
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         text: Joi.string().trim().required(),
-      }).required())
-      .min(1).required(),
+      }).required()
+    )
+    .min(1)
+    .required(),
   difficulty: Joi.string().trim().lowercase().required().default("beginner"),
   category: Joi.string().trim().required(),
-  prerequisites: Joi.array().items(
+  prerequisites: Joi.array()
+    .items(
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         text: Joi.string().trim(),
       }).required()
-    ).min(1).required(),
+    )
+    .min(1)
+    .required(),
   outro: Joi.object({
     heading: Joi.string().trim(),
     text: Joi.string().trim(),
@@ -100,7 +109,8 @@ const DesignValidator = Joi.object().keys({
   isPublic: Joi.bool().default(false),
   user: Joi.any(),
   thumbnail: Joi.string().required().trim().uri(),
-  typography: Joi.array().required()
+  typography: Joi.array()
+    .required()
     .items(
       Joi.object({
         _id: Joi.any(),
@@ -111,7 +121,8 @@ const DesignValidator = Joi.object().keys({
     )
     .min(1),
 
-  colorPalette: Joi.array().required()
+  colorPalette: Joi.array()
+    .required()
     .items(
       Joi.object({
         _id: Joi.any(),
@@ -131,10 +142,12 @@ const DesignValidator = Joi.object().keys({
         title: Joi.string().trim().required(),
         about: Joi.string().trim().required(),
       }).required()
-    ).required()
+    )
+    .required()
     .min(1),
 
-  externalResources: Joi.array().required()
+  externalResources: Joi.array()
+    .required()
     .items(
       Joi.object({
         _id: Joi.any(),
@@ -146,11 +159,16 @@ const DesignValidator = Joi.object().keys({
     )
     .min(1),
 
-  tools: Joi.array().items(Joi.object({
-    _id: Joi.any(),
-    __v: Joi.any(),
-    text: Joi.string().trim().required(),
-  }).required()).min(1).required(),
+  tools: Joi.array()
+    .items(
+      Joi.object({
+        _id: Joi.any(),
+        __v: Joi.any(),
+        text: Joi.string().trim().required(),
+      }).required()
+    )
+    .min(1)
+    .required(),
 });
 
 export const NoteValidator = Joi.object({
@@ -205,7 +223,76 @@ const LoginValidator = Joi.object({
 const RegisterValidator = LoginValidator.keys();
 
 const ResetValidator = LoginValidator.keys({
-  secret : Joi.string().trim().required()
+  secret: Joi.string().trim().required(),
+});
+
+export const UserProfileValidator = Joi.object({
+  _id: Joi.any(),
+  __v: Joi.any(),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .trim()
+    .required(),
+  name: Joi.string()
+    .required()
+    .trim()
+    .regex(/^[a-zA-Z ]+$/),
+  adminLabel: Joi.string().required().trim(),
+  bio: Joi.string().required().trim(),
+  skills: Joi.string().required().trim(),
+  social: Joi.array()
+    .required()
+    .items(
+      Joi.object({
+        _id: Joi.any(),
+        __v: Joi.any(),
+        label: Joi.string().required(),
+        href: Joi.string().required().uri(),
+      })
+    ),
+  portfolio: Joi.array().items(Joi.any()),
+  techStack: Joi.array()
+    .required()
+    .items(
+      Joi.object({
+        _id: Joi.any(),
+        __v: Joi.any(),
+        heading: Joi.string().trim().required(),
+        items: Joi.array().required().min(1).items(
+          Joi.object({
+            text : Joi.string().required().trim()
+          })
+        ),
+      })
+    ),
+});
+
+export const PortfolioProjectValidator = Joi.object({
+  design: Joi.any(),
+  user: Joi.any(),
+  project: Joi.any(),
+  desc: Joi.string().trim().required(),
+  uiux: Joi.array()
+    .required()
+    .items(
+      Joi.object({
+        _id: Joi.any(),
+        __v: Joi.any(),
+        heading: Joi.string().trim().required(),
+        desc: Joi.string().trim().required(),
+      }).required()
+    ),
+  dev: Joi.array()
+    .required()
+    .items(
+      Joi.object({
+        _id: Joi.any(),
+        __v: Joi.any(),
+        heading: Joi.string().trim().required(),
+        desc: Joi.string().trim().required(),
+      }).required()
+    ),
+  isShowcased: Joi.bool().default(false),
 });
 
 export const ContentValidators = {

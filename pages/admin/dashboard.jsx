@@ -4,30 +4,29 @@ import { HeadComponent } from '../../components/Head';
 
 
 // import : internal 
-import { getAllTags } from '../../database/tags';
+import { getAdminUser } from '../../database/user';
 import { isAdminMiddleware } from '../../utils/authLib';
 import { ADMIN_ACCOUNT } from '../../utils';
+import { ProfileComponent } from '../../components/admin/ProfileComponent';
 
-const AdminDashboard = ({allTags}) => {
-
-    return (
-        <>
-        <HeadComponent title='Admin | Dashboard CMS' />
-        <NavBar left={true} type={'admin'} />
-        <main className="text-dark main-light w-full h-full min-h-screen p-16">
-            <p>
-                {allTags}
-            </p>
-        </main>
-        </>
-    )
+const AdminDashboard = ({admin}) => {
+  admin = JSON.parse(admin);
+  return (
+      <>
+      <HeadComponent title='Admin | Dashboard CMS' />
+      <NavBar left={true} type={'admin'} />
+      <main className="text-dark main-light w-full h-full min-h-screen p-11">
+          <ProfileComponent admin={admin} />
+      </main>
+      </>
+  )
 }
 
 
 export default AdminDashboard;
 
 export async function getServerSideProps({req, res}) {
-  let allTags;
+  let admin;
   try {
     const {loggedAsAdmin} = await isAdminMiddleware(req, res);
     if (!loggedAsAdmin) {
@@ -38,18 +37,22 @@ export async function getServerSideProps({req, res}) {
         }
       }
     }
-    allTags = await getAllTags();
+    admin = await getAdminUser('');
+    
+    let temp = {...admin._doc};
+    delete temp.password
+
     return {
       props : {
-        allTags : JSON.stringify(allTags)
+        admin : JSON.stringify(temp)
       }
     }
   } 
   catch (error) {
-    allTags = [];
+    admin = {};
     return {
       props : {
-        allTags : JSON.stringify(allTags)
+        admin : JSON.stringify(admin)
       }
     }
   }

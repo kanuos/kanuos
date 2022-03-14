@@ -242,7 +242,70 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  adminLabel: {
+    type: String,
+    required: true,
+  },
+  bio: {
+    type: String,
+    required: true,
+  },
+  skills: {
+    type: String,
+    required: true,
+  },
+  techStack: [{
+    type: Object,
+    required: true,
+  }],
+  social: [{
+    type: Object,
+    required: true,
+  }],
+  portfolio: [{
+    type: Schema.Types.ObjectId,
+    ref : 'portfolio',
+    required: true,
+  }],
 });
+
+// Portfolio project Schema
+const PortfolioSchema = new Schema({
+  design : {
+    type : Schema.Types.ObjectId,
+    ref : 'design',
+    unique : true
+  },
+  user : {
+    type : Schema.Types.ObjectId,
+    ref : 'user'
+  },
+  project : {
+    type : Schema.Types.ObjectId,
+    ref : 'project',
+    unique : true
+  },
+  desc : {
+    type: String, 
+    required : true
+  },
+  uiux : [{
+    type : Object
+  }],
+  dev : [{
+    type : Object
+  }],
+  isShowcased : {
+    type: Boolean,
+    default : false
+  }
+})
+
+
 
 const models = conn.models;
 
@@ -253,5 +316,6 @@ const models = conn.models;
 !models.message && conn.model("message", MessageSchema);
 !models.design && conn.model("design", DesignSchema);
 !models.user && conn.model("user", UserSchema);
+!models.portfolio && conn.model("portfolio", PortfolioSchema);
 
 export default conn;

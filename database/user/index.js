@@ -99,3 +99,11 @@ export async function updatePassword(user) {
 
     return updatedUser;
 }
+
+
+
+export async function updateUserProfile(activeUserID, metadata) {
+    const updatedProfile = await UserModel.findByIdAndUpdate(activeUserID, metadata, { new: true, upsert: false});
+
+    return updatedProfile;
+}

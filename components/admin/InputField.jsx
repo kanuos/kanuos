@@ -237,6 +237,7 @@ export const ObjectArrayStepInput = props => {
     typography : 'family',
     colorPalette : 'hex',
     tools : 'string',
+    social : 'label',
     userFlowSteps: 'title',
     externalResources: 'poster',
   };
@@ -361,5 +362,102 @@ export const SelectInput = props => {
         ))}
       </div>
     </section>
+  )
+}
+
+
+
+export const ObjectHybrid = ({name, init=[], getData, layout}) => {
+  const [heading, setHeading] = useState(init[layout.heading] || '');
+  const [items, setItems] = useState(init[layout.list] || []);
+
+  function handleSubmit() {
+    const conflict = init.find(el => el.heading === heading);
+    if (Boolean(conflict)) {
+      alert('Already exists')
+      return
+    }
+    getData([...init, { heading, items }])
+    setHeading('');
+    setItems([])
+  }
+
+  function handleDelete(el) {
+    getData(init.filter(item => item.heading !== el.heading))
+  }
+
+  function handleEdit(el) {
+    setHeading(el.heading)
+    setItems(el.items)
+    handleDelete(el)
+  }
+
+  return (
+  <section className="flex flex-col items-start justify-start gap-2 bg-light p-4 filter drop-shadow-xl rounded-md">
+    
+    <ul className="flex flex-col items-stretch justify-start gap-y-4 mb-6 w-full">
+      {init.length > 0 && 
+      <li>
+        <span className="text-xs capitalize font-semibold text-secondary">Init</span>
+      </li>}
+      {init?.map((el, i) => {
+      return (
+          <li key={i} className="w-full p-4 bg-light rounded-md filter drop-shadow-xl">
+              <details className="w-full focus:outline-none border-none">
+              <summary className="w-full flex justify-between items-center focus:outline-none border-none">
+                  <p className="cursor-pointer font-semibold text-xs text-primary hover:text-secondary capitalize grow w-full flex items-center justify-start gap-x-2 break-words">
+                    {el.heading}
+                  </p>
+              </summary>
+              <section className="text-xs my-2 w-full break-words whitespace-pre-line">
+                  <ul className="flex flex-col items-stretch justify-start gap-y-2 list-inside list-disc">
+                    {el.items?.map((item, i) => (
+                      <li key={i}>
+                        {item.text}
+                      </li>
+                    ))}
+                  </ul>
+              </section>
+              <ul className="flex items-center justify-start gap-x-4 text-xs pt-4 w-full border-t">
+                  <li className='text-dark hover:text-secondary py-0.5 px-3 border-current border rounded'>
+                      <button onClick={() => handleEdit(el)}>
+                          <small>
+                              Edit
+                          </small>
+                      </button>
+                  </li>
+                  <li className='text-dark hover:text-primary py-0.5 px-3 border-current border rounded'>
+                      <button onClick={() => handleDelete(el)}>
+                          <small>
+                              Delete
+                          </small>
+                      </button>
+                  </li>
+              </ul>
+              </details>
+          </li>
+      )})}
+    </ul>
+    <span className="text-xs capitalize font-semibold">{name}</span>
+      
+    <div className="w-full">
+      <StringField 
+        name={layout.heading} 
+        value={heading} 
+        setValue={({k, v}) => setHeading(v)}/>
+    </div>
+
+    <ArrayField name={layout.list} init={items} getData={({v}) => setItems(v)} />
+    
+    {Boolean(heading?.trim().length * items.length) &&
+     <button
+        onClick={handleSubmit}
+        className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer transition-all">
+        <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
+          Add {name} 
+        </span>
+        <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
+    </button>}
+  </section>
   )
 }

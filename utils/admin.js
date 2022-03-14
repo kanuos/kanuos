@@ -6,7 +6,11 @@ export const LAYOUTS = {
     typography : ['family', 'desc'],
     color : ['name', 'hex'],
     externalResources : ['poster', 'photographer', 'courtesy'],
-    userFlowSteps : ['page', 'title', 'about']
+    userFlowSteps : ['page', 'title', 'about'],
+    techStack : {
+        heading : 'category', 
+        list : 'item'
+    }
 }
 
 
@@ -172,6 +176,41 @@ export const CONTENT_TYPE = {
 }
 
 
+
+export const PROFILE_FIELDS = [
+        {
+            key : 'email',
+            type : 'string',
+        },
+        {
+            key : 'name',
+            type : 'string',
+        },
+        {
+            key : 'adminLabel',
+            type : 'string',
+        },
+        {
+            key : 'bio',
+            type : 'string',
+        },
+        {
+            key : 'skills',
+            type : 'string',
+        },
+        {
+            key : 'techStack',
+            type : 'objHybrid',
+            layout : LAYOUTS.techStack
+        },
+        {
+            key : 'social',
+            type : 'objArr',
+            layout : LAYOUTS.link
+        }        
+    ]
+
+
 export function getEmptyTemplate(type) {
     let obj = {};
     CONTENT_TYPE[type]?.fields.forEach(el => {
@@ -213,6 +252,7 @@ export const API_ROUTES = {
     messages : `/api/messages`,
     projects : `/api/projects`,
     designs : `/api/designs`,
+    profile : `/api/profile`,
 }
 
 
