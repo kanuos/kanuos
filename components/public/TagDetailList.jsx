@@ -69,6 +69,15 @@ export const TagDetailList = props => {
         {(active === CONTENT_TYPE.project.name) && <GroupList type={CONTENT_TYPE.project.name} list={project} tag={tag} />}
         {(active === CONTENT_TYPE.blog.name) && <GroupList type={CONTENT_TYPE.blog.name} list={blog} tag={tag} />}
         {(active === CONTENT_TYPE.design.name) && <GroupList type={CONTENT_TYPE.design.name} list={design} tag={tag} />}
+
+        {!Boolean(project.length || blog.length || design.length) && (
+            <p className="text-center flex items-start justify-center gap-1 w-full my-10">
+                <span>
+                No content found for 
+                </span>
+                <strong className="text-primary capitalize underline underline-offset-4 font-semibold text-sm">{tag}</strong>
+            </p>
+        )}
     </section>
     
   )
