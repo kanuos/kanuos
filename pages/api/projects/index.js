@@ -1,6 +1,6 @@
 //  PROJECT API
 
-import { addProjectToDB, projectUniqueConstraint } from "../../../database/projects";
+import { addProjectToDB, getAllProjects, projectUniqueConstraint } from "../../../database/projects";
 import { isAdminMiddleware } from "../../../utils/authLib";
 import { ContentValidators } from "../../../utils/validator";
 
@@ -14,6 +14,12 @@ export default async function (req, res) {
         if (!loggedAsAdmin) throw error
 
         switch(method.toLowerCase()) {
+            case 'get':
+                const list = await getAllProjects(true);
+                return res.json({
+                    data : list,
+                    err : false
+                })
             case 'post':
                 // Create a new Project document
                 // receives newProject data from the incoming request body 

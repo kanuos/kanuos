@@ -1,6 +1,6 @@
 // Design API
 
-import { addDesignToDB } from "../../../database/designs";
+import { addDesignToDB, getAllDesigns } from "../../../database/designs";
 import { isAdminMiddleware } from "../../../utils/authLib"
 import { ContentValidators } from "../../../utils/validator";
 
@@ -12,6 +12,12 @@ export default async function (req, res) {
         const {method, body} = req;
         
         switch(method.toLowerCase()) {
+            case 'get':
+                const list = await getAllDesigns(true);
+                return res.json({
+                    data : list,
+                    err : false
+                })
             // Add new design to DB
             case 'post':
                 // validate incoming request body with the design valiator
