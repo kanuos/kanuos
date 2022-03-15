@@ -210,6 +210,23 @@ export const PROFILE_FIELDS = [
         }        
     ]
 
+export const PORTFOLIO_FIELDS = [
+        {
+            key : 'desc',
+            type : 'string',
+        },
+        {
+            key : 'uiux',
+            type : 'objArr',
+            layout : LAYOUTS.outro
+        },
+        {
+            key : 'dev',
+            type : 'objArr',
+            layout : LAYOUTS.outro
+        },
+    ]
+
 
 export function getEmptyTemplate(type) {
     let obj = {};
@@ -253,6 +270,7 @@ export const API_ROUTES = {
     projects : `/api/projects`,
     designs : `/api/designs`,
     profile : `/api/profile`,
+    portfolio : `/api/profile/portfolio`,
 }
 
 

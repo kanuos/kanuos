@@ -268,6 +268,8 @@ export const UserProfileValidator = Joi.object({
 });
 
 export const PortfolioProjectValidator = Joi.object({
+  _id: Joi.any(),
+  __v: Joi.any(),
   design: Joi.any(),
   user: Joi.any(),
   project: Joi.any(),
@@ -279,7 +281,7 @@ export const PortfolioProjectValidator = Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         heading: Joi.string().trim().required(),
-        desc: Joi.string().trim().required(),
+        text: Joi.string().trim().required(),
       }).required()
     ),
   dev: Joi.array()
@@ -289,7 +291,7 @@ export const PortfolioProjectValidator = Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         heading: Joi.string().trim().required(),
-        desc: Joi.string().trim().required(),
+        text: Joi.string().trim().required(),
       }).required()
     ),
   isShowcased: Joi.bool().default(false),

@@ -2,6 +2,7 @@ import { hashPassword, isValidPassword } from '../../utils/encrypt';
 import conn from '../Models';
 
 const UserModel = conn.models.user;
+const PortfolioModel = conn.models.portfolio;
 
 
 
@@ -19,7 +20,15 @@ export async function getAdminUser(email='') {
     // query the user collection for admin user
     // since for the time being only one user is allowed
     // db query findone is used instead of find
-    const admin = await UserModel.findOne(filter);
+    const admin = await UserModel.findOne(filter).populate({
+        path : 'portfolio',
+        populate : {
+            path : 'design project',
+            populate : {
+                path : 'tags'
+            }
+        }
+    });
     return admin;
 }
 
@@ -106,4 +115,47 @@ export async function updateUserProfile(activeUserID, metadata) {
     const updatedProfile = await UserModel.findByIdAndUpdate(activeUserID, metadata, { new: true, upsert: false});
 
     return updatedProfile;
+}
+
+
+
+export async function addPortfolioProjectToProfile(newDoc) { 
+    // insert sanitized doc into portfolio sub-array
+    const newPortfolio = await PortfolioModel.create(newDoc)
+    await UserModel.findByIdAndUpdate(newDoc.user, { $push : { portfolio : newPortfolio}}, {new : true, upsert: false});
+    const populatedData = await PortfolioModel.findById(newPortfolio._id).populate({
+            path : 'design project',
+            populate : {
+                path : 'tags'
+        }
+    });
+    return populatedData;
+}
+
+
+export async function deletePortfolioProjectFromProfile(portfolioID, userID) { 
+    const deletedPortfolio = await PortfolioModel.findOneAndRemove({
+        _id : portfolioID,
+        user : userID
+    });
+    return deletedPortfolio;
+}
+
+
+
+export async function updatePortfolioProject(portfolioID, userID, updateDoc) { 
+    const updatedPortfolio = await PortfolioModel.findOneAndUpdate({
+        _id : portfolioID,
+        user : userID
+    }, updateDoc,  {
+        new : true,
+        upsert : false
+    }).populate({
+        path : 'design project',
+        populate : {
+            path : 'tags'
+    }
+});
+
+    return updatedPortfolio;
 }

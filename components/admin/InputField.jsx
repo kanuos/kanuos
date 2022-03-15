@@ -237,6 +237,8 @@ export const ObjectArrayStepInput = props => {
     typography : 'family',
     colorPalette : 'hex',
     tools : 'string',
+    uiux : 'heading',
+    dev : 'heading',
     social : 'label',
     userFlowSteps: 'title',
     externalResources: 'poster',
