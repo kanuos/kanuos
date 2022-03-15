@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { isValidObjectId } from 'mongoose'
 import conn from "../Models";
 
@@ -43,4 +44,41 @@ export async function deleteExistingTag(tagID) {
     if (!deletedTag) throw `Tag by id ${tagID} not deleted`
 
     return deletedTag;
+}
+
+
+
+export async function getDataRelatedToTag(tagID) {
+    const data = await TagModel.aggregate([
+        {
+            $match : {
+               "_id" : mongoose.Types.ObjectId(tagID)
+            }
+        }, 
+        {
+            $lookup: {
+                from: "projects", 
+                localField: "_id",
+                foreignField: "tags",
+                as: "project"
+            }
+        }, 
+        {
+            $lookup: {
+                from: "blogs", 
+                localField: "_id",
+                foreignField: "tags",
+                as: "blog"
+            }
+        },
+        {
+            $lookup: {
+                from: "designs", 
+                localField: "_id",
+                foreignField: "tags",
+                as: "design"
+            }
+        }
+    ]);
+    return data;
 }
