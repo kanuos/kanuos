@@ -26,11 +26,20 @@ const DesignList = ({ designList }) => {
           />
           {designList.length > 0 ? (
             <>
-              <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 grid-flow-row gap-10 w-full mb-20">
+              {
+                designList.length < 4 &&
+                <main className="grid grid-flow-row grid-cols-1 place-items-center gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
                 {designList.map((design) => (
-                  <DesignThumbnail key={design._id} data={design} />
+                  <DesignThumbnail key={design._id} data={design} center={designList.length < 4} />
                 ))}
-              </main>
+              </main>}
+              {
+                designList.length >= 4 &&
+                <main className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
+                {designList.map((design) => (
+                  <DesignThumbnail key={design._id} data={design} center={designList.length >= 4} />
+                ))}
+              </main>}
               <ListLoader />
             </>
           ) : (
@@ -67,3 +76,4 @@ export async function getStaticProps() {
     };
   }
 }
+

@@ -6,12 +6,12 @@ import { motion } from "framer-motion"
 import { ADMIN_EDIT_URL } from "../../utils/admin"
 
 
-export const DesignThumbnail = ({data, adminMode}) => {
+export const DesignThumbnail = ({data, adminMode, center}) => {
     const designURL = adminMode ? ADMIN_EDIT_URL("design", data._id) : (PUBLIC_URLS.designs.url + '/' + formatURLParamString(data.title))
 
     return (
         <article 
-            className="text-dark bg-light md:col-span-4 lg:odd:col-span-3 lg:even:col-span-3 lg:odd:row-span-4 lg:even:row-span-5 flex flex-col gap-y-2 relative h-full min-h-[28rem] lg:h-full flex-grow group overflow-hidden rounded-md shadow-lg hover:shadow-2xl w-full">
+            className={(center ? 'w-full max-w-sm ' : 'sm:col-span-3 sm:even:row-span-2 sm:odd:row-span-2 row-span-1 ') +" text-dark bg-light sm:hover:scale-110 transition-all  flex flex-col gap-y-2 relative h-full min-h-[28rem] lg:h-full flex-grow group overflow-hidden p-2.5 shadow-lg hover:shadow-2xl w-full odd:-rotate-3 even:rotate-3 sm:hover:rotate-0"}>
             <img 
                 src={data.thumbnail} 
                 alt={data.title + "'s thumbnail"} 
