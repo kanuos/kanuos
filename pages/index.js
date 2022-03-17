@@ -1,6 +1,6 @@
 // Portfolio page
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 // import : internal
 import { HeadComponent } from '../components/Head'
@@ -10,6 +10,9 @@ import { getAllTags } from "../database/tags"
 import axios from 'axios';
 import { API_ROUTES } from '../utils/admin';
 import { TagDetailList } from '../components/public/TagDetailList';
+import { ThemeContext } from "../contexts/ThemeContext";
+import { LoadSpinner } from '../components/public/Loader';
+import { ThemeToggler } from '../components/public/ThemeToggler';
 
 const STATUSES = {
   'initial' : 'initial',
@@ -22,6 +25,9 @@ const HomePage = ({allTags}) => {
   const [selectedTag, setSelectedTag] = useState('');
   const [status, setStatus] = useState(STATUSES.initial);
   const [data, setData] = useState(null);
+
+  const { isDarkMode } = useContext(ThemeContext)
+  
 
   useEffect(async () => {
     if (!selectedTag) return;
@@ -63,7 +69,8 @@ const HomePage = ({allTags}) => {
     <>
     <HeadComponent title="Welcome to Sounak Mukherjee's website" />
     <NavBar />
-    <main className="min-h-screen h-auto w-full relative main-light p-10">
+    <ThemeToggler />
+    <main className={"min-h-screen h-auto w-full relative p-10 " + (isDarkMode ? 'main-dark' : 'main-light')}>
       <div className="w-full">
         <LandingHeader />
         
@@ -71,7 +78,7 @@ const HomePage = ({allTags}) => {
           (status === STATUSES.initial) && 
             <>
             <div className="flex flex-col items-start max-w-3xl mx-auto w-full">
-              <h2 className="font-special font-semibold capitalize">
+              <h2 className=" font-semibold capitalize">
                 tags 
               </h2>
               <p className="text-xs opacity-50">
@@ -85,7 +92,7 @@ const HomePage = ({allTags}) => {
               <li key={tag._id} className="group">
                 <button 
                   onClick={() => setSelectedTag(tag._id)} 
-                  className="uppercase font-semibold opacity-50 group-hover:opacity-100 hover:group-even:text-primary hover:group-odd:text-secondary transition-all">
+                  className="uppercase font-black text-sm tracking-wide hover:group-even:text-primary hover:group-odd:text-secondary transition-all">
                 #{tag.tag}
                 </button>
               </li>))}
@@ -94,8 +101,7 @@ const HomePage = ({allTags}) => {
         }
         
         {
-          //TODO: show loader
-          (status === STATUSES.loading && <p>Loading...</p>)
+          (status === STATUSES.loading && <LoadSpinner />)
         }
         
         { 

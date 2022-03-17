@@ -29,7 +29,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                     descType={CLIENT_TYPE.project.name} />
 
                     <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 my-10'>
-                        <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter:font-special first-letter:uppercase float-left opacity-75'>
+                        <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter: first-letter:uppercase float-left opacity-75'>
                             {project.desc}
                         </p>
                         <ul className="flex flex-col items-start gap-y-0.5 mt-4">
@@ -63,7 +63,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
             
                     <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 py-10'>
                         <h2 className='text-2xl inline-flex items-center justify-start'>
-                            <span className='capitalize font-special font-semibold'>
+                            <span className='capitalize  font-semibold'>
                                 Project Tech stack used
                             </span>
                         </h2>
@@ -82,7 +82,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
 
                     <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 py-10'>
                         <h2 className='text-2xl inline-flex items-center justify-start'>
-                            <span className='capitalize font-special font-semibold'>
+                            <span className='capitalize  font-semibold'>
                                 Prerequisites
                             </span>
                         </h2>
@@ -102,7 +102,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
             
                     <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-10 py-10 mb-10'>
                         <h2 className='inline-flex items-center justify-start gap-x-2'>
-                            <span className='text-2xl capitalize font-special font-semibold'>
+                            <span className='text-2xl capitalize  font-semibold'>
                                 Chapters
                             </span>
                             <small className="text-xs opacity-70">
@@ -120,7 +120,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
 
 
                     <section className='w-full mx-auto flex flex-col items-start justify-start gap-y-1'>
-                        <h2 className='text-2xl capitalize font-special font-semibold'>
+                        <h2 className='text-2xl capitalize  font-semibold'>
                             {project?.outro?.heading}
                         </h2>
                         <JoinLine />

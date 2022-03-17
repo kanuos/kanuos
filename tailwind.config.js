@@ -4,9 +4,6 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-      fontFamily : {
-        'special' : ['Shadows Into Light', 'sans-serif']
-      },
       extend : {
         colors : {
           'dark' : '#171738',

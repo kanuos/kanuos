@@ -49,10 +49,6 @@ export const PUBLIC_URLS = {
         name : 'designs',
         url : '/designs'
     },
-    contact : {
-        name : 'contact me',
-        url : '/contact'
-    },
 }
 
 
@@ -91,6 +87,57 @@ export const ADMIN_URLS = {
         name : 'tags',
         url : ADMIN_PATH + '/tags'
     },
+}
+
+const SOCIAL = {
+    email : 'sounakmukherjee@ymail.com',
+    phone : '+1 (607) 280-5640',
+    credential : 'full stack developer'
+}
+
+const PORTFOLIO_LINKS = {
+    "about me" : {
+        name : 'about me',
+        url : '/#about-me'
+    },
+    "selected works" : {
+        name : 'selected works',
+        url : '/#work'
+    },
+    "contact me" : {
+        name : 'contact me',
+        url : '/#contact-me'
+    },
+}
+
+export const NAV_METADATA = {
+    public : {
+        links : PUBLIC_URLS,
+        other : {
+            heading : 'My portfolio',
+            link : '/portfolio'
+        },
+        social : SOCIAL_LINKS,
+        contact : SOCIAL
+    },
+    portfolio : {
+        links : PORTFOLIO_LINKS,
+        other : {
+            heading : 'Check out my website',
+            link : '/',
+            sublinks : PUBLIC_URLS
+        },
+        social : SOCIAL_LINKS,
+        contact : SOCIAL
+    },
+    admin : {
+        links : ADMIN_URLS,
+        other : {
+            heading : 'Main site',
+            link : '/',
+        }
+    },
+
 }
 
 
@@ -278,29 +325,6 @@ export function formatURLParamString(str) {
  */
 export function deFormatURLParamString(str) {
     return str.split('+').join(' ');
-}
-
-
-export const NAV_LINK_DESCRIPTIONS = {
-    '/' : `Hey there! Please check out my portfolio website. 
-        You can know more about me, what I'm working on, my projects and much more.`,
-    
-    '/blogs' : `Hey there! Please check out my blogs. 
-        I blog about technical blogs, code solutions, programming concepts and much more.
-        Please check them out!`,
-    '/blogs/[slug]' : `Hey there! Please check out my blogs. 
-        I blog about technical blogs, code solutions, programming concepts and much more.
-        Please check them out!`,
-    
-    '/designs' : `Hey there! Please check out my UI/UX designs. \nI try to implement UI/UX designs, scroll animations etc for different app-ideas and digital products. \nCheck out the list of public designs that I've created.`,
-    '/designs/[design]' : `Hey there! Please check out my UI/UX designs. \nI try to implement UI/UX designs, scroll animations etc for different app-ideas and digital products. \nCheck out the list of public designs that I've created.`,
-
-    '/projects' : `Hey there! Please check out my projects. \nI love creating all kinds of practical projects viz. front-end projects, full stack projects, console apps etc . \nCheck out the list of projects that I've created and published.`,
-    '/projects/[name]' : `Hey there! Please check out my projects. \nI love creating all kinds of practical projects viz. front-end projects, full stack projects, console apps etc . \nCheck out the list of projects that I've created and published.`,
-    
-    
-    '/contact' : `Have a project idea in mind? Want to work with me or hire me? Please feel free to send me a message. I will get back to you ASAP!`,
-    
 }
 
 

@@ -4,12 +4,18 @@
 
 
 *, *::after, *::before {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
 html {
+  height: -webkit-fill-available;
   @apply scrollbar-thin;
 }
+
 
 a, a:visited, a:focus,
 button, button:visited, button:focus {
@@ -25,10 +31,18 @@ button, button:visited, button:focus {
 }
 
 .main-dark {
-  background-image: linear-gradient(to right, rgba(23, 23, 56, .9), rgba(23, 23, 56, .9)) , url(/hero.jpg);
+  background-image: linear-gradient(to right, rgba(23, 23, 56, .95), rgba(23, 23, 56, .95)) , url(/hero.jpg);
   background-size: cover;
   background-attachment: fixed;
   @apply text-light;
+}
+
+.nav-light {
+  @apply text-dark bg-light;
+}
+
+.nav-dark {
+  @apply text-light bg-dark;
 }
 
 @media screen and (min-width : 1024px) {
@@ -40,7 +54,7 @@ button, button:visited, button:focus {
 
 
 code[class*="language-"], pre[class*="language-"] {
-  font-family: 'Poppins', sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 

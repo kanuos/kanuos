@@ -5,7 +5,7 @@ export const PublicHeader = ({data}) => {
 
     return (
     <header className="flex flex-col items-start mb-24 gap-y-2">
-        <h1 className="font-special font-semibold text-4xl capitalize">
+        <h1 className=" font-semibold text-4xl capitalize">
             {title}
         </h1>
         <JoinLine />

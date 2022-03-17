@@ -33,7 +33,7 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
             <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
                 <small>Blog : #{index}</small>
             </p>
-            <h3 className="font-special font-semibold group-hover:tracking-wide transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right">
+            <h3 className=" font-semibold group-hover:tracking-wide transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right">
                 {data.title}
             </h3>
             <div className="filter grayscale group-hover:grayscale-0 transition-all">

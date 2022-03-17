@@ -29,7 +29,7 @@ export const DescHeader = props => {
                         </a>
                     </Link>}
         
-                    <h1 className={"text-4xl md:text-5xl font-special my-6 "}>{name}</h1>
+                    <h1 className={"text-4xl md:text-5xl  my-6 "}>{name}</h1>
 
 
                     <ul className="flex flex-col items-start text-xs gap-y-0.5">

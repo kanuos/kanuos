@@ -49,10 +49,10 @@ export const Portfolio = ({portfolio}) => {
         <div className="relative h-full w-full">
             <header className="h-screen px-10 pt-28 pb-4 w-full flex flex-col items-center justify-center max-w-3xl mx-auto">
                 <h1 className='flex flex-col gap-y-2 items-stretch w-fit mr-auto'>
-                    <span className='font-special text-2xl text-primary'>
+                    <span className=' text-2xl text-primary'>
                         Hello, I am
                     </span>
-                    <strong className='font-special text-center font-normal text-7xl md:text-8xl capitalize'>
+                    <strong className=' text-center font-normal text-7xl md:text-8xl capitalize'>
                         {portfolio.user.name.split(' ')[0]}
                     </strong>
                     <p className='text-xs text-right opacity-50'>
@@ -80,7 +80,7 @@ export const Portfolio = ({portfolio}) => {
             <section className='h-auto min-h-screen py-10 mt-20  max-w-3xl mx-auto'>
                 <div className="flex flex-col items-start justify-center">
                     <div className="flex flex-col items-start px-10">
-                        <h2 className='font-special font-semibold text-4xl lg:text-5xl mb-6'>Some of my works</h2>
+                        <h2 className=' font-semibold text-4xl lg:text-5xl mb-6'>Some of my works</h2>
                     </div>
                     <ul className="my-4 flex px-10 items-end md:items-center justify-center gap-8">
                         {Object.entries(PORTFOLIO_PROJECT_CATEGORIES).map(([k,v]) => (
@@ -108,7 +108,7 @@ export const Portfolio = ({portfolio}) => {
 
             <section className='h-auto min-h-screen py-10'>
                 <div className="flex flex-col items-start px-10  max-w-3xl mx-auto">
-                    <h2 className='font-special text-4xl font-semibold lg:text-5xl'>A few words about me</h2>
+                    <h2 className=' text-4xl font-semibold lg:text-5xl'>A few words about me</h2>
                     <JoinLine />
                     <p className='text-sm my-4 opacity-70 whitespace-pre-line'>   
                         {portfolio.user.bio}
@@ -153,7 +153,7 @@ export const Portfolio = ({portfolio}) => {
 
             <section className='h-auto flex flex-col min-h-screen p-10  max-w-3xl mx-auto'>
                 <div className="flex flex-col items-start">
-                    <h2 className='font-special text-4xl font-semibold lg:text-5xl'>Let's work together</h2>
+                    <h2 className=' text-4xl font-semibold lg:text-5xl'>Let's work together</h2>
                     <JoinLine />
                 </div>
                 <p className='text-sm my-4 whitespace-pre-line opacity-70'>
@@ -184,7 +184,7 @@ const PortfolioProjectThumbnail = ({project}) => {
     return (
         <article className="my-6 h-screen flex flex-col gap-y-2 py-4 border-b even:items-end odd:items-start group">
             <p className="text-xs capitalize font-semibold"><small>project</small></p>
-            <h6 className='tracking-tight font-special text-4xl text-primary'>{project.name}</h6>
+            <h6 className='tracking-tight  text-4xl text-primary'>{project.name}</h6>
             <div className="flex items-center justify-between gap-x-4 w-full group-even:flex-row-reverse">
                 <img
                     className='h-96 w-3/4 md:w-5/6 my-4 object-cover block filter rounded grayscale drop-shadow-lg group-hover:grayscale-0 transition-all' 

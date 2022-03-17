@@ -28,7 +28,7 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                 descType={CLIENT_TYPE.blog.name} />
 
                 <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2'>
-                    <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter:font-special first-letter:uppercase float-left opacity-75'>
+                    <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter: first-letter:uppercase float-left opacity-75'>
                         {blog.desc}
                     </p>
                 </section>
@@ -40,7 +40,7 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                         <li key={i} className="flex items-center justify-start gap-x-1 my-6 w-full z-10">
                             <section 
                                 className='text-sm  w-full rounded relative pb-6'>
-                                <h2 className='text-2xl capitalize font-special font-semibold'>
+                                <h2 className='text-2xl capitalize  font-semibold'>
                                     {segment?.heading}
                                 </h2>
                                 <div className="ml-2">
@@ -58,7 +58,7 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                 </section>
 
                 <section className='w-full mx-auto flex flex-col items-start justify-start'>
-                    <h2 className='text-2xl capitalize font-special font-semibold'>
+                    <h2 className='text-2xl capitalize  font-semibold'>
                         {blog?.outro?.heading}
                     </h2>
                     <div className="ml-1">

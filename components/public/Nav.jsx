@@ -1,73 +1,73 @@
 // built in imports
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 // external imports
 import { AnimatePresence, motion } from "framer-motion"
-import { FaQuoteLeft } from 'react-icons/fa'
-import { GrHomeRounded, GrCode, GrMailOption, GrGrow, GrCatalog, GrSun, GrArchive, GrClipboard, GrTag, GrGremlin } from 'react-icons/gr'
+import { GrSun, GrEject, GrMoon } from 'react-icons/gr'
+import axios from "axios";
 
 // internal imports
-import { ADMIN_URLS, NAV_LINK_DESCRIPTIONS, PUBLIC_URLS } from "../../utils";
+import { ADMIN_ACCOUNT, ADMIN_URLS, NAV_METADATA, PUBLIC_URLS } from "../../utils";
+import { AUTH_ROUTES } from "../../utils/admin";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { SecondaryHeading } from "../portfolio/SecondaryHeading";
 
 
 
 
 
-export const NavBar = ({left=false, type='public'}) => {
+export const NavBar = ({type='public'}) => {
     const [showMenu, setShowMenu] = useState(false);
+    const { isDarkMode } = useContext(ThemeContext)
+
+    
     return (
-        <>
-        <motion.nav 
-            whileHover={{ scale: 1.1}}
-            onClick={() => setShowMenu(prev => !prev)}
-            className={"fixed z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group rounded-full top-4 h-10 w-10 " + (left ? 'left-2' : 'right-2') + (showMenu ? ' bg-transparent' : ' hover:bg-light filter hover:drop-shadow-xl')}>
-            <motion.span 
-                animate={showMenu ? {
-                    rotate: 45,
-                    y: 3,
-                    transition : { type : 'spring', stiffness : 400}
-                } : 
-                {
-                    rotate: 0,
-                    y: 0,
-                    transition : { type : 'spring', stiffness : 400}
-                    
-                }}
-                className={"w-6 rounded h-[2px] transition-colors " + (showMenu ? "bg-primary" : "bg-dark group-hover:bg-secondary")}></motion.span>
-            <motion.span 
-                animate={showMenu ? {
-                    rotate: -45,
-                    y: -5,
-                    transition : { type : 'spring', stiffness : 400}
-                } : 
-                {
-                    rotate: 0,
-                    y: 0,
-                    transition : { type : 'spring', stiffness : 400}
-                }}
-                className={"w-6 rounded h-[2px] transition-colors " + (showMenu ? "bg-primary" : "bg-dark group-hover:bg-secondary")}></motion.span>
-        </motion.nav>
+        <motion.nav className="fixed z-40 flex items-center justify-center top-4 right-2">
+            <motion.div 
+                onClick={() => setShowMenu(prev => !prev)}
+                className="z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group rounded-full h-10 w-10 hover:rounded-full">
+                <motion.span 
+                    animate={showMenu ? {
+                        rotate: 45,
+                        y: 3,
+                        transition : { type : 'spring', stiffness : 400}
+                    } : 
+                    {
+                        rotate: 0,
+                        y: 0,
+                        transition : { type : 'spring', stiffness : 400}
+                        
+                    }}
+                    className={"w-6 rounded h-[2px] transition-opacity " + (showMenu ? "bg-primary" : `${isDarkMode ? 'bg-light' : 'bg-dark'} opacity-50 group-hover:opacity-100 group-hover:mr-0 mr-1`)}></motion.span>
+                <motion.span 
+                    animate={showMenu ? {
+                        rotate: -45,
+                        y: -5,
+                        transition : { type : 'spring', stiffness : 400}
+                    } : 
+                    {
+                        rotate: 0,
+                        y: 0,
+                        transition : { type : 'spring', stiffness : 400}
+                    }}
+                    className={"w-6 rounded h-[2px] transition-opacity " + (showMenu ? "bg-primary" : `${isDarkMode ? 'bg-light' : 'bg-dark'} opacity-50 group-hover:opacity-100 group-hover:ml-0 ml-1`)}></motion.span>
+            </motion.div>
         <AnimatePresence>
             <NavMenu showMenu={showMenu} type={type} />
         </AnimatePresence>
-        </>
+        </motion.nav>
   )
 }
 
 
 const NavMenu = ({ showMenu, type='public' }) => {
     const currentPath = useRouter().pathname;
-    const [currentText, setCurrentText] = useState('');
-    const [hoverText, setHoverText] = useState('');
+    const { isDarkMode } = useContext(ThemeContext)
 
-    const URLS = type === 'public' ? PUBLIC_URLS : ADMIN_URLS
+    const URLS = type in NAV_METADATA ? NAV_METADATA[type] : NAV_METADATA.public
 
-    useEffect(() => {
-        setCurrentText(NAV_LINK_DESCRIPTIONS[currentPath])        
-    }, [currentPath])
-    
 
     const variants = {
         section : {
@@ -86,29 +86,19 @@ const NavMenu = ({ showMenu, type='public' }) => {
             }
         }
     }
+    
     return (
         <AnimatePresence>
         <motion.section
-            className="h-full min-h-screen overflow-hidden w-screen fixed inset-0 main-light z-30 text-dark"
+            className={"h-screen overflow-hidden w-full fixed inset-0 z-30 " + (isDarkMode ? 'nav-dark' : 'nav-light')}
             variants={variants.section}
             initial={'hide'}
             animate={showMenu ? 'show' : 'hide'} >
             
-            <div
-            className={"h-full flex flex-col items-center justify-center pt-14 pb-4 md:py-0 " + (type !== 'public' ? '' : 'md:flex-row')}>
-                <LeftPanel 
-                    key={hoverText}
-                    highlightCurrent={!Boolean(hoverText)}
-                    isAdmin={type !== 'public'}
-                    text={!Boolean(hoverText) ? currentText : hoverText}/>
-
-                <RightPanel 
-                    urls={URLS} 
-                    currentPath={currentPath} 
-                    setText={setHoverText}
-                    isAdmin={type !== 'public'} />
-                
-            </div>
+            <MenuComponent 
+                urls={URLS} 
+                currentPath={currentPath} 
+                type={type} />
         </motion.section>
         </AnimatePresence>
     )
@@ -116,64 +106,37 @@ const NavMenu = ({ showMenu, type='public' }) => {
 
 
 
-const LeftPanel = ({text, highlightCurrent, isAdmin}) => {
-    if (isAdmin) {
-        return (
 
-            <h1 className="font-special text-4xl font-semibold capitalize mt-20">
-                Admin Mode
-            </h1>
-        )
+
+const MenuComponent = ({urls, currentPath, type}) => {
+    const isAdmin =  type === 'admin';
+
+    const r = useRouter();
+
+    async function handleLogout() {
+        try {
+            await axios.get(AUTH_ROUTES.logout);    
+            r.push(ADMIN_ACCOUNT)
+        } 
+        catch (error) {
+            console.log(error)
+        }
     }
-    return (
-        <section className="w-full grow h-auto flex flex-col p-4 items-center justify-center text-dark md:w-1/2 md:bg-gradient-to-r md:from-transparent md:to-secondary relative md:h-full">
-            <img src="/hero.jpg" className="pointer-events-none z-0 hidden md:block h-full w-full absolute inset-0 object-cover opacity-25" />
-            <div className="bg-light relative h-full z-10 filter drop-shadow-2xl p-2 md:pt-20 w-full rounded-md flex items-start flex-col justify-center max-w-md md:items-center md:bg-transparent">
-                
-                {/* user group */}
-                <section className="flex items-center w-full justify-start gap-2 md:flex-col md:bg-light md:filter md:drop-shadow-2xl md:rounded-md md:w-fit md:p-4 md:gap-4 relative">
-                    <img 
-                        className="h-10 w-10 block object-cover rounded-full p-0.5 bg-light drop-shadow-lg md:h-16 md:w-16"
-                        src="/sounak.jpg" 
-                        alt="Sounak's face!"/>
-                    <div className="flex flex-col items-start justify-start md:items-center md:justify-center">
-                        <strong className="text-xs">Sounak Mukherjee</strong>
-                        <p className="text-xs opacity-50 font-semibold">
-                            <small>
-                                Full Stack Web Developer
-                            </small>
-                        </p>
-                    </div>
-                </section>
-                <span className="hidden md:block w-0.5 h-28 bg-dark"></span>
-                <p className="text-xs pl-12 py-2 w-full md:bg-light md:filter md:drop-shadow-2xl md:rounded-md md:w-fit md:p-4 md:text-sm h-20 overflow-y-auto md:overflow-hidden md:h-auto scrollbar-thin md:flex md:items-start md:justify-start md:gap-x-3">
-                    <FaQuoteLeft className="block md:text-xl mb-1 md:mb-0 text-secondary"/>
-                    <motion.small 
-                        initial={{ opacity: 0, rotate: -5}}
-                        animate={{opacity: 1, rotate : 0 }}
-                        className={"font-semibold w-full block selection:bg-dark selection:text-light leading-relaxed " + (highlightCurrent ? "text-secondary" : "text-dark")}>
-                        {text} 
-                    </motion.small>
-                </p>
-                <button className="hidden md:flex items-center gap-2 mt-auto bg-light filter drop-shadow-2xl p-4 w-fit rounded-md text-sm group">
-                    <GrSun className="group-hover:animate-pulse transition-all opacity-50 group-hover:opacity-100"/> 
-                        <small className="capitalize font-semibold transition-all opacity-50 group-hover:opacity-100">
-                            Light Mode On
-                        </small>
-                </button>
-            </div>
-        </section>
-    )
-}
-
-
-const RightPanel = ({urls, currentPath, isAdmin, setText}) => {
-    const handleSetText = val => () => setText(val)
 
     return (
-        <section className="w-full grow h-full flex flex-col p-4 items-center justify-center text-dark md:w-1/2">
-            <ul className={"h-fit md:h-full mt-10 md:mt-0 w-max mx-auto flex flex-col justify-center gap-6 md:gap-10 px-4 " + (isAdmin ? "items-center" : "items-start")}>
-            {Object.entries(urls).map(([key, valueObj]) => {
+        <section className="w-full max-w-5xl mx-auto grow h-full px-10 pt-20 pb-20 flex flex-col items-start justify-between sm:grid sm:grid-cols-2 sm:grid-rows-6 sm:pt-28">
+            <video 
+                muted
+                autoPlay
+                loop
+                playsInline={true}
+                className='h-screen w-screen object-cover block pointer-events-none opacity-20 fixed inset-0 -z-10'>
+                <source src='/pf.webm' type='video/webm'/>
+                <source src='/pf.mp4' type='video/mp4'/>
+            </video>
+     
+            <ul className="w-max mx-auto flex flex-col justify-center sm:justify-start sm:mx-0 items-center sm:items-start sm:col-start-1 sm:col-end-2 sm:row-start-1 sm:row-end-4 h-fit sm:h-full gap-6 sm:gap-10">
+            {Object.entries(urls.links).map(([key, valueObj]) => {
                 let isActive;
                 
                 if ([PUBLIC_URLS.home.url, ADMIN_URLS.dashboard.url].includes(valueObj.url)){
@@ -184,29 +147,27 @@ const RightPanel = ({urls, currentPath, isAdmin, setText}) => {
                 else {
                     isActive = currentPath.startsWith(valueObj.url)
                 }
-                if (isActive) {
+                if (isActive || type === 'portfolio') {
                     return(
-                        <li key={key} className="capitalize w-fit text-sm md:text-base">
+                        <li key={key} className="capitalize w-fit">
                             <Link href={valueObj.url}>
-                                <a className={`flex items-center justify-center gap-x-2 relative before:h-1.5 before:w-1.5 before:rounded-full before:bg-secondary before:absolute before:top-1/2 before:-right-4 font-semibold before:-translate-y-1/2 md:font-normal`}>
-                                    <LinkIcon type={valueObj.name} isActive={true} />
+                                <a className={"text-3xl md:text-4xl lg:text-5xl flex items-center justify-center gap-x-2 relative group font-black" }>
                                     <span>
                                         {valueObj.name}
                                     </span>
+                                    {type === 'portfolio' && 
+                                        <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-secondary group-hover:w-6 origin-right transition-all duration-100"></span>
+                                    }
                                 </a>
                             </Link>  
                         </li>
                     )
                 }
                 return(
-                    <li key={key} className="capitalize w-fit text-sm md:text-base">
+                    <li key={key} className="capitalize w-fit">
                         <Link href={valueObj.url}>
-                            <a 
-                                onMouseEnter={handleSetText(NAV_LINK_DESCRIPTIONS[valueObj.url])}
-                                onMouseLeave={handleSetText('')}
-                                className="flex items-center justify-center gap-x-2 font-semibold  md:font-normal relative group">
-                                <LinkIcon type={valueObj.name}/>
-                                <span className="opacity-50 group-hover:scale-x-105 origin-left group-hover:opacity-100 transition-all">
+                            <a className="text-3xl md:text-4xl lg:text-5xl flex items-center justify-center gap-x-2 relative group font-black">
+                                <span className="opacity-40 group-hover:scale-x-105 origin-left group-hover:opacity-75 transition-all">
                                     {valueObj.name}
                                 </span>
                                 <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-secondary group-hover:w-6 origin-right transition-all duration-100"></span>
@@ -216,68 +177,85 @@ const RightPanel = ({urls, currentPath, isAdmin, setText}) => {
                 )
                 })}
             </ul>
-            { !isAdmin && 
-            <button className="flex md:hidden items-center gap-2 mt-auto text-sm group">
-                <GrSun className="transition-all opacity-50 group-hover:opacity-100"/> 
-                    <small className="capitalize font-semibold transition-all opacity-50 group-hover:opacity-100">
-                        Light Mode On
-                    </small>
+
+            <div className="flex w-max mx-auto flex-col items-start justify-start gap-4 sm:mx-0 sm:col-start-2 sm:col-end-3 sm:row-start-1 sm:row-end-2 sm:items-end sm:w-full">
+                <Link href={urls.other.link}>
+                    <a>
+                        <SecondaryHeading text={urls.other.heading} navMode={true} />
+                    </a>
+                </Link>
+                {urls.other.sublinks && 
+                    <ul className="hidden sm:flex flex-col items-end">
+                        {Object.values(urls.other.sublinks).map(link => (
+                            <li key={link.name}>
+                                <Link href={link.url}>
+                                    <a className="text-xs md:text-sm font-semibold capitalize opacity-50 hover:opacity-100 transition-all text-right">
+                                        <small>
+                                            {link.name}
+                                        </small>
+                                    </a>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                }
+            </div>
+
+
+            { urls.social && 
+            <div className="hidden sm:flex flex-col items-end justify-end gap-4 sm:col-start-2 sm:col-end-3 sm:row-start-4 h-full">
+                <SecondaryHeading text="social links" navMode={true} />
+                {urls.social && 
+                    <ul className="hidden sm:flex flex-col items-end">
+                        {Object.entries(urls.social)?.map(([name, url]) => (
+                            <li key={name}>
+                                <Link href={url}>
+                                    <a className="text-xs md:text-sm font-semibold capitalize opacity-50 hover:opacity-100 transition-all">
+                                        <small className="text-right">
+                                            {name}
+                                        </small>
+                                    </a>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                }
+            </div>}
+
+
+            {urls?.contact && <NavContact cred ={urls.contact}/>}
+            
+            { isAdmin && 
+            <button
+                onClick={handleLogout}
+                className="flex md:hidden items-center gap-2 text-sm"> 
+                <small className="capitalize text-primary font-semibold transition-all hover:underline underline-offset-4">
+                    Logout
+                </small>
             </button>}
+
+            
+
         </section>
     )
 }
 
 
-const LinkIcon = ({type, isActive}) => {
-    let icon;
-    switch(type.toLowerCase()) {
-        case 'home':
-            icon = <GrHomeRounded 
-                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-        
-        case 'projects':
-            icon = <GrCode 
-                className={"text-sm " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        case 'blogs':
-            icon = <GrCatalog 
-                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        case 'designs':
-            icon = <GrGrow 
-                className={"text-sm " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        case 'contact me':
-            icon = <GrMailOption 
-                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        case 'inbox':
-            icon = <GrArchive 
-                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        case 'notes':
-            icon = <GrClipboard 
-                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        case 'tags':
-            icon = <GrTag 
-                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        case 'dashboard':
-            icon = <GrGremlin 
-                className={"text-xs " + (isActive ? 'opacity-100' : 'opacity-50 group-hover:opacity-100')} />
-            break;
-
-        default :
-            icon = <></>
-    }
-    return icon;
+const NavContact = ({cred}) => {
+    return (
+        <section className="flex flex-col w-max mx-auto items-center sm:mx-0 sm:items-start gap-y-2 sm:col-start-1 sm:col-end-2 sm:justify-end sm:h-full sm:row-start-6 sm:row-end-7">
+            <strong className="opacity-50 font-semibold capitalize text-xs">
+                {cred?.credential}
+            </strong>
+            <ul className="flex flex-col items-center sm:items-start">
+                <li className="font-semibold lowercase text-xs">
+                    {cred?.email}
+                </li>
+                <li className="font-semibold lowercase text-xs">
+                    {cred?.phone}
+                </li>
+            </ul>
+        </section>
+    )
 }
+

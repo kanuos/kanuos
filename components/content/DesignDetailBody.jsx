@@ -31,7 +31,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                         ui/ux design
                     </small>
                 </p>
-                <h1 className='text-4xl md:text-5xl font-special capitalize'>         
+                <h1 className='text-4xl md:text-5xl  capitalize'>         
                     {design.title}
                 </h1>
                 <JoinLine />
@@ -124,7 +124,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                                 <figure className="h-auto w-11/12 rounded-md shadow-2xl overflow-hidden mb-2 z-10">
                                     <img src={page} alt={title} className="h-full w-full object-cover block" />
                                 </figure>
-                                <span className='z-10 font-special text-xl font-semibold capitalize'>
+                                <span className='z-10  text-xl font-semibold capitalize'>
                                     Page {i + 1} : {title}
                                 </span>
                                 <JoinLine />
@@ -165,7 +165,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                     <ul className='text-xs w-full flex flex-col items-start mt-10 gap-y-20'>
                         {design.externalResources.map(({poster, courtesy, photographer}, i) => (
                             <li key={i} className="flex flex-col items-center group">
-                                <span className="font-special text-3xl">
+                                <span className=" text-3xl">
                                     #{(i + 1).toString().padStart(2, '0')}
                                 </span>
                                 <JoinLine />
@@ -182,7 +182,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                                         href={courtesy} 
                                         referrerPolicy="no-referrer" 
                                         target="_blank" 
-                                        rel="noopener noreferrer nofollow" className='font-semibold hover:underline hover:text-primary font-special text-lg capitalize tracking-wider'>
+                                        rel="noopener noreferrer nofollow" className='font-semibold hover:underline hover:text-primary  text-lg capitalize tracking-wider'>
                                         {photographer}
                                     </a>
                                 </div>
