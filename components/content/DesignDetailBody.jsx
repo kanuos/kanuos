@@ -15,8 +15,8 @@ import { ThemeContext } from '../../contexts/ThemeContext'
 export const DesignDetailBody = ({design, adminMode=false}) => {
     const { isDarkMode } = useContext(ThemeContext)
     return (
-    <main className={'h-auto w-full min-h-screen pb-20 select-text selection:bg-dark selection:text-light ' + (isDarkMode ? 'main-dark' : 'main-light')}>
-        <header className='h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto py-8 px-8 md:px-16'>
+    <main className={'h-auto w-full min-h-screen px-12 md:px-16 pb-20 select-text selection:bg-dark selection:text-light ' + (isDarkMode ? 'main-dark' : 'main-light')}>
+        <header className='h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto py-20'>
             {!adminMode && 
             <Link href={PUBLIC_URLS.designs.url}>
             <a className='text-xs font-semibold opacity-50 focus:opacity-100 hover:opacity-100 capitalize mb-4'>
@@ -38,7 +38,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                 <p className="text-sm mt-2 leading-relaxed opacity-75">{design.desc}</p>
             </div>
         </header>
-        <div className="relative h-full w-full px-8 md:px-16 my-16 max-w-4xl mx-auto">
+        <div className="relative h-full w-full my-16 max-w-4xl mx-auto">
             
             <ul className={"flex flex-col items-start justify-around gap-y-14 h-full relative before:h-full before:absolute before:w-0.5 before:top-0 before:left-0 " + (isDarkMode ? "before:bg-light before:bg-opacity-20" : "before:bg-dark before:bg-opacity-10")}>
 

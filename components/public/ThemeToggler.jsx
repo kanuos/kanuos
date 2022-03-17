@@ -6,11 +6,11 @@ import { ThemeContext } from '../../contexts/ThemeContext'
 export const ThemeToggler = () => {
     const { toggleTheme, isDarkMode } = useContext(ThemeContext);
   return (
-    <div className='h-screen fixed top-0 right-0 z-10 flex flex-col items-end justify-end'>
+    <div className='fixed top-4 left-2 z-10 flex flex-col items-end justify-end'>
         <button 
             title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             onClick={toggleTheme} 
-            className={`rounded-full text-lg filter transition-all drop-shadow-xl hover:scale-110 p-2.5 mb-6 mr-2 ${isDarkMode ? 'bg-light text-dark' : 'bg-dark text-light'}`}>
+            className={`rounded-full filter transition-all drop-shadow-xl hover:scale-110 p-2 hover:text-primary border border-transparent hover:border-current border-dashed ${isDarkMode ? 'text-light' : 'text-dark'}`}>
             {!isDarkMode ? <BsFillSunFill /> : <BsMoonStarsFill />}
         </button>
     </div>
