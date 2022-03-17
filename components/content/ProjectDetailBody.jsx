@@ -14,7 +14,6 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 
 export const ProjectDetailBody = ({project, adminMode=false}) => {
     const { isDarkMode } = useContext(ThemeContext)
-    console.log(project)
     return (
         <main className={'px-8 md:px-16 h-auto w-full min-h-screen relative select-text selection:bg-dark selection:text-light ' + (isDarkMode ? "main-dark" : "main-light")}>
             
@@ -29,7 +28,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                     descType={CLIENT_TYPE.project.name} />
 
                     <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 my-10'>
-                        <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter: first-letter:uppercase float-left opacity-75'>
+                        <p className='leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left opacity-75'>
                             {project.desc}
                         </p>
                         <ul className="flex flex-col items-start gap-y-0.5 mt-4">

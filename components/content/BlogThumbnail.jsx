@@ -1,12 +1,14 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { PUBLIC_URLS } from "../../utils"
 import { JoinLine } from "../public/DescHeader"
 import { motion } from "framer-motion"
 import { ADMIN_EDIT_URL } from "../../utils/admin"
+import { ThemeContext } from "../../contexts/ThemeContext"
 
 export const BlogThumbnail = ({data, index, adminMode=false}) => {
     const [hovered, setHovered] = useState(false)
+    const { isDarkMode } = useContext(ThemeContext);
 
     const btnVariants = {
         show : {
@@ -46,7 +48,6 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
                 <span className="text-xs font-semibold capitalize transition-all group-hover:text-primary">tags</span>
                 <ul className="flex flex-wrap pz-2 opacity-50 group-hover:opacity-100 items-start group-odd:justify-start group-even:justify-end flex-grow gap-x-4 gap-y-2 capitalize font-semibold text-xs">
                     {data.tags.map(tag => (
-                        // TODO: !adminMode => search blogs by tag name 
                         <li key={tag._id}>
                             {tag.tag}
                         </li>
@@ -70,10 +71,10 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
                     variants={btnVariants}
                     animate={hovered ? 'show' : 'hide'}
                     className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
-                    <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark">
+                    <span className={"py-1.5 px-6 block z-10 peer  transition-all hover:shadow-xl border-2 " + (isDarkMode ? "border-secondary hover:text-dark text-secondary font-semibold" : "hover:text-light border-dark")}>
                         {adminMode ? 'Open Blog in Admin Mode' : 'Read blog'}
                     </span>
-                    <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300"></span>
+                    <span className={"py-1.5 px-6 block  transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300 " + (isDarkMode ? "bg-secondary border-secondary" : "bg-dark border-dark")}></span>
                 </motion.a>
             </Link>
         </article>

@@ -31,7 +31,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                         ui/ux design
                     </small>
                 </p>
-                <h1 className='text-4xl md:text-5xl  capitalize'>         
+                <h1 className='text-4xl md:text-6xl font-black capitalize'>         
                     {design.title}
                 </h1>
                 <JoinLine />
@@ -148,7 +148,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                             <li key={i} className="flex items-center gap-2">
                                 <IoDiscSharp className='text-secondary'/>
                                 <span className='text-xs font-semibold capitalize'>
-                                    {tool.text}
+                                    {tool}
                                 </span>
                             </li>
                         ))}

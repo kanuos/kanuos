@@ -87,7 +87,7 @@ const HomePage = ({allTags}) => {
                 </small>
               </p>
             </div>
-            <ul className='flex flex-wrap items-center my-10 justify-start gap-8 max-w-3xl mx-auto w-full'>
+            <ul className='flex flex-wrap items-center my-10 justify-start gap-x-6 gap-y-3 max-w-3xl mx-auto w-full'>
             {allTags.map(tag => (
               <li key={tag._id} className="group">
                 <button 

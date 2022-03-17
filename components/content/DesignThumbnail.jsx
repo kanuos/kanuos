@@ -19,7 +19,7 @@ export const DesignThumbnail = ({data, adminMode}) => {
             
             <section className="bottom-0 left-0 w-full h-1/2 absolute z-10 bg-light translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all transform-gpu duration-300 delay-200">
                 <section className="w-full h-1/2 p-10">
-                    <h3 className=" text-xl">
+                    <h3 className="font-semibold text-lg">
                         {data.title}
                     </h3>
                     <JoinLine />

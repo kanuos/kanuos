@@ -4,6 +4,7 @@
 import { useContext } from 'react'
 
 // import : internal components
+import { ThemeToggler } from "../../components/public/ThemeToggler"
 import { HeadComponent } from '../../components/Head'
 import { PublicHeader } from '../../components/public/Header';
 import { NavBar } from '../../components/public/Nav';
@@ -24,6 +25,7 @@ const ProjectList = ({projectList}) => {
     <>
     <HeadComponent title="Sounak Mukherjee's Projects" />
     <NavBar />
+    <ThemeToggler />
     <div className={'h-full w-full min-h-screen ' + (isDarkMode ? 'main-dark' : 'main-light')}>
         <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-black selection:text-light'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.projects, count : projectList.length}} />

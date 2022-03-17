@@ -9,6 +9,7 @@ import { ListLoader } from "../../components/public/ListLoader";
 import { DesignThumbnail } from "../../components/content/DesignThumbnail";
 import { getAllDesigns } from "../../database/designs";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { ThemeToggler } from "../../components/public/ThemeToggler";
 
 const DesignList = ({ designList }) => {
   designList = JSON.parse(designList);
@@ -17,6 +18,7 @@ const DesignList = ({ designList }) => {
     <>
       <HeadComponent title="Sounak Mukherjee's Ui/UX Designs" />
       <NavBar />
+      <ThemeToggler />
       <div className={"h-full w-full min-h-screen " + (isDarkMode ? 'main-dark' : 'main-light')}>
         <div className="px-12 py-20 w-full flex flex-col items-center justify-start mx-auto select-text selection:bg-black selection:text-light h-full">
           <PublicHeader

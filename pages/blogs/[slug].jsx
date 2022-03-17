@@ -2,6 +2,7 @@
 import { HeadComponent } from '../../components/Head'
 import { BlogDetailBody } from '../../components/content/BlogDetailBody';
 import { NavBar } from '../../components/public/Nav'
+import { ThemeToggler } from "../../components/public/ThemeToggler"
 import { getAllBlogs, getIndividualBlog } from '../../database/blogs'
 
 const BlogDetail = ({blog}) => {
@@ -10,6 +11,7 @@ const BlogDetail = ({blog}) => {
         <>
         <HeadComponent title={blog.name} />
         <NavBar />
+        <ThemeToggler />
         <BlogDetailBody blog={blog} />
         </>
   )

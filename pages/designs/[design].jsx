@@ -6,6 +6,7 @@ import { DesignDetailBody } from '../../components/content/DesignDetailBody';
 import { HeadComponent } from '../../components/Head'
 import { getAllDesigns, getIndividualDesign } from '../../database/designs';
 import { deFormatURLParamString, formatURLParamString } from '../../utils';
+import { ThemeToggler } from '../../components/public/ThemeToggler';
 
 
 const DesignDetail = ({design}) => {
@@ -14,6 +15,7 @@ const DesignDetail = ({design}) => {
     <>
     <HeadComponent title={`Design : ` + design.title} />
     <NavBar />
+    <ThemeToggler />
     <DesignDetailBody design={design} />
     </>
   )

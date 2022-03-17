@@ -4,6 +4,7 @@
 import { ProjectDetailBody } from '../../components/content/ProjectDetailBody';
 import { HeadComponent } from '../../components/Head'
 import { NavBar } from '../../components/public/Nav'
+import { ThemeToggler } from '../../components/public/ThemeToggler';
 import { getIndividualProject, getAllProjects } from '../../database/projects'
 import { deFormatURLParamString, formatURLParamString } from '../../utils';
 
@@ -13,6 +14,7 @@ const ProjectDetail = ({project}) => {
     <>
     <HeadComponent title={project.name} />
     <NavBar />
+    <ThemeToggler />
     <ProjectDetailBody project={project} />
     </>
   )

@@ -28,7 +28,7 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                 descType={CLIENT_TYPE.blog.name} />
 
                 <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2'>
-                    <p className='leading-relaxed text-sm first-letter:text-7xl first-letter:leading-7 first-letter:float-left first-letter:mr-1 first-letter: first-letter:uppercase float-left opacity-75'>
+                    <p className='leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left opacity-75'>
                         {blog.desc}
                     </p>
                 </section>

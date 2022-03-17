@@ -1,10 +1,11 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { formatURLParamString, PUBLIC_URLS } from "../../utils"
 import { JoinLine } from "../public/DescHeader"
 import { AnimatePresence, motion } from "framer-motion"
 import { IoRemoveOutline, IoAddOutline, IoGameControllerOutline, IoPricetagOutline, IoCodeSlashOutline, IoCubeOutline } from "react-icons/io5"
 import { ADMIN_EDIT_URL } from "../../utils/admin"
+import { ThemeContext } from "../../contexts/ThemeContext"
 
 export const ProjectThumbnail = ({data, index, adminMode=false}) => {
     const [hovered, setHovered] = useState(false)
@@ -71,6 +72,7 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
         }
     }
 
+    const { isDarkMode } = useContext(ThemeContext)
 
     const projectURL = adminMode ? ADMIN_EDIT_URL("project", data._id) : (PUBLIC_URLS.projects.url + '/' + formatURLParamString(data.title))
 
@@ -123,7 +125,7 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
                                     </span>
                                 </li>
                                 <li className="flex w-full items-center justify-between">
-                                    <small className="text-xs ml-4">
+                                    <small className="text-xs ml-4 capitalize font-semibold">
                                         {data.difficulty}
                                     </small>
                                     
@@ -139,10 +141,10 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
                                     </span>
                                 </li>
                                 <li className="flex w-full items-center justify-between">
-                                    <ul className="flex flex-col ml-4 items-start gap-y-2 list-inside list-disc">
+                                    <ul className="flex flex-col ml-4 items-start gap-y-2">
                                     {data.techStack.map((stack, i) => (
                                         <li key={i}>
-                                            <small className="text-xs opacity-75">
+                                            <small className="text-xs capitalize font-semibold">
                                                 {stack.text}
                                             </small>
                                         </li>
@@ -161,7 +163,7 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
                                     </span>
                                 </li>
                                 <li className="flex w-full items-center justify-between">
-                                    <small className="text-xs ml-4">
+                                    <small className="text-xs ml-4 capitalize font-semibold">
                                         {data.category}
                                     </small>
                                     
@@ -187,10 +189,10 @@ export const ProjectThumbnail = ({data, index, adminMode=false}) => {
                     variants={btnVariants}
                     animate={hovered ? 'show' : 'hide'}
                     className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
-                    <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark">
-                        go to project
+                    <span className={"py-1.5 px-6 block z-10 peer  transition-all hover:shadow-xl border-2 " + (isDarkMode ? "border-secondary hover:text-dark text-secondary font-semibold" : "hover:text-light border-dark")}>
+                        {adminMode ? 'Open project in Admin Mode' : 'View project'}
                     </span>
-                    <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300"></span>
+                    <span className={"py-1.5 px-6 block  transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300 " + (isDarkMode ? "bg-secondary border-secondary" : "bg-dark border-dark")}></span>
                 </motion.a>
             </Link>
         </article>

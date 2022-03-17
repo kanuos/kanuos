@@ -9,6 +9,7 @@ import { PUBLIC_LIST_TYPES } from '../../utils';
 import { BlogThumbnail } from '../../components/content/BlogThumbnail';
 import { ListLoader } from '../../components/public/ListLoader';
 import { getAllBlogs } from '../../database/blogs'
+import { ThemeToggler } from "../../components/public/ThemeToggler"
 
 import { ThemeContext } from '../../contexts/ThemeContext'
 
@@ -21,6 +22,8 @@ const BlogList = ({blogList}) => {
     <>
     <HeadComponent title="Sounak Mukherjee's Blogs" />
     <NavBar />
+    <ThemeToggler />
+
     <div className={'h-full w-full min-h-screen ' + (isDarkMode ? 'main-dark' : 'main-light')}>
         <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-black selection:text-light'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.blogs, count : blogList.length}} />
