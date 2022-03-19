@@ -85,7 +85,7 @@ export const InputField = ({name, value='', inputMode=true, getData, constraints
 
     if (!isInputMode) {
         return (
-            <article className="w-fit bg-light text-dark p-4 shadow-2xl rounded-md relative 
+            <article className="w-fit p-4 shadow-2xl rounded-md relative 
             max-w-lg md:min-w-[20rem] group flex items-start">
                 <div className="flex flex-col items-start w-full gap-y-1">
                     <p className="text-xs opacity-75">
@@ -116,15 +116,15 @@ export const InputField = ({name, value='', inputMode=true, getData, constraints
 
     return (
         <>
-        <form onSubmit={handleSubmit} className="relative h-auto w-full text-dark">
-            <div className="flex w-full items-stretch justify-start border-2 border-dark rounded-md p-1">
+        <form onSubmit={handleSubmit} className="relative h-auto w-full">
+            <div className="flex w-full items-stretch justify-start border-2 border-current rounded-md p-1">
                 <Textarea 
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
                     value={field}
                     spellCheck={false}
                     placeholder={`Please type in ${name}`} 
-                    className="p-1.5 resize-none w-full h-full outline-none border-none relative z-10 text-sm focus:placeholder:invisible select-text"
+                    className="p-1.5 resize-none w-full h-full outline-none border-none relative z-10 text-sm focus:placeholder:invisible select-text bg-transparent"
                     onChange={e => setField(_ => e.target.value)} />
                 
                 <motion.button 

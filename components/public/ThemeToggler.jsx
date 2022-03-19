@@ -6,7 +6,7 @@ import { ThemeContext } from '../../contexts/ThemeContext'
 export const ThemeToggler = () => {
     const { toggleTheme, isDarkMode } = useContext(ThemeContext);
   return (
-    <div className='fixed top-4 left-2 z-10 flex flex-col items-end justify-end'>
+    <div className='fixed top-4 left-2 z-20 flex flex-col items-end justify-end'>
         <button 
             title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             onClick={toggleTheme} 

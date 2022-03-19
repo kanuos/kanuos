@@ -13,6 +13,7 @@ import { ADMIN_ACCOUNT, ADMIN_URLS, NAV_METADATA, PUBLIC_URLS } from "../../util
 import { AUTH_ROUTES } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { SecondaryHeading } from "../portfolio/SecondaryHeading";
+import { VideoBG } from "./VideoBG";
 
 
 
@@ -125,15 +126,7 @@ const MenuComponent = ({urls, currentPath, type}) => {
 
     return (
         <section className="w-full max-w-5xl mx-auto grow h-full px-10 pt-20 pb-20 flex flex-col items-start justify-between sm:grid sm:grid-cols-2 sm:grid-rows-6 sm:pt-28">
-            <video 
-                muted
-                autoPlay
-                loop
-                playsInline={true}
-                className='h-screen w-screen object-cover block pointer-events-none opacity-20 fixed inset-0 -z-10'>
-                <source src='/pf.webm' type='video/webm'/>
-                <source src='/pf.mp4' type='video/mp4'/>
-            </video>
+            <VideoBG />
      
             <ul className="w-max mx-auto flex flex-col justify-center sm:justify-start sm:mx-0 items-center sm:items-start sm:col-start-1 sm:col-end-2 sm:row-start-1 sm:row-end-4 h-fit sm:h-full gap-6 sm:gap-10">
             {Object.entries(urls.links).map(([key, valueObj]) => {

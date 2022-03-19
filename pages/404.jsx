@@ -8,6 +8,7 @@ import { HeadComponent } from "../components/Head";
 import { JoinLine } from '../components/public/DescHeader'
 import { ThemeContext } from "../contexts/ThemeContext";
 import { PUBLIC_URLS } from "../utils";
+import { VideoBG } from "../components/public/VideoBG";
 
 const PortfolioPage = () => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -21,10 +22,7 @@ const PortfolioPage = () => {
           (isDarkMode ? "main-dark" : "main-light")
         }
       >
-        <video loop playsInline muted autoPlay className="fixed z-0 inset-0 h-screen w-screen object-cover opacity-5 pointer-events-none">
-          <source src="/pf.webm" type="video/webm"/>
-          <source src="/pf.mp4" type="video/mp4"/>
-        </video>
+        <VideoBG />
         <h1 className="font-special font-black text-9xl capitalize relative after:absolute before:absolute after:content-['404'] before:content-['404'] after:text-9xl before:text-9xl after:text-primary before:text-secondary after:-bottom-0.5 before:-top-0.5 before:-left-0.5 after:-right-0.5 after:z-0 before:z-0 tracking-tighter">
           <span className="relative z-10">404</span>
         </h1>

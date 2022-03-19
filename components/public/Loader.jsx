@@ -5,7 +5,7 @@ export const LoadSpinner = () => {
    
   return (
     <div className="flex flex-col items-center justify-center my-10 gap-y-10">
-        <span className="font-light text-center">
+        <span className="font-semibold text-center">
             Loading
         </span>
         <ul className="flex items-center justify-center gap-4">
@@ -64,7 +64,7 @@ export const LoadSpinner = () => {
                 }}
                 className="block h-10 w-10"></motion.li>
         </ul>
-        <span className="font-light text-center">
+        <span className="font-semibold text-center">
             Please wait
         </span>
     </div>

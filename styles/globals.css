@@ -24,14 +24,14 @@ button, button:visited, button:focus {
 
 
 .main-light {
-  background-image: linear-gradient(to right, rgba(255,255,255,.75), rgba(255,255,255,.75)) , url(/hero.jpg);
+  background-image: linear-gradient(to right, rgba(255,255,255,.75), rgba(255,255,255,.75)) , url(/hero.webp);
   background-size: cover;
   background-attachment: fixed;
   @apply text-dark;
 }
 
 .main-dark {
-  background-image: linear-gradient(to right, rgba(23, 23, 56, .95), rgba(23, 23, 56, .95)) , url(/hero.jpg);
+  background-image: linear-gradient(to right, rgba(23, 23, 56, .95), rgba(23, 23, 56, .95)) , url(/hero.webp);
   background-size: cover;
   background-attachment: fixed;
   @apply text-light;
@@ -47,7 +47,7 @@ button, button:visited, button:focus {
 
 @media screen and (min-width : 1024px) {
   .main-light {
-    background-image: linear-gradient(to right, rgba(255,255,255,.8), rgba(255,255,255,.8)) , url(/hero.jpg);
+    background-image: linear-gradient(to right, rgba(255,255,255,.8), rgba(255,255,255,.8)) , url(/hero.webp);
   }
 }
 

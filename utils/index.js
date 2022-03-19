@@ -89,13 +89,14 @@ export const ADMIN_URLS = {
     },
 }
 
-const SOCIAL = {
+export const SOCIAL = {
     email : 'sounakmukherjee@ymail.com',
     phone : '+1 (607) 280-5640',
-    credential : 'full stack developer'
+    credential : 'full stack developer',
+    mailto : `mailto:sounakmukherjee@ymail.com?subject=Let's work together`
 }
 
-const PORTFOLIO_LINKS = {
+export const PORTFOLIO_LINKS = {
     "about me" : {
         name : 'about me',
         url : '/#about-me'
