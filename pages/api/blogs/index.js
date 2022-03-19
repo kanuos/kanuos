@@ -4,7 +4,7 @@ import { addBlogToDB, blogUniqueConstraint } from "../../../database/blogs";
 import { isAdminMiddleware } from "../../../utils/authLib"
 import { ContentValidators } from "../../../utils/validator";
 
-export default async function (req, res) {
+export default async function blogAPIHandler (req, res) {
     
     let blogValidator;
     try {

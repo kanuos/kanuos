@@ -70,7 +70,7 @@ const EditCMS = ({ allTags, data, contentType }) => {
     setContent(parsedData);
     setTags(parsedData.tags);
     setIsPublic(parsedData.isPublic);
-  }, []);
+  }, [contentType, data]);
 
   useEffect(() => {
     setContent((prev) => ({ ...prev, tags }));

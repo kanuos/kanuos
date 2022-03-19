@@ -8,7 +8,7 @@ import { isAdminMiddleware } from "../../../utils/authLib"
 import { ContentValidators } from "../../../utils/validator";
 
 
-export default async function (req, res) {
+export default async function individualDesignAPIHandler (req, res) {
     let designValidator;
     try {
         const { method, body, query : {id} } = req;

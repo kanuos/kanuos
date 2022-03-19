@@ -3,7 +3,7 @@ import { addPortfolioProjectToProfile } from '../../../../database/user';
 import { isAdminMiddleware } from '../../../../utils/authLib'
 import { PortfolioProjectValidator } from '../../../../utils/validator'
 
-export default async function (req, res) {
+export default async function profileHandler (req, res) {
     try {
         // check for authorization
         const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);

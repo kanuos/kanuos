@@ -4,7 +4,7 @@ import { addDesignToDB, getAllDesigns } from "../../../database/designs";
 import { isAdminMiddleware } from "../../../utils/authLib"
 import { ContentValidators } from "../../../utils/validator";
 
-export default async function (req, res) {
+export default async function designAPIHandler (req, res) {
     try {
         const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);
         if (!loggedAsAdmin) throw error

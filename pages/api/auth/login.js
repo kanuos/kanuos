@@ -9,7 +9,7 @@ import { AuthValidators } from "../../../utils/validator";
 import { isAdminMiddleware } from '../../../utils/authLib'
 
 
-export default async function (req, res) {
+export default async function login(req, res) {
     try {
         const { method, body } = req;
         

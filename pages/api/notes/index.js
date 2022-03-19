@@ -4,7 +4,7 @@ import { addNewNote, deleteExistingNote, editExistingNote } from '../../../datab
 import { NoteValidator } from '../../../utils/validator'
 import { isAdminMiddleware } from '../../../utils/authLib'
 
-export default async function (req, res) {
+export default async function notesAPIHandler (req, res) {
     try {
         const { loggedAsAdmin, error } = await isAdminMiddleware(req, res);
         if (!loggedAsAdmin) throw error

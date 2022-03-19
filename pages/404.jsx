@@ -27,12 +27,12 @@ const PortfolioPage = () => {
           <span className="relative z-10">404</span>
         </h1>
         <p className="text-xs text-center w-11/12 max-w-xl mx-auto break-words">
-          This page doesn't exist or is temporarily unavailable.
+          This page doesn&apos;t exist or is temporarily unavailable.
         </p>
         <div className="mt-20 animate-bounce">
           <JoinLine />
         </div>
-        <p className="text-xs group opacity-50 hover:opacity-100 transition-all">Let's go to <Link href={PUBLIC_URLS.home.url}>
+        <p className="text-xs group opacity-50 hover:opacity-100 transition-all">Let&apos;s go to <Link href={PUBLIC_URLS.home.url}>
           <a className="inline-block transition-all relative after:w-full after:absolute after:-bottom-1.5 after:h-0.5 after:bg-secondary after:left-0 after:scale-0 group-hover:after:scale-100 after:transition-all after:origin-center hover:after:bg-primary">
             HOME
           </a>

@@ -5,7 +5,7 @@ import { serialize } from 'cookie'
 import { COOKIE_OPTIONS, JWT_COOKIE_NAME } from '../../../utils/admin';
 import { isAdminMiddleware } from "../../../utils/authLib"
 
-export default async function (req, res) {
+export default async function logout(req, res) {
     try {
         const { method } = req;    
         COOKIE_OPTIONS

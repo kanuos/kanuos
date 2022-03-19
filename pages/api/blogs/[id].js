@@ -5,12 +5,10 @@
 
 import { deleteBlogFromDB, editIndividualBlog } from "../../../database/blogs";
 
-import { JWT_COOKIE_NAME } from "../../../utils/admin";
 import { ContentValidators } from "../../../utils/validator";
-import { getPayloadFromToken } from '../../../utils/encrypt'
 import { isAdminMiddleware } from "../../../utils/authLib"
 
-export default async function (req, res) {
+export default async function individualBlogAPIHandler(req, res) {
     let blogValidator;
     try {
         const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);

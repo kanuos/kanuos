@@ -7,7 +7,7 @@ import { addNewMessageToDB, getAllMessagesFromDB } from '../../../database/messa
 import { MessageValidator } from '../../../utils/validator'
 import { isAdminMiddleware } from '../../../utils/authLib'
 
-export default async function (req, res) {
+export default async function inboxAPIHandler (req, res) {
     try {
         // destructure the incoming req object
         const {method, body} = req;

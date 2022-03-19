@@ -6,7 +6,7 @@ import { isAdminMiddleware } from "../../../utils/authLib"
 
 
 
-export default async function(req, res) {
+export default async function register(req, res) {
     try {
         const {body, method} = req;
         

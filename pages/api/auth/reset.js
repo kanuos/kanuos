@@ -5,7 +5,7 @@ import { AuthValidators } from "../../../utils/validator";
 
 const {PASSWORD_RESET_CODE} = process.env; 
 
-export default async function(req, res) {
+export default async function resetPassword(req, res) {
     try {
         const {body, method} = req;
         

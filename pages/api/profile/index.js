@@ -2,7 +2,7 @@ import { updateUserProfile } from "../../../database/user";
 import { isAdminMiddleware } from "../../../utils/authLib";
 import { UserProfileValidator } from '../../../utils/validator'
 
-export default async function (req, res) {
+export default async function userProfileHandler (req, res) {
     try {
         // if not logged in throw error
         const { loggedAsAdmin, error, user } = await isAdminMiddleware(req, res);

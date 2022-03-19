@@ -5,7 +5,7 @@
 import { deleteMessageFromDB, toggleMessageReadStatus } from '../../../database/messages';
 import { isAdminMiddleware } from '../../../utils/authLib'
 
-export default async function (req, res) {
+export default async function inboxAPIHandler (req, res) {
     try {
         // destructure the incoming req object
         const {method, query : {m_id}, body : {isRead}} = req;

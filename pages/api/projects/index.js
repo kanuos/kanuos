@@ -5,7 +5,7 @@ import { isAdminMiddleware } from "../../../utils/authLib";
 import { ContentValidators } from "../../../utils/validator";
 
 
-export default async function (req, res) {
+export default async function projectAPIHandler (req, res) {
     
     let projectValidator;
     try {

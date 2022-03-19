@@ -1,7 +1,7 @@
 import { isValidObjectId } from "mongoose"
 import { getDataRelatedToTag } from "../../../database/tags";
 
-export default async function (req, res) {
+export default async function individualTagHandler (req, res) {
     try {
         console.log('first')
         const { query : {id}, method } = req;
