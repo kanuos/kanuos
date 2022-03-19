@@ -133,8 +133,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                                         <IoGitBranchOutline className='text-primary text-xl filter grayscale group-hover:grayscale-0 transition-all' />
                                         <a 
                                             target="_blank"
-                                            rel='noopener'
-                                            referrerPolicy='no-referrer'
+                                            rel='noopener noreferrer'
                                             href={project.repo.href} className="capitalize font-semibold text-sm group-hover:border-current pb-0.5 border-transparent border-b-2 transition-all duration-300">
                                             {project.repo.label}
                                         </a>
@@ -145,8 +144,7 @@ export const ProjectDetailBody = ({project, adminMode=false}) => {
                                         <IoLinkOutline className='text-primary text-xl filter grayscale group-hover:grayscale-0 transition-all' />
                                         <a 
                                             target="_blank"
-                                            rel='noopener'
-                                            referrerPolicy='no-referrer'
+                                            rel='noopener noreferrer'
                                             href={project.demo.href} className="capitalize font-semibold text-sm group-hover:border-current pb-0.5 border-transparent border-b-2 transition-all duration-300">
                                             {project.demo.label}
                                         </a>

@@ -25,7 +25,7 @@ export const DesignThumbnail = ({ data, adminMode, center }) => {
         className="h-full w-full object-cover filter group-hover:grayscale transition-all group-hover:h-3/5"
       />
 
-      <section className="bottom-0 left-0 w-full h-1/2 absolute z-10 bg-light translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all transform-gpu duration-300 delay-200">
+      <section className="bottom-0 left-0 w-full h-1/2 absolute z-10 bg-light translate-y-0 md:translate-y-full md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 md:transition-all md:transform-gpu md:duration-300 md:delay-200">
         <section className="w-full h-1/2 p-10">
           <h3 className="font-semibold text-lg">{data.title}</h3>
           <JoinLine />
@@ -37,6 +37,7 @@ export const DesignThumbnail = ({ data, adminMode, center }) => {
             </Link>
             <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300"></span>
           </motion.div>
+
         </section>
       </section>
     </article>

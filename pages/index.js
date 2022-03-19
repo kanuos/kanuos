@@ -29,9 +29,9 @@ const HomePage = ({allTags}) => {
   const { isDarkMode } = useContext(ThemeContext)
   
 
-  useEffect(async () => {
+  useEffect(() => {
     if (!selectedTag) return;
-    await getTagRelatedData(selectedTag)
+    getTagRelatedData(selectedTag)
 
   }, [selectedTag])
 
@@ -70,7 +70,7 @@ const HomePage = ({allTags}) => {
     <HeadComponent title="Welcome to Sounak Mukherjee's website" />
     <NavBar />
     <ThemeToggler />
-    <main className={"min-h-screen h-auto w-full relative p-10 " + (isDarkMode ? 'main-dark' : 'main-light')}>
+    <main className={"min-h-screen h-auto w-full overflow-hidden relative p-10 " + (isDarkMode ? 'main-dark' : 'main-light')}>
       <div className="w-full">
         <LandingHeader />
         
@@ -92,7 +92,7 @@ const HomePage = ({allTags}) => {
               <li key={tag._id} className="group">
                 <button 
                   onClick={() => setSelectedTag(tag._id)} 
-                  className="uppercase font-black text-sm tracking-wide hover:group-even:text-primary hover:group-odd:text-secondary transition-all">
+                  className="uppercase font-black text-sm tracking-wide opacity-75 hover:group-even:text-primary hover:group-odd:text-secondary transition-all group-hover:opacity-100 group-hover:scale-110">
                 #{tag.tag}
                 </button>
               </li>))}

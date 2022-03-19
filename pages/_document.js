@@ -6,7 +6,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-            <link rel="stylesheet" href="/fonts/fonts.css" />
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             <Favicon />
         </Head>
         <body>

@@ -71,7 +71,7 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
                 <motion.div 
                     variants={btnVariants}
                     animate={hovered ? 'show' : 'hide'}
-                    className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
+                    className="my-6 capitalize text-xs rounded hidden md:flex items-center justify-center relative overflow-hidden cursor-pointer">
                     <Link href={blogURL}>
                         <a className={"py-1.5 px-6 block z-10 peer  transition-all hover:shadow-xl border-2 relative bg-transparent " + (isDarkMode ? "border-secondary hover:text-dark text-secondary font-semibold" : "hover:text-light border-dark")}>
                             {adminMode ? 'Open Blog in Admin Mode' : 'Read blog'}
@@ -79,6 +79,16 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
                     </Link>
                     <span className={"py-1.5 px-6 block  transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300 " + (isDarkMode ? "bg-secondary border-secondary" : "bg-dark border-dark")}></span>
                 </motion.div>
+
+                <div
+                    className="my-6 capitalize text-xs rounded md:hidden flex items-center justify-center relative overflow-hidden cursor-pointer">
+                    <Link href={blogURL}>
+                        <a className={"py-1.5 px-6 block z-10 peer  transition-all hover:shadow-xl border-2 relative bg-transparent " + (isDarkMode ? "border-secondary hover:text-dark text-secondary font-semibold" : "hover:text-light border-dark")}>
+                            {adminMode ? 'Open Blog in Admin Mode' : 'Read blog'}
+                        </a>
+                    </Link>
+                    <span className={"py-1.5 px-6 block  transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300 " + (isDarkMode ? "bg-secondary border-secondary" : "bg-dark border-dark")}></span>
+                </div>
         </article>
     )
 }

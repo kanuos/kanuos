@@ -1,44 +1,56 @@
 // Default error page
 import { useContext } from "react";
-import Link from "next/link";
-
-
+import { useRouter } from 'next/router'
 // import : internal
 import { HeadComponent } from "../components/Head";
 import { JoinLine } from '../components/public/DescHeader'
 import { ThemeContext } from "../contexts/ThemeContext";
 import { PUBLIC_URLS } from "../utils";
 import { VideoBG } from "../components/public/VideoBG";
+import { PortfolioLink } from "../components/portfolio/PortfolioLink";
 
 const PortfolioPage = () => {
   const { isDarkMode } = useContext(ThemeContext);
+  const router = useRouter();
 
   return (
     <>
       <HeadComponent title="Oops! Page Not Found" />
       <main
         className={
-          "h-screen flex flex-col items-center select-none justify-center gap-2 p-10 w-full " +
+          "h-auto min-h-screen overflow-hidden flex flex-col items-center select-none justify-center gap-2 p-10 w-full " +
           (isDarkMode ? "main-dark" : "main-light")
         }
       >
         <VideoBG />
-        <h1 className="font-special font-black text-9xl capitalize relative after:absolute before:absolute after:content-['404'] before:content-['404'] after:text-9xl before:text-9xl after:text-primary before:text-secondary after:-bottom-0.5 before:-top-0.5 before:-left-0.5 after:-right-0.5 after:z-0 before:z-0 tracking-tighter">
-          <span className="relative z-10">404</span>
-        </h1>
-        <p className="text-xs text-center w-11/12 max-w-xl mx-auto break-words">
-          This page doesn&apos;t exist or is temporarily unavailable.
-        </p>
-        <div className="mt-20 animate-bounce">
+        <div className="w-full max-w-3xl mx-auto flex flex-col items-start gap-y-2">
+          <h1 className="font-black text-6xl -ml-2">
+            Oops!!
+          </h1>
           <JoinLine />
+          <p className="w-full max-w-lg break-words md:text-lg">
+            It seems that the page you are looking for doesn&apos;t exist or is temporarily unavailable.
+          </p>
+        
+          <ul className="flex mt-10 items-center justify-start gap-x-4">
+            <li>
+              <PortfolioLink 
+                shadow={false} 
+                label='go back' 
+                btnMode 
+                cb={() => router.back()}/>
+            </li>
+            <li>
+              <PortfolioLink 
+                shadow={false} 
+                label='go to homepage' 
+                href={PUBLIC_URLS.home.url}/>
+            </li>
+          </ul>
+          
         </div>
-        <p className="text-xs group opacity-50 hover:opacity-100 transition-all">Let&apos;s go to <Link href={PUBLIC_URLS.home.url}>
-          <a className="inline-block transition-all relative after:w-full after:absolute after:-bottom-1.5 after:h-0.5 after:bg-secondary after:left-0 after:scale-0 group-hover:after:scale-100 after:transition-all after:origin-center hover:after:bg-primary">
-            HOME
-          </a>
-        </Link> and surf from there!
-        </p>
-      </main>
+
+       </main>
     </>
   );
 };

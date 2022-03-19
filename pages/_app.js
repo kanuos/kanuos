@@ -1,3 +1,4 @@
+import '../styles/fonts.css';
 import '../styles/globals.css';
 import "prismjs/themes/prism-okaidia.css"
 import ThemeContextProvider from '../contexts/ThemeContext'
