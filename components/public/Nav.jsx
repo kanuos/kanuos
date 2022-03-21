@@ -172,11 +172,17 @@ const MenuComponent = ({urls, currentPath, type}) => {
             </ul>
 
             <div className="flex w-max mx-auto flex-col items-start justify-start gap-4 sm:mx-0 sm:col-start-2 sm:col-end-3 sm:row-start-1 sm:row-end-2 sm:items-end sm:w-full">
+                {urls.other?.heading?.toLowerCase() !== 'logout' ?
                 <Link href={urls.other.link}>
                     <a>
                         <SecondaryHeading text={urls.other.heading} navMode={true} />
                     </a>
                 </Link>
+                :
+                <button onClick={handleLogout}>
+                    <SecondaryHeading text={urls.other.heading} navMode={true} />
+                </button>
+                }
                 {urls.other.sublinks && 
                     <ul className="hidden sm:flex flex-col items-end">
                         {Object.values(urls.other.sublinks).map(link => (
