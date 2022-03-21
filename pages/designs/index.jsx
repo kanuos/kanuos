@@ -20,7 +20,7 @@ const DesignList = ({ designList }) => {
       <NavBar />
       <ThemeToggler />
       <div className={"h-full  min-h-screen scrollbar-thin w-full overflow-hidden " + (isDarkMode ? 'main-dark' : 'main-light')}>
-        <div className="px-12 py-20 w-full flex flex-col items-center justify-start mx-auto select-text selection:bg-black selection:text-light h-full">
+        <div className="px-12 py-20 w-full flex flex-col items-center justify-start mx-auto select-text selection:bg-secondary selection:text-dark h-full">
           <PublicHeader
             data={{ ...PUBLIC_LIST_TYPES.designs, count: designList.length }}
           />

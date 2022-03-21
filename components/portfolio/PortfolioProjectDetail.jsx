@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { JoinLine } from '../public/DescHeader'
 
-
+// TODO: generate dynamic data
 
 const PortfolioProjectDetail = ({isDarkMode=false, isOpen, project, close, prev, next, selectProject}) => {
 

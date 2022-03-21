@@ -27,7 +27,7 @@ const ProjectList = ({projectList}) => {
     <NavBar />
     <ThemeToggler />
     <div className={'h-full  min-h-screen scrollbar-thin w-full overflow-hidden ' + (isDarkMode ? 'main-dark' : 'main-light')}>
-        <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-black selection:text-light'>
+        <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-secondary selection:text-dark'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.projects, count : projectList.length}} />
             {
                 projectList.length > 0 ?
