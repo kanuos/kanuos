@@ -2,7 +2,7 @@ import { PUBLIC_URLS } from "../../utils"
 import { PortfolioLink } from "./PortfolioLink"
 import { ProjectThumb } from "./ProjectThumb"
 
-export const Showcase = ({portfolio}) => {
+export const Showcase = ({portfolio, selectProject}) => {
 
 
   return (
@@ -12,7 +12,12 @@ export const Showcase = ({portfolio}) => {
         </h2>
         <div className="flex flex-col p-4 items-center justify-start gap-20 lg:gap-y-40 h-auto overflow-y-auto scrollbar-none scrollbar-none snap-y snap-mandatory">
         {portfolio.map((p, i) => (
-            <ProjectThumb key={p._id} project={p} index={i + 1} total={portfolio.length} />
+            <ProjectThumb 
+              key={p._id} 
+              project={p}
+              selectProject={() => selectProject({_id : p._id})} 
+              index={i + 1} 
+              total={portfolio.length} />
         ))}    
         </div>
         <div className="grid place-items-center mt-20">

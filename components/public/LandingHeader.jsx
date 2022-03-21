@@ -1,5 +1,5 @@
 import { JoinLine } from './DescHeader';
-import { metadata } from '../../utils/portfolio_static'
+import { staticMetadata } from '../../utils/portfolio_static'
 
 export const LandingHeader = () => {
   return (
@@ -10,7 +10,7 @@ export const LandingHeader = () => {
                   Hi,
               </h1>
               <p className="font-semibold text-sm">
-                Welcome to <span className="text-secondary">{metadata.name}&apos;s</span> website
+                Welcome to <span className="text-secondary">{staticMetadata.name}&apos;s</span> website
               </p>
             </div>
             <JoinLine />

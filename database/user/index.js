@@ -110,6 +110,20 @@ export async function updatePassword(user) {
 }
 
 
+export async function getPortfolio() {
+    const user = await UserModel.findOne({}).select('skills bio portfolio').populate({
+        path : 'portfolio',
+        populate : {
+            path : 'design project',
+            populate : {
+                path : 'tags'
+            }
+        }
+    })
+    return user;
+}
+
+
 
 export async function updateUserProfile(activeUserID, metadata) {
     const updatedProfile = await UserModel.findByIdAndUpdate(activeUserID, metadata, { new: true, upsert: false});

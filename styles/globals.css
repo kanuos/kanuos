@@ -13,7 +13,7 @@ body {
 }
 html {
   height: -webkit-fill-available;
-  @apply scrollbar-thin;
+  @apply scrollbar-none;
 }
 
 

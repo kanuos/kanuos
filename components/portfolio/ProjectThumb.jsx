@@ -1,16 +1,18 @@
 import { JoinLine } from "../public/DescHeader";
 import { PortfolioLink } from "./PortfolioLink";
+import Image from 'next/image';
 
-export const ProjectThumb = ({ project = null, index, total }) => {
+export const ProjectThumb = ({ project = null, index, total, selectProject }) => {
   if (!project) {
     return <></>;
   }
-  const {thumbnail, title, desc, tags} = project;
-  
-  function selectModal(id) {
-    console.log({id})
-  }
+  const {title, desc} = project;
 
+  const portfolioProject = project.project;
+  const portfolioDesign = project.design;
+
+  const tags = [... new Set([...portfolioProject.tags.map(({tag}) => tag), ...portfolioDesign.tags.map(({tag}) => tag)])];
+  
   return (
     <article className="h-auto w-full flex flex-col justify-center gap-6 p-10 snap-center group even:items-end odd:items-start lg:odd:flex-row lg:even:flex-row-reverse lg:items-end z-10 selection:bg-secondary">
         <section className="flex flex-col justify-start group-even:items-end group-odd:items-start">
@@ -37,16 +39,24 @@ export const ProjectThumb = ({ project = null, index, total }) => {
                 </li>
             </ul>
             <div className="my-4 md:block hidden animate-bounce">
-                <PortfolioLink label='view details' btnMode={true} cb={() => selectModal(title)} />
+                <PortfolioLink label='view details' btnMode={true} cb={() => selectProject({_id : project._id})} />
             </div>
         </section>
-        <img 
-            className="h-[50vh] w-full max-w-lg object-cover block filter md:group-even:hover:rotate-3 md:group-odd:hover:-rotate-3 transition-all md:p-3 md:bg-light md:shadow-lg lg:group-even:-rotate-3 lg:group-odd:rotate-3 lg:group-hover:scale-105 group-hover:shadow-2xl"
-            src={thumbnail} 
-            alt={`Project ${title}'s thumbnail`} />
+        <div className="w-full block bg-light filter md:group-even:hover:rotate-3 md:group-odd:hover:-rotate-3 transition-all md:p-3 md:bg-light md:shadow-lg lg:group-even:-rotate-3 lg:group-odd:rotate-3 lg:group-hover:scale-105 group-hover:shadow-2xl max-w-lg h-[75vh] md:h-[50vh]">
+            <figure 
+                className="h-full w-full object-cover block relative"
+            >
+                <Image 
+                    loader={({src, width}) => `${src}?w=${width}&q=100`}
+                    src={portfolioDesign.thumbnail} 
+                    layout='fill'
+                    objectFit="cover"
+                    alt={`Project ${title}'s thumbnail`} />
+            </figure>
+        </div>
         
         <div className="my-4 w-full grid place-content-center md:hidden">
-            <PortfolioLink label='view details' btnMode={true} cb={() => selectModal(title)} />
+            <PortfolioLink label='view details' btnMode={true} cb={() => selectProject(project)} />
         </div>
     </article>
   );

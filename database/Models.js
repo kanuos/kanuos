@@ -242,14 +242,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  adminLabel: {
-    type: String,
-    required: true,
-  },
   bio: {
     type: String,
     required: true,
@@ -259,10 +251,6 @@ const UserSchema = new Schema({
     required: true,
   },
   techStack: [{
-    type: Object,
-    required: true,
-  }],
-  social: [{
     type: Object,
     required: true,
   }],

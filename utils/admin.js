@@ -183,14 +183,6 @@ export const PROFILE_FIELDS = [
             type : 'string',
         },
         {
-            key : 'name',
-            type : 'string',
-        },
-        {
-            key : 'adminLabel',
-            type : 'string',
-        },
-        {
             key : 'bio',
             type : 'string',
         },
@@ -202,12 +194,7 @@ export const PROFILE_FIELDS = [
             key : 'techStack',
             type : 'objHybrid',
             layout : LAYOUTS.techStack
-        },
-        {
-            key : 'social',
-            type : 'objArr',
-            layout : LAYOUTS.link
-        }        
+        },        
     ]
 
 export const PORTFOLIO_FIELDS = [

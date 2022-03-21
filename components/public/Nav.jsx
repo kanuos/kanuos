@@ -41,7 +41,7 @@ export const NavBar = ({type='public'}) => {
                         transition : { type : 'spring', stiffness : 400}
                         
                     }}
-                    className={"w-6 rounded h-[2px] transition-opacity " + (showMenu ? "bg-primary" : `${isDarkMode ? 'bg-light' : 'bg-dark'} opacity-50 group-hover:opacity-100 group-hover:mr-0 mr-1`)}></motion.span>
+                    className={`w-6 rounded h-[2px] transition-opacity ${showMenu ? "bg-primary" : (type !== 'admin' ? (isDarkMode ? 'bg-light' : 'bg-dark') : 'bg-dark')} opacity-50 group-hover:opacity-100 group-hover:mr-0 mr-1`}></motion.span>
                 <motion.span 
                     animate={showMenu ? {
                         rotate: -45,
@@ -53,7 +53,7 @@ export const NavBar = ({type='public'}) => {
                         y: 0,
                         transition : { type : 'spring', stiffness : 400}
                     }}
-                    className={"w-6 rounded h-[2px] transition-opacity " + (showMenu ? "bg-primary" : `${isDarkMode ? 'bg-light' : 'bg-dark'} opacity-50 group-hover:opacity-100 group-hover:ml-0 ml-1`)}></motion.span>
+                    className={`w-6 rounded h-[2px] transition-opacity ${showMenu ? "bg-primary" : (type !== 'admin' ? (isDarkMode ? 'bg-light' : 'bg-dark') : 'bg-dark')} opacity-50 group-hover:opacity-100 group-hover:ml-0 ml-1`}></motion.span>
             </motion.div>
         <AnimatePresence>
             <NavMenu showMenu={showMenu} type={type} />

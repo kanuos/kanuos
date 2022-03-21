@@ -1,123 +1,166 @@
 // Portfolio page
-import { useContext } from 'react';
+import { useEffect, useContext, useState } from "react";
+import dynamic from "next/dynamic";
+import Link from 'next/link'
 
 // import : internal
-import { HeadComponent } from '../components/Head'
-import { ContactMe } from '../components/portfolio/ContactMe';
-import { PortfolioHeader } from '../components/portfolio/PortfolioHeader';
-import { SectionHeader } from '../components/portfolio/SectionHeader';
-import { Showcase } from '../components/portfolio/Showcase';
-import { Skills } from '../components/portfolio/Skills';
-import { NavBar } from '../components/public/Nav';
-import { ThemeToggler } from '../components/public/ThemeToggler';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { HeadComponent } from "../components/Head";
+import { PortfolioHeader } from "../components/portfolio/PortfolioHeader";
+import { SectionHeader } from "../components/portfolio/SectionHeader";
+import { Showcase } from "../components/portfolio/Showcase";
+import { Skills } from "../components/portfolio/Skills";
+import { NavBar } from "../components/public/Nav";
+import { ThemeToggler } from "../components/public/ThemeToggler";
+import { VideoBG } from "../components/public/VideoBG";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { getPortfolio } from "../database/user"
 
-const PortfolioPage = () => {
-    const { isDarkMode } = useContext(ThemeContext);
-  return (
+
+import { staticMetadata } from "../utils/portfolio_static";
+import { JoinLine } from "../components/public/DescHeader";
+import { PortfolioLink } from "../components/portfolio/PortfolioLink";
+import { PUBLIC_URLS } from "../utils";
+
+
+const PortfolioProjectDetail = dynamic(() => import("../components/portfolio/PortfolioProjectDetail"))
+const ContactMe = dynamic(() => import("../components/portfolio/ContactMe"));
+
+
+
+const PortfolioPage = ({metadata}) => {
+  metadata = { ...staticMetadata, ...JSON.parse(metadata)};
+  const { isDarkMode } = useContext(ThemeContext);
+  const [expandProject, setExpandProject] = useState(false);
+  const [current, setCurrent] = useState(null);
+  const [prev, setPrev] = useState(null);
+  const [next, setNext] = useState(null);
+  
+
+  useEffect(() => {
+    if (expandProject) {
+      const selectedProject = metadata.portfolio.findIndex(el => el._id === expandProject);
+
+      if (selectedProject >= 0) {
+        setCurrent(metadata.portfolio[selectedProject]);
+        setPrev(metadata.portfolio[selectedProject - 1]);
+        setNext(metadata.portfolio[selectedProject + 1]);
+        return
+      }
+    }
+    setCurrent(null);
+    setPrev(null);
+    setNext(null)
+  }, [expandProject])
+
+
+  if (!metadata?.portfolio || metadata.portfolio.length === 0) {
+    return (
     <>
-    <HeadComponent title='Sounak Mukherjee | Portfolio' />
-    <NavBar type='portfolio' />
+    <HeadComponent title="Sounak Mukherjee | Portfolio" />
+    <NavBar type="portfolio" />
     <ThemeToggler />
-    <main className={"min-h-screen scrollbar-none w-full overflow-hidden relative filter " + (isDarkMode ? 'nav-dark' : 'nav-light')}>
-        <video 
-            muted
-            autoPlay
-            loop
-            playsInline={true}
-            className='h-screen w-screen object-cover block pointer-events-none opacity-10 fixed inset-0 z-0'>
-            <source src='/pf.webm' type='video/webm'/>
-            <source src='/pf.mp4' type='video/mp4'/>
-        </video>
-        <div className="w-full selection:bg-secondary selection:text-dark">
-            <PortfolioHeader miniBio={userData.miniBio} name={userData.name} />
-            <section className="flex py-20 gap-20 min-h-screen w-full max-w-5xl mx-auto flex-col justify-center items-center lg:items-start lg:justify-start">
-                <section className='w-full max-w-5xl mx-auto px-16'>
-                    <SectionHeader
-                        heading='About me' 
-                        cls='lg:items-end lg:text-right'
-                        content={<p className="grow whitespace-pre-line text-sm max-w-3xl">{userData.bio} <br/> {userData.skills}</p>}/>
-                </section>
-            
-                <Skills isDarkMode={isDarkMode} techStack={userData.techStack} />
-            </section>
-            <Showcase portfolio={portfolio} isDarkMode={isDarkMode}/>
-            <ContactMe isDarkMode={isDarkMode}/>   
-            
+    <main
+      className={
+        "h-screen scrollbar-none w-full overflow-hidden relative grid place-items-center filter bg-opacity-70 " +
+        (isDarkMode ? "nav-dark" : "nav-light")
+      }
+    >
+      <VideoBG />
+      <div className="flex flex-col items-center justify-center gap-4">
+        <small className="font-semibold uppercase text-xs"> portfolio </small>
+        <div className="animate-bounce">
+          <JoinLine />
         </div>
+        <h1 className="text-7xl w-min text-center capitalize font-thin mb-10">
+          coming soon!
+        </h1>
+        <PortfolioLink label='go to home' href={PUBLIC_URLS.home.url} shadow={false}/>
+      </div>
     </main>
     </>
-  )
-}
+    )}
+
+  return (
+    <>
+      <HeadComponent title="Sounak Mukherjee | Portfolio" />
+      <NavBar type="portfolio" />
+      <ThemeToggler />
+      <main
+        className={
+          "min-h-screen scrollbar-none w-full overflow-hidden relative filter bg-opacity-70 " +
+          (isDarkMode ? "nav-dark" : "nav-light")
+        }
+      >
+        <VideoBG />
+        <div className="w-full selection:bg-secondary selection:text-dark scrollbar-none">
+          <PortfolioHeader miniBio={metadata.miniBio} name={metadata.name} />
+          <section className="flex py-20 gap-20 min-h-screen w-full max-w-5xl mx-auto flex-col justify-center items-center lg:items-start lg:justify-start">
+            <section className="w-full max-w-5xl mx-auto px-16">
+              <SectionHeader
+                heading="About me"
+                cls="lg:items-end lg:text-right"
+                content={
+                  <div className="flex flex-col md:gap-y-6">
+                    <p className="grow whitespace-pre-line text-sm max-w-3xl">
+                      {metadata.bio}
+                    </p>
+                    <p className="grow whitespace-pre-line text-sm max-w-3xl">
+                      {metadata.skills}
+                    </p>
+                    <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer md:ml-auto">
+                        <Link href=''>
+                            <a className={"py-1.5 px-6 block z-10 peer font-semibold transition-all hover:shadow-xl border-2 relative bg-transparent " + (isDarkMode ? "border-light hover:text-dark text-light font-semibold" : "hover:text-light border-dark")}>
+                                my resume
+                            </a>
+                        </Link>
+                        <span className={"py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " + (isDarkMode ? "bg-light border-light" : "bg-dark border-dark")}></span>
+                    </div>
+                  </div>
+                  
+                }
+              />
+            </section>
+
+            <Skills isDarkMode={isDarkMode} techStack={metadata.techStack} />
+          </section>
+          <Showcase 
+            portfolio={metadata.portfolio} 
+            selectProject={({_id}) => setExpandProject(_id)} />
+          <ContactMe isDarkMode={isDarkMode} />
+        </div>
+      </main>
+      {Boolean(current) && (
+        <PortfolioProjectDetail 
+          key={JSON.stringify(current)}
+          isOpen={Boolean(current)}
+          close={() => setExpandProject(null)}
+          prev={prev}
+          next={next}
+          selectProject={({_id}) => setExpandProject(_id)}
+          project={current} 
+          isDarkMode={isDarkMode} />
+      )}
+    </>
+  );
+};
 
 export default PortfolioPage;
 
-const userData = {
-    name : 'Sounak',
-    miniBio : 'Full stack developer based in Ithaca, NY.',
-    adminLabel : 'Full stack web developer',
-    bio : `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam eius possimus ducimus, est deserunt ut soluta ad repellat voluptate atque! Excepturi necessitatibus id eveniet enim!
 
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis nostrum asperiores velit maiores incidunt dignissimos itaque? Autem dolorem blanditiis ullam ratione modi quod veritatis sit. Placeat, sint laboriosam autem quisquam iste reprehenderit provident ratione, a inventore voluptatum rem sit dolor.`,
-    skills : `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam eius possimus ducimus, est deserunt ut soluta ad repellat voluptate atque! Excepturi necessitatibus id eveniet enim! Placeat, sint laboriosam autem quisquam iste reprehenderit provident ratione, a inventore voluptatum rem sit dolor.`,
-    techStack : [
-        {
-            heading : 'Design',
-            items : [
-                'Responsive web design',
-                'Mobile first design',
-                'Wireframing and prototyping'
-            ]
-        },
-        {
-            heading : 'UI-UX',
-            items : [
-                'HTML, CSS, SCSS, JavaScript ESNext',
-                'React',
-                'Vue',
-                'Tailwind CSS, Bootstrap'
-            ]
-        },
-        {
-            heading : 'Dev',
-            items : [
-                'Express',
-                'NextJS',
-                'Django',
-                'Django REST Framework',
-            ]
-        },
-    ]
-
+export async function getStaticProps() {
+  let metadata = {};
+  try {
+    metadata = await getPortfolio();
+    return {
+      props : {metadata : JSON.stringify(metadata)},
+      revalidate : 5
+    }
+  } 
+  catch (error) {
+    console.log(error);
+    return {
+      props : {metadata : JSON.stringify({})},
+      revalidate : 5
+    }  
+  }
 }
-
-const portfolio = [
-    {
-        _id : 1,
-        title : 'Moovey',
-        tags : ['express', 'react', 'postgresql', 'omdb api', 'express', 'react', 'postgresql', 'omdb api', 'express', 'react', 'postgresql', 'omdb api'],
-        thumbnail : 'https://images.unsplash.com/photo-1646886530010-a738828bbfa2',
-        desc : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime facilis necessitatibus suscipit at quibusdam, illum quia ad molestias culpa itaque vitae, officiis similique, reiciendis laborum.'
-    },
-    {
-        _id : 2,
-        title : 'Pomodoro App',
-        tags : ['express', 'react', 'mongodb'],
-        thumbnail : 'https://images.unsplash.com/photo-1646864052090-071a579e1346',
-        desc : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime facilis necessitatibus suscipit at quibusdam, illum quia ad molestias culpa itaque vitae, officiis similique, reiciendis laborum.'
-    },
-    {
-        _id : 3,
-        title : 'Migu Pizza',
-        tags : ['express', 'react', 'mongodb'],
-        thumbnail : 'https://images.unsplash.com/photo-1559183533-ee5f4826d3db',
-        desc : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime facilis necessitatibus suscipit at quibusdam, illum quia ad molestias culpa itaque vitae, officiis similique, reiciendis laborum.'
-    },
-    {
-        _id : 4,
-        title : 'Lorem ipsum dolor sit amet.',   
-        tags : ['express', 'react', 'mongodb'],
-        thumbnail : 'https://images.unsplash.com/photo-1559183533-ee5f4826d3db',
-        desc : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime facilis necessitatibus suscipit at quibusdam, illum quia ad molestias culpa itaque vitae, officiis similique, reiciendis laborum.'
-    },
-]

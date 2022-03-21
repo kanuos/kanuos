@@ -1,3 +1,5 @@
+import { AUTH_ROUTES } from "./admin"
+
 export const CLIENT_TYPE = {
     blog : {
         name : 'blogs',
@@ -134,8 +136,11 @@ export const NAV_METADATA = {
     admin : {
         links : ADMIN_URLS,
         other : {
-            heading : 'Main site',
-            link : '/',
+            heading : 'Logout',
+            link : AUTH_ROUTES.logout,
+        },
+        social : {
+            'main site' : '/'
         }
     },
 
