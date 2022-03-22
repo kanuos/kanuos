@@ -474,7 +474,7 @@ const NavMenu = ({ showMenu, type = "public" }) => {
               variants={variants.contact}
               animate={showMenu ? "show" : "hide"}
               exit="hide"
-              className="flex flex-col w-max mx-auto items-center sm:mx-0 sm:items-start gap-y-2 sm:col-start-1 sm:col-end-2 sm:justify-end sm:h-full sm:row-start-6 sm:row-end-7"
+              className="flex flex-col w-max mx-auto items-center sm:mx-0 sm:items-start gap-y-2 sm:col-start-1 sm:col-end-2 sm:justify-end sm:h-full sm:row-start-6 sm:row-end-7 md:-mt-4"
             >
               <strong className="opacity-50 font-semibold capitalize text-xs">
                 {URLS.contact?.credential}
