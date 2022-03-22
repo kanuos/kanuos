@@ -70,7 +70,7 @@ const HomePage = ({allTags}) => {
     <HeadComponent title="Welcome to Sounak Mukherjee's website" />
     <NavBar />
     <ThemeToggler />
-    <main className={"min-h-screen h-auto w-full overflow-hidden relative p-10 selection:bg-secondary selection:text-dark " + (isDarkMode ? 'main-dark' : 'main-light')}>
+    <main className={"min-h-screen h-auto w-full overflow-hidden relative p-10 " + (isDarkMode ? 'main-dark' : 'main-light')}>
       <div className="w-full">
         <LandingHeader />
         

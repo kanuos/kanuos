@@ -25,7 +25,7 @@ const BlogList = ({blogList}) => {
     <ThemeToggler />
 
     <div className={'h-full  min-h-screen scrollbar-thin w-full overflow-hidden ' + (isDarkMode ? 'main-dark' : 'main-light')}>
-        <div className='px-12 py-20 max-w-3xl mx-auto select-text selection:bg-secondary selection:text-dark'>
+        <div className='px-12 py-20 max-w-3xl mx-auto select-text'>
             <PublicHeader data={{...PUBLIC_LIST_TYPES.blogs, count : blogList.length}} />
         {
             blogList.length > 0 ?

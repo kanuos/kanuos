@@ -11,11 +11,11 @@ import Link from 'next/link';
 import { PUBLIC_URLS } from '../../utils';
 import { ThemeContext } from '../../contexts/ThemeContext'
 
-
+// TODO: img to Image
 export const DesignDetailBody = ({design, adminMode=false}) => {
     const { isDarkMode } = useContext(ThemeContext)
     return (
-    <main className={'h-auto w-full min-h-screen px-12 md:px-16 pb-20 select-text selection:bg-secondary selection:text-dark ' + (isDarkMode ? 'main-dark' : 'main-light')}>
+    <main className={'h-auto w-full min-h-screen px-12 md:px-16 pb-20 select-text ' + (isDarkMode ? 'main-dark' : 'main-light')}>
         <header className='h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto py-20'>
             {!adminMode && 
             <Link href={PUBLIC_URLS.designs.url}>

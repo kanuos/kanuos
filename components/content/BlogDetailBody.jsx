@@ -15,7 +15,7 @@ import { ThemeContext } from '../../contexts/ThemeContext'
 export const BlogDetailBody = ({blog, adminMode=false}) => {
     const { isDarkMode } = useContext(ThemeContext)
     return (
-    <main className={'px-12 md:px-16 h-auto w-full min-h-screen relative select-text selection:bg-secondary selection:text-dark pb-20 ' + (isDarkMode ? 'main-dark' : 'main-light')}>
+    <main className={'px-12 md:px-16 h-auto w-full min-h-screen relative select-text pb-20 ' + (isDarkMode ? 'main-dark' : 'main-light')}>
         {/* background image */}
         
         <div className="relative h-full w-full max-w-3xl mx-auto">

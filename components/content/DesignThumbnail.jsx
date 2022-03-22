@@ -19,6 +19,7 @@ export const DesignThumbnail = ({ data, adminMode, center }) => {
         " text-dark bg-light sm:hover:scale-110 transition-all  flex flex-col gap-y-2 relative h-full min-h-[28rem] lg:h-full flex-grow group overflow-hidden p-2.5 shadow-lg hover:shadow-2xl w-full odd:-rotate-3 even:rotate-3 sm:hover:rotate-0"
       }
     >
+      {/* TODO: img to Image */}
       <img
         src={data.thumbnail}
         alt={data.title + "'s thumbnail"}

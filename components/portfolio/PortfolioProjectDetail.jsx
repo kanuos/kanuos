@@ -7,7 +7,7 @@ import { JoinLine } from '../public/DescHeader'
 const PortfolioProjectDetail = ({isDarkMode=false, isOpen, project, close, prev, next, selectProject}) => {
 
   return (
-    <article className={`z-50 w-full h-screen fixed overflow-y-auto overflow-x-hidden top-0 left-0 scrollbar-none selection:bg-secondary selection:text-dark ${isDarkMode ? 'main-dark' : 'main-light'}`}>
+    <article className={`z-50 w-full h-screen fixed overflow-y-auto overflow-x-hidden top-0 left-0 scrollbar-none ${isDarkMode ? 'main-dark' : 'main-light'}`}>
         <button
             onClick={close}
             className="fixed inline-block top-2 right-4 z-50 text-5xl hover:rotate-90 hover:text-primary transition-all origin-center"

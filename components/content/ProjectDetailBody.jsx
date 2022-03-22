@@ -15,7 +15,7 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 export const ProjectDetailBody = ({project, adminMode=false}) => {
     const { isDarkMode } = useContext(ThemeContext)
     return (
-        <main className={'px-12 md:px-16 h-auto w-full min-h-screen relative select-text selection:bg-secondary selection:text-dark ' + (isDarkMode ? "main-dark" : "main-light")}>
+        <main className={'px-12 md:px-16 h-auto w-full min-h-screen relative select-text ' + (isDarkMode ? "main-dark" : "main-light")}>
             
             <div className="relative h-full w-full max-w-3xl mx-auto">
                 <DescHeader 
