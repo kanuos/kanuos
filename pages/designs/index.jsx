@@ -44,7 +44,6 @@ const DesignList = ({ designList }) => {
             </>
           ) : (
             <main className="h-[30vh] flex flex-col items-center justify-center gap-2">
-                <img src='/error.png' className='h-20 w-20 object-cover' />
                 <p className='p-4 rounded-md bg-light text-dark filter drop-shadow-xl'>
                     <span className="text-sm">
                         No designs found!

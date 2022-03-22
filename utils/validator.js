@@ -233,23 +233,8 @@ export const UserProfileValidator = Joi.object({
     .email({ tlds: { allow: false } })
     .trim()
     .required(),
-  name: Joi.string()
-    .required()
-    .trim()
-    .regex(/^[a-zA-Z ]+$/),
-  adminLabel: Joi.string().required().trim(),
   bio: Joi.string().required().trim(),
   skills: Joi.string().required().trim(),
-  social: Joi.array()
-    .required()
-    .items(
-      Joi.object({
-        _id: Joi.any(),
-        __v: Joi.any(),
-        label: Joi.string().required(),
-        href: Joi.string().required().uri(),
-      })
-    ),
   portfolio: Joi.array().items(Joi.any()),
   techStack: Joi.array()
     .required()
@@ -274,6 +259,7 @@ export const PortfolioProjectValidator = Joi.object({
   user: Joi.any(),
   project: Joi.any(),
   desc: Joi.string().trim().required(),
+  role: Joi.string().trim().required(),
   uiux: Joi.array()
     .required()
     .items(

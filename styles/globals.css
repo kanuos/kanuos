@@ -7,6 +7,10 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+*::selection {
+  @apply bg-secondary text-dark;
+}
+
 body {
   min-height: 100vh;
   min-height: -webkit-fill-available;

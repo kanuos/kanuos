@@ -203,6 +203,10 @@ export const PORTFOLIO_FIELDS = [
             type : 'string',
         },
         {
+            key : 'role',
+            type : 'string',
+        },
+        {
             key : 'uiux',
             type : 'objArr',
             layout : LAYOUTS.outro
