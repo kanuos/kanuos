@@ -13,6 +13,7 @@ import {
   ADMIN_URLS,
   NAV_METADATA,
   PUBLIC_URLS,
+  SOCIAL,
 } from "../../utils";
 import { AUTH_ROUTES } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -481,10 +482,14 @@ const NavMenu = ({ showMenu, type = "public" }) => {
               </strong>
               <ul className="flex flex-col items-center sm:items-start">
                 <li className="font-semibold lowercase text-xs">
-                  {URLS.contact?.email}
+                  <a href={SOCIAL.mailto} rel='noopener noreferrer' target="_blank">
+                    {URLS.contact?.email}
+                  </a>
                 </li>
                 <li className="font-semibold lowercase text-xs">
-                  {URLS.contact?.phone}
+                  <a href={`tel:${SOCIAL.phone}`} rel='noopener noreferrer' target="_blank">
+                    {URLS.contact?.phone}
+                  </a>
                 </li>
               </ul>
             </motion.section>

@@ -2,6 +2,7 @@
 import { useEffect, useContext, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 // import : internal
 import { HeadComponent } from "../components/Head";
@@ -28,7 +29,8 @@ const ContactMe = dynamic(() => import("../components/portfolio/ContactMe"));
 
 
 const PortfolioPage = ({metadata}) => {
-  metadata = { ...staticMetadata, ...JSON.parse(metadata)};
+  // metadata = { ...staticMetadata, ...JSON.parse(metadata)};
+  metadata = { ...JSON.parse(metadata), ...staticMetadata};
   const { isDarkMode } = useContext(ThemeContext);
   const [expandProject, setExpandProject] = useState(false);
   const [current, setCurrent] = useState(null);
@@ -107,14 +109,14 @@ const PortfolioPage = ({metadata}) => {
                     <p className="grow whitespace-pre-line text-sm max-w-3xl">
                       {metadata.skills}
                     </p>
-                    <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer md:ml-auto">
+                    <motion.div initial={{ opacity: 0, scale : 0}} whileInView={{ opacity: 1, scale :1}} className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer md:ml-auto">
                         <Link href=''>
                             <a className={"py-1.5 px-6 block z-10 peer font-semibold transition-all hover:shadow-xl border-2 relative bg-transparent " + (isDarkMode ? "border-light hover:text-dark text-light font-semibold" : "hover:text-light border-dark")}>
                                 my resume
                             </a>
                         </Link>
                         <span className={"py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " + (isDarkMode ? "bg-light border-light" : "bg-dark border-dark")}></span>
-                    </div>
+                    </motion.div>
                   </div>
                   
                 }
@@ -126,6 +128,7 @@ const PortfolioPage = ({metadata}) => {
           <Showcase 
             portfolio={metadata.portfolio} 
             selectProject={({_id}) => setExpandProject(_id)} />
+
           <ContactMe isDarkMode={isDarkMode} />
         </div>
       </main>
