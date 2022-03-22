@@ -25,12 +25,39 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
         }
     }
 
+    const articleVariants = {
+        left : {
+            hide : {
+                scale : 0.5,
+                opacity : 0.5,
+            },
+            show : {
+                scale : 1,
+                opacity : 1,
+                transition : { type : 'spring', stiffness : 200 }
+            }
+        },
+        right : {
+            hide : {
+                scale : 0.5,
+                opacity : 0.5,
+            },
+            show : {
+                scale : 1,
+                opacity : 1,
+                transition : { type : 'spring', stiffness : 200 }
+            }
+        },
+    }
+
     const blogURL = adminMode ? ADMIN_EDIT_URL("blog", data._id) : (PUBLIC_URLS.blogs.url + '/' + data.slug)
 
-    console.log(blogURL)
-
     return (
-        <article 
+        <motion.article 
+            whileInView='show'
+            whileTap='show'
+            initial='hide'
+            variants={(index % 2 === 0 ) ? articleVariants.left : articleVariants.right }
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             className="flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto">
@@ -89,6 +116,6 @@ export const BlogThumbnail = ({data, index, adminMode=false}) => {
                     </Link>
                     <span className={"py-1.5 px-6 block  transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300 " + (isDarkMode ? "bg-secondary border-secondary" : "bg-dark border-dark")}></span>
                 </div>
-        </article>
+        </motion.article>
     )
 }

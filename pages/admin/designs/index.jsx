@@ -26,7 +26,7 @@ const DesignAdminPage = ({allDesigns}) => {
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 grid-flow-row gap-10 w-full mb-20">
             {allDesigns?.map((design, index) => (
-                <DesignThumbnail key={index} data={design} adminMode={true} />
+                <DesignThumbnail key={index} data={design} adminMode={true} index={index} />
             ))}
             </div>
         </main>

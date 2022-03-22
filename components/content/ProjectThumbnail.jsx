@@ -79,6 +79,31 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
     },
   };
 
+  const articleVariants = {
+    left : {
+        hide : {
+            scale : 0.5,
+            opacity : 0.5,
+        },
+        show : {
+            scale : 1,
+            opacity : 1,
+            transition : { type : 'spring', stiffness : 200 }
+        }
+    },
+    right : {
+        hide : {
+            scale : 0.5,
+            opacity : 0.5,
+        },
+        show : {
+            scale : 1,
+            opacity : 1,
+            transition : { type : 'spring', stiffness : 200 }
+        }
+    },
+}
+
   const { isDarkMode } = useContext(ThemeContext);
 
   const projectURL = adminMode
@@ -86,7 +111,11 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
     : PUBLIC_URLS.projects.url + "/" + formatURLParamString(data.title);
 
   return (
-    <article
+    <motion.article
+      whileInView='show'
+      whileTap='show'
+      initial='hide'
+      variants={(index % 2) ? articleVariants.left : articleVariants.right}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className="flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto"
@@ -241,6 +270,6 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
           }
         ></span>
       </div>
-    </article>
+    </motion.article>
   );
 };
