@@ -13,42 +13,56 @@ import { ThemeToggler } from "../../components/public/ThemeToggler";
 
 const DesignList = ({ designList }) => {
   designList = JSON.parse(designList);
-  const {isDarkMode} = useContext(ThemeContext)
+  const { isDarkMode } = useContext(ThemeContext);
   return (
     <>
-      <HeadComponent title="Sounak Mukherjee's Ui/UX Designs" />
+      <HeadComponent
+        title="Sounak Mukherjee's Ui/UX Designs"
+        content="Check out the UI-UX designs and prototypes I designed for various products"
+      />
       <NavBar />
       <ThemeToggler />
-      <div className={"h-full  min-h-screen scrollbar-thin w-full overflow-hidden " + (isDarkMode ? 'main-dark' : 'main-light')}>
+      <div
+        className={
+          "h-full  min-h-screen scrollbar-thin w-full overflow-hidden " +
+          (isDarkMode ? "main-dark" : "main-light")
+        }
+      >
         <div className="px-12 py-20 w-full flex flex-col items-center justify-start mx-auto select-text h-full">
           <PublicHeader
             data={{ ...PUBLIC_LIST_TYPES.designs, count: designList.length }}
           />
           {designList.length > 0 ? (
             <>
-              {
-                designList.length < 4 &&
+              {designList.length < 4 && (
                 <main className="grid grid-flow-row grid-cols-1 place-items-center gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
-                {designList.map((design) => (
-                  <DesignThumbnail key={design._id} data={design} center={designList.length < 4} />
-                ))}
-              </main>}
-              {
-                designList.length >= 4 &&
+                  {designList.map((design) => (
+                    <DesignThumbnail
+                      key={design._id}
+                      data={design}
+                      center={designList.length < 4}
+                    />
+                  ))}
+                </main>
+              )}
+              {designList.length >= 4 && (
                 <main className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
-                {designList.map((design) => (
-                  <DesignThumbnail key={design._id} data={design} center={designList.length >= 4} />
-                ))}
-              </main>}
+                  {designList.map((design) => (
+                    <DesignThumbnail
+                      key={design._id}
+                      data={design}
+                      center={designList.length >= 4}
+                    />
+                  ))}
+                </main>
+              )}
               <ListLoader />
             </>
           ) : (
             <main className="h-[30vh] flex flex-col items-center justify-center gap-2">
-                <p className='p-4 rounded-md bg-light text-dark filter drop-shadow-xl'>
-                    <span className="text-sm">
-                        No designs found!
-                    </span>
-                </p>
+              <p className="p-4 rounded-md bg-light text-dark filter drop-shadow-xl">
+                <span className="text-sm">No designs found!</span>
+              </p>
             </main>
           )}
         </div>
@@ -75,4 +89,3 @@ export async function getStaticProps() {
     };
   }
 }
-

@@ -344,3 +344,18 @@ export function isValidURL(href) {
         return false;
     }
 }
+
+
+
+export function generateDetailViewMetadata(title, tags, category, type='project'){
+    if (type === 'project'){
+        return `Check out the walk-through for ${category} "${title}" which uses ${tags}`
+    }
+    if (type === 'blog') {
+        return `Check out the ${category} "${title}" that puts light on ${tags}`
+    }
+    if (type === 'design') {
+        return `Check out how I ${type}ed "${title}" using ${category} to implement technologies - ${tags}`
+    }
+    return ''
+}

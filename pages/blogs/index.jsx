@@ -20,7 +20,7 @@ const BlogList = ({blogList}) => {
 
     return (
     <>
-    <HeadComponent title="Sounak Mukherjee's Blogs" />
+    <HeadComponent title="Sounak Mukherjee's Blogs" content='Check out my blogs where I solve various problems, learn new tech etc'/>
     <NavBar />
     <ThemeToggler />
 

@@ -82,7 +82,7 @@ const PortfolioPage = ({metadata}) => {
 
   return (
     <>
-      <HeadComponent title="Sounak Mukherjee | Portfolio" />
+      <HeadComponent title="Sounak Mukherjee | Portfolio" content="Check out my full stack web developer portfolio website" />
       <NavBar type="portfolio" />
       <ThemeToggler />
       <main
@@ -92,7 +92,7 @@ const PortfolioPage = ({metadata}) => {
         }
       >
         <VideoBG />
-        <div className="w-full selection:bg-secondary selection:text-dark scrollbar-none">
+        <div className="w-full scrollbar-none">
           <PortfolioHeader miniBio={metadata.miniBio} name={metadata.name} />
           <section className="flex py-20 gap-20 min-h-screen w-full max-w-5xl mx-auto flex-col justify-center items-center lg:items-start lg:justify-start">
             <section className="w-full max-w-5xl mx-auto px-16">
