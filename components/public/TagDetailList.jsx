@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { IoCloseOutline, IoPricetagOutline } from "react-icons/io5"
 
@@ -8,12 +8,15 @@ import { DesignThumbnail } from "../content/DesignThumbnail"
 import { JoinLine } from "./DescHeader";
 
 import { CONTENT_TYPE } from "../../utils/admin";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 
 export const TagDetailList = props => {
     const {tag, project, blog, design, close} = props;
-    const [active, setActive] = useState('')
+    const [active, setActive] = useState('');
+
+    const { isDarkMode } = useContext(ThemeContext);
 
     useEffect(() => {
         if (project.length > 0) {
@@ -30,11 +33,13 @@ export const TagDetailList = props => {
         }
     }, [])
 
+    console.log({tag})
+
     return (
     <section className='flex flex-col items-start gap-4'>
-        <div className="p-4 bg-light rounded-md flex items-center justify-between filter drop-shadow-xl mt-10 max-w-3xl mx-auto w-full">
+        <div className={`p-4 rounded-md flex items-center justify-between filter drop-shadow-xl mt-10 max-w-3xl mx-auto w-full ${isDarkMode ? 'nav-light' : 'nav-dark'}`}>
             <p className="font-semibold text-xs">
-                Searching for <span className="text-primary capitalize">{tag}</span>
+                Searching for <span className="text-primary capitalize text-sm ml-1">{tag}</span>
             </p>
             <button onClick={close} className="hover:rotate-90 hover:text-primary hover:scale-110 transition-all">
                 <IoCloseOutline />
@@ -94,7 +99,7 @@ const GroupList = ({type, list, tag}) => {
                     <span className="capitalize font-semibold text-xs">{tag}</span>
                 </p>
                 <h3 className="capitalize font-black text-center text-3xl md:text-5xl">{type}</h3>
-                <p className="text-xs text-primary font-semibold">
+                <p className="text-xs text-primary font-semibold ml-1">
                     <small>
                     Total {type} : {list.length}
                     </small>
@@ -107,7 +112,6 @@ const GroupList = ({type, list, tag}) => {
                     <ProjectThumbnail 
                         key={project._id} 
                         data={project} 
-                        adminMode={true}
                         index={index + 1} />
                 ))}
                 </div>
@@ -119,18 +123,38 @@ const GroupList = ({type, list, tag}) => {
                     <BlogThumbnail 
                         key={blog._id} 
                         data={blog} 
-                        adminMode={true}
                         index={index + 1} />
                 ))}
                 </div>
             }
 
             {(type === CONTENT_TYPE.design.name) && 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 grid-flow-row gap-10 w-full mb-20">
-                {list?.map((design, index) => (
-                    <DesignThumbnail key={index} data={design} adminMode={true} />
+                <>
+                {list.length < 4 && (
+                <div className="grid grid-flow-row grid-cols-1 place-items-center gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
+                  {list.map((design, i) => (
+                    <DesignThumbnail
+                      key={design._id}
+                      data={design}
+                      index = {i}
+                      center={list.length < 4}
+                    />
+                  ))}
+                </div>
+                )}
+                {list.length >= 4 && (
+                <div className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
+                {list.map((design, i) => (
+                    <DesignThumbnail
+                    key={design._id}
+                    data={design}
+                    index = {i}
+                    center={list.length >= 4}
+                    />
                 ))}
                 </div>
+            )}
+                </>
             }
 
         </section>

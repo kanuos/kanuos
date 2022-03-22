@@ -47,7 +47,13 @@ const HomePage = ({allTags}) => {
 
       if (error) throw data;
       
-      setData(data?.[0])
+      let {blog, design, project, tag : t} = data[0];
+
+      blog = blog.filter(b => b.isPublic);
+      design = design.filter(d => d.isPublic);
+      project = project.filter(p => p.isPublic);
+
+      setData({blog, design, project, tag : t})
       setStatus(STATUSES.complete)
     } 
     catch (error) {
