@@ -6,7 +6,7 @@ import { IoChatboxOutline  } from 'react-icons/io5'
 import { ContactEmail } from "../public/ContactEmail";
 import { ContactInstantMessage } from "../public/ContactInstantMessage";
 
-export const ContactMe = ({ isDarkMode }) => {
+const ContactMe = ({ isDarkMode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -28,26 +28,26 @@ export const ContactMe = ({ isDarkMode }) => {
             <span className={"py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " + (isDarkMode ? 'bg-light' : 'bg-dark')}></span>
           </button>
           <AnimatePresence>
+            {isModalOpen && 
             <motion.div
-              animate={
-                isModalOpen
-                  ? {
-                      opacity: 1,
-                      scale: 1,
-                      rotate: 0,
-                      transition: { type: "spring", staggerChildren: 0.25 },
-                    }
-                  : {
-                      opacity: 0,
-                      scale: 0,
-                      rotate: 6,
-                      transition: { type: "spring" },
-                    }
-              }
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y : 0,
+                transition: { type: "linear", staggerChildren: 0.25, when: 'beforeChildren' },
+              }}
+
               exit={{
                 opacity: 0,
                 scale: 0,
-                rotate: -6,
+                y : '100vh',
+                transition: { type: "linear", when: 'afterChildren' },
+              }}
+              
+              initial={{
+                opacity: 0,
+                scale: 0,
+                y : '100vh',
                 transition: { type: "spring" },
               }}
               className={
@@ -57,17 +57,18 @@ export const ContactMe = ({ isDarkMode }) => {
             >
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="fixed top-4 z-50 right-4 text-5xl hover:rotate-180 hover:text-primary font-thin transition-all origin-center"
+                className="fixed top-4 z-50 right-6 text-5xl hover:rotate-180 hover:text-primary transition-all origin-center"
               >
                 &times;
               </button>
-              <div className="h-full block w-full">
-                <ContactInstantMessage key={isModalOpen} />
-              </div>
-            </motion.div>
+              <ContactInstantMessage key={isModalOpen} close={() => setIsModalOpen(false)} />
+            </motion.div>}
           </AnimatePresence>
         </div>
       </div>
     </section>
   );
 };
+
+
+export default ContactMe;

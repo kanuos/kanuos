@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
 
-export const LoadSpinner = () => {
+export const LoadSpinner = ({text='Loading'}) => {
 
    
   return (
     <div className="flex flex-col items-center justify-center my-10 gap-y-10">
         <span className="font-semibold text-center">
-            Loading
+            {text}
         </span>
         <ul className="flex items-center justify-center gap-4">
             <motion.li 

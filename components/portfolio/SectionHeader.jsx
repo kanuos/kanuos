@@ -37,11 +37,11 @@ export const SectionHeader = ({heading, content, cls='', fromLeft=false}) => {
     h2 : {
       hide : {
         opacity : 0.5,
-        scale : .5
+        scaleY : .5
       },
       show : {
-        opacity : 1,
-        scale : [.5, 1.25, 1], 
+        opacity : [.5, 1],
+        scaleY : [.5, 1], 
       },
     },
     content : {

@@ -18,7 +18,6 @@ export default async function inboxAPIHandler (req, res) {
                 // incoming message from client
                 // validate and sanitize the body
                 const {error, value} = MessageValidator.validate(body);
-                console.log(error)
                 if (error) throw error.details[0].message; 
 
                 const newMessage = await addNewMessageToDB(value);

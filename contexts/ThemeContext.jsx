@@ -4,23 +4,24 @@ const THEME_KEY = "sounak_theme";
 
 export const ThemeContext = createContext();
 
+
 const ThemeContextProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   function toggleTheme() {
-    let currentState = !isDarkMode;
-    setIsDarkMode(currentState);
-    sessionStorage.setItem(THEME_KEY, JSON.stringify(currentState));
+    let newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    sessionStorage.setItem(THEME_KEY, newMode ? 'dark' : 'light');
   }
-
+  
   useEffect(() => {
-    const themeFromStorage = sessionStorage.getItem(THEME_KEY);
-    if (!themeFromStorage) {
-      sessionStorage.setItem(THEME_KEY, JSON.stringify(false));
+    const currentTheme = sessionStorage.getItem(THEME_KEY);
+    if (['dark', 'light'].includes(currentTheme)) {
+      setIsDarkMode(currentTheme === 'dark' ? true : false);
       return;
     }
-    setIsDarkMode(JSON.parse(Boolean(themeFromStorage)));
-  }, []);
+    setIsDarkMode(false);
+  }, [])
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>

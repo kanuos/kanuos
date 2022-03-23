@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 import { PUBLIC_URLS } from "../../utils"
-import { PortfolioLink } from "./PortfolioLink"
 import { ProjectThumb } from "./ProjectThumb"
 
 export const Showcase = ({portfolio, selectProject}) => {
@@ -33,10 +33,11 @@ export const Showcase = ({portfolio, selectProject}) => {
       onScroll={e => e.preventDefault()} className='h-auto w-full max-w-5xl mx-auto'>
         <motion.h2 
           variants={vars.h2}
+          viewport={{ once : true }}
           className='text-6xl font-thin sm:text-8xl lg:text-9xl capitalize w-min px-16 mb-40'>
             selected works
         </motion.h2>
-        <motion.div variants={vars.showcase} whileInView='show' className="flex flex-col p-4 items-center justify-start gap-20 lg:gap-y-40 h-auto overflow-y-auto scrollbar-none scrollbar-none snap-y snap-mandatory">
+        <motion.div variants={vars.showcase} whileInView='show' className="flex flex-col p-4 items-center justify-start gap-20 lg:gap-y-60 h-auto overflow-y-auto scrollbar-none scrollbar-none snap-y snap-mandatory">
         {portfolio.map((p, i) => (
             <ProjectThumb 
               key={p._id} 
@@ -46,8 +47,14 @@ export const Showcase = ({portfolio, selectProject}) => {
               total={portfolio.length} />
         ))}    
         </motion.div>
-        <motion.div variants={vars.linkBox} initial='hide' whileInView='show' className="grid place-items-center mt-20">
-            <PortfolioLink label="more work →" href={PUBLIC_URLS.home.url}/>
+        <motion.div variants={vars.linkBox} initial='hide' whileInView='show' className="grid place-items-center my-20">
+          <Link href={PUBLIC_URLS.home.url}>
+            <a
+              className="text-xs uppercase opacity-50 hover:opacity-100 transition-all font-semibold hover:text-primary hover:underline underline-offset-2"
+            >
+              check out my other works
+            </a>
+          </Link>
         </motion.div>
     </motion.section>
   )
