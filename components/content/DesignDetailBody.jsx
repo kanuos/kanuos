@@ -1,4 +1,5 @@
 
+import Image from 'next/image';
 import { useContext } from 'react';
 // import : external
 import {  IoDiscSharp, IoCalendarOutline, IoPricetagOutline, IoLeafOutline, IoColorFillOutline, IoRocketOutline, IoMapSharp, IoCameraOutline } from 'react-icons/io5';
@@ -11,11 +12,10 @@ import Link from 'next/link';
 import { PUBLIC_URLS } from '../../utils';
 import { ThemeContext } from '../../contexts/ThemeContext'
 
-// TODO: img to Image
 export const DesignDetailBody = ({design, adminMode=false}) => {
     const { isDarkMode } = useContext(ThemeContext)
     return (
-    <main className={'h-auto w-full min-h-screen px-12 md:px-16 pb-20 select-text ' + (isDarkMode ? 'main-dark' : 'main-light')}>
+    <main className={'h-auto w-full min-h-screen pb-20 select-text ' + (isDarkMode ? 'main-dark' : 'main-light') + (!adminMode && ' px-12 md:px-16')}>
         <header className='h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto py-20'>
             {!adminMode && 
             <Link href={PUBLIC_URLS.designs.url}>
@@ -38,7 +38,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                 <p className="text-sm mt-2 leading-relaxed opacity-75">{design.desc}</p>
             </div>
         </header>
-        <div className="relative h-full w-full my-16 max-w-4xl mx-auto">
+        <div className="relative h-full w-full max-w-4xl mx-auto">
             
             <ul className={"flex flex-col items-start justify-around gap-y-14 h-full relative before:h-full before:absolute before:w-0.5 before:top-0 before:left-0 " + (isDarkMode ? "before:bg-light before:bg-opacity-20" : "before:bg-dark before:bg-opacity-10")}>
 
@@ -100,9 +100,9 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                         {design.colorPalette.map(({name, hex}, i) => (
                             <li key={i} className="flex items-center gap-4">
                                 <span className="w-4 h-4 rounded-full filter drop-shadow-lg" style={{backgroundColor : hex}}></span>
-                                <span className='text-xs font-semibold'>
-                                    {name}
-                                </span>
+                                <p className='text-xs font-semibold capitalize'>
+                                    {name} <span className="opacity-50 uppercase">({hex})</span>
+                                </p>
                             </li>
                         ))}
                     </ul>
@@ -121,8 +121,13 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                             <motion.li 
                                 key={i} 
                                 className="flex flex-col items-start flex-grow gap-y-4">
-                                <figure className="h-auto w-11/12 rounded-md shadow-2xl overflow-hidden mb-2 z-10">
-                                    <img src={page} alt={title} className="h-full w-full object-cover block" />
+                                <figure className="h-full min-h-[75vh] w-full relative rounded-md shadow-2xl overflow-hidden mb-2 z-10">
+                                    <Image 
+                                        loader={({src, width}) => `${src}?w=${width}&q=100`} 
+                                        layout='fill'
+                                        objectFit='cover' 
+                                        src={page} 
+                                        alt={title} className="h-full w-full object-cover block" />
                                 </figure>
                                 <span className='z-10  text-xl font-semibold capitalize'>
                                     Page {i + 1} : {title}
@@ -148,14 +153,14 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                             <li key={i} className="flex items-center gap-2">
                                 <IoDiscSharp className='text-secondary'/>
                                 <span className='text-xs font-semibold capitalize'>
-                                    {tool}
+                                    {tool?.text}
                                 </span>
                             </li>
                         ))}
                     </ul>
                 </li>
 
-                <li className='pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2'>
+                <li className='pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2 w-full'>
                     <p className="flex items-center justify-start gap-x-1">
                         <IoCameraOutline className='text-sm'/>
                         <span className='font-semibold text-xs opacity-70 capitalize'>
@@ -164,12 +169,22 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                     </p>
                     <ul className='text-xs w-full flex flex-col items-start mt-10 gap-y-20'>
                         {design.externalResources.map(({poster, courtesy, photographer}, i) => (
-                            <li key={i} className="flex flex-col items-center group">
+                            <li key={i} className="flex flex-col items-center group w-full">
                                 <span className=" text-3xl">
                                     #{(i + 1).toString().padStart(2, '0')}
                                 </span>
                                 <JoinLine />
-                                <img src={poster} className="h-auto w-3/4 my-2 object-cover group-even:rotate-6 group-odd:-rotate-6 filter drop-shadow-2xl p-3 bg-light" />
+                                <div className="bg-light w-full h-full min-h-[50vh] md:min-h-[60vh] rounded-md overflow-hidden group-even:rotate-3 group-odd:-rotate-3 p-4 filter drop-shadow-2xl max-w-[28rem]">
+                                    <figure className="relative h-full w-full min-h-[50vh] md:min-h-[60vh]">
+                                        <Image 
+                                            loader={({src, width}) => `${src}?w=${width}&q=100`}
+                                            layout='fill'
+                                            alt={`Pic courtesy ${photographer}`} 
+                                            src={poster} 
+                                            objectFit='cover'
+                                            className="h-full w-full object-cover" />
+                                    </figure>
+                                </div>
                                 <div className="ml-4 flex flex-col w-full items-center gap-y-1">
                                     <JoinLine />
                                     <p className="text-center font-semibold text-xs capitalize opacity-50">
@@ -191,7 +206,6 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                     </ul>
                 </li>
 
-                <li className='pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2'></li>
             </ul>
         
         </div>

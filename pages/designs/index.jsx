@@ -34,30 +34,15 @@ const DesignList = ({ designList }) => {
           />
           {designList.length > 0 ? (
             <>
-              {designList.length < 4 && (
-                <main className="grid grid-flow-row grid-cols-1 place-items-center gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
-                  {designList.map((design, i) => (
-                    <DesignThumbnail
-                      key={design._id}
-                      data={design}
-                      index = {i}
-                      center={designList.length < 4}
-                    />
-                  ))}
-                </main>
-              )}
-              {designList.length >= 4 && (
-                <main className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
-                  {designList.map((design, i) => (
-                    <DesignThumbnail
-                      key={design._id}
-                      data={design}
-                      index = {i}
-                      center={designList.length >= 4}
-                    />
-                  ))}
-                </main>
-              )}
+              <main className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
+                {designList.map((design, i) => (
+                  <DesignThumbnail
+                    key={design._id}
+                    data={design}
+                    index = {i}
+                  />
+                ))}
+              </main>
               <ListLoader />
             </>
           ) : (

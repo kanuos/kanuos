@@ -30,7 +30,7 @@ export const InputField = ({name, value='', inputMode=true, getData, constraints
     useEffect(() => {
         const temp = Object.values(constraints).map(({check}) => check(field)).every(Boolean);
         setCanSubmit(_ => temp)
-    }, [field])
+    }, [field, constraints])
     
     useEffect(() => {
         if(isInputMode) {
@@ -38,7 +38,7 @@ export const InputField = ({name, value='', inputMode=true, getData, constraints
             return
         }
         setEditMode(false)
-    }, [isInputMode])
+    }, [isInputMode, setEditMode])
 
     function handleSubmit(e) {
         e.preventDefault();

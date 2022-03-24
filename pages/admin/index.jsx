@@ -7,9 +7,8 @@ import { HeadComponent } from '../../components/Head'
 import { ADMIN_URLS } from '../../utils';
 import { getAdminUser } from '../../database/user'
 import { isAdminMiddleware } from '../../utils/authLib'
-import dynamic from 'next/dynamic';
 
-const { LoginBody, RegisterBody } =  dynamic(() => import('../../components/admin/AccountBody').then(({ LoginBody, RegisterBody }) => ({ LoginBody, RegisterBody })));
+import { LoginBody, RegisterBody } from '../../components/admin/AccountBody'
 
 const AdminHomePage = ({adminFromDB}) => {
   adminFromDB = JSON.parse(adminFromDB);

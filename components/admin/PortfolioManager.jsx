@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 
 import axios from 'axios'
 import { IoCloseOutline, IoCheckmarkCircle, IoRemoveCircleSharp, IoLockOpenOutline, IoLockClosedOutline } from 'react-icons/io5'
@@ -16,7 +16,7 @@ export const PortfolioManager = ({handleClose, existing, editMode=null, del, add
     const [isPublic, setIsPublic] = useState(editMode?.isShowcased ?? false);
 
 
-    const getLists = useMemo(async function getLists() {
+    const getLists = useCallback(async function getLists() {
         try {
             let temp;
             const projectPromise = new Promise(async (res, rej) => {

@@ -153,11 +153,12 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                             }
                             
                             {['image'].includes(field.type) && 
-                                <div className="w-full flex flex-col items-stretch bg-light drop-shadow-xl filter rounded-md relative group overflow-hidden">
+                                <div className="w-full flex flex-col items-stretch bg-light drop-shadow-xl filter rounded-md relative group overflow-hidden min-h-[60vh]">
                                 {Boolean(state[field.key]) ? 
                                 <>
                                     <Image 
                                         layout="fill"
+                                        loader={({src, width}) => `${src}?w=${width}&q=100`}
                                         alt={'preview image for ' + field.key}
                                         className="h-full w-full object-cover block shadow-xl transition-all group-hover:grayscale group-hover:rotate-12 group-hover:scale-150 rounded-md"
                                         src={state[field.key]}  />
