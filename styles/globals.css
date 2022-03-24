@@ -59,6 +59,8 @@ button, button:visited, button:focus {
 
 code[class*="language-"], pre[class*="language-"] {
   font-family: 'Montserrat', sans-serif !important;
+  font-weight: 600 !important;
+  white-space: pre-wrap !important;
 }
 
 

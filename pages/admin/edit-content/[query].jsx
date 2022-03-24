@@ -2,6 +2,7 @@
 // import : internal
 import axios from "axios";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
@@ -15,16 +16,8 @@ import {
 } from "react-icons/io5";
 
 // import : internal components
-import {
-  JSONEditor,
-  JSON_EDITOR_STATE,
-} from "../../../components/admin/JSONEditor";
-import { TagSelector } from "../../../components/admin/TagSelector";
-import { BlogDetailBody } from "../../../components/content/BlogDetailBody";
-import { ProjectDetailBody } from "../../../components/content/ProjectDetailBody";
-import { DesignDetailBody } from "../../../components/content/DesignDetailBody";
 import { HeadComponent } from "../../../components/Head";
-import { NavBar } from "../../../components/public/Nav";
+import { JSON_EDITOR_STATE, JSONEditor } from "../../../components/admin/JSONEditor";
 
 // import : internal
 import { getIndividualProject } from "../../../database/projects";
@@ -35,6 +28,38 @@ import { API_ROUTES, CONTENT_TYPE } from "../../../utils/admin";
 import { ContentValidators } from "../../../utils/validator";
 import { getIndividualDesign } from "../../../database/designs";
 import { isAdminMiddleware } from "../../../utils/authLib";
+
+// dynamic imports
+
+const TagSelector = dynamic(() =>
+  import("../../../components/admin/TagSelector").then(
+    (module) => module.TagSelector
+  )
+);
+const BlogDetailBody = dynamic(() =>
+  import("../../../components/content/BlogDetailBody").then(
+    (module) => module.BlogDetailBody
+  )
+);
+const ProjectDetailBody = dynamic(() =>
+  import("../../../components/content/ProjectDetailBody").then(
+    (module) => module.ProjectDetailBody
+  )
+);
+const DesignDetailBody = dynamic(() =>
+  import("../../../components/content/DesignDetailBody").then(
+    (module) => module.DesignDetailBody
+  )
+);
+const NavBar = dynamic(() =>
+  import("../../../components/public/Nav").then((module) => module.NavBar)
+);
+
+
+
+
+
+
 
 const SESSION_NAME = `sounak_admin`;
 
@@ -59,6 +84,12 @@ const EditCMS = ({ allTags, data, contentType }) => {
     setContent(ctnt);
     setStep(3);
   }
+
+  useEffect(() => {
+    sessionStorage.removeItem(SESSION_NAME);
+    sessionStorage.removeItem(JSON_EDITOR_STATE);
+  }, [router.pathname])
+
 
   useEffect(() => {
     setContent((prev) => ({ ...prev, isPublic }));
@@ -149,7 +180,7 @@ const EditCMS = ({ allTags, data, contentType }) => {
       <main className="h-full min-h-screen p-10 main-light text-dark">
         {[0, 3].includes(step) && (
           <>
-            <p className="text-center block font-light font-special text-xl border-b pb-1 mb-4">
+            <p className="text-center block font-black font-special text-xl border-b pb-1 mb-4">
               Admin Read Mode
             </p>
             {step === 3 && (
@@ -165,7 +196,7 @@ const EditCMS = ({ allTags, data, contentType }) => {
             )}
             {type === CONTENT_TYPE.blog.name &&
               Object.keys(content).length > 0 && (
-                <BlogDetailBody blog={content} adminMode={true} />
+                  <BlogDetailBody blog={content} adminMode={true} />
               )}
 
             {type === CONTENT_TYPE.project.name && (

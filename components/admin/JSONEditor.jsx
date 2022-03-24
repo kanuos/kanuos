@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+import Image from "next/image";
 import { StringField, ConstArrField, SlugField, ArrayField, ObjectStepInput, SelectInput, ObjectArrayStepInput, ImageInput } from "./InputField";
 import { CONTENT_TYPE, getEmptyTemplate } from "../../utils/admin";
 import { PageField } from "./PageStep";
@@ -64,7 +65,9 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
         }
     }, [state])
 
-
+    const getSlug = useCallback((v) => {
+        handleStateUpdate({k : 'slug', v: v.trim().toLowerCase()})
+    }, [])
 
     function handleSendContentToPage() {
         getContent(state);
@@ -106,7 +109,7 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                             {(field.type === 'slug') && 
                                 <SlugField 
                                     text={state?.title}
-                                    getSlug={(v) => handleStateUpdate({k : 'slug', v: v.trim().toLowerCase()})} />
+                                    getSlug={getSlug} />
                             }
                             {(field.type === 'string') && 
                                 <StringField 
@@ -153,9 +156,10 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                                 <div className="w-full flex flex-col items-stretch bg-light drop-shadow-xl filter rounded-md relative group overflow-hidden">
                                 {Boolean(state[field.key]) ? 
                                 <>
-                                    <img 
+                                    <Image 
+                                        layout="fill"
                                         alt={'preview image for ' + field.key}
-                                        className="h-full w-full object-cover block shadow-xl transition-all group-hover:grayscale group-hover:rotate-12 group-hover:scale-150"
+                                        className="h-full w-full object-cover block shadow-xl transition-all group-hover:grayscale group-hover:rotate-12 group-hover:scale-150 rounded-md"
                                         src={state[field.key]}  />
                                     <button 
                                         onClick={() => setState(prev => ({...prev, [field.key] : ''}))}

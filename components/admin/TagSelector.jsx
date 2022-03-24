@@ -1,6 +1,13 @@
-import { JoinLine } from "../public/DescHeader";
+import { JoinLine } from "../public/DescHeader";;
+import { useRouter } from 'next/router'
+import { ADMIN_URLS } from "../../utils";
 
 export const TagSelector = ({ handleTag, tag, next, allTags, prev }) => {
+  const router = useRouter();
+  if (allTags.length === 0) {
+    router.replace(ADMIN_URLS.tags.url)
+    return <></>
+  }
   return (
     <div className="section h-full w-full flex items-start justify-center">
       <section className="flex flex-col items-start gap-y-2  w-full max-w-2xl">

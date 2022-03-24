@@ -14,7 +14,6 @@ const BlogModel = conn.models.blog;
  export async function getAllBlogs(adminMode=false) {
     // admin mode => true   lists all blogs (both public and private)
     // admin mode => false  lists all public blogs
-    // TODO: auth to check adminMode with session
     const filter = adminMode ? {} : { isPublic : true};
 
     const allBlogs = await BlogModel.find(filter).populate('tags');
@@ -32,7 +31,6 @@ const BlogModel = conn.models.blog;
 export async function getIndividualBlog(adminMode=false, searchBy) {
     let blog;
     if (adminMode) {
-        // TODO: auth to check adminMode with session
         // check if incoming blog ID is valid mongoose objectID
         if (!isValidObjectId(searchBy)) throw 'Invalid BlogID (Admin Mode)'
         
@@ -44,7 +42,7 @@ export async function getIndividualBlog(adminMode=false, searchBy) {
         return blog;
     }
     // search in client mode
-    searchBy = searchBy?.trim().split(' ').join('_');
+    searchBy = searchBy?.trim().split(' ').join('-');
     blog = await BlogModel.findOne({ slug : searchBy}).populate('tags');
 
     if (!blog) throw `Blog with id:${searchBy} doesn't exist`

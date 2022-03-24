@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useMemo} from 'react'
 
 import axios from 'axios'
 import { IoCloseOutline, IoCheckmarkCircle, IoRemoveCircleSharp, IoLockOpenOutline, IoLockClosedOutline } from 'react-icons/io5'
@@ -16,7 +16,7 @@ export const PortfolioManager = ({handleClose, existing, editMode=null, del, add
     const [isPublic, setIsPublic] = useState(editMode?.isShowcased ?? false);
 
 
-    async function getLists() {
+    const getLists = useMemo(async function getLists() {
         try {
             let temp;
             const projectPromise = new Promise(async (res, rej) => {
@@ -64,9 +64,9 @@ export const PortfolioManager = ({handleClose, existing, editMode=null, del, add
         catch (error) {
             alert(error)
         }
-    }
+    }, [editMode, existing])
 
-    useEffect(() => getLists(), [editMode, existing])
+    useEffect(() => getLists(), [editMode, existing, getLists])
 
     async function handleSubmitPortfolio() {
         try {

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
-import { IoCheckmarkDone,  IoSend, IoEllipseOutline, IoCheckmarkCircleSharp, IoMagnetOutline, IoCloseCircleOutline } from "react-icons/io5"
+import Image from "next/image"
+import { useEffect, useState, useCallback } from "react"
+import { IoCheckmarkDone,  IoSend, IoEllipseOutline, IoCheckmarkCircleSharp, IoCloseCircleOutline } from "react-icons/io5"
 import Textarea from "react-textarea-autosize"
 
 export const StringField = ({name, value='', setValue}) => {
@@ -29,18 +30,18 @@ export const ConstArrField = ({name, array}) => {
 }
 
 export const SlugField = ({text='', getSlug}) => {
-  const slug = text.toLowerCase().split(' ').join('_');
+  const slug = text.toLowerCase().split(' ').join('-');
 
   useEffect(() => {
-    getSlug(text.toLowerCase().split(' ').join('_'))
-  }, [text])
+    getSlug(text.toLowerCase().split(' ').join('-'))
+  }, [text, getSlug])
   
   return (
     <section className="flex flex-col items-start justify-start gap-2 bg-light p-4 filter drop-shadow-xl rounded-md">
       <span className="text-xs capitalize font-semibold">slug</span>
       <article 
-        className={"flex flex-wrap gap-4 w-full p-1.5 text-xs peer outline-none focus:outline-none border-2 rounded focus:border-current font-semibold " + (text.length > 0 ? "text-dark" : "text-primary")}>
-          /{slug}
+        className={"flex flex-wrap gap-4 w-full p-1.5 text-xs peer outline-none focus:outline-none border-2 rounded focus:border-current font-semibold " + (text.length > 0 ? "text-secondary" : "text-primary")}>
+          {slug}
       </article>
     </section>
   )
@@ -117,8 +118,12 @@ export const ImageInput = ({name, setValue}) => {
   return (
     <div className="flex flex-col w-full p-4 mt-4">
       {previewMode && 
-      <div className="flex flex-col items-center justify-center gap-4">
-        <img src={imgUrl} className="w-full h-auto object-cover my-4 block shadow-lg" />
+      <div className="flex flex-col items-center min-h-[60vh] justify-center gap-4 relative rounded-md overflow-hidden">
+        <Image 
+          src={imgUrl} 
+          layout='fill'
+          loader={({src, width}) => `${src}?q=${width}&q=100`} 
+          alt='image preview' className="w-full h-full object-cover my-4 block shadow-lg" />
         <button onClick={handleSubmitImage}
           className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
           <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
@@ -163,6 +168,14 @@ export const ObjectStepInput = props => {
     setStep(prev => ({...prev, [k] : v}))
   }
 
+  
+  const resetStep = useCallback(function () {
+    let obj = {};
+    layout.forEach(key => obj[key.trim()] = '');
+    setStep(() => obj)
+    return obj
+  }, [layout])
+
   useEffect(() => {
     if (init && Object.keys(init).length > 0) {
       setStep(prev => ({...prev, ...init}))
@@ -170,7 +183,7 @@ export const ObjectStepInput = props => {
     }
     // if no init data
     resetStep()
-  }, [init])
+  }, [init, resetStep])
 
   function handleSubmitStep() {
     setValue({key : name, value : step})
@@ -182,12 +195,6 @@ export const ObjectStepInput = props => {
     setValue({key : name, value : resetStep()})
   }
 
-  function resetStep() {
-    let obj = {};
-    layout.forEach(key => obj[key.trim()] = '');
-    setStep(() => obj)
-    return obj
-  }
 
 
   return (

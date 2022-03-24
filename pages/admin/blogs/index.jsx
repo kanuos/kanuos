@@ -22,6 +22,9 @@ const BlogsAdminPage = ({allBlogs}) => {
                 <span className="text-3xl md:text-5xl font-special font-semibold capitalize">
                     Blog List View
                 </span>
+                <small className="text-xs ml-4 opacity-50 font-semibold">
+                    Total : {allBlogs.length ?? 0}
+                </small>
             </h1>
             <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-3xl mx-auto">
             {allBlogs?.map((blog, index) => (

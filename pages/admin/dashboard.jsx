@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import dynamic from 'next/dynamic';
 
 // import : internal components
-import { NavBar } from '../../components/public/Nav';
 import { HeadComponent } from '../../components/Head';
 
 
@@ -9,8 +9,16 @@ import { HeadComponent } from '../../components/Head';
 import { getAdminUser } from '../../database/user';
 import { isAdminMiddleware } from '../../utils/authLib';
 import { ADMIN_ACCOUNT } from '../../utils';
-import { ProfileComponent } from '../../components/admin/ProfileComponent';
-import { PortfolioMgmt } from '../../components/admin/PortfolioMgmt';
+
+// dynamic imports
+const ProfileComponent = dynamic(() => import('../../components/admin/ProfileComponent').then(module => module.ProfileComponent))
+
+const PortfolioMgmt = dynamic(() => import('../../components/admin/PortfolioMgmt').then(module => module.PortfolioMgmt))
+
+const NavBar = dynamic(() => import('../../components/public/Nav').then(module => module.NavBar))
+
+
+
 
 const AdminDashboard = ({admin}) => {
   admin = JSON.parse(admin);
