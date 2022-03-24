@@ -51,7 +51,7 @@ const PortfolioPage = ({metadata}) => {
     setCurrent(null);
     setPrev(null);
     setNext(null)
-  }, [expandProject])
+  }, [expandProject, metadata.portfolio])
 
 
   if (!metadata?.portfolio || metadata.portfolio.length === 0) {

@@ -244,20 +244,19 @@ const UserSchema = new Schema({
   },
   bio: {
     type: String,
-    required: true,
+  },
+  adminLabel: {
+    type: String,
   },
   skills: {
     type: String,
-    required: true,
   },
   techStack: [{
     type: Object,
-    required: true,
   }],
   portfolio: [{
     type: Schema.Types.ObjectId,
     ref : 'portfolio',
-    required: true,
   }],
 });
 

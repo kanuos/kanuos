@@ -410,7 +410,7 @@ const NavMenu = ({ showMenu, type = "public" }) => {
             className="flex w-max mx-auto flex-col items-start justify-start gap-4 sm:mx-0 sm:col-start-2 sm:col-end-3 sm:row-start-1 sm:row-end-2 sm:items-end sm:w-full"
           >
             {URLS.other?.heading?.toLowerCase() !== "logout" ? (
-              <Link href={URLS.other.link}>
+              <Link href={URLS.other.link} passHref={true}>
                 <motion.a variants={variants.socialUL}
               animate={showMenu ? "show" : "hide"}
               exit="hide" className="cursor-pointer block hover:italic">

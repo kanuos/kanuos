@@ -4,7 +4,7 @@ import { BsToggle2Off, BsToggle2On } from 'react-icons/bs';
 
 import { PortfolioManager } from './PortfolioManager';
 
-export const PortfolioMgmt = ({projects}) => {
+export const PortfolioMgmt = ({projects=[]}) => {
     const [allPortfolios, setAllPortfolios] = useState(projects) 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editData, setEditData] = useState(null)

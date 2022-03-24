@@ -125,7 +125,7 @@ const AccountBody = ({ type, fields, cb }) => {
 
   useEffect(() => {
     setAccountDetail(getInitialState);
-  }, []);
+  }, [getInitialState]);
 
   useEffect(() => {
     if (!accountDetail) return;
@@ -144,7 +144,7 @@ const AccountBody = ({ type, fields, cb }) => {
     if (index !== -1) {
       setCurrentStep((_) => fields[index]?.field);
     }
-  }, [accountDetail, canSubmit]);
+  }, [accountDetail, canSubmit, fields]);
 
   function updateState(data) {
     setAccountDetail((prev) => ({ ...prev, ...data }));

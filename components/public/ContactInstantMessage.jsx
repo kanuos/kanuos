@@ -29,7 +29,7 @@ export const ContactInstantMessage = ({close}) => {
     let timer = 5;
     const [countdown, setCountdown] = useState(timer);
     
-    const getInitialState = useMemo(() => getEmptyState(MESSAGE_STEPS), [MESSAGE_STEPS])
+    const getInitialState = useMemo(() => getEmptyState(MESSAGE_STEPS), [])
 
     useEffect(() => {
         setMessageState(getInitialState)
@@ -65,7 +65,7 @@ export const ContactInstantMessage = ({close}) => {
 
         return () => clearInterval(t)
 
-    }, [success])
+    }, [success, timer])
 
     function updateState(data){
         setMessageState(prev => ({...prev, ...data}))

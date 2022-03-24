@@ -9,7 +9,7 @@ export const StringField = ({name, value='', setValue}) => {
       <Textarea 
         id={name}
         spellCheck={name.toLowerCase() !== 'title'}
-        className={"resize-none w-full p-1.5 text-xs peer outline-none focus:outline-none border-2 rounded overflow-hidden border-transparent focus:border-current " + (value.trim().length === 0 ? 'text-primary' : 'text-secondary')}
+        className={"resize-none w-full p-1.5 text-xs peer outline-none focus:outline-none border-2 rounded overflow-hidden border-transparent focus:border-current " + (value.trim().length === 0 ? 'text-primary' : 'text-dark')}
         value={value} 
         onChange={e => setValue({k : name, v: e.target.value})}/> 
     </form>
@@ -39,7 +39,7 @@ export const SlugField = ({text='', getSlug}) => {
     <section className="flex flex-col items-start justify-start gap-2 bg-light p-4 filter drop-shadow-xl rounded-md">
       <span className="text-xs capitalize font-semibold">slug</span>
       <article 
-        className={"flex flex-wrap gap-4 w-full p-1.5 text-xs peer outline-none focus:outline-none border-2 rounded focus:border-current font-semibold " + (text.length > 0 ? "text-secondary" : "text-primary")}>
+        className={"flex flex-wrap gap-4 w-full p-1.5 text-xs peer outline-none focus:outline-none border-2 rounded focus:border-current font-semibold " + (text.length > 0 ? "text-dark" : "text-primary")}>
           /{slug}
       </article>
     </section>
@@ -73,7 +73,7 @@ export const ArrayField = ({name, init=[], getData}) => {
     <div className="flex flex-col w-full bg-light p-4 filter drop-shadow-xl rounded-md">
       <form onSubmit={handleAddToList} className="flex flex-col items-start justify-start">
         <section className="w-full bg-light p-4 rounded-md filter drop-shadow-xl">
-          <label htmlFor="text" className={"text-xs capitalize font-semibold " + (init.length > 0 ? "text-secondary" : "text-primary")}>{name} ({init.length})</label>
+          <label htmlFor="text" className={"text-xs capitalize font-semibold " + (init.length > 0 ? "text-dark" : "text-primary")}>{name} ({init.length})</label>
           <div className="block mt-2 relative">
             <Textarea 
               id="text"
@@ -194,7 +194,7 @@ export const ObjectStepInput = props => {
       <div className="flex flex-col w-full p-4 bg-light drop-shadow-xl filter rounded-md">
       <div className="flex flex-col items-start justify-start w-full">
         <div className="flex items-center justiyf-start gap-x-2">
-          {(init && Object.values(init).some(Boolean)) && <IoCheckmarkDone className="text-sm text-secondary" />}
+          {(init && Object.values(init).some(Boolean)) && <IoCheckmarkDone className="text-sm text-dark" />}
           <span className="text-xs capitalize font-semibold">{name}</span>
         </div>
           {layout.map(el => (

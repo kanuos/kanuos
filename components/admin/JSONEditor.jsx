@@ -42,7 +42,7 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
     useEffect(() => {
         setState(getEmptyTemplate(type))
         setState(prev => ({...prev, tags, date : new Date().toDateString()}))
-    }, [type])
+    }, [type, tags])
 
     
     useEffect(() => {
@@ -55,7 +55,7 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
             setState(() => ({...currentStateInSessionStorage, tags : [...tags]}))
         }
 
-    }, [])
+    }, [initData, tags])
 
 
     useEffect(() => {
@@ -154,6 +154,7 @@ export const JSONEditor = ({tags, type, prev, initData=null, getContent}) => {
                                 {Boolean(state[field.key]) ? 
                                 <>
                                     <img 
+                                        alt={'preview image for ' + field.key}
                                         className="h-full w-full object-cover block shadow-xl transition-all group-hover:grayscale group-hover:rotate-12 group-hover:scale-150"
                                         src={state[field.key]}  />
                                     <button 

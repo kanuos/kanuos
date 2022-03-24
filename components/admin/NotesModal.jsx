@@ -25,7 +25,7 @@ export const NotesModal = ({closeAddModal, getNote, notes, init = null}) => {
             return
         }
         setIsConflicting(() => false)
-    }, [note.title])
+    }, [note.title, notes, init])
 
 
     return (

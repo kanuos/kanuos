@@ -187,6 +187,10 @@ export const PROFILE_FIELDS = [
             type : 'string',
         },
         {
+            key : 'adminLabel',
+            type : 'string',
+        },
+        {
             key : 'skills',
             type : 'string',
         },

@@ -31,9 +31,8 @@ export const TagDetailList = props => {
             setActive(CONTENT_TYPE.design.name)
             return;
         }
-    }, [])
+    }, [project.length, blog.length, design.length])
 
-    console.log({tag})
 
     return (
     <section className='flex flex-col items-start gap-4'>

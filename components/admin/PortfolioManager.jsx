@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 
 import axios from 'axios'
-import { IoCloseCircleOutline, IoCheckmarkCircle, IoRemoveCircleSharp, IoLockOpenOutline, IoLockClosedOutline } from 'react-icons/io5'
+import { IoCloseOutline, IoCheckmarkCircle, IoRemoveCircleSharp, IoLockOpenOutline, IoLockClosedOutline } from 'react-icons/io5'
 
 import { API_ROUTES, PORTFOLIO_FIELDS } from '../../utils/admin';
 import { StringField, ObjectArrayStepInput } from '../admin/InputField';
@@ -10,8 +10,8 @@ import { PortfolioProjectValidator } from '../../utils/validator'
 export const PortfolioManager = ({handleClose, existing, editMode=null, del, add, edit}) => {
     const [designs, setDesigns] = useState([]);
     const [projects, setProjects] = useState([]);
-    const [project, setProject] = useState(editMode?.project?._id);
-    const [design, setDesign] = useState(editMode?.design?._id);
+    const [project, setProject] = useState(editMode?.project?._id ?? null);
+    const [design, setDesign] = useState(editMode?.design?._id ?? null);
     const [base, setBase] = useState(Boolean(editMode) ? editMode : {});
     const [isPublic, setIsPublic] = useState(editMode?.isShowcased ?? false);
 
@@ -66,7 +66,7 @@ export const PortfolioManager = ({handleClose, existing, editMode=null, del, add
         }
     }
 
-    useEffect(getLists, [])
+    useEffect(() => getLists(), [editMode, existing])
 
     async function handleSubmitPortfolio() {
         try {
@@ -120,11 +120,11 @@ export const PortfolioManager = ({handleClose, existing, editMode=null, del, add
 
     return (
     <div className='fixed z-40 inset-0 h-screen scrollbar-thin overflow-y-auto bg-light text-dark snap-y snap-proximity'>
-        <IoCloseCircleOutline onClick={handleClose} className="fixed top-4 right-4 text-4xl" />
+        <IoCloseOutline onClick={handleClose} className="fixed top-4 right-4 text-4xl cursor-pointer hover:rotate-90 hover:text-primary transition-all" />
         {!Boolean(designs.length * projects.length) && (
             <section className='h-[50vh] flex flex-col items-center justify-center'>
                 <strong className="font-special text-4xl font-black capitalize mb-2">
-                    Error!
+                    Oops!
                 </strong>
                 <span>
                     No {designs.length > 0 ? 'projects' : 'designs'} available for portfolio.
