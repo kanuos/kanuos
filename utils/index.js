@@ -101,15 +101,15 @@ export const SOCIAL = {
 export const PORTFOLIO_LINKS = {
     "about me" : {
         name : 'about me',
-        url : '/#about-me'
+        url : '/portfolio/#about-me'
     },
     "selected works" : {
         name : 'selected works',
-        url : '/#work'
+        url : '/portfolio/#work'
     },
     "contact me" : {
         name : 'contact me',
-        url : '/#contact-me'
+        url : '/portfolio/#contact-me'
     },
 }
 

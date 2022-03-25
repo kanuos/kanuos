@@ -30,8 +30,7 @@ const ContactMe = dynamic(() => import("../components/portfolio/ContactMe"));
 
 
 const PortfolioPage = ({metadata}) => {
-  // metadata = { ...staticMetadata, ...JSON.parse(metadata)};
-  metadata = { ...JSON.parse(metadata), ...staticMetadata};
+  metadata = { ...staticMetadata, ...JSON.parse(metadata)};
   const { isDarkMode } = useContext(ThemeContext);
   const [expandProject, setExpandProject] = useState(false);
   const [current, setCurrent] = useState(null);

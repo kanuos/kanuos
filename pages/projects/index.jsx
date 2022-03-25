@@ -2,19 +2,28 @@
 
 // import : built in
 import { useContext } from "react";
+import dynamic from "next/dynamic";
 
 // import : internal components
-import { ThemeToggler } from "../../components/public/ThemeToggler";
 import { HeadComponent } from "../../components/Head";
 import { PublicHeader } from "../../components/public/Header";
-import { NavBar } from "../../components/public/Nav";
 import { PUBLIC_LIST_TYPES } from "../../utils";
-import { ListLoader } from "../../components/public/ListLoader";
 import { ProjectThumbnail } from "../../components/content/ProjectThumbnail";
 import { getAllProjects } from "../../database/projects";
 
 // import : internal contexts
 import { ThemeContext } from "../../contexts/ThemeContext";
+
+// dynamic imports
+const NavBar = dynamic(() =>
+  import("../../components/public/Nav").then((m) => m.NavBar)
+);
+const ThemeToggler = dynamic(() =>
+  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
+);
+const ListLoader = dynamic(() =>
+  import("../../components/public/ListLoader").then((m) => m.ListLoader)
+);
 
 const ProjectList = ({ projectList }) => {
   projectList = JSON.parse(projectList);

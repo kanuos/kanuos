@@ -7,7 +7,6 @@ import { useState } from "react";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { StringField } from "../../../components/admin/InputField";
 import { HeadComponent } from "../../../components/Head";
-import { JoinLine } from "../../../components/public/DescHeader";
 import { getAllTags } from "../../../database/tags";
 import { ADMIN_ACCOUNT } from "../../../utils";
 import { API_ROUTES } from "../../../utils/admin";
@@ -15,6 +14,10 @@ import { isAdminMiddleware } from "../../../utils/authLib";
 
 const NavBar = dynamic(() =>
   import("../../../components/public/Nav").then((m) => m.NavBar)
+);
+
+const JoinLine = dynamic(() =>
+  import("../../../components/public/DescHeader").then((m) => m.JoinLine)
 );
 
 const TagsAdminPage = ({ allTags }) => {

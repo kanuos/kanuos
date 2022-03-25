@@ -1,16 +1,23 @@
 // Project Detail View
+import dynamic from "next/dynamic";
 
 // import : internal
 import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
 import { HeadComponent } from "../../components/Head";
-import { NavBar } from "../../components/public/Nav";
-import { ThemeToggler } from "../../components/public/ThemeToggler";
 import { getIndividualProject, getAllProjects } from "../../database/projects";
 import {
   deFormatURLParamString,
   formatURLParamString,
   generateDetailViewMetadata,
 } from "../../utils";
+
+// dynamic
+const NavBar = dynamic(() =>
+  import("../../components/public/Nav").then((m) => m.NavBar)
+);
+const ThemeToggler = dynamic(() =>
+  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
+);
 
 const ProjectDetail = ({ project }) => {
   project = JSON.parse(project);
