@@ -27,7 +27,7 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                 descType={CLIENT_TYPE.blog.name} />
 
                 <section className='w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2'>
-                    <p className='leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left opacity-75'>
+                    <p className='leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left'>
                         {blog.desc}
                     </p>
                 </section>
@@ -64,7 +64,7 @@ export const BlogDetailBody = ({blog, adminMode=false}) => {
                         <JoinLine />
                     </div>
                     <section className='text-sm  w-full break-words'>
-                        <p className='leading-relaxed text-sm opacity-75'>
+                        <p className='leading-relaxed text-sm'>
                             {blog.outro?.text}
                         </p>
                             <ul className="flex flex-col gap-y-4 my-4">

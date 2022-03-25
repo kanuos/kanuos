@@ -130,7 +130,7 @@ export const DesignDetailBody = ({design, adminMode=false}) => {
                                         alt={title} className="h-full w-full object-cover block" />
                                 </figure>
                                 <span className='z-10  text-xl font-semibold capitalize'>
-                                    Page {i + 1} : {title}
+                                    {title}
                                 </span>
                                 <JoinLine />
                                 <p className='w-11/12 z-10 whitespace-pre-line leading-relaxed text-sm'>

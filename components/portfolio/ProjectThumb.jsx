@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from 'next/image';
 
 import { JoinLine } from "../public/DescHeader";
 
@@ -9,10 +10,25 @@ export const ProjectThumb = ({
   total,
   selectProject,
 }) => {
-  const [showImage, setShowImage] = useState(false);
-  if (!project) {
-    return <></>;
+  const [viewportWidth, setViewportWidth] = useState('');
+  
+  function getViewportWidth() {
+    let width =  window?.innerWidth ?? 0;
+    console.log({width})
+    setViewportWidth(width);
   }
+
+  useEffect(() => {
+    window.addEventListener("resize", getViewportWidth)
+    window.addEventListener('load', getViewportWidth)
+
+    return () => {
+      window.removeEventListener("resize", getViewportWidth);
+      window.removeEventListener("load", getViewportWidth);
+    }
+
+  }, [viewportWidth])
+  
   const { title, desc } = project;
 
   const portfolioProject = project.project;
@@ -76,6 +92,7 @@ export const ProjectThumb = ({
       show: {
         opacity: 1,
         scale: 1,
+        transform : 'all',
         transition: { type: "linear", staggerChildren: 0.25 },
       },
     },
@@ -88,6 +105,12 @@ export const ProjectThumb = ({
       },
     },
   };
+
+
+  if (!project) {
+    return <></>;
+  }
+  
 
   return (
     <motion.article
@@ -166,30 +189,42 @@ export const ProjectThumb = ({
             </li>
           </ul>
         </div>
-
-        <motion.figure
-          variants={variants.item}
-          className={
-            "w-full lg:row-span-full " +
-            (index % 2 ? "lg:col-start-2" : "lg:col-start-1")
-          }
-          onAnimationComplete={() => setShowImage(true)}
-        >
-          <img
-            className={
-              "h-[50vh] max-w-lg bg-light sm:p-3 md:p-4 filter drop-shadow-xl w-full block object-cover rounded-md sm:rounded-none z-10 lg:hover:drop-shadow-2xl grayscale group-hover:grayscale-0 transition-all" +
-              (index % 2
-                ? "group-hover:rotate-3 md:rotate-3"
-                : "group-hover:-rotate-3 md:-rotate-3")
+        
+        <motion.div 
+          variants={variants.item} 
+          whileInView={index % 2 ? 
+            { 
+              rotate : viewportWidth >= 1024 ? -3 : 0
+            } : 
+            { 
+              rotate : viewportWidth >= 1024 ? 3 : 0 
             }
+          }
+          whileHover={index % 2 ? 
+            { 
+              rotate : viewportWidth >= 1024 ? 0 : -3
+            } : 
+            { 
+              rotate : viewportWidth >= 1024 ? 0 : 3 
+            }
+          }
+          className={"p-3 max-w-lg min-h-[50vh] h-full w-full bg-light lg:row-span-full filter drop-shadow-xl lg:hover:drop-shadow-2xl md:mt-8 lg:my-0 " +
+            (index % 2 ? "lg:col-start-2" : "lg:col-start-1")}>
+        <motion.figure
+          className={"w-full h-full min-h-[50vh] relative"}
+        >
+          <Image
+            layout="fill"
+            loader={({src, width}) => `${src}?w=${width}&q=100`}
+            className={"min-h-[50vh] h-full w-full block object-cover grayscale group-hover:grayscale-0 transition-all"}
             src={portfolioDesign.thumbnail}
             alt={`Project ${title}'s thumbnail`}
           />
         </motion.figure>
+        </motion.div>
 
         <motion.div
           variants={variants.text}
-          transition={{ delay : 1 }}
           className={
             "mt-10 lg:mt-0 block lg:row-start-3 z-10 " +
             (index % 2

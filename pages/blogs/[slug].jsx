@@ -1,10 +1,15 @@
+import dynamic from "next/dynamic";
 // import : internal
 import { HeadComponent } from "../../components/Head";
-import { BlogDetailBody } from "../../components/content/BlogDetailBody";
-import { NavBar } from "../../components/public/Nav";
-import { ThemeToggler } from "../../components/public/ThemeToggler";
 import { getAllBlogs, getIndividualBlog } from "../../database/blogs";
 import { generateDetailViewMetadata } from "../../utils";
+
+
+// dynamic imports
+const BlogDetailBody = dynamic(() => import("../../components/content/BlogDetailBody").then(m => m.BlogDetailBody));
+const NavBar = dynamic(() => import("../../components/public/Nav").then(m => m.NavBar));
+const ThemeToggler = dynamic(() => import("../../components/public/ThemeToggler").then(m => m.ThemeToggler));
+
 
 const BlogDetail = ({ blog }) => {
   blog = JSON.parse(blog);

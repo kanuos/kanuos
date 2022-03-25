@@ -4,14 +4,17 @@ import { useContext } from 'react'
 // import : internal
 import { HeadComponent } from '../../components/Head'
 import { PublicHeader } from '../../components/public/Header';
-import { NavBar } from '../../components/public/Nav';
 import { PUBLIC_LIST_TYPES } from '../../utils';
 import { BlogThumbnail } from '../../components/content/BlogThumbnail';
-import { ListLoader } from '../../components/public/ListLoader';
 import { getAllBlogs } from '../../database/blogs'
-import { ThemeToggler } from "../../components/public/ThemeToggler"
 
 import { ThemeContext } from '../../contexts/ThemeContext'
+import dynamic from 'next/dynamic';
+
+// dynamic imports
+const NavBar = dynamic(() => import('../../components/public/Nav').then(m => m.NavBar));
+const ListLoader = dynamic(() => import('../../components/public/ListLoader').then(m => m.ListLoader));
+const ThemeToggler = dynamic(() => import("../../components/public/ThemeToggler").then(m => m.ThemeToggler))
 
 
 const BlogList = ({blogList}) => {

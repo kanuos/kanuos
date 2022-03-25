@@ -4,7 +4,7 @@ import { Favicon } from '../components/public/Favicon'
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang='en'>
         <Head>
             <Favicon />
         </Head>
