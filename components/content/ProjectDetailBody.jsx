@@ -36,14 +36,14 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           descType={CLIENT_TYPE.project.name}
         />
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 my-8">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start my-8">
           <p className="leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left">
             {project.desc}
           </p>
           <ul className="flex flex-col items-start gap-y-0.5 mt-4">
             <li className="inline-flex items-center justify-start gap-x-2 text-xs">
               <IoGameControllerOutline className="text-sm" />
-              <small className="capitalize">Difficulty</small>
+              <small className="capitalize font-semibold">Difficulty</small>
             </li>
             <li className="text-sm">
               <small className="font-semibold capitalize text-primary">
@@ -55,7 +55,7 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           <ul className="flex flex-col items-start gap-y-0.5 mb-4">
             <li className="inline-flex items-center justify-start gap-x-2 text-xs">
               <IoPricetagOutline className="text-sm" />
-              <small className="capitalize">Category</small>
+              <small className="capitalize font-semibold">Category</small>
             </li>
             <li className="text-sm">
               <small className="font-semibold capitalize text-primary">
@@ -65,7 +65,7 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 py-10">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2">
           <h2 className="text-2xl inline-flex items-center justify-start">
             <span className="capitalize  font-semibold">
               Project Tech stack used
@@ -82,7 +82,7 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 py-10">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2 py-8">
           <h2 className="text-2xl inline-flex items-center justify-start">
             <span className="capitalize  font-semibold">Prerequisites</span>
           </h2>
@@ -97,7 +97,7 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-10 py-10 mb-10">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-10 mb-10">
           <h2 className="inline-flex items-center justify-start gap-x-2">
             <span className="text-2xl capitalize  font-semibold">Chapters</span>
             <small className="text-xs opacity-70">

@@ -50,9 +50,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
             {design.title}
           </h1>
           <JoinLine />
-          <p className="text-sm mt-2 leading-relaxed opacity-75">
-            {design.desc}
-          </p>
+          <p className="text-sm mt-2 leading-relaxed">{design.desc}</p>
         </div>
       </header>
       <div className="relative h-full w-full max-w-3xl mx-auto">
@@ -67,7 +65,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
             <p className="flex items-center justify-start gap-x-1">
               <IoCalendarOutline className="text-xs" />
-              <span className="font-semibold text-xs opacity-70 capitalize">
+              <span className="font-semibold text-xs capitalize">
                 created on
               </span>
             </p>
@@ -79,13 +77,11 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
             <p className="flex items-center justify-start gap-x-1">
               <IoPricetagOutline className="text-xs" />
-              <span className="font-semibold text-xs opacity-70 capitalize">
-                tags
-              </span>
+              <span className="font-semibold text-xs capitalize">tags</span>
             </p>
             <p className="text-xs font-semibold flex flex-wrap gap-x-4 gap-y-2">
               {design.tags.map((tag) => (
-                <small key={tag._id} className="uppercase">
+                <small key={tag._id} className="uppercase opacity-75">
                   {tag.tag}
                 </small>
               ))}
@@ -95,7 +91,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
             <p className="flex items-center justify-start gap-x-1">
               <IoLeafOutline className="text-sm" />
-              <span className="font-semibold text-xs opacity-70 capitalize">
+              <span className="font-semibold text-xs capitalize">
                 typography
               </span>
             </p>
@@ -105,7 +101,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
                   <span className="text-xs font-semibold capitalize">
                     {family}
                   </span>
-                  <p className="pl-6 text-sm leading-relaxed opacity-75">
+                  <p className="pl-6 text-sm leading-relaxed">
                     <small>{desc}</small>
                   </p>
                 </li>
@@ -116,7 +112,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
             <p className="flex items-center justify-start gap-x-1">
               <IoColorFillOutline className="text-sm" />
-              <span className="font-semibold text-xs opacity-70 capitalize">
+              <span className="font-semibold text-xs capitalize">
                 color palette
               </span>
             </p>
@@ -138,7 +134,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2 w-full">
             <p className="flex items-center justify-start gap-x-1">
               <IoMapSharp className="text-sm" />
-              <span className="font-semibold text-xs opacity-70 capitalize">
+              <span className="font-semibold text-xs capitalize">
                 user flow
               </span>
             </p>
@@ -173,7 +169,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
             <p className="flex items-center justify-start gap-x-1">
               <IoRocketOutline className="text-sm" />
-              <span className="font-semibold text-xs opacity-70 capitalize">
+              <span className="font-semibold text-xs capitalize">
                 tools used
               </span>
             </p>
@@ -192,7 +188,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2 w-full">
             <p className="flex items-center justify-start gap-x-1">
               <IoCameraOutline className="text-sm" />
-              <span className="font-semibold text-xs opacity-70 capitalize">
+              <span className="font-semibold text-xs capitalize">
                 external assets &amp; resources
               </span>
             </p>
