@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from 'next/image';
+import Image from "next/image";
 
 import { JoinLine } from "../public/DescHeader";
 
@@ -10,26 +10,25 @@ export const ProjectThumb = ({
   total,
   selectProject,
 }) => {
-  const [viewportWidth, setViewportWidth] = useState('');
-  
+  const [viewportWidth, setViewportWidth] = useState("");
+
   function getViewportWidth() {
-    let width =  window?.innerWidth ?? 0;
-    console.log({width})
+    let width = window?.innerWidth ?? 0;
+    console.log({ width });
     setViewportWidth(width);
   }
 
   useEffect(() => {
-    window.addEventListener("resize", getViewportWidth)
-    window.addEventListener('load', getViewportWidth)
+    window.addEventListener("resize", getViewportWidth);
+    window.addEventListener("load", getViewportWidth);
 
     return () => {
       window.removeEventListener("resize", getViewportWidth);
       window.removeEventListener("load", getViewportWidth);
-    }
+    };
+  }, [viewportWidth]);
 
-  }, [viewportWidth])
-  
-  const { title, desc } = project;
+  const { desc } = project;
 
   const portfolioProject = project.project;
   const portfolioDesign = project.design;
@@ -92,25 +91,23 @@ export const ProjectThumb = ({
       show: {
         opacity: 1,
         scale: 1,
-        transform : 'all',
+        transform: "all",
         transition: { type: "linear", staggerChildren: 0.25 },
       },
     },
     text: {
       hide: { opacity: 0, scale: 0 },
       show: {
-        opacity: .75,
+        opacity: 0.75,
         scale: 1,
         transition: { type: "linear", staggerChildren: 0.25 },
       },
     },
   };
 
-
   if (!project) {
     return <></>;
   }
-  
 
   return (
     <motion.article
@@ -140,9 +137,12 @@ export const ProjectThumb = ({
 
           <motion.h3
             variants={variants.item}
-            className={"filter drop-shadow-lg text-5xl md:text-7xl capitalize font-black w-min break-words max-w-xs " + ((index % 2 === 0) ? 'text-right' : 'text-left')}
+            className={
+              "filter drop-shadow-lg text-5xl md:text-7xl capitalize font-black w-min max-w-xs " +
+              (index % 2 === 0 ? "text-right" : "text-left")
+            }
           >
-            {title}
+            {portfolioProject.title.slice(0, 15)}
           </motion.h3>
 
           <motion.div variants={variants.item}>
@@ -151,7 +151,10 @@ export const ProjectThumb = ({
 
           <motion.p
             variants={variants.text}
-            className={"text-xs capitalize font-semibold italic max-w-sm " + ((index % 2) ? 'text-left' : 'text-right')}
+            className={
+              "text-xs capitalize font-semibold italic max-w-sm " +
+              (index % 2 ? "text-left" : "text-right")
+            }
           >
             {desc}
           </motion.p>
@@ -189,38 +192,43 @@ export const ProjectThumb = ({
             </li>
           </ul>
         </div>
-        
-        <motion.div 
-          variants={variants.item} 
-          whileInView={index % 2 ? 
-            { 
-              rotate : viewportWidth >= 1024 ? -3 : 0
-            } : 
-            { 
-              rotate : viewportWidth >= 1024 ? 3 : 0 
-            }
+
+        <motion.div
+          variants={variants.item}
+          whileInView={
+            index % 2
+              ? {
+                  rotate: viewportWidth >= 1024 ? -3 : 0,
+                }
+              : {
+                  rotate: viewportWidth >= 1024 ? 3 : 0,
+                }
           }
-          whileHover={index % 2 ? 
-            { 
-              rotate : viewportWidth >= 1024 ? 0 : -3
-            } : 
-            { 
-              rotate : viewportWidth >= 1024 ? 0 : 3 
-            }
+          whileHover={
+            index % 2
+              ? {
+                  rotate: viewportWidth >= 1024 ? 0 : -3,
+                }
+              : {
+                  rotate: viewportWidth >= 1024 ? 0 : 3,
+                }
           }
-          className={"p-3 max-w-lg min-h-[50vh] h-full w-full bg-light lg:row-span-full filter drop-shadow-xl lg:hover:drop-shadow-2xl md:mt-8 lg:my-0 " +
-            (index % 2 ? "lg:col-start-2" : "lg:col-start-1")}>
-        <motion.figure
-          className={"w-full h-full min-h-[50vh] relative"}
+          className={
+            "p-3 max-w-lg min-h-[50vh] h-full w-full bg-light lg:row-span-full filter drop-shadow-xl lg:hover:drop-shadow-2xl md:mt-8 lg:my-0 " +
+            (index % 2 ? "lg:col-start-2" : "lg:col-start-1")
+          }
         >
-          <Image
-            layout="fill"
-            loader={({src, width}) => `${src}?w=${width}&q=100`}
-            className={"min-h-[50vh] h-full w-full block object-cover grayscale group-hover:grayscale-0 transition-all"}
-            src={portfolioDesign.thumbnail}
-            alt={`Project ${title}'s thumbnail`}
-          />
-        </motion.figure>
+          <motion.figure className={"w-full h-full min-h-[50vh] relative"}>
+            <Image
+              layout="fill"
+              loader={({ src, width }) => `${src}?w=${width}&q=100`}
+              className={
+                "min-h-[50vh] h-full w-full block object-cover grayscale group-hover:grayscale-0 transition-all"
+              }
+              src={portfolioDesign.thumbnail}
+              alt={`Project ${portfolioProject.title}'s thumbnail`}
+            />
+          </motion.figure>
         </motion.div>
 
         <motion.div
@@ -236,7 +244,8 @@ export const ProjectThumb = ({
             className="text-xs uppercase opacity-50 lg:opacity-0 lg:group-hover:opacity-100 transition-all font-semibold hover:underline underline-offset-2"
             onClick={() => selectProject(project)}
           >
-            {index % 2 ===0 && <>&larr;</>}  view details {(index % 2 !==0) && <>&rarr;</>}
+            {index % 2 === 0 && <>&larr;</>} view details{" "}
+            {index % 2 !== 0 && <>&rarr;</>}
           </button>
         </motion.div>
       </motion.section>

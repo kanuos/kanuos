@@ -38,7 +38,6 @@ const SegmentValidator = Joi.object({
 const CommonFields = Joi.object().keys({
   _id: Joi.any(),
   __v: Joi.any(),
-  title: Joi.string().required().trim().min(1),
   desc: Joi.string().required().trim().min(1),
   date: Joi.date().allow("").default(Date.now()),
   tags: Joi.array().items(TagValidator).min(1).required(),
@@ -59,6 +58,7 @@ const CommonFields = Joi.object().keys({
 });
 
 const BlogValidator = CommonFields.keys({
+  title: Joi.string().required().trim().min(1).max(100),
   slug: Joi.string().required().trim().min(1).lowercase(),
   outro: Joi.object({
     heading: Joi.string().trim(),
@@ -70,6 +70,7 @@ const BlogValidator = CommonFields.keys({
 });
 
 const ProjectValidator = CommonFields.keys({
+  title: Joi.string().required().trim().min(1).max(15),
   techStack: Joi.array()
     .items(
       Joi.object({
@@ -102,7 +103,7 @@ const ProjectValidator = CommonFields.keys({
 const DesignValidator = Joi.object().keys({
   _id: Joi.any(),
   __v: Joi.any(),
-  title: Joi.string().required().trim().min(1),
+  title: Joi.string().required().trim().min(1).max(15),
   desc: Joi.string().required().trim().min(1),
   date: Joi.date().allow("").default(Date.now()),
   tags: Joi.array().items(TagValidator).min(1).required(),
@@ -244,11 +245,14 @@ export const UserProfileValidator = Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         heading: Joi.string().trim().required(),
-        items: Joi.array().required().min(1).items(
-          Joi.object({
-            text : Joi.string().required().trim()
-          })
-        ),
+        items: Joi.array()
+          .required()
+          .min(1)
+          .items(
+            Joi.object({
+              text: Joi.string().required().trim(),
+            })
+          ),
       })
     ),
 });
