@@ -9,11 +9,9 @@ import { PortfolioHeader } from "../components/portfolio/PortfolioHeader";
 import { SectionHeader } from "../components/portfolio/SectionHeader";
 import { Showcase } from "../components/portfolio/Showcase";
 import { Skills } from "../components/portfolio/Skills";
-import { NavBar } from "../components/public/Nav";
-import { ThemeToggler } from "../components/public/ThemeToggler";
-import { VideoBG } from "../components/public/VideoBG";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { getPortfolio } from "../database/user"
+import { VideoBG } from"../components/public/VideoBG";
 
 
 import { staticMetadata } from "../utils/portfolio_static";
@@ -22,6 +20,10 @@ import { PortfolioLink } from "../components/portfolio/PortfolioLink";
 import { PUBLIC_URLS } from "../utils";
 
 
+
+
+const NavBar = dynamic(() => import("../components/public/Nav").then(m => m.NavBar));
+const ThemeToggler = dynamic(() => import("../components/public/ThemeToggler").then(m => m.ThemeToggler));
 const PortfolioProjectDetail = dynamic(() => import("../components/portfolio/PortfolioProjectDetail"))
 const ContactMe = dynamic(() => import("../components/portfolio/ContactMe"));
 

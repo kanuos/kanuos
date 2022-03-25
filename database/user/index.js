@@ -111,7 +111,7 @@ export async function updatePassword(user) {
 
 
 export async function getPortfolio() {
-    const user = await UserModel.findOne({}).select('skills bio portfolio').populate({
+    const user = await UserModel.findOne({}).select('skills bio portfolio techStack adminLabel').populate({
         path : 'portfolio',
         populate : {
             path : 'design project',
