@@ -2,6 +2,7 @@ import conn from "../Models";
 import { isValidObjectId } from "mongoose";
 
 const DesignModel = conn.models.design;
+const PortfolioModel = conn.models.portfolio;
 
 /**
  *
@@ -57,9 +58,13 @@ export async function addDesignToDB(design) {
 export async function deleteDesignFromDB(id, user) {
   if (!isValidObjectId(id)) throw "Invalid Design ID";
 
-  const deletedDesign = await DesignModel.findOneAndRemove({_id : id, user});
+  const deletedDesign = await DesignModel.findOneAndRemove({ _id: id, user });
 
   if (!deletedDesign) throw `Design by ID ${id} not found`;
+
+  await PortfolioModel.findOneAndDelete({
+    design: id,
+  });
 
   return deletedDesign;
 }
@@ -67,10 +72,14 @@ export async function deleteDesignFromDB(id, user) {
 export async function updateDesignByID(id, design, user) {
   if (!isValidObjectId(id)) throw "Invalid Design ID";
 
-  const updatedDesign = await DesignModel.findOneAndUpdate({_id : id, user}, design, {
-    new: true,
-    upsert: false,
-  });
+  const updatedDesign = await DesignModel.findOneAndUpdate(
+    { _id: id, user },
+    design,
+    {
+      new: true,
+      upsert: false,
+    }
+  );
 
   if (!updatedDesign) throw `Design with ID ${id} doesn't exist`;
 
