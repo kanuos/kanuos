@@ -8,16 +8,18 @@ import { DesignThumbnail } from "../../components/content/DesignThumbnail";
 import { getAllDesigns } from "../../database/designs";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import dynamic from "next/dynamic";
-
+import { Footer } from "../../components/public/Footer";
 
 // dynamic imports
-const NavBar = dynamic(() => import("../../components/public/Nav").then(m => m.NavBar));
-const ListLoader = dynamic(() => import("../../components/public/ListLoader").then(m => m.ListLoader));
-const ThemeToggler = dynamic(() => import("../../components/public/ThemeToggler").then(m => m.ThemeToggler));
-
-
-
-
+const NavBar = dynamic(() =>
+  import("../../components/public/Nav").then((m) => m.NavBar)
+);
+const ListLoader = dynamic(() =>
+  import("../../components/public/ListLoader").then((m) => m.ListLoader)
+);
+const ThemeToggler = dynamic(() =>
+  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
+);
 
 const DesignList = ({ designList }) => {
   designList = JSON.parse(designList);
@@ -44,11 +46,7 @@ const DesignList = ({ designList }) => {
             <>
               <main className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
                 {designList.map((design, i) => (
-                  <DesignThumbnail
-                    key={design._id}
-                    data={design}
-                    index = {i}
-                  />
+                  <DesignThumbnail key={design._id} data={design} index={i} />
                 ))}
               </main>
               <ListLoader />
@@ -62,6 +60,7 @@ const DesignList = ({ designList }) => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

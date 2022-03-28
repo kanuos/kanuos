@@ -13,6 +13,7 @@ import { getAllProjects } from "../../database/projects";
 
 // import : internal contexts
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Footer } from "../../components/public/Footer";
 
 // dynamic imports
 const NavBar = dynamic(() =>
@@ -69,6 +70,7 @@ const ProjectList = ({ projectList }) => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };
