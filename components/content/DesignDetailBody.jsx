@@ -29,7 +29,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
         (!adminMode && " px-12 md:px-16")
       }
     >
-      <header className="h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-3xl mx-auto py-20">
+      <header className="h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-4xl mx-auto py-20">
         {!adminMode && (
           <Link href={PUBLIC_URLS.designs.url}>
             <a className="text-xs font-semibold opacity-50 focus:opacity-100 hover:opacity-100 capitalize mb-4">
@@ -53,7 +53,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           <p className="text-sm mt-2 leading-relaxed">{design.desc}</p>
         </div>
       </header>
-      <div className="relative h-full w-full max-w-3xl mx-auto">
+      <div className="relative h-full w-full max-w-4xl mx-auto">
         <ul
           className={
             "flex flex-col items-start justify-around gap-y-14 h-full relative before:h-full before:absolute before:w-0.5 before:top-0 before:left-0 " +

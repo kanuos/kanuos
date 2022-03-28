@@ -1,12 +1,9 @@
 import { useContext } from "react";
 
-// import : external
-import { IoLinkOutline, IoGitBranchOutline } from "react-icons/io5";
-
 // import : internal
 import { DescHeader, JoinLine } from "../public/DescHeader";
 import { CLIENT_TYPE } from "../../utils";
-import { Step } from "../public/PageStepComponent";
+import { AnchorStep, Step } from "../public/PageStepComponent";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
 
@@ -20,7 +17,7 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
         (adminMode ? "" : " px-12 md:px-16")
       }
     >
-      <div className="relative h-full w-full max-w-3xl mx-auto">
+      <div className="relative h-full w-full max-w-4xl mx-auto">
         <DescHeader
           adminMode={adminMode}
           name={blog.title}
@@ -30,13 +27,13 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
           descType={CLIENT_TYPE.blog.name}
         />
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2">
+        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start gap-y-2">
           <p className="leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left">
             {blog.desc}
           </p>
         </section>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mt-10">
+        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start mt-10">
           <ul className="flex flex-col items-start w-full">
             {blog.page?.map((segment, i) => (
               <li
@@ -61,7 +58,7 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full mx-auto flex flex-col items-start justify-start">
+        <section className="w-full mt-10 mx-auto flex flex-col items-start justify-start">
           <h2 className="text-2xl capitalize  font-semibold">
             {blog?.outro?.heading}
           </h2>
@@ -72,29 +69,17 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
             <p className="leading-relaxed text-sm">{blog.outro?.text}</p>
             <ul className="flex flex-col gap-y-4 my-4">
               {blog.repo && Object.values(blog.repo).every(Boolean) && (
-                <li className="inline-flex items-start justify-start gap-2 group w-max">
-                  <IoGitBranchOutline className="text-primary text-xl filter grayscale group-hover:grayscale-0 transition-all" />
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <li>
+                  <AnchorStep
                     href={blog.repo.href}
-                    className="capitalize font-semibold text-sm group-hover:border-current pb-0.5 border-transparent border-b-2 transition-all duration-300"
-                  >
-                    {blog.repo.label}
-                  </a>
+                    label={blog.repo.label}
+                    icon="git"
+                  />
                 </li>
               )}
               {blog.demo && Object.values(blog.demo).every(Boolean) && (
-                <li className="inline-flex items-start justify-start gap-2 group w-max">
-                  <IoLinkOutline className="text-primary text-xl filter grayscale group-hover:grayscale-0 transition-all" />
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={blog.demo.href}
-                    className="capitalize font-semibold text-sm group-hover:border-current pb-0.5 border-transparent border-b-2 transition-all duration-300"
-                  >
-                    {blog.demo.label}
-                  </a>
+                <li>
+                  <AnchorStep href={blog.demo.href} label={blog.demo.label} />
                 </li>
               )}
             </ul>

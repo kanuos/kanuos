@@ -2,11 +2,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { JoinLine } from "../public/DescHeader";
 
-// TODO: generate dynamic data
-
 const PortfolioProjectDetail = ({
   isDarkMode = false,
-  isOpen,
   project,
   close,
   prev,
@@ -14,7 +11,7 @@ const PortfolioProjectDetail = ({
   selectProject,
 }) => {
   {
-    console.log(project);
+    // console.log(project);
   }
 
   const variants = {

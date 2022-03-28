@@ -16,7 +16,7 @@ export const DescHeader = (props) => {
   const { name, tags, date, back = "/", descType, adminMode } = props;
   return (
     <header className="flex flex-col items-start justify-start gap-1.5 pt-16 pb-10 w-full">
-      <section className="h-auto w-full max-w-3xl mx-auto">
+      <section className="h-auto w-full max-w-4xl mx-auto">
         {!adminMode && (
           <Link href={back}>
             <a className="text-xs font-semibold opacity-50 focus:opacity-100 hover:opacity-100 capitalize">

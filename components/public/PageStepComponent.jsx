@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { IoFootsteps, IoLinkOutline } from "react-icons/io5";
-import { FaQuoteLeft } from "react-icons/fa";
+import { useEffect, useState, useContext } from "react";
+import { IoLinkOutline, IoGitBranchOutline } from "react-icons/io5";
 import { isValidURL, STEP_TYPE } from "../../utils";
+
+import Markdown from "react-markdown";
 
 import Image from "next/image";
 
@@ -10,6 +11,7 @@ import "prismjs/components/prism-markup-templating";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-django";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const Step = ({ step }) => {
   const { key, value } = step;
@@ -23,14 +25,8 @@ export const Step = ({ step }) => {
         />
       );
 
-    case STEP_TYPE.quote:
-      return <QuoteStep text={value?.trim()} />;
-
-    case STEP_TYPE.subheading:
-      return <SubHeadingStep text={value?.trim()} />;
-
-    case STEP_TYPE.text:
-      return <TextStep text={value?.trim()} />;
+    case STEP_TYPE.markdown:
+      return <MarkdownStep text={value} />;
 
     case STEP_TYPE.image:
       return <ImageStep url={value?.trim()} />;
@@ -43,30 +39,13 @@ export const Step = ({ step }) => {
   }
 };
 
-const TextStep = ({ text }) => {
+export const MarkdownStep = ({ text }) => {
+  const { isDarkMode } = useContext(ThemeContext);
   return (
-    <p className="text-sm leading-relaxed break-words whitespace-pre-line my-2">
-      {text}
-    </p>
-  );
-};
-
-const SubHeadingStep = ({ text }) => {
-  return (
-    <h2 className="font-semibold w-full break-words flex items-center justify-start gap-x-2 text-sm capitalize mt-10 mb-4">
-      <IoFootsteps />
-      <span>{text}</span>
-    </h2>
-  );
-};
-
-const QuoteStep = ({ text }) => {
-  return (
-    <article className="my-14">
-      <FaQuoteLeft className="text-2xl" />
-      <blockquote className="p-4 break-words whitespace-pre-line font-semibold text-sm leading-relaxed tracking-wide bg-gradient-to-b from-primary to-dark via-purple-700 text-transparent bg-clip-text border-b">
-        {text}
-      </blockquote>
+    <article
+      className={`markdown-editor ${isDarkMode ? "md-dark" : "md-light"}`}
+    >
+      <Markdown children={text} />
     </article>
   );
 };
@@ -76,14 +55,18 @@ const CodeStep = ({ code, file, language }) => {
     highlightAll();
   }, []);
   return (
-    <section className="flex flex-col items-stretch ">
+    <section className="flex flex-col items-stretch">
       {Boolean(file) && (
         <p className="text-xs opacity-50 block">
           <small>{file}</small>
         </p>
       )}
-      <pre className="scrollbar-thin rounded-md whitespace-pre-line">
-        <code className={` language-${language} `}>{code.trim()}</code>
+      <pre className="scrollbar-thin rounded-md">
+        <code
+          className={` language-${language} whitespace-pre-line overflow-x-auto block w-max pr-4 `}
+        >
+          {code.trim()}
+        </code>
       </pre>
     </section>
   );
@@ -112,19 +95,25 @@ const ImageStep = ({ url }) => {
   );
 };
 
-const AnchorStep = ({ label, href }) => {
+export const AnchorStep = ({ label, href, icon = "link" }) => {
   if (!isValidURL(href)) {
     return <></>;
   }
-
   return (
     <p className="text-sm leading-relaxed flex gap-x-2 items-center group w-max">
-      <IoLinkOutline className="group-hover:text-secondary transition-all" />
+      {icon === "link" && (
+        <IoLinkOutline className="opacity-50 group-hover:opacity-100 transition-all" />
+      )}
+
+      {icon === "git" && (
+        <IoGitBranchOutline className="opacity-50 group-hover:opacity-100 transition-all" />
+      )}
       <a
         href={href}
-        className="border-b-2 border-secondary group-hover:border-primary inline group-hover:opacity-100 opacity-75 group-hover:italic break-words transition-all"
+        rel="noopener noreferrer"
+        className="inline-flex font-semibold break-words transition-all relative before:absolute before:bottom-0 before:w-full before:h-[1.5px] before:bg-secondary before:-left-full hover:before:left-0 before:transition-all overflow-hidden before:duration-200 capitalize"
       >
-        {label}{" "}
+        {label}
       </a>
     </p>
   );

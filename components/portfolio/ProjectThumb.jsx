@@ -120,7 +120,7 @@ export const ProjectThumb = ({
       <motion.section
         variants={index % 2 === 0 ? variants.left : variants.right}
         className={
-          "flex flex-col justify-start lg:gap-x-10 lg:w-full group lg:grid lg:grid-cols-2 lg:grid-flow-row lg:h-[60vh]"
+          "flex flex-col justify-start lg:gap-x-10 lg:w-full group lg:grid lg:grid-cols-2 lg:grid-flow-row"
         }
       >
         <div
