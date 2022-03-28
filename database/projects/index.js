@@ -14,7 +14,6 @@ const PortfolioModel = conn.models.portfolio;
 export async function getAllProjects(adminMode = false) {
   // admin mode => true   lists all projects (both public and private)
   // admin mode => false  lists all public projects
-  // TODO: auth to check adminMode with session
   const filter = adminMode ? {} : { isPublic: true };
 
   const allProjects = await ProjectModel.find(filter).populate("tags");
@@ -31,7 +30,6 @@ export async function getAllProjects(adminMode = false) {
 export async function getIndividualProject(adminMode = false, searchBy) {
   let project;
   if (adminMode) {
-    // TODO: auth to check adminMode with session
     // check if incoming project ID is valid mongoose objectID
     if (!isValidObjectId(searchBy)) throw "Invalid projectID (Admin Mode)";
 

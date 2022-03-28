@@ -267,7 +267,6 @@ export const PageField = ({
 
             {["markdown"].includes(currentStepType) && (
               <>
-                {/* TODO: replace by markdwodn */}
                 <MarkdownEditor
                   name={currentStepType}
                   key={currentStepData.key}

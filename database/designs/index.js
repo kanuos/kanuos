@@ -20,7 +20,6 @@ export async function getAllDesigns(adminMode = false) {
 export async function getIndividualDesign(adminMode = false, searchBy) {
   let design;
   if (adminMode) {
-    // TODO: auth to check adminMode with session
     // check if incoming design ID is valid mongoose objectID
     if (!isValidObjectId(searchBy)) throw "Invalid designID (Admin Mode)";
 
