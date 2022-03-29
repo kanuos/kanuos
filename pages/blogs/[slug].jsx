@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 // import : internal
 import { HeadComponent } from "../../components/Head";
+import { Footer } from "../../components/public/Footer";
 import { getAllBlogs, getIndividualBlog } from "../../database/blogs";
 import { generateDetailViewMetadata } from "../../utils";
 
@@ -31,6 +32,7 @@ const BlogDetail = ({ blog }) => {
       <NavBar />
       <ThemeToggler />
       <BlogDetailBody blog={blog} />
+      <Footer />
     </>
   );
 };

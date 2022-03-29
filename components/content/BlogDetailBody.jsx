@@ -1,8 +1,9 @@
 import { useContext } from "react";
+import Link from "next/link";
 
 // import : internal
 import { DescHeader, JoinLine } from "../public/DescHeader";
-import { PUBLIC_URLS } from "../../utils";
+import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
 import { AnchorStep, Step } from "../public/PageStepComponent";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -83,6 +84,32 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
                 </li>
               )}
             </ul>
+            <p className="leading-relaxed text-sm">
+              If you have any queries about this blog, please send me a message
+              stating your query. Don't forget to mention the blog title in your
+              message. I will get back to you ASAP
+            </p>
+
+            <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer">
+              <Link href={PORTFOLIO_LINKS["contact me"].url}>
+                <a
+                  className={
+                    "py-1.5 px-6 block z-10 peer font-semibold transition-all hover:shadow-xl border-2 relative bg-transparent " +
+                    (isDarkMode
+                      ? "border-light hover:text-dark text-light font-semibold"
+                      : "hover:text-light border-dark")
+                  }
+                >
+                  send me a message
+                </a>
+              </Link>
+              <span
+                className={
+                  "py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
+                  (isDarkMode ? "bg-light border-light" : "bg-dark border-dark")
+                }
+              ></span>
+            </div>
           </section>
         </section>
       </div>

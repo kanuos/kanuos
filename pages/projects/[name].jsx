@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 // import : internal
 import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
 import { HeadComponent } from "../../components/Head";
+import { Footer } from "../../components/public/Footer";
 import { getIndividualProject, getAllProjects } from "../../database/projects";
 import {
   deFormatURLParamString,
@@ -32,6 +33,7 @@ const ProjectDetail = ({ project }) => {
       <NavBar />
       <ThemeToggler />
       <ProjectDetailBody project={project} />
+      <Footer />
     </>
   );
 };
