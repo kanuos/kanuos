@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { formatURLParamString, PUBLIC_URLS } from "../../utils";
+import { formatURLParamString, PUBLIC_NAVIGATION_URLS } from "../../utils";
 import { JoinLine } from "../public/DescHeader";
 import { motion } from "framer-motion";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
@@ -9,7 +9,7 @@ import { ADMIN_EDIT_URL } from "../../utils/admin";
 export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
   const designURL = adminMode
     ? ADMIN_EDIT_URL("design", data._id)
-    : PUBLIC_URLS.designs.url + "/" + formatURLParamString(data.title);
+    : PUBLIC_NAVIGATION_URLS.designs + "/" + formatURLParamString(data.title);
   return (
     <motion.article
       initial={{ scale: 0.5 }}
