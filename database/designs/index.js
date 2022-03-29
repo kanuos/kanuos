@@ -12,7 +12,7 @@ const PortfolioModel = conn.models.portfolio;
 export async function getAllDesigns(adminMode = false) {
   const filter = adminMode ? {} : { isPublic: true };
 
-  const designs = await DesignModel.find(filter).populate("tags");
+  const designs = await DesignModel.find(filter).populate("tags").sort("-date");
 
   return designs;
 }

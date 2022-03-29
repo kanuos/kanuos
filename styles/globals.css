@@ -124,7 +124,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor a {
-  @apply inline-flex font-semibold break-words transition-all relative before:absolute before:bottom-0 before:w-full before:h-[1.5px] before:bg-secondary before:-left-full hover:before:left-0 before:transition-all overflow-hidden before:duration-200 capitalize;
+  @apply inline-flex font-semibold break-words transition-all relative before:absolute before:bottom-0 before:w-full before:h-[1.5px] before:bg-secondary before:-left-full hover:before:left-0 before:transition-all overflow-hidden before:duration-200;
 }
 
 .markdown-editor strong {
@@ -140,5 +140,5 @@ pre[class*="language-"] {
 }
 
 .markdown-editor li {
-  @apply ml-4 capitalize my-4;
+  @apply ml-4 my-4;
 }

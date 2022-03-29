@@ -36,6 +36,7 @@ export const PUBLIC_URLS = {
 export const PUBLIC_NAVIGATION_URLS = {
   projects: "/projects",
   blogs: "/blogs",
+  designs: "/designs",
 };
 
 const ADMIN_PATH = "/admin";
@@ -335,7 +336,7 @@ export function generateDetailViewMetadata(
 }
 
 export const ITEMS_PER_PAGE = {
-  blog: 2,
-  project: 1,
-  design: 2,
+  blog: 15,
+  project: 15,
+  design: 45,
 };
