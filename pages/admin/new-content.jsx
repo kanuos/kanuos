@@ -9,14 +9,17 @@ import axios from "axios";
 import { IoLockClosedOutline, IoLockOpenOutline } from "react-icons/io5";
 
 // import : internal components
-import {
-  JSONEditor,
-  JSON_EDITOR_STATE,
-} from "../../components/admin/JSONEditor";
+import { JSON_EDITOR_STATE } from "../../components/admin/JSONEditor";
 import { SelectContentType } from "../../components/admin/SelectContentType";
 import { HeadComponent } from "../../components/Head";
 
 // dynamic imports
+const JSONEditor = dynamic(() =>
+  import("../../components/admin/JSONEditor").then(
+    (module) => module.JSONEditor
+  )
+);
+
 const TagSelector = dynamic(() =>
   import("../../components/admin/TagSelector").then(
     (module) => module.TagSelector
@@ -99,7 +102,7 @@ const ContentCMS = ({ allTags }) => {
   useEffect(() => {
     sessionStorage.removeItem(SESSION_NAME);
     sessionStorage.removeItem(JSON_EDITOR_STATE);
-  }, [router.pathname])
+  }, [router.pathname]);
 
   function getSessionStorageData() {
     return JSON.parse(sessionStorage.getItem(SESSION_NAME));

@@ -86,8 +86,8 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
             </ul>
             <p className="leading-relaxed text-sm">
               If you have any queries about this blog, please send me a message
-              stating your query. Don't forget to mention the blog title in your
-              message. I will get back to you ASAP
+              stating your query. Don&apos;t forget to mention the blog title in
+              your message. I will get back to you ASAP
             </p>
 
             <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer">

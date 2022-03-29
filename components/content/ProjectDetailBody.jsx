@@ -110,13 +110,13 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
             default, all the chapters are marked as unread and you can toggle
             the completion status of each chapter by clicking on the button at
             the bottom of each chapter. Enjoy the journey. If you have any
-            queries feel free to send me a message and I'll try to get back to
-            you ASAP.
+            queries feel free to send me a message and I&apos;ll try to get back
+            to you ASAP.
             {project.repo && Object.values(project.repo).every(Boolean) && (
               <>
                 <br />
-                You can find the link to the project's source code at the end of
-                the chapters section.
+                You can find the link to the project&apos;s source code at the
+                end of the chapters section.
               </>
             )}
           </p>
@@ -168,8 +168,8 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
 
             <p className="leading-relaxed text-sm">
               If you have any queries about this project, please send me a
-              message stating your query. Don't forget to mention the project
-              title in your message. I will get back to you ASAP
+              message stating your query. Don&apos;t forget to mention the
+              project title in your message. I will get back to you ASAP
             </p>
 
             <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer">

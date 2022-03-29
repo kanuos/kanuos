@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 // import : internal
 import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
 import { HeadComponent } from "../../components/Head";
-import { Footer } from "../../components/public/Footer";
 import { getIndividualProject, getAllProjects } from "../../database/projects";
 import {
   deFormatURLParamString,
@@ -15,6 +14,9 @@ import {
 // dynamic
 const NavBar = dynamic(() =>
   import("../../components/public/Nav").then((m) => m.NavBar)
+);
+const Footer = dynamic(() =>
+  import("../../components/public/Footer").then((m) => m.Footer)
 );
 const ThemeToggler = dynamic(() =>
   import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)

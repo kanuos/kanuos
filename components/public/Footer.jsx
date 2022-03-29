@@ -11,6 +11,7 @@ export const Footer = () => {
           <figure className="relative block rounded-full w-[3.5rem] h-[3.5rem] md:w-11 md:h-11">
             <Image
               layout="fill"
+              alt="Sounak Mukherjee's memoji"
               src="/android-chrome-384x384.png"
               className="w-[3.5rem] h-[3.5rem] md:w-11 md:h-11 object-cover rounded-full block bg-secondary"
               objectFit="cover"

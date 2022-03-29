@@ -8,11 +8,12 @@ function MyApp({ Component, pageProps, router }) {
   return (
     <ThemeContextProvider>
       <AnimatePresence exitBeforeEnter>
-        <motion.div key={router.route} 
-          initial={{ x : '-200', opacity: 0, rotate: 3}}
-          animate={{ x : 0, opacity: 1, rotate: 0}}
-          exit={{ x : '-200',  opacity: 0, rotate: -3}}
-          transition={{ type: 'tween', stiffness : 200}}
+        <motion.div
+          key={router.route}
+          initial={{ x: "200", opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: "-200", opacity: 0 }}
+          transition={{ type: "tween", stiffness: 200 }}
         >
           <Component {...pageProps} />
         </motion.div>

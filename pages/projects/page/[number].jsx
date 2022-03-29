@@ -13,11 +13,13 @@ import { getAllProjects } from "../../../database/projects";
 
 // import : internal contexts
 import { ThemeContext } from "../../../contexts/ThemeContext";
-import { Footer } from "../../../components/public/Footer";
 
 // dynamic imports
 const NavBar = dynamic(() =>
   import("../../../components/public/Nav").then((m) => m.NavBar)
+);
+const Footer = dynamic(() =>
+  import("../../../components/public/Footer").then((m) => m.Footer)
 );
 const ThemeToggler = dynamic(() =>
   import("../../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
@@ -53,13 +55,13 @@ const ProjectList = ({
           (isDarkMode ? "main-dark" : "main-light")
         }
       >
-        <div className="px-12 py-20 max-w-3xl mx-auto select-text">
+        <div className="px-12 lg:px-0 py-20 max-w-3xl mx-auto select-text">
           <PublicHeader
             data={{ ...PUBLIC_LIST_TYPES.projects, count: totalCount }}
           />
           {projectList.length > 0 ? (
             <>
-              <main className="flex flex-col my-20 gap-20">
+              <main className="flex flex-col my-20 gap-20 items-stretch w-full">
                 {projectList.map((project, index) => (
                   <ProjectThumbnail
                     key={project._id}

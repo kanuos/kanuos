@@ -10,11 +10,13 @@ import { getAllBlogs } from "../../../database/blogs";
 
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import dynamic from "next/dynamic";
-import { Footer } from "../../../components/public/Footer";
 
 // dynamic imports
 const NavBar = dynamic(() =>
   import("../../../components/public/Nav").then((m) => m.NavBar)
+);
+const Footer = dynamic(() =>
+  import("../../../components/public/Footer").then((m) => m.Footer)
 );
 const Pagination = dynamic(() =>
   import("../../../components/public/Pagination").then((m) => m.Pagination)
@@ -46,13 +48,13 @@ const BlogList = ({ blogList, totalCount, pageStartNumber, pageCount }) => {
           (isDarkMode ? "main-dark" : "main-light")
         }
       >
-        <div className="px-12 py-20 max-w-3xl mx-auto select-text">
+        <div className="px-12 lg:px-0 py-20 max-w-3xl mx-auto select-text">
           <PublicHeader
             data={{ ...PUBLIC_LIST_TYPES.blogs, count: totalCount }}
           />
           {blogList.length > 0 ? (
             <>
-              <main className="flex flex-col my-20 gap-20">
+              <main className="flex flex-col my-20 gap-20 items-stretch w-full gap-y-20 mx-auto">
                 {blogList.map((blog, index) => (
                   <BlogThumbnail
                     key={blog._id}

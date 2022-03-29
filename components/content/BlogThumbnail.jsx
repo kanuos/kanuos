@@ -75,7 +75,7 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
       <h3
         className={
           (!data.isPublic && "opacity-50") +
-          " font-semibold group-hover:tracking-wide transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right"
+          " font-semibold opacity-75 group-hover:opacity-100 transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right"
         }
       >
         {data.title}

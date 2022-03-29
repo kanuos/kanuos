@@ -132,13 +132,13 @@ pre[class*="language-"] {
 }
 
 .markdown-editor ul {
-  @apply list-inside list-disc;
+  @apply list-inside list-disc flex flex-col items-start;
 }
 
 .markdown-editor ol {
-  @apply list-inside list-decimal;
+  @apply list-inside list-decimal flex flex-col items-start;
 }
 
 .markdown-editor li {
-  @apply list-item ml-4 capitalize my-4;
+  @apply ml-4 capitalize my-4;
 }

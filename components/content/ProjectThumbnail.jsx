@@ -123,7 +123,7 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
         <small>Project : #{index}</small>
       </p>
-      <h3 className=" font-semibold group-hover:tracking-wide transition-all text-2xl md:text-3xl group-odd:text-left group-even:text-right">
+      <h3 className=" font-semibold opacity-75 group-hover:opacity-100 transition-all text-2xl md:text-3xl group-odd:text-left group-even:text-right">
         {data.title}
       </h3>
       <div className="filter grayscale group-hover:grayscale-0">

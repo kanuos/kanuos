@@ -16,7 +16,9 @@ export async function getAllProjects(adminMode = false) {
   // admin mode => false  lists all public projects
   const filter = adminMode ? {} : { isPublic: true };
 
-  const allProjects = await ProjectModel.find(filter).populate("tags");
+  const allProjects = await ProjectModel.find(filter)
+    .populate("tags")
+    .sort("-date");
 
   return allProjects;
 }

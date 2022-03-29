@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 // import : internal
 import { HeadComponent } from "../../components/Head";
-import { Footer } from "../../components/public/Footer";
 import { getAllBlogs, getIndividualBlog } from "../../database/blogs";
 import { generateDetailViewMetadata } from "../../utils";
 
@@ -13,6 +12,10 @@ const BlogDetailBody = dynamic(() =>
 );
 const NavBar = dynamic(() =>
   import("../../components/public/Nav").then((m) => m.NavBar)
+);
+
+const Footer = dynamic(() =>
+  import("../../components/public/Footer").then((m) => m.Footer)
 );
 const ThemeToggler = dynamic(() =>
   import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)

@@ -45,7 +45,7 @@ export const MarkdownStep = ({ text }) => {
     <article
       className={`markdown-editor ${isDarkMode ? "md-dark" : "md-light"}`}
     >
-      <Markdown children={text} />
+      <Markdown>{text}</Markdown>
     </article>
   );
 };

@@ -15,7 +15,7 @@ export async function getAllBlogs(adminMode = false) {
   // admin mode => false  lists all public blogs
   const filter = adminMode ? {} : { isPublic: true };
 
-  const allBlogs = await BlogModel.find(filter).populate("tags");
+  const allBlogs = await BlogModel.find(filter).populate("tags").sort("-date");
 
   return allBlogs;
 }

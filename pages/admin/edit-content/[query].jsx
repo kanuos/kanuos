@@ -17,7 +17,7 @@ import {
 
 // import : internal components
 import { HeadComponent } from "../../../components/Head";
-import { JSON_EDITOR_STATE, JSONEditor } from "../../../components/admin/JSONEditor";
+import { JSON_EDITOR_STATE } from "../../../components/admin/JSONEditor";
 
 // import : internal
 import { getIndividualProject } from "../../../database/projects";
@@ -31,6 +31,11 @@ import { isAdminMiddleware } from "../../../utils/authLib";
 
 // dynamic imports
 
+const JSONEditor = dynamic(() =>
+  import("../../../components/admin/JSONEditor").then(
+    (module) => module.JSONEditor
+  )
+);
 const TagSelector = dynamic(() =>
   import("../../../components/admin/TagSelector").then(
     (module) => module.TagSelector
@@ -54,12 +59,6 @@ const DesignDetailBody = dynamic(() =>
 const NavBar = dynamic(() =>
   import("../../../components/public/Nav").then((module) => module.NavBar)
 );
-
-
-
-
-
-
 
 const SESSION_NAME = `sounak_admin`;
 
@@ -88,8 +87,7 @@ const EditCMS = ({ allTags, data, contentType }) => {
   useEffect(() => {
     sessionStorage.removeItem(SESSION_NAME);
     sessionStorage.removeItem(JSON_EDITOR_STATE);
-  }, [router.pathname])
-
+  }, [router.pathname]);
 
   useEffect(() => {
     setContent((prev) => ({ ...prev, isPublic }));
@@ -196,7 +194,7 @@ const EditCMS = ({ allTags, data, contentType }) => {
             )}
             {type === CONTENT_TYPE.blog.name &&
               Object.keys(content).length > 0 && (
-                  <BlogDetailBody blog={content} adminMode={true} />
+                <BlogDetailBody blog={content} adminMode={true} />
               )}
 
             {type === CONTENT_TYPE.project.name && (
