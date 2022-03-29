@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState, useContext } from "react";
-import { PUBLIC_URLS } from "../../utils";
+import { PUBLIC_NAVIGATION_URLS } from "../../utils";
 import { JoinLine } from "../public/DescHeader";
 import { motion } from "framer-motion";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
@@ -52,7 +52,7 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
 
   const blogURL = adminMode
     ? ADMIN_EDIT_URL("blog", data._id)
-    : PUBLIC_URLS.blogs.url + "/" + data.slug;
+    : PUBLIC_NAVIGATION_URLS.blogs + "/" + data.slug;
 
   return (
     <motion.article

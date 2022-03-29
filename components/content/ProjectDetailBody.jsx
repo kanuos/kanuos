@@ -10,7 +10,7 @@ import {
 // import : internal
 import { DescHeader, JoinLine } from "../public/DescHeader";
 import { PageSegment } from "../public/PageComponents";
-import { CLIENT_TYPE, PORTFOLIO_LINKS } from "../../utils";
+import { PUBLIC_URLS, PORTFOLIO_LINKS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { AnchorStep } from "../public/PageStepComponent";
 
@@ -30,9 +30,9 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           name={project.title}
           date={project.date}
           tags={project.tags}
-          back={CLIENT_TYPE.project.url}
+          back={PUBLIC_URLS.projects.url}
           adminMode={adminMode}
-          descType={CLIENT_TYPE.project.name}
+          descType={PUBLIC_URLS.projects.name}
         />
 
         <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start my-8">

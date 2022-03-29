@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 // import : internal
 import { DescHeader, JoinLine } from "../public/DescHeader";
-import { CLIENT_TYPE } from "../../utils";
+import { PUBLIC_URLS } from "../../utils";
 import { AnchorStep, Step } from "../public/PageStepComponent";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -23,8 +23,8 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
           name={blog.title}
           date={blog.date}
           tags={blog.tags}
-          back={CLIENT_TYPE.blog.url}
-          descType={CLIENT_TYPE.blog.name}
+          back={PUBLIC_URLS.blogs.url}
+          descType={PUBLIC_URLS.blogs.name}
         />
 
         <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start gap-y-2">

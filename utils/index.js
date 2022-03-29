@@ -1,20 +1,5 @@
 import { AUTH_ROUTES } from "./admin";
 
-export const CLIENT_TYPE = {
-  blog: {
-    name: "blogs",
-    url: "/blogs",
-  },
-  project: {
-    name: "projects",
-    url: "/projects",
-  },
-  design: {
-    name: "designs",
-    url: "/designs",
-  },
-};
-
 export const STEP_TYPE = {
   code: "code",
   markdown: "markdown",
@@ -36,16 +21,21 @@ export const PUBLIC_URLS = {
   },
   projects: {
     name: "projects",
-    url: "/projects",
+    url: "/projects/page/1",
   },
   blogs: {
     name: "blogs",
-    url: "/blogs",
+    url: "/blogs/page/1",
   },
   designs: {
     name: "designs",
-    url: "/designs",
+    url: "/designs/page/1",
   },
+};
+
+export const PUBLIC_NAVIGATION_URLS = {
+  projects: "/projects",
+  blogs: "/blogs",
 };
 
 const ADMIN_PATH = "/admin";
@@ -343,3 +333,9 @@ export function generateDetailViewMetadata(
   }
   return "";
 }
+
+export const ITEMS_PER_PAGE = {
+  blog: 2,
+  project: 1,
+  design: 2,
+};

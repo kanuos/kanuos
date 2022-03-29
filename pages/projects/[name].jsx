@@ -28,7 +28,7 @@ const ProjectDetail = ({ project }) => {
   );
   return (
     <>
-      <HeadComponent title={project.name} content={content} />
+      <HeadComponent title={project.title} content={content} />
       <NavBar />
       <ThemeToggler />
       <ProjectDetailBody project={project} />

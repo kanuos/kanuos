@@ -4,12 +4,18 @@ import { HeadComponent } from "../../components/Head";
 import { getAllBlogs, getIndividualBlog } from "../../database/blogs";
 import { generateDetailViewMetadata } from "../../utils";
 
-
 // dynamic imports
-const BlogDetailBody = dynamic(() => import("../../components/content/BlogDetailBody").then(m => m.BlogDetailBody));
-const NavBar = dynamic(() => import("../../components/public/Nav").then(m => m.NavBar));
-const ThemeToggler = dynamic(() => import("../../components/public/ThemeToggler").then(m => m.ThemeToggler));
-
+const BlogDetailBody = dynamic(() =>
+  import("../../components/content/BlogDetailBody").then(
+    (m) => m.BlogDetailBody
+  )
+);
+const NavBar = dynamic(() =>
+  import("../../components/public/Nav").then((m) => m.NavBar)
+);
+const ThemeToggler = dynamic(() =>
+  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
+);
 
 const BlogDetail = ({ blog }) => {
   blog = JSON.parse(blog);
@@ -21,7 +27,7 @@ const BlogDetail = ({ blog }) => {
   );
   return (
     <>
-      <HeadComponent title={blog.name} content={content} />
+      <HeadComponent title={blog.title} content={content} />
       <NavBar />
       <ThemeToggler />
       <BlogDetailBody blog={blog} />
