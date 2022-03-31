@@ -1,12 +1,20 @@
 import { useContext } from "react";
-import Link from "next/link";
+import dynamic from "next/dynamic";
 
 // import : internal
-import { DescHeader, JoinLine } from "../public/DescHeader";
-import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
-import { AnchorStep, Step } from "../public/PageStepComponent";
+import { DescHeader } from "../public/DescHeader";
+import { PUBLIC_URLS } from "../../utils";
+import { Step } from "../public/PageStepComponent";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
+
+const ContactModal = dynamic(() => import("../public/ContactModal"));
+const JoinLine = dynamic(() =>
+  import("../public/DescHeader").then((m) => m.JoinLine)
+);
+const AnchorStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.AnchorStep)
+);
 
 export const BlogDetailBody = ({ blog, adminMode = false }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -59,7 +67,7 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full mt-10 mx-auto flex flex-col items-start justify-start">
+        <section className="w-full my-10 mx-auto flex flex-col items-start justify-start">
           <h2 className="text-2xl capitalize  font-semibold">
             {blog?.outro?.heading}
           </h2>
@@ -90,26 +98,7 @@ export const BlogDetailBody = ({ blog, adminMode = false }) => {
               your message. I will get back to you ASAP
             </p>
 
-            <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer">
-              <Link href={PORTFOLIO_LINKS["contact me"].url}>
-                <a
-                  className={
-                    "py-1.5 px-6 block z-10 peer font-semibold transition-all hover:shadow-xl border-2 relative bg-transparent " +
-                    (isDarkMode
-                      ? "border-light hover:text-dark text-light font-semibold"
-                      : "hover:text-light border-dark")
-                  }
-                >
-                  send me a message
-                </a>
-              </Link>
-              <span
-                className={
-                  "py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
-                  (isDarkMode ? "bg-light border-light" : "bg-dark border-dark")
-                }
-              ></span>
-            </div>
+            <ContactModal isDarkMode={isDarkMode} />
           </section>
         </section>
       </div>

@@ -119,12 +119,26 @@ export const ContactInstantMessage = ({ close }) => {
 
   if (success) {
     return (
-      <article className="h-[75vh] w-full flex flex-col items-center justify-center gap-2">
-        <strong className="font-semibold text-2xl filter drop-shadow-xl text-center">
+      <motion.article
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { when: "beforeChildren" } }}
+        exit={{ opacity: 0, transition: { when: "afterChildren" } }}
+        className="h-[75vh] w-full flex flex-col items-center justify-center gap-2"
+      >
+        <motion.strong
+          animate={{ scaleY: 1, transition: { type: "spring" } }}
+          initial={{ scaleY: 0 }}
+          exit={{ opacity: 0 }}
+          className="font-semibold text-2xl filter drop-shadow-xl text-center"
+        >
           Message sent successfully.
-        </strong>
+        </motion.strong>
         <JoinLine />
-        <p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
           Modal closing in{" "}
           <motion.strong
             key={timer.toString()}
@@ -135,8 +149,8 @@ export const ContactInstantMessage = ({ close }) => {
             {countdown}s
           </motion.strong>
           .
-        </p>
-      </article>
+        </motion.p>
+      </motion.article>
     );
   }
 
@@ -151,7 +165,7 @@ export const ContactInstantMessage = ({ close }) => {
   return (
     <motion.article
       variants={variant}
-      className="w-full h-auto flex flex-col items-start mt-6 max-w-3xl mx-auto"
+      className="w-full h-auto flex flex-col items-start mt-6 max-w-2xl mx-auto"
     >
       <SectionHeader heading="Send an instant message" />
       {Boolean(errMsg.trim()) ? (

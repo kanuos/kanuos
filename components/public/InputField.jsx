@@ -9,7 +9,7 @@ import {
   MdSend,
   MdOutlineMailOutline,
   MdOutlineFace,
-  MdOutlineKeyboardAlt,
+  MdOutlineMessage,
   MdOutlinePassword,
   MdOutlineQuestionAnswer,
   MdOutlineLock,
@@ -84,7 +84,7 @@ export const InputField = ({
       case "answer":
         return <MdOutlineQuestionAnswer />;
       case "message":
-        return <MdOutlineKeyboardAlt />;
+        return <MdOutlineMessage />;
       default:
         return <MdOutlineCheckCircleOutline />;
     }
@@ -132,6 +132,14 @@ export const InputField = ({
   return (
     <>
       <form onSubmit={handleSubmit} className="relative h-auto w-full">
+        {name === "message" && (
+          <p className="text-xs text-right absolute right-2 -top-6">
+            <small className="opacity-75 inline-flex items-center">
+              <span className="pr-2">Currently typed :</span>
+              <strong className="font-semibold">{field.length} chars</strong>
+            </small>
+          </p>
+        )}
         <div className="flex w-full items-stretch justify-start border-2 border-current rounded-md p-1">
           <Textarea
             onFocus={() => setFocused(true)}
@@ -139,7 +147,7 @@ export const InputField = ({
             value={field}
             spellCheck={false}
             placeholder={`Please type in ${name}`}
-            className="p-1.5 resize-none w-full h-full outline-none border-none relative z-10 text-sm focus:placeholder:invisible select-text bg-transparent"
+            className="p-1.5 resize-none w-full h-full outline-none border-none relative z-10 text-sm focus:placeholder:invisible select-text bg-transparent scrollbar-none"
             onChange={(e) => setField((_) => e.target.value)}
           />
 

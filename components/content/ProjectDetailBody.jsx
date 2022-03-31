@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import Link from "next/link";
 // import : external
 import {
   IoCheckmarkCircleOutline,
@@ -8,11 +7,19 @@ import {
 } from "react-icons/io5";
 
 // import : internal
-import { DescHeader, JoinLine } from "../public/DescHeader";
 import { PageSegment } from "../public/PageComponents";
-import { PUBLIC_URLS, PORTFOLIO_LINKS } from "../../utils";
+import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { AnchorStep } from "../public/PageStepComponent";
+import { DescHeader } from "../public/DescHeader";
+import dynamic from "next/dynamic";
+
+const ContactModal = dynamic(() => import("../public/ContactModal"));
+const AnchorStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.AnchorStep)
+);
+const JoinLine = dynamic(() =>
+  import("../public/DescHeader").then((m) => m.JoinLine)
+);
 
 export const ProjectDetailBody = ({ project, adminMode = false }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -172,26 +179,7 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
               project title in your message. I will get back to you ASAP
             </p>
 
-            <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer">
-              <Link href={PORTFOLIO_LINKS["contact me"].url}>
-                <a
-                  className={
-                    "py-1.5 px-6 block z-10 peer font-semibold transition-all hover:shadow-xl border-2 relative bg-transparent " +
-                    (isDarkMode
-                      ? "border-light hover:text-dark text-light font-semibold"
-                      : "hover:text-light border-dark")
-                  }
-                >
-                  send me a message
-                </a>
-              </Link>
-              <span
-                className={
-                  "py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
-                  (isDarkMode ? "bg-light border-light" : "bg-dark border-dark")
-                }
-              ></span>
-            </div>
+            <ContactModal />
           </section>
         </section>
       </div>

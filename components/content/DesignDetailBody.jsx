@@ -15,9 +15,14 @@ import {
 import { motion } from "framer-motion";
 
 // import : internal
-import { JoinLine } from "../public/DescHeader";
-import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
+import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import dynamic from "next/dynamic";
+
+const JoinLine = dynamic(() =>
+  import("../public/DescHeader").then((m) => m.JoinLine)
+);
+const ContactModal = dynamic(() => import("../public/ContactModal"));
 
 export const DesignDetailBody = ({ design, adminMode = false }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -253,26 +258,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
               project, let me know the same.
             </p>
 
-            <div className="my-6 capitalize text-xs rounded w-max flex items-center justify-center relative overflow-hidden cursor-pointer">
-              <Link href={PORTFOLIO_LINKS["contact me"].url}>
-                <a
-                  className={
-                    "py-1.5 px-6 block z-10 peer font-semibold transition-all hover:shadow-xl border-2 relative bg-transparent " +
-                    (isDarkMode
-                      ? "border-light hover:text-dark text-light font-semibold"
-                      : "hover:text-light border-dark")
-                  }
-                >
-                  send me a message
-                </a>
-              </Link>
-              <span
-                className={
-                  "py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
-                  (isDarkMode ? "bg-light border-light" : "bg-dark border-dark")
-                }
-              ></span>
-            </div>
+            <ContactModal isDarkMode={isDarkMode} />
           </section>
         </section>
       </div>

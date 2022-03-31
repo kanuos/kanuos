@@ -1,5 +1,5 @@
 // Project Detail View
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 // import : internal
 import { DesignDetailBody } from "../../components/content/DesignDetailBody";
@@ -11,15 +11,17 @@ import {
   generateDetailViewMetadata,
 } from "../../utils";
 
-
-
 // dynamic imports
 
-const ThemeToggler = dynamic(() => import("../../components/public/ThemeToggler").then(m => m.ThemeToggler));
-const NavBar = dynamic(() => import("../../components/public/Nav").then(m => m.NavBar));
-
-
-
+const ThemeToggler = dynamic(() =>
+  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
+);
+const NavBar = dynamic(() =>
+  import("../../components/public/Nav").then((m) => m.NavBar)
+);
+const Footer = dynamic(() =>
+  import("../../components/public/Footer").then((m) => m.Footer)
+);
 
 const DesignDetail = ({ design }) => {
   design = JSON.parse(design);
@@ -35,6 +37,7 @@ const DesignDetail = ({ design }) => {
       <NavBar />
       <ThemeToggler />
       <DesignDetailBody design={design} />
+      <Footer />
     </>
   );
 };
