@@ -1,25 +1,35 @@
 // Portfolio page
 
+import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 
 // import : internal
 import { HeadComponent } from "../components/Head";
-import { NavBar } from "../components/public/Nav";
 import { LandingHeader } from "../components/public/LandingHeader";
 import { getAllTags } from "../database/tags";
-import axios from "axios";
 import { API_ROUTES } from "../utils/admin";
-import { TagDetailList } from "../components/public/TagDetailList";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { LoadSpinner } from "../components/public/Loader";
 import { ThemeToggler } from "../components/public/ThemeToggler";
-import { Footer } from "../components/public/Footer";
+import dynamic from "next/dynamic";
 
 const STATUSES = {
   initial: "initial",
   loading: "loading",
   complete: "complete",
 };
+
+const NavBar = dynamic(() =>
+  import("../components/public/Nav").then((m) => m.NavBar)
+);
+const LoadSpinner = dynamic(() =>
+  import("../components/public/Loader").then((m) => m.LoadSpinner)
+);
+const TagDetailList = dynamic(() =>
+  import("../components/public/TagDetailList").then((m) => m.TagDetailList)
+);
+const Footer = dynamic(() =>
+  import("../components/public/Footer").then((m) => m.Footer)
+);
 
 const HomePage = ({ allTags }) => {
   allTags = JSON.parse(allTags);
