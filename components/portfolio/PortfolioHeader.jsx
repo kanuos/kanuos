@@ -52,23 +52,25 @@ const PortfolioHeader = () => {
         variants={variants.wrapper}
         className="flex flex-col items-start justify-start"
       >
-        <motion.p variants={variants.children} className="text-xs">
-          <motion.small
-            variants={variants.children}
-            className="italic font-semibold ml-1 text-primary"
-          >
-            Hi, I am
-          </motion.small>
+        <motion.p
+          variants={variants.children}
+          className="text-xs font-semibold md:text-sm"
+        >
+          I am {staticMetadata.name}
         </motion.p>
         <motion.h1
           variants={variants.children}
-          className="text-7xl md:text-9xl font-black mb-6"
+          whileHover={{
+            scale: [1, 1.05, 1],
+            transition: { type: "spring", stiffness: 600 },
+          }}
+          className="text-8xl md:text-9xl font-black mt-1 mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent select-none"
         >
-          {staticMetadata.name}
+          Hello,
         </motion.h1>
         <motion.small
           variants={variants.children}
-          className="font-semibold text-xs w-1/2 ml-auto text-right"
+          className="font-semibold text-xs w-2/3 md:w-1/2 md:text-sm"
         >
           {staticMetadata.miniBio}
         </motion.small>
