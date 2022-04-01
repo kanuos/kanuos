@@ -1,6 +1,6 @@
 import { PORTFOLIO_LINKS, SOCIAL } from "../../utils";
 import { SectionHeader } from "../portfolio/SectionHeader";
-import { IoMailOutline } from "react-icons/io5";
+import { BiEnvelope } from "react-icons/bi";
 import { motion } from "framer-motion";
 
 export const ContactEmail = ({ isDarkMode }) => {
@@ -10,7 +10,7 @@ export const ContactEmail = ({ isDarkMode }) => {
       opacity: 1,
       transition: {
         type: "linear",
-        staggerChildren : .25
+        staggerChildren: 0.25,
       },
     },
     hide: {
@@ -22,14 +22,14 @@ export const ContactEmail = ({ isDarkMode }) => {
   const block = {
     show: {
       scaleY: 1,
-      x : 0,
+      x: 0,
       transition: {
         type: "spring",
       },
     },
     hide: {
       scaleY: 0,
-      x : -100,
+      x: -100,
     },
   };
 
@@ -69,18 +69,18 @@ export const ContactEmail = ({ isDarkMode }) => {
       >
         <div
           className={
-            "py-1.5 px-6 z-10 peer flex items-center gap-1 transition-all hover:shadow-xl border-2 border-current font-semibold " +
+            "py-2 px-4 z-10 peer flex items-center gap-1 transition-all hover:shadow-xl border-2 border-current font-semibold " +
             (!isDarkMode
               ? "text-dark hover:text-light hover:border-dark"
               : "text-light hover:text-dark hover:border-light")
           }
         >
-          <IoMailOutline />
-          send email
+          <BiEnvelope className="text-lg" />
+          <span className="text-xs">send email</span>
         </div>
         <span
           className={
-            "py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
+            "py-2 px-4 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
             (isDarkMode ? "bg-light" : "bg-dark")
           }
         ></span>

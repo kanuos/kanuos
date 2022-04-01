@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { BiPen } from "react-icons/bi";
 
 import { ContactInstantMessage } from "./ContactInstantMessage";
 
@@ -15,17 +16,18 @@ const ContactModal = ({ isDarkMode }) => {
         >
           <div
             className={
-              "py-2 px-6 flex items-center gap-1 z-10 peer transition-all hover:shadow-xl border-2 border-current font-semibold " +
+              "py-2 px-4 flex items-center gap-1 z-10 peer transition-all hover:shadow-xl border-2 border-current font-semibold " +
               (!isDarkMode
                 ? "text-dark hover:text-light hover:border-dark"
                 : "text-light hover:text-dark hover:border-light")
             }
           >
-            send an instant message &rarr;
+            <BiPen className="text-lg" />
+            <span className="text-xs">send an instant message</span>
           </div>
           <span
             className={
-              "py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
+              "py-2 px-4 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300 " +
               (isDarkMode ? "bg-light" : "bg-dark")
             }
           ></span>
