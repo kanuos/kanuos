@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { BsArrowDown } from "react-icons/bs";
+import { useState, useEffect } from "react";
 import { staticMetadata } from "../../utils/portfolio_static";
+import { PortfolioLink } from "./PortfolioLink";
+import { ShadowText } from "./ShadowText";
 
 const variants = {
   wrapper: {
@@ -12,7 +14,6 @@ const variants = {
       transition: {
         type: "linear",
         when: "beforeChildren",
-        delayChildren: 0.25,
         delay: 0.25,
         staggerChildren: 0.5,
       },
@@ -36,63 +37,109 @@ const variants = {
       },
     },
   },
+  linear: {
+    initial: {
+      y: 100,
+      scaleY: 0,
+      opacity: 0,
+    },
+    final: {
+      y: 0,
+      scaleY: 1,
+      opacity: 1,
+      origin: "bottom",
+      transition: {
+        type: "linear",
+        delay: 0.25,
+        staggerChildren: 0.5,
+      },
+    },
+  },
 };
 
 const PortfolioHeader = () => {
+  const [greeting, setGreeting] = useState();
+
+  useEffect(() => {
+    const time = new Date().getHours();
+
+    // 5pm onwards
+    if (time > 17) {
+      setGreeting(() => "evening");
+      return;
+    }
+    // 12pm to 5pm
+    if (time >= 12) {
+      setGreeting(() => "afternoon");
+      return;
+    }
+    // 4am to 12pm
+    if (time >= 4) {
+      setGreeting(() => "morning");
+      return;
+    }
+    setGreeting(() => "night");
+  }, [greeting]);
+
   return (
     <motion.header
       variants={variants.wrapper}
       whileInView="final"
       initial="initial"
-      className="relative h-screen w-full px-10 flex flex-col items-center justify-center"
+      className="relative h-screen w-full px-10 flex flex-col items-center justify-center max-w-3xl mx-auto"
     >
+      <ShadowText text="full stack developer" />
+
       <motion.div
         initial="initial"
         whileInView="final"
         variants={variants.wrapper}
-        className="flex flex-col items-start justify-start"
+        className="flex flex-col items-start justify-start z-10 w-full -translate-y-14 max-w-xl mx-auto"
       >
-        <motion.p
-          variants={variants.children}
-          className="text-xs font-semibold md:text-sm"
-        >
-          I am {staticMetadata.name}
-        </motion.p>
         <motion.h1
           variants={variants.children}
-          whileHover={{
-            scale: [1, 1.05, 1],
-            transition: { type: "spring", stiffness: 600 },
-          }}
-          className="text-8xl md:text-9xl font-black mt-1 mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent select-none"
+          className="text-6xl md:text-7xl w-min font-black capitalize bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent selection:bg-transparent selection:text-secondary pb-2"
         >
-          Hello,
+          Good {greeting},
         </motion.h1>
+        <motion.p
+          variants={variants.children}
+          className="text-sm font-semibold md:text-sm inline-flex gap-x-1"
+        >
+          <span className="opacity-50">I am</span>
+          <strong className="font-semibold">{staticMetadata.name}</strong>
+        </motion.p>
         <motion.small
           variants={variants.children}
-          className="font-semibold text-xs w-2/3 md:w-1/2 md:text-sm"
+          className="text-xs w-1/2 md:text-sm my-10 opacity-50"
         >
           {staticMetadata.miniBio}
         </motion.small>
+        <motion.div variants={variants.children}>
+          <PortfolioLink href="/" label="Contact Me" />
+        </motion.div>
       </motion.div>
 
-      <motion.p
+      <motion.div
         variants={variants.children}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 inline-flex items-center justify-center flex-col text-xs"
+        className="absolute bottom-6 left-0 block z-10 w-full"
       >
-        <motion.span
+        <motion.p
           variants={variants.children}
-          className=" inline-block animate-bounce text-primary text-xl"
+          className="w-full flex items-center justify-center flex-col-reverse text-xs z-10"
         >
-          <BsArrowDown />
-        </motion.span>
-        <motion.small
-          variants={variants.children}
-          className="uppercase tracking-tight font-semibold inline-block"
-        >
-          scroll
-        </motion.small>
-      </motion.p>
+          <motion.small
+            variants={variants.linear}
+            className="uppercase tracking-tight font-semibold block"
+          >
+            scroll
+          </motion.small>
+          <motion.span
+            variants={variants.linear}
+            className=" block mb-1 bg-primary h-20 w-px animate-bounce delay-300"
+          ></motion.span>
+        </motion.p>
+      </motion.div>
     </motion.header>
   );
 };
