@@ -121,11 +121,11 @@ const PortfolioHeader = () => {
       </motion.div>
 
       <motion.div
-        variants={variants.children}
+        variants={variants.linear}
         className="absolute bottom-6 left-0 block z-10 w-full"
       >
         <motion.p
-          variants={variants.children}
+          variants={variants.linear}
           className="w-full flex items-center justify-center flex-col-reverse text-xs z-10"
         >
           <motion.small
