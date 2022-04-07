@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { staticMetadata } from "../../utils/portfolio_static";
-import { PortfolioLink } from "./PortfolioLink";
 import { ShadowText } from "./ShadowText";
 
 const variants = {
@@ -14,26 +13,35 @@ const variants = {
       transition: {
         type: "linear",
         when: "beforeChildren",
-        delay: 0.25,
-        staggerChildren: 0.5,
+        staggerChildren: 0.25,
+      },
+    },
+  },
+  shadow: {
+    initial: {
+      opacity: 0,
+    },
+    final: {
+      opacity: 1,
+      transition: {
+        type: "linear",
       },
     },
   },
   children: {
     initial: {
-      scale: 0,
-      rotate: 10,
+      scaleY: 0,
+      opacity: 0,
     },
     final: {
-      scale: 1,
-      rotate: 0,
+      scaleY: 1,
+      opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 400,
+        type: "linear",
         when: "beforeChildren",
-        delayChildren: 0.25,
         delay: 0.25,
-        staggerChildren: 0.5,
+        delayChildren: 0.25,
+        staggerChildren: 0.25,
       },
     },
   },
@@ -47,10 +55,8 @@ const variants = {
       y: 0,
       scaleY: 1,
       opacity: 1,
-      origin: "bottom",
       transition: {
         type: "linear",
-        delay: 0.25,
         staggerChildren: 0.5,
       },
     },
@@ -83,61 +89,65 @@ const PortfolioHeader = () => {
 
   return (
     <motion.header
-      variants={variants.wrapper}
-      whileInView="final"
       initial="initial"
-      className="relative h-screen w-full px-10 flex flex-col items-center justify-center max-w-3xl mx-auto"
+      whileInView="final"
+      viewport={{ once: true }}
+      variants={variants.wrapper}
+      className="relative h-[90vh] w-full px-10 grid grid-rows-6 max-w-3xl mx-auto"
     >
-      <ShadowText text="full stack developer" />
-
       <motion.div
-        initial="initial"
-        whileInView="final"
         variants={variants.wrapper}
-        className="flex flex-col items-start justify-start z-10 w-full -translate-y-14 max-w-xl mx-auto"
+        className="h-4/6 flex flex-col items-start justify-center z-10 w-full max-w-xl mx-auto relative row-start-2 row-end-5"
       >
+        <motion.div variants={variants.shadow}>
+          <ShadowText text="full stack developer" />
+        </motion.div>
         <motion.h1
           variants={variants.children}
-          className="text-6xl md:text-7xl w-min font-black capitalize bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent selection:bg-transparent selection:text-secondary pb-2"
+          className="text-5xl sm:text-7xl md:text-8xl w-min tracking-tighter font-black capitalize pb-2 select-none"
         >
           Good {greeting},
         </motion.h1>
         <motion.p
           variants={variants.children}
-          className="text-sm font-semibold md:text-sm inline-flex gap-x-1"
+          className="text-sm font-semibold mt-4 mb-2 md:text-sm inline-flex gap-x-1"
         >
-          <span className="opacity-50">I am</span>
-          <strong className="font-semibold">{staticMetadata.name}</strong>
+          <motion.span variants={variants.children} className="opacity-50">
+            I am
+          </motion.span>
+          <motion.strong
+            variants={variants.children}
+            className="font-semibold text-primary"
+          >
+            {staticMetadata.name}
+          </motion.strong>
         </motion.p>
         <motion.small
           variants={variants.children}
-          className="text-xs w-1/2 md:text-sm my-10 opacity-50"
+          className="text-xs w-1/2 md:text-sm opacity-50"
         >
           {staticMetadata.miniBio}
         </motion.small>
-        <motion.div variants={variants.children}>
-          <PortfolioLink href="/" label="Contact Me" />
-        </motion.div>
       </motion.div>
 
       <motion.div
-        variants={variants.linear}
-        className="absolute bottom-6 left-0 block z-10 w-full"
+        variants={variants.children}
+        className="block z-10 w-full row-start-6"
       >
         <motion.p
           variants={variants.linear}
-          className="w-full flex items-center justify-center flex-col-reverse text-xs z-10"
+          className="w-full flex items-center justify-center flex-col text-xs z-10"
         >
+          <motion.span
+            variants={variants.linear}
+            className=" block mb-1 bg-primary h-20 w-px animate-bounce delay-300"
+          ></motion.span>
           <motion.small
             variants={variants.linear}
             className="uppercase tracking-tight font-semibold block"
           >
             scroll
           </motion.small>
-          <motion.span
-            variants={variants.linear}
-            className=" block mb-1 bg-primary h-20 w-px animate-bounce delay-300"
-          ></motion.span>
         </motion.p>
       </motion.div>
     </motion.header>

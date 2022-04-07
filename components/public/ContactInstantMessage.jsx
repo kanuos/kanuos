@@ -102,7 +102,6 @@ export const ContactInstantMessage = ({ close }) => {
 
   const variant = {
     show: {
-      x: 0,
       opacity: 1,
       transition: {
         type: "spring",
@@ -111,7 +110,6 @@ export const ContactInstantMessage = ({ close }) => {
       },
     },
     hide: {
-      x: "-100%",
       opacity: 0,
       transition: { type: "spring", when: "afterChildren" },
     },
@@ -164,10 +162,16 @@ export const ContactInstantMessage = ({ close }) => {
 
   return (
     <motion.article
-      variants={variant}
+      initial={{ opacity: 0 }}
+      animate={{
+        opacity: 1,
+        transition: { delay: 0.5, staggerChildren: 0.25, type: "spring" },
+      }}
       className="w-full h-auto flex flex-col items-start mt-6 max-w-2xl mx-auto"
     >
-      <SectionHeader heading="Send an instant message" />
+      <motion.h2 className="text-4xl font-thin tracking-tighter capitalize mb-10">
+        Send an instant message
+      </motion.h2>
       {Boolean(errMsg.trim()) ? (
         <motion.p
           animate={{ scaleY: 1, transition: { type: "spring" } }}
@@ -180,7 +184,7 @@ export const ContactInstantMessage = ({ close }) => {
         <motion.p
           animate={{ scaleY: 1, transition: { type: "spring" } }}
           initial={{ scaleY: 0 }}
-          className="text-xs mb-8 w-full max-w-xl font-semibold opacity-75"
+          className="text-xs mb-8 w-full max-w-xl font-semibold opacity-50"
         >
           Fill in your details and I’ll get back to you ASAP. Start filling up
           the form now. It will just take a few minutes.

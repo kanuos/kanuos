@@ -61,7 +61,7 @@ const InitialLoader = ({ showLoader, hideLoader, isDarkMode }) => {
           exit="exit"
           animate="show"
           className={
-            "h-screen fixed top-0 left-0 w-full z-20 flex items-center justify-center " +
+            "h-screen fixed top-0 left-0 w-full z-50 flex items-center justify-center " +
             (isDarkMode ? "bg-secondary" : "bg-dark")
           }
         >

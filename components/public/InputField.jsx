@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // import : external
 import Textarea from "react-textarea-autosize";
 import {
-  MdOutlineErrorOutline,
+  MdOutlineAdd,
   MdCheckCircle,
   MdSend,
   MdOutlineMailOutline,
@@ -136,7 +136,9 @@ export const InputField = ({
           <p className="text-xs text-right absolute right-2 -top-6">
             <small className="opacity-75 inline-flex items-center">
               <span className="pr-2">Currently typed :</span>
-              <strong className="font-semibold">{field.length} chars</strong>
+              <strong className="font-semibold text-primary">
+                {field.length} chars
+              </strong>
             </small>
           </p>
         )}
@@ -184,7 +186,7 @@ export const InputField = ({
                   (isValid ? "text-secondary line-through" : "text-primary")
                 }
               >
-                {isValid ? <MdCheckCircle /> : <MdOutlineErrorOutline />}
+                {isValid ? <MdCheckCircle /> : <MdOutlineAdd />}
                 <small className="font-semibold tracking-wide">{message}</small>
               </motion.li>
             );
