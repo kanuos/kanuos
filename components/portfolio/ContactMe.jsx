@@ -6,6 +6,7 @@ import {
   IoNavigateCircleOutline,
   IoArrowForward,
 } from "react-icons/io5";
+import { PORTFOLIO_LINKS } from "../../utils";
 
 const variants = {
   wrapper: {
@@ -49,6 +50,7 @@ const variants = {
 const ContactMe = ({ email, social, isDarkMode }) => {
   return (
     <motion.section
+      id={PORTFOLIO_LINKS["contact me"].name}
       whileInView="show"
       initial="hide"
       viewport={{ once: true }}

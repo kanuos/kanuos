@@ -84,15 +84,15 @@ export const SOCIAL = {
 
 export const PORTFOLIO_LINKS = {
   "about me": {
-    name: "about me",
+    name: "about-me",
     url: "/portfolio/#about-me",
   },
   "selected works": {
-    name: "selected works",
+    name: "work",
     url: "/portfolio/#work",
   },
   "contact me": {
-    name: "contact me",
+    name: "contact-me",
     url: "/portfolio/#contact-me",
   },
 };
