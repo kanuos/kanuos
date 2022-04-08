@@ -19,7 +19,7 @@ export const Footer = () => {
           </figure>
         </div>
         <div className="flex flex-col items-start justify-center md:items-center">
-          <h4 className="font-thin text-xl">{staticMetadata.fullName}</h4>
+          <h4 className="text-xl">{staticMetadata.fullName}</h4>
           <p className="text-xs capitalize opacity-50">
             <small>{staticMetadata.adminLabel}</small>
           </p>

@@ -59,14 +59,14 @@ const ContactMe = ({ email, social, isDarkMode }) => {
       className="h-auto min-h-screen w-full max-w-3xl mx-auto flex flex-col items-start relative md:px-10"
     >
       <SectionHeader
-        paddingBottom={false}
         shadow="say hello"
         heading="let's work together"
+        paddingBottom={false}
         content="Currently I am looking for a position as a full-stack developer, front-end developer, API developer"
       />
       <motion.div
         variants={variants.wrapper}
-        className="w-full md:max-w-lg ml-auto relative my-10"
+        className="w-full md:max-w-lg ml-auto relative my-16"
       >
         <motion.ul
           whileInView="show"
@@ -91,7 +91,7 @@ const ContactMe = ({ email, social, isDarkMode }) => {
           >
             <a href={email} className="flex items-center justify-start gap-x-2">
               <IoMailOutline className="text-lg" />
-              <small className="font-black opacity-75 hover:opacity-100 uppercase">
+              <small className="font-black uppercase">
                 send an email {email}
               </small>
             </a>
@@ -108,9 +108,7 @@ const ContactMe = ({ email, social, isDarkMode }) => {
               <div className="flex justify-between w-full items-center">
                 <div className="flex items-center justify-start gap-x-2">
                   <IoNavigateCircleOutline className="text-lg" />
-                  <small className="font-black opacity-75 hover:opacity-100 uppercase">
-                    send a message
-                  </small>
+                  <small className="font-black uppercase">send a message</small>
                 </div>
                 <IoArrowForward className="text-lg" />
               </div>

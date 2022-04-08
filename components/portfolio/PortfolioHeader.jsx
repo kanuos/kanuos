@@ -104,7 +104,7 @@ const PortfolioHeader = () => {
         </motion.div>
         <motion.h1
           variants={variants.children}
-          className="text-5xl sm:text-7xl md:text-8xl w-min tracking-tighter font-black capitalize pb-2 select-none"
+          className="text-7xl md:text-8xl w-min tracking-tighter capitalize pb-2 select-none"
         >
           Good {greeting},
         </motion.h1>

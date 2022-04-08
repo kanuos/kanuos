@@ -169,7 +169,7 @@ export const ContactInstantMessage = ({ close }) => {
       }}
       className="w-full h-auto flex flex-col items-start mt-6 max-w-2xl mx-auto"
     >
-      <motion.h2 className="text-4xl font-thin tracking-tighter capitalize mb-10">
+      <motion.h2 className="text-4xl tracking-tighter capitalize mb-10">
         Send an instant message
       </motion.h2>
       {Boolean(errMsg.trim()) ? (

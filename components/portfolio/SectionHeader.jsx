@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+
 import { JoinLine } from "../public/DescHeader";
 import { ShadowText } from "./ShadowText";
 
@@ -51,7 +52,7 @@ export const SectionHeader = ({
         whileInView="show"
         className={
           "flex flex-col relative mt-20 pt-20 px-10 " +
-          (paddingBottom && "pb-20 mb-20")
+          (paddingBottom ? "pb-20 mb-20" : "")
         }
       >
         <motion.section
@@ -64,7 +65,7 @@ export const SectionHeader = ({
             whileInView="show"
             viewport={{ once: true }}
             variants={variants.h2}
-            className="text-4xl sm:text-6xl font-black tracking-tighter uppercase w-min"
+            className="text-7xl lg:text-8xl tracking-tighter leading-[0.8] lg:leading-[0.8] capitalize w-min selection:text-transparent bg-gradient-to-b from-primary to-secondary bg-clip-text selection:bg-transparent"
           >
             {heading}
           </motion.h2>
@@ -75,7 +76,7 @@ export const SectionHeader = ({
               </motion.div>
               <motion.p
                 variants={variants.content}
-                className="text-xs uppercase m-2 font-semibold w-3/4 md:w-3/5 max-w-md"
+                className="text-xs uppercase m-2 font-black w-3/4 max-w-lg text-primary"
               >
                 <small>{content}</small>
               </motion.p>

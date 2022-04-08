@@ -2,9 +2,8 @@ import Image from "next/image";
 import { SectionHeader } from "./SectionHeader";
 import { AnimatePresence, motion } from "framer-motion";
 import { PORTFOLIO_LINKS } from "../../utils";
-import { PortfolioLink } from "./PortfolioLink";
 
-const Showcase = ({ projects }) => {
+const Showcase = ({ projects, isDarkMode }) => {
   const variants = {
     projectLeft: {
       show: {
@@ -91,11 +90,11 @@ const Showcase = ({ projects }) => {
       variants={variants.content}
       className="h-auto w-full flex flex-col items-start relative md:px-10"
     >
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto w-full">
         <SectionHeader
-          heading="some projects i've worked on"
-          shadow="selected work"
           paddingBottom={false}
+          heading="selected work"
+          shadow="projects I've worked on"
           content={`It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. `}
         />
       </div>
@@ -114,8 +113,11 @@ const Showcase = ({ projects }) => {
                 }
                 whileInView="show"
                 initial="hide"
+                whileHover={{ scale: 1.1 }}
+                onClick={() => console.log(`Open project `, project)}
                 key={project._id}
-                className="relative snap-top w-full group-even:mr-auto group-odd:ml-auto md:flex md:items-center md:group-even:flex-row-reverse md:group-odd:flex-row md:gap-x-6"
+                viewport={{ once: true }}
+                className="relative peer snap-top w-full group-even:mr-auto group-odd:ml-auto md:flex md:items-center md:group-even:flex-row-reverse md:group-odd:flex-row md:gap-x-6 cursor-pointer"
               >
                 <motion.figure
                   variants={variants.content}
@@ -144,18 +146,16 @@ const Showcase = ({ projects }) => {
                   >
                     {project.title}
                   </motion.h3>
-                  <motion.p className="px-2 text-sm tracking-tighter w-full max-w-sm opacity-50">
+                  <motion.p
+                    className={
+                      "px-2 text-sm tracking-tighter w-full max-w-sm " +
+                      (isDarkMode ? "opacity-50" : "opacity-100")
+                    }
+                  >
                     {project.desc}
                   </motion.p>
                 </motion.section>
               </motion.article>
-              <motion.section className="mt-10 pl-6 opacity-0 group-hover:opacity-100 -translate-y-full group-hover:translate-y-0 transition-all md:w-full md:grid md:place-items-center">
-                <PortfolioLink
-                  label="Expand Project"
-                  btnMode={true}
-                  cb={() => console.log(`Open project `, project)}
-                />
-              </motion.section>
             </motion.div>
           ))}
         </motion.section>
