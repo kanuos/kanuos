@@ -18,7 +18,7 @@ const PortfolioPage = () => {
           isDarkMode ? "bg-dark" : "bg-[#0079D8]"
         } text-light`}
       >
-        <div className="w-full max-w-3xl mx-auto flex flex-col items-start gap-y-6">
+        <div className="w-full max-w-xl mx-auto flex flex-col items-start gap-y-6">
           <h1 className="text-9xl -ml-2 mb-10">:(</h1>
           <p className="w-full max-w-lg font-semibold md:text-lg">Error-404</p>
           <p className="w-full max-w-lg break-words md:text-lg">
