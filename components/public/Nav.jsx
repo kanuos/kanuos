@@ -270,6 +270,10 @@ const NavMenu = ({ showMenu, type = "public", toggleModal }) => {
                 isActive = currentPath.startsWith(valueObj.url);
               }
 
+              if (type === "portfolio") {
+                isActive = true;
+              }
+
               return (
                 <motion.li
                   variants={variants.li}
