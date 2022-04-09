@@ -92,7 +92,7 @@ const HomePage = ({ allTags }) => {
         <div className="w-full">
           <LandingHeader />
 
-          {status === STATUSES.initial && (
+          {status === STATUSES.initial && Boolean(allTags.length) && (
             <>
               <div className="flex flex-col items-start max-w-3xl mx-auto w-full">
                 <h2 className=" font-semibold capitalize">tags</h2>

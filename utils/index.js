@@ -19,13 +19,17 @@ export const PUBLIC_URLS = {
     name: "home",
     url: "/",
   },
-  projects: {
-    name: "projects",
-    url: "/projects/page/1",
+  portfolio: {
+    name: "portfolio",
+    url: "/portfolio",
   },
   blogs: {
     name: "blogs",
     url: "/blogs/page/1",
+  },
+  projects: {
+    name: "projects",
+    url: "/projects/page/1",
   },
   designs: {
     name: "designs",
@@ -77,7 +81,6 @@ export const ADMIN_URLS = {
 
 export const SOCIAL = {
   email: "sounakmukherjee@ymail.com",
-  phone: "+1 (607) 280-5640",
   credential: "full stack developer",
   mailto: `mailto:sounakmukherjee@ymail.com?subject=Let's work together`,
 };
@@ -95,38 +98,16 @@ export const PORTFOLIO_LINKS = {
     name: "contact-me",
     url: "/portfolio/#contact-me",
   },
+  "my website": {
+    name: "my-website",
+    url: "/",
+  },
 };
 
 export const NAV_METADATA = {
-  public: {
-    links: PUBLIC_URLS,
-    other: {
-      heading: "My portfolio",
-      link: "/portfolio",
-    },
-    social: SOCIAL_LINKS,
-    contact: SOCIAL,
-  },
-  portfolio: {
-    links: PORTFOLIO_LINKS,
-    other: {
-      heading: "Check out my website",
-      link: "/",
-      sublinks: PUBLIC_URLS,
-    },
-    social: SOCIAL_LINKS,
-    contact: SOCIAL,
-  },
-  admin: {
-    links: ADMIN_URLS,
-    other: {
-      heading: "Logout",
-      link: AUTH_ROUTES.logout,
-    },
-    social: {
-      "main site": "/",
-    },
-  },
+  public: PUBLIC_URLS,
+  portfolio: PORTFOLIO_LINKS,
+  admin: ADMIN_URLS,
 };
 
 export const PUBLIC_LIST_TYPES = {
