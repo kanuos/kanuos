@@ -11,7 +11,6 @@ export const VideoBG = () => {
     >
       <source src="/pf.webm" type="video/webm" />
       <source src="/pf.mp4" type="video/mp4" />
-      <img src="/hero.webp" />
     </video>
   );
 };

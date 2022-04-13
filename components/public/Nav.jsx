@@ -23,7 +23,7 @@ export const NavBar = ({ type = "public" }) => {
   const [showMenu, setShowMenu] = useState(false);
   const { isDarkMode } = useContext(ThemeContext);
 
-  const toggleModal = useCallback(() => setShowMenu((prev) => !prev));
+  const toggleModal = useCallback(() => setShowMenu((prev) => !prev), []);
 
   const r = useRouter();
 

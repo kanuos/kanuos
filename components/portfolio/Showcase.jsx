@@ -133,6 +133,7 @@ const Showcase = ({ projects, isDarkMode, selectProject }) => {
                       loader={({ src, width }) => `${src}?w=${width}&q=100`}
                       src={project.design.thumbnail}
                       layout="fill"
+                      alt={project.title}
                     />
                   </motion.figure>
 
