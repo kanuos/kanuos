@@ -105,13 +105,13 @@ export const SkillList = ({ isDarkMode, heading, list }) => {
         variants={variants.details}
         initial="hide"
         animate={isOpen ? "show" : "hide"}
-        className="flex flex-col items-start gap-1 md:items-center md:flex-wrap justify-start gap-x-3"
+        className="flex flex-col items-start gap-1 md:items-center md:flex-row md:flex-wrap justify-start gap-x-3"
       >
         {list.map(({ text }, j) => (
           <motion.li
             variants={variants.item}
             key={j}
-            className="font-semibold opacity-75 text-xs"
+            className="font-semibold opacity-75 text-xs break-words"
           >
             {text}
           </motion.li>

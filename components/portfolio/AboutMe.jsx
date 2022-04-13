@@ -95,24 +95,26 @@ const AboutMe = ({ skills, bio, techStack, about, isDarkMode }) => {
       initial="hide"
       className="h-auto min-h-screen relative snap-start w-full max-w-3xl mx-auto md:px-10"
     >
-      <SectionHeader
-        paddingBottom={false}
-        shadow="let me introduce myself"
-        heading="about sounak"
-        content={`I love creating digital products that are beautiful, responsive, performant and secure!`}
-      />
-      <div className="p-10 pb-0 flex flex-col items-stretch justify-start gap-y-10 mt-10">
+      <div className="w-11/12 mx-auto">
+        <SectionHeader
+          paddingBottom={false}
+          shadow="let me introduce myself"
+          heading="about sounak"
+          content={`I love creating digital products that are beautiful, responsive, performant and secure!`}
+        />
+      </div>
+      <div className="p-10 pb-0 flex flex-col items-stretch w-11/12 mx-auto justify-start gap-y-10 mt-10">
         <p className="w-full text-sm leading-tight">{about}</p>
         <p className="w-full text-sm leading-tight">{bio || text + text}</p>
       </div>
 
       <div className="flex flex-col-reverse items-stretch">
         <div className="flex flex-col items-stretch">
-          <p className="px-10 w-full text-sm font-semibold leading-tight">
+          <p className="px-10 text-sm font-semibold leading-tight w-11/12 mx-auto">
             {skills || text}
           </p>
           <ul className="flex flex-col items-stretch justify-start w-full my-10 max-w-lg mx-auto">
-            {(techStack || textArr).map((el, i) => (
+            {textArr.map((el, i) => (
               <SkillList
                 heading={el.heading}
                 list={el.items}

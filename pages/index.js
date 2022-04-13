@@ -85,7 +85,7 @@ const HomePage = ({ allTags }) => {
       <ThemeToggler />
       <main
         className={
-          "min-h-screen h-auto w-full overflow-hidden relative p-10 " +
+          "min-h-screen h-auto w-full overflow-hidden relative p-16 " +
           (isDarkMode ? "main-dark" : "main-light")
         }
       >
