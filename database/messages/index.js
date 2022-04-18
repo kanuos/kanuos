@@ -1,9 +1,9 @@
 import { isValidObjectId } from "mongoose";
-import conn from "../Models";
+import { connectionFactory } from "../index";
+
+const conn = connectionFactory();
 
 const MessageModel = conn.models.message;
-
-
 
 /**
  *

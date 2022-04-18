@@ -100,10 +100,8 @@ export const AnchorStep = ({ label, href, icon = "link" }) => {
     return <></>;
   }
   return (
-    <p className="text-sm leading-relaxed flex gap-x-2 items-center group w-max">
-      {icon === "link" && (
-        <IoLinkOutline className="opacity-50 group-hover:opacity-100 transition-all" />
-      )}
+    <p className="text-xs leading-relaxed opacity-50 hover:opacity-100 flex gap-x-2 items-center group w-max">
+      {icon === "link" && <IoLinkOutline className="transition-all" />}
 
       {icon === "git" && (
         <IoGitBranchOutline className="opacity-50 group-hover:opacity-100 transition-all" />

@@ -1,9 +1,9 @@
 import { Schema } from "mongoose";
 import { ADMIN_SELECT_OPTIONS } from "../utils/admin";
-import conn from "./index";
+// import conn from "./index";
 
 // Tag Schema for maintaining tags for references to other content models
-const TagSchema = new Schema({
+export const TagSchema = new Schema({
   tag: {
     type: String,
     unique: true,
@@ -12,7 +12,7 @@ const TagSchema = new Schema({
 });
 
 // Note Schema for notes and future ideas plans
-const NoteSchema = new Schema({
+export const NoteSchema = new Schema({
   title: {
     type: String,
     unique: true,
@@ -29,17 +29,17 @@ const NoteSchema = new Schema({
 });
 
 // Blog Schema for CRUD operations of Blogs
-const BlogSchema = new Schema({
+export const BlogSchema = new Schema({
   title: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   slug: {
     type: String,
     required: true,
     unique: true,
-    index: true
+    index: true,
   },
   desc: {
     type: String,
@@ -75,12 +75,12 @@ const BlogSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref : 'user'
+    ref: "user",
   },
 });
 
 // Message schema for incoming client messages and admin management of the same
-const MessageSchema = new Schema({
+export const MessageSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -104,12 +104,12 @@ const MessageSchema = new Schema({
 });
 
 // Project Schema for CRUD operations of Projects
-const ProjectSchema = new Schema({
+export const ProjectSchema = new Schema({
   title: {
     type: String,
     required: true,
     unique: true,
-    index : true
+    index: true,
   },
   desc: {
     type: String,
@@ -143,12 +143,12 @@ const ProjectSchema = new Schema({
   difficulty: {
     type: String,
     required: true,
-    enum : [...Object.values(ADMIN_SELECT_OPTIONS.difficulty)]
+    enum: [...Object.values(ADMIN_SELECT_OPTIONS.difficulty)],
   },
   category: {
     type: String,
     required: true,
-    enum : [...Object.values(ADMIN_SELECT_OPTIONS.category)]
+    enum: [...Object.values(ADMIN_SELECT_OPTIONS.category)],
   },
   repo: {
     type: Object,
@@ -165,17 +165,17 @@ const ProjectSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref : 'user'
+    ref: "user",
   },
 });
 
 // Design Schema for CRUD operations of Designs
-const DesignSchema = new Schema({
+export const DesignSchema = new Schema({
   title: {
     type: String,
     required: true,
     unique: true,
-    index: true
+    index: true,
   },
   desc: {
     type: String,
@@ -226,17 +226,17 @@ const DesignSchema = new Schema({
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref : 'user'
+    ref: "user",
   },
 });
 
 // User Schema for admin
-const UserSchema = new Schema({
+export const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
     required: true,
-    index: true
+    index: true,
   },
   password: {
     type: String,
@@ -251,62 +251,79 @@ const UserSchema = new Schema({
   skills: {
     type: String,
   },
-  techStack: [{
-    type: Object,
-  }],
-  portfolio: [{
-    type: Schema.Types.ObjectId,
-    ref : 'portfolio',
-  }],
+  techStack: [
+    {
+      type: Object,
+    },
+  ],
+  portfolio: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "portfolio",
+    },
+  ],
 });
 
 // Portfolio project Schema
-const PortfolioSchema = new Schema({
-  design : {
-    type : Schema.Types.ObjectId,
-    ref : 'design',
-    unique : true
+export const PortfolioSchema = new Schema({
+  design: {
+    type: Schema.Types.ObjectId,
+    ref: "design",
+    unique: true,
   },
-  user : {
-    type : Schema.Types.ObjectId,
-    ref : 'user'
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
   },
-  project : {
-    type : Schema.Types.ObjectId,
-    ref : 'project',
-    unique : true
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: "project",
+    unique: true,
   },
-  desc : {
-    type: String, 
-    required : true
+  desc: {
+    type: String,
+    required: true,
+  },
+  screens: [
+    {
+      type: Object,
+    },
+  ],
+  priority: {
+    type: Number,
+    default: 1,
+    max: 3,
+    min: 1,
   },
   role: {
     type: String,
     required: true,
   },
-  uiux : [{
-    type : Object
-  }],
-  dev : [{
-    type : Object
-  }],
-  isShowcased : {
+  uiux: [
+    {
+      type: Object,
+    },
+  ],
+  dev: [
+    {
+      type: Object,
+    },
+  ],
+  isShowcased: {
     type: Boolean,
-    default : false
-  }
-})
+    default: false,
+  },
+});
 
+// const models = conn.models;
 
+// !models.tag && conn.model("tag", TagSchema);
+// !models.note && conn.model("note", NoteSchema);
+// !models.blog && conn.model("blog", BlogSchema);
+// !models.project && conn.model("project", ProjectSchema);
+// !models.message && conn.model("message", MessageSchema);
+// !models.design && conn.model("design", DesignSchema);
+// !models.user && conn.model("user", UserSchema);
+// !models.portfolio && conn.model("portfolio", PortfolioSchema);
 
-const models = conn.models;
-
-!models.tag && conn.model("tag", TagSchema);
-!models.note && conn.model("note", NoteSchema);
-!models.blog && conn.model("blog", BlogSchema);
-!models.project && conn.model("project", ProjectSchema);
-!models.message && conn.model("message", MessageSchema);
-!models.design && conn.model("design", DesignSchema);
-!models.user && conn.model("user", UserSchema);
-!models.portfolio && conn.model("portfolio", PortfolioSchema);
-
-export default conn;
+// export default conn;

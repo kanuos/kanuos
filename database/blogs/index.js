@@ -1,5 +1,7 @@
 import { isValidObjectId } from "mongoose";
-import conn from "../Models";
+import { connectionFactory } from "../index";
+
+const conn = connectionFactory();
 
 const BlogModel = conn.models.blog;
 

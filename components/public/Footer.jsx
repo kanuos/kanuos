@@ -5,7 +5,7 @@ import { AnchorStep } from "../public/PageStepComponent";
 
 export const Footer = () => {
   return (
-    <footer className="min-h-[50vh] w-full main-dark z-10 px-10 py-14 mt-auto md:py-16">
+    <footer className="h-auto w-full bg-dark text-light z-10 px-10 py-14 mt-auto md:py-16">
       <section className="w-full mx-auto flex flex-col items-start md:items-center justify-center gap-2">
         <div className="bg-light rounded-full w-16 h-16 md:w-12 md:h-12 filter drop-shadow-xl flex items-center justify-center overflow-hidden">
           <figure className="relative block rounded-full w-[3.5rem] h-[3.5rem] md:w-11 md:h-11">

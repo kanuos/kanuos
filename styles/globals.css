@@ -54,13 +54,6 @@ button:focus {
   @apply text-light;
 }
 
-.main-dark .shadow-lg-custom {
-  @apply shadow-[2px_4px_16px_rgba(255,255,255,.15)] bg-dark text-light;
-}
-
-.main-light .shadow-lg-custom {
-  @apply shadow-lg bg-light text-dark;
-}
 
 .nav-light {
   @apply text-dark bg-light;
@@ -84,7 +77,6 @@ button:focus {
 code[class*="language-"],
 pre[class*="language-"] {
   font-family: monospace !important;
-  font-weight: 600 !important;
   white-space: pre-wrap !important;
   word-spacing: 1.5rem;
 }

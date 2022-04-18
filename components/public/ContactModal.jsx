@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BiPen } from "react-icons/bi";
 
 import { ContactInstantMessage } from "./ContactInstantMessage";
 
@@ -17,14 +16,13 @@ const ContactModal = ({ isDarkMode, children }) => {
         ) : (
           <button
             onClick={() => setIsModalOpen(true)}
-            className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer select-none"
+            className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer select-none opacity-75 hover:opacity-100 transition-all"
           >
             <div
               className={
                 "py-2 px-4 flex items-center gap-1 z-10 peer transition-all hover:shadow-xl border-2 border-current font-semibold "
               }
             >
-              <BiPen className="text-lg" />
               <span className="text-xs">send an instant message</span>
             </div>
             <span

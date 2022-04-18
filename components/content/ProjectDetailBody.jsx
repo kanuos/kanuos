@@ -31,7 +31,7 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
         (adminMode ? "" : " px-12 md:px-16")
       }
     >
-      <div className="relative h-full w-full max-w-4xl mx-auto">
+      <div className="relative h-full w-full max-w-3xl mx-auto">
         <DescHeader
           projectMode={true}
           name={project.title}
@@ -42,7 +42,7 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           descType={PUBLIC_URLS.projects.name}
         />
 
-        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start my-8">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start my-8">
           <p className="leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left lg:text-base">
             {project.desc}
           </p>
@@ -71,14 +71,14 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start mb-16">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mb-16">
           <h2 className="text-2xl inline-flex items-center justify-start">
             <span className="capitalize  font-semibold">
               Project Tech stack used
             </span>
           </h2>
           <JoinLine />
-          <ul className="flex flex-wrap items-start gap-4 mt-4">
+          <ul className="flex flex-col items-start gap-1">
             {project.techStack?.map((t, i) => (
               <li key={i} className="flex items-start justify-start">
                 <span className="text-xs grow block font-semibold opacity-75">
@@ -89,12 +89,12 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start mb-16">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mb-16">
           <h2 className="text-2xl inline-flex items-center justify-start">
             <span className="capitalize  font-semibold">Prerequisites</span>
           </h2>
           <JoinLine />
-          <ul className="flex flex-col items-start gap-y-4 mt-4">
+          <ul className="flex flex-col items-start gap-y-4 mt-4 -ml-6">
             {project.prerequisites.map((p, i) => (
               <li key={i} className="flex items-start justify-start gap-x-2">
                 <IoCheckmarkCircleOutline className="text-secondary text-lg grow block shrink-0" />
@@ -104,21 +104,22 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
           </ul>
         </section>
 
-        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start gap-y-10 mb-10">
+        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mb-10">
           <h2 className="inline-flex items-center justify-start gap-x-2">
             <span className="text-2xl capitalize  font-semibold">Chapters</span>
             <small className="text-xs opacity-70">
               ({project.chapters.length})
             </small>
           </h2>
+          <JoinLine />
           <p className="leading-relaxed text-sm lg:text-base">
-            Project {project.title} walkthrough is classified into{" "}
-            {project.chapters.length} chapters for the better modulization. By
-            default, all the chapters are marked as unread and you can toggle
-            the completion status of each chapter by clicking on the button at
-            the bottom of each chapter. Enjoy the journey. If you have any
-            queries feel free to send me a message and I&apos;ll try to get back
-            to you ASAP.
+            Project <strong className="font-semibold">{project.title}</strong>{" "}
+            is classified into{" "}
+            <strong className="font-semibold">{project.chapters.length}</strong>{" "}
+            chapters for the better modulization. By default, all the chapters
+            are marked as unread and you can toggle the completion status of
+            each chapter by clicking on the button at the bottom of each
+            chapter.
             {project.repo && Object.values(project.repo).every(Boolean) && (
               <>
                 <br />
@@ -127,18 +128,17 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
               </>
             )}
           </p>
-          <ul
-            className={
-              "flex flex-col items-start w-full gap-y-12 relative after:absolute after:h-full after:top-0 after:-left-0 after:w-0.5 after:bg-opacity-10 after:z-0 " +
-              (isDarkMode ? "after:bg-light" : "after:bg-dark")
-            }
-          >
+          <ul className="flex flex-col items-start w-full mt-6">
             {project.chapters.map((chapter, i) => (
               <li
                 key={i}
-                className="flex items-center justify-start gap-x-1 w-full z-10"
+                className="flex items-center justify-start my-4 w-full last:after:hidden relative z-10 after:absolute after:w-0.5 after:left-4 after:h-10 after:-bottom-10 after:bg-secondary"
               >
-                <PageSegment segment={chapter} index={i + 1} />
+                <PageSegment
+                  segment={chapter}
+                  index={i + 1}
+                  isDarkMode={isDarkMode}
+                />
               </li>
             ))}
           </ul>
