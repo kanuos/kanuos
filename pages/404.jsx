@@ -2,53 +2,47 @@
 import { useContext } from "react";
 import { useRouter } from "next/router";
 // import : internal
-import { HeadComponent } from "../components/Head";
 import { PUBLIC_URLS } from "../utils";
-import { PortfolioLink } from "../components/portfolio/PortfolioLink";
+import PublicLayout from "../components/Layouts/PublicLayout";
+import { StyledHeader } from "../components/portfolio/StyledHeader";
+import { CTA } from "../components/portfolio/CTA";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 const PortfolioPage = () => {
   const router = useRouter();
+
   const { isDarkMode } = useContext(ThemeContext);
+
   return (
-    <>
-      <HeadComponent title="Oops! Page Not Found" />
-      <main
-        className={`h-auto min-h-screen overflow-hidden flex flex-col items-center select-none justify-center gap-2 p-10 w-full ${
-          isDarkMode ? "bg-dark" : "bg-[#0079D8]"
-        } text-light`}
-      >
-        <div className="w-full max-w-xl mx-auto flex flex-col items-start gap-y-6">
-          <h1 className="text-9xl -ml-2 mb-10">:(</h1>
-          <p className="w-full max-w-lg font-semibold md:text-lg">Error-404</p>
-          <p className="w-full max-w-lg break-words md:text-lg">
+    <PublicLayout
+      metaTitle="Error 404"
+      content="Page couldn't be found. Sounak Mukherjee's website"
+    >
+      <StyledHeader styledText="page not found" isDarkMode={isDarkMode}>
+        <>
+          <button
+            onClick={() => router.back()}
+            className="text-xs md:text-sm font-semibold opacity-60 hover:opacity-100 hover:underline"
+          >
+            &lt;&nbsp;Go back
+          </button>
+          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-6">Oops :(</h1>
+          <p className="w-3/4 text-xs md:text-sm font-semibold opacity-60 max-w-lg">
             It seems that the page you are looking for doesn&apos;t exist or is
             temporarily unavailable.
-          </p>
-          <p className="w-full max-w-lg font-semibold md:text-lg">
+            <br />
             Sorry for the inconvenience.
           </p>
-
-          <ul className="flex mt-10 items-center justify-start gap-x-4">
-            <li>
-              <PortfolioLink
-                shadow={false}
-                label="Go Back"
-                btnMode
-                cb={() => router.back()}
-              />
-            </li>
-            <li>
-              <PortfolioLink
-                shadow={false}
-                label="Homepage"
-                href={PUBLIC_URLS.home.url}
-              />
-            </li>
-          </ul>
-        </div>
-      </main>
-    </>
+          <div className="mt-10">
+            <CTA
+              label="Go to Home"
+              href={PUBLIC_URLS.home.url}
+              isDarkMode={isDarkMode}
+            />
+          </div>
+        </>
+      </StyledHeader>
+    </PublicLayout>
   );
 };
 
