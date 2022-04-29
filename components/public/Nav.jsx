@@ -250,7 +250,7 @@ const NavMenu = ({ type = "public" }) => {
           animate={showMenu ? "show" : "hide"}
           variants={variants.section}
           exit="exit"
-          className="w-full mx-auto h-[90vh] my-auto px-10 grid place-items-center z-40 absolute inset-0"
+          className="w-full mx-auto h-[80vh] my-auto px-10 pb-10 grid place-items-center z-40 absolute inset-0"
         >
           <motion.ul
             variants={variants.mainUL}

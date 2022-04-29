@@ -13,6 +13,7 @@ import { StyledHeader } from "../../components/portfolio/StyledHeader";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { ContactMe } from "../../components/portfolio/ContactMe";
 import { AboutMe } from "../../components/portfolio/AboutMe";
+import { PORTFOLIO_LINKS } from "../../utils";
 
 const PortfolioPage = ({ metadata }) => {
   metadata = JSON.parse(metadata);
@@ -42,8 +43,7 @@ const PortfolioPage = ({ metadata }) => {
           <div className="mt-10">
             <CTA
               label="Hire me"
-              btnMode={true}
-              cb={() => alert(123)}
+              href={PORTFOLIO_LINKS["contact me"].url}
               isDarkMode={isDarkMode}
             />
           </div>

@@ -12,6 +12,8 @@ import { StyledHeader } from "../components/portfolio/StyledHeader";
 import PublicLayout from "../components/Layouts/PublicLayout";
 import { staticMetadata } from "../utils/portfolio_static";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { CTA } from "../components/portfolio/CTA";
+import { PUBLIC_URLS } from "../utils";
 
 const STATUSES = {
   initial: "initial",
@@ -76,24 +78,27 @@ const HomePage = ({ allTags }) => {
     <>
       <PublicLayout metaTitle="Welcome to Sounak's website">
         <StyledHeader styledText="search by tags" isDarkMode={isDarkMode}>
-          <span className="text-sm md:text-base font-semibold">Hi, I am</span>
-          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-6 w-min">
-            {staticMetadata.fullName}
+          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-2 w-min">
+            Hello world!
           </h1>
+          <span className="text-sm md:text-base font-semibold mb-6">
+            I&apos;m Sounak. Welcome to my tech journal
+          </span>
           <p className="w-3/4 text-sm opacity-60">
-            Hey there, I write technical blogs, create projects and journal
-            them, create UI-UX designs and much more.
-            <br />
-            For ease of navigation, I tag them accordingly. You can click on the
-            tags to get all the content for the corresponding <em>tag</em>.
-            Enjoy!
+            You can search blogs, designs and projects by tags. For ease of
+            navigation, I tag them accordingly. Enjoy!
           </p>
-          <div className="block text-xs w-full mt-8">
-            <small className="uppercase animate-pulse font-semibold w-full">
-              scroll
-            </small>
+          <div className="mt-10">
+            <CTA
+              isDarkMode={isDarkMode}
+              href={PUBLIC_URLS.portfolio.url}
+              label="My Portfolio"
+            />
           </div>
         </StyledHeader>
+        <div className="-mt-10 text-center text-xs w-full uppercase tracking-widest animate-bounce">
+          <small>scroll</small>
+        </div>
         <div className="w-full p-10">
           {status === STATUSES.initial && Boolean(allTags.length) && (
             <>

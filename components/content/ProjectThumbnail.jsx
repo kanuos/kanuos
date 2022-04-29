@@ -1,17 +1,9 @@
-import Link from "next/link";
 import { useState, useContext } from "react";
 import { formatURLParamString, PUBLIC_NAVIGATION_URLS } from "../../utils";
 import { JoinLine } from "../public/DescHeader";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  IoRemoveOutline,
-  IoAddOutline,
-  IoGameControllerOutline,
-  IoPricetagOutline,
-  IoCodeSlashOutline,
-  IoCubeOutline,
-} from "react-icons/io5";
-import { PortfolioLink } from "../portfolio/PortfolioLink";
+import { IoCubeOutline, IoChevronDown } from "react-icons/io5";
+import { CTA } from "../portfolio/CTA";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
@@ -119,35 +111,53 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       variants={index % 2 ? articleVariants.left : articleVariants.right}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto"
+      className={`flex flex-col gap-y-2 max-w-lg ${
+        index % 2 === 0 ? "ml-auto items-end" : "items-start mr-auto"
+      }`}
     >
-      <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
+      <p
+        className={`text-xs font-semibold transition-all ${
+          hovered ? "opacity-100 text-primary" : "opacity-50"
+        }`}
+      >
         <small>Project : #{index}</small>
       </p>
-      <h3 className=" font-semibold opacity-75 group-hover:opacity-100 transition-all text-2xl md:text-3xl group-odd:text-left group-even:text-right">
+      <h3
+        className={`font-semibold transition-all text-2xl md:text-3xl ${
+          index % 2 === 0 ? "text-right" : "text-left"
+        } ${hovered ? "opacity-100" : "opacity-75"}`}
+      >
         {data.title}
       </h3>
-      <div className="filter grayscale group-hover:grayscale-0">
+      <div className={`filter ${hovered ? "grayscale-0" : "grayscale"}`}>
         <JoinLine />
       </div>
-      <p className="text-sm opacity-70 group-even:text-right group-odd:text-left group-hover:opacity-75 leading-relaxed">
+      <p
+        className={`text-sm ${index % 2 === 0 ? "text-right" : "text-left"} ${
+          hovered ? "opacity-75" : "opacity-70"
+        } leading-relaxed`}
+      >
         {data.desc?.slice(0, 150)}
       </p>
       <section className="bg-white rounded-md p-4 w-full mt-4 filter shadow-lg">
-        <div className="flex items-center justify-between text-dark">
+        <div
+          onClick={() => setShowMD((prev) => !prev)}
+          className={
+            "flex items-center justify-between cursor-pointer text-dark hover:text-primary"
+          }
+        >
           <p className="flex items-center justify-start gap-x-1 pb-2">
             <IoCubeOutline />
             <small className="text-sm font-semibold capitalize">
               Project information
             </small>
           </p>
-          <button onClick={() => setShowMD((prev) => !prev)}>
-            {!showMD ? (
-              <IoAddOutline className="text-lg transition-all group-hover:text-primary " />
-            ) : (
-              <IoRemoveOutline className="text-lg transition-all group-hover:text-primary " />
-            )}
-          </button>
+          <motion.button
+            animate={!showMD ? { rotate: 0 } : { rotate: 180 }}
+            className={`text-lg`}
+          >
+            <IoChevronDown />
+          </motion.button>
         </div>
         <AnimatePresence>
           <motion.section
@@ -157,18 +167,15 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
           >
             <motion.ul
               variants={metadataVariants.body}
-              className="text-xs flex mt-2 border-t flex-col items-start gap-4 py-4 text-dark"
+              className="text-xs flex mt-2 border-t flex-col items-start gap-4 py-4 text-dark pl-6"
             >
               <li className="w-full">
                 <ul className="flex flex-col items-start gap-4">
                   <li className="flex items-center justify-start gap-1">
-                    <IoGameControllerOutline />
-                    <span className="capitalize font-semibold text-secondary">
-                      Difficulty
-                    </span>
+                    <span className="capitalize font-semibold">Difficulty</span>
                   </li>
                   <li className="flex w-full items-center justify-between">
-                    <small className="text-xs ml-4 capitalize font-semibold">
+                    <small className="text-xs capitalize font-semibold opacity-60">
                       {data.difficulty}
                     </small>
                   </li>
@@ -177,16 +184,13 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
               <li className="w-full">
                 <ul className="flex flex-col items-start gap-4">
                   <li className="flex items-center justify-start gap-1.5">
-                    <IoCodeSlashOutline />
-                    <span className="capitalize font-semibold text-secondary">
-                      Tech stack
-                    </span>
+                    <span className="capitalize font-semibold">Tech stack</span>
                   </li>
                   <li className="flex w-full items-center justify-between">
-                    <ul className="flex flex-col ml-4 items-start gap-y-2">
+                    <ul className="flex flex-col items-start gap-y-2 gap-x-4">
                       {data.techStack.map((stack, i) => (
                         <li key={i}>
-                          <small className="text-xs capitalize font-semibold">
+                          <small className="text-xs font-semibold opacity-60">
                             {stack.text}
                           </small>
                         </li>
@@ -198,13 +202,10 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
               <li className="w-full">
                 <ul className="flex flex-col items-start gap-4">
                   <li className="flex items-center justify-start gap-1">
-                    <IoPricetagOutline />
-                    <span className="capitalize font-semibold text-secondary">
-                      category
-                    </span>
+                    <span className="capitalize font-semibold">category</span>
                   </li>
                   <li className="flex w-full items-center justify-between">
-                    <small className="text-xs ml-4 capitalize font-semibold">
+                    <small className="text-xs capitalize font-semibold opacity-60">
                       {data.category}
                     </small>
                   </li>
@@ -214,11 +215,17 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
           </motion.section>
         </AnimatePresence>
       </section>
-      <ul className="text-sm mt-4 group-even:text-right group-odd:text-left">
+      <ul
+        className={`text-sm mt-4 ${
+          index % 2 === 0 ? "text-right" : "text-left"
+        }`}
+      >
         <li className="text-xs font-semibold capitalize opacity-75">
           <small>Project Date</small>
         </li>
-        <li className="text-xs font-semibold group-hover:text-primary">
+        <li
+          className={`text-xs font-semibold ${hovered ? "text-primary" : ""}`}
+        >
           {new Date(data.date).toDateString()}
         </li>
       </ul>
@@ -227,16 +234,18 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
         animate={hovered ? "show" : "hide"}
         className="my-6 capitalize text-xs rounded hidden md:flex items-center justify-center relative overflow-hidden cursor-pointer"
       >
-        <PortfolioLink
+        <CTA
           label={adminMode ? "Open project in Admin Mode" : "View project"}
           href={projectURL}
+          isDarkMode={isDarkMode}
         />
       </motion.div>
 
       <div className="my-6 capitalize text-xs rounded flex md:hidden items-center justify-center relative overflow-hidden cursor-pointer">
-        <PortfolioLink
+        <CTA
           label={adminMode ? "Open project in Admin Mode" : "View project"}
           href={projectURL}
+          isDarkMode={isDarkMode}
         />
       </div>
     </motion.article>

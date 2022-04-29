@@ -15,7 +15,7 @@ export const CTA = ({
     isDarkMode
       ? !isActive
         ? "group-hover:text-dark border-light"
-        : "text-dark"
+        : "text-dark group-hover:text-dark border-light"
       : !isActive
       ? "group-hover:text-light border-dark"
       : "text-light group-hover:text-light border-dark"

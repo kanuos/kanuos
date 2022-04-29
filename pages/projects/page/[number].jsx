@@ -1,29 +1,17 @@
 // Project LIST PAGE
 
 // import : built in
-import { useContext } from "react";
 import dynamic from "next/dynamic";
 
 // import : internal components
-import { HeadComponent } from "../../../components/Head";
+import PublicLayout from "../../../components/Layouts/PublicLayout";
 import { PublicHeader } from "../../../components/public/Header";
 import { ITEMS_PER_PAGE, PUBLIC_LIST_TYPES } from "../../../utils";
 import { ProjectThumbnail } from "../../../components/content/ProjectThumbnail";
 import { getAllProjects } from "../../../database/projects";
 
-// import : internal contexts
-import { ThemeContext } from "../../../contexts/ThemeContext";
-
 // dynamic imports
-const NavBar = dynamic(() =>
-  import("../../../components/public/Nav").then((m) => m.NavBar)
-);
-const Footer = dynamic(() =>
-  import("../../../components/public/Footer").then((m) => m.Footer)
-);
-const ThemeToggler = dynamic(() =>
-  import("../../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
-);
+
 const Pagination = dynamic(() =>
   import("../../../components/public/Pagination").then((m) => m.Pagination)
 );
@@ -39,26 +27,18 @@ const ProjectList = ({
   pageStartNumber = JSON.parse(pageStartNumber);
   pageCount = JSON.parse(pageCount);
 
-  const { isDarkMode } = useContext(ThemeContext);
-
   return (
     <>
-      <HeadComponent
-        title="Sounak Mukherjee's Projects"
-        content="Check out the walkthroughs for various projects using the state-of-the-art technologies"
-      />
-      <NavBar />
-      <ThemeToggler />
-      <div
-        className={
-          "h-full  min-h-screen scrollbar-thin w-full overflow-hidden " +
-          (isDarkMode ? "main-dark" : "main-light")
-        }
+      <PublicLayout
+        metaTitle="Sounak Mukherjee's Projects"
+        metaDesc="Check out the walkthroughs for various projects using the state-of-the-art technologies"
       >
-        <div className="px-12 lg:px-0 py-20 max-w-3xl mx-auto select-text">
+        <div className="px-10 lg:px-0 pt-20 max-w-2xl mx-auto select-text">
           <PublicHeader
             data={{ ...PUBLIC_LIST_TYPES.projects, count: totalCount }}
           />
+        </div>
+        <div className="px-10 lg:px-0 pb-20 max-w-4xl mx-auto">
           {projectList.length > 0 ? (
             <>
               <main className="flex flex-col my-20 gap-20 items-stretch w-full">
@@ -82,8 +62,7 @@ const ProjectList = ({
             </main>
           )}
         </div>
-      </div>
-      <Footer />
+      </PublicLayout>
     </>
   );
 };
