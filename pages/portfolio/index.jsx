@@ -1,5 +1,5 @@
 // Portfolio page
-import { useEffect, useContext, useState, useCallback } from "react";
+import { useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 // import : internal

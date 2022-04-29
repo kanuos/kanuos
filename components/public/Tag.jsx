@@ -1,0 +1,35 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
+
+export const Tag = ({ cb = null, tag }) => {
+  const { isDarkMode } = useContext(ThemeContext);
+
+  const cls = {
+    base: `uppercase font-semibold text-sm border-current border py-0.5 px-3 rounded`,
+    static() {
+      return `${this.base} `;
+    },
+    link() {
+      return `${
+        this.base
+      } transition-all hover:shadow-lg cursor-pointer bg-opacity-0 hover:bg-opacity-5 ${
+        isDarkMode
+          ? "opacity-50 hover:opacity-100 hover:text-secondary bg-secondary"
+          : "hover:text-primary bg-primary"
+      }`;
+    },
+  };
+
+  if (!cb) {
+    return (
+      <p className={cls.static()}>
+        <small>{tag.tag}</small>
+      </p>
+    );
+  }
+  return (
+    <button onClick={cb} className={cls.link()}>
+      <small>{tag.tag}</small>
+    </button>
+  );
+};

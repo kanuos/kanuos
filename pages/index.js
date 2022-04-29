@@ -1,16 +1,17 @@
-// Portfolio page
+// Home/Landing
 
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 
 // import : internal
-import { HeadComponent } from "../components/Head";
-import { LandingHeader } from "../components/public/LandingHeader";
 import { getAllTags } from "../database/tags";
 import { API_ROUTES } from "../utils/admin";
-import { ThemeContext } from "../contexts/ThemeContext";
-import { ThemeToggler } from "../components/public/ThemeToggler";
 import dynamic from "next/dynamic";
+import { Tag } from "../components/public/Tag";
+import { StyledHeader } from "../components/portfolio/StyledHeader";
+import PublicLayout from "../components/Layouts/PublicLayout";
+import { staticMetadata } from "../utils/portfolio_static";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const STATUSES = {
   initial: "initial",
@@ -18,26 +19,19 @@ const STATUSES = {
   complete: "complete",
 };
 
-const NavBar = dynamic(() =>
-  import("../components/public/Nav").then((m) => m.NavBar)
-);
 const LoadSpinner = dynamic(() =>
   import("../components/public/Loader").then((m) => m.LoadSpinner)
 );
 const TagDetailList = dynamic(() =>
   import("../components/public/TagDetailList").then((m) => m.TagDetailList)
 );
-const Footer = dynamic(() =>
-  import("../components/public/Footer").then((m) => m.Footer)
-);
 
 const HomePage = ({ allTags }) => {
+  const { isDarkMode } = useContext(ThemeContext);
   allTags = JSON.parse(allTags);
   const [selectedTag, setSelectedTag] = useState("");
   const [status, setStatus] = useState(STATUSES.initial);
   const [data, setData] = useState(null);
-
-  const { isDarkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     if (!selectedTag) return;
@@ -80,35 +74,39 @@ const HomePage = ({ allTags }) => {
 
   return (
     <>
-      <HeadComponent title="Welcome to Sounak Mukherjee's website" />
-      <NavBar />
-      <ThemeToggler />
-      <main
-        className={
-          "min-h-screen h-auto w-full overflow-hidden relative p-16 " +
-          (isDarkMode ? "main-dark" : "main-light")
-        }
-      >
-        <div className="w-full">
-          <LandingHeader />
-
+      <PublicLayout metaTitle="Welcome to Sounak's website">
+        <StyledHeader styledText="search by tags" isDarkMode={isDarkMode}>
+          <span className="text-sm md:text-base font-semibold">Hi, I am</span>
+          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-6 w-min">
+            {staticMetadata.fullName}
+          </h1>
+          <p className="w-3/4 text-sm opacity-60">
+            Hey there, I write technical blogs, create projects and journal
+            them, create UI-UX designs and much more.
+            <br />
+            For ease of navigation, I tag them accordingly. You can click on the
+            tags to get all the content for the corresponding <em>tag</em>.
+            Enjoy!
+          </p>
+          <div className="block text-xs w-full mt-8">
+            <small className="uppercase animate-pulse font-semibold w-full">
+              scroll
+            </small>
+          </div>
+        </StyledHeader>
+        <div className="w-full p-10">
           {status === STATUSES.initial && Boolean(allTags.length) && (
             <>
               <div className="flex flex-col items-start max-w-3xl mx-auto w-full">
-                <h2 className=" font-semibold capitalize">tags</h2>
-                <p className="text-xs opacity-50">
+                <h2 className=" font-semibold capitalize">available tags</h2>
+                <p className="text-xs">
                   <small>Total tags : {allTags.length}</small>
                 </p>
               </div>
-              <ul className="flex flex-wrap items-center my-10 justify-start gap-x-6 gap-y-3 max-w-3xl mx-auto w-full">
+              <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 max-w-3xl mx-auto w-full">
                 {allTags.map((tag) => (
-                  <li key={tag._id} className="group">
-                    <button
-                      onClick={() => setSelectedTag(tag._id)}
-                      className="uppercase font-black text-sm tracking-wide opacity-75 hover:group-even:text-primary hover:group-odd:text-secondary transition-all group-hover:opacity-100 group-hover:scale-110"
-                    >
-                      #{tag.tag}
-                    </button>
+                  <li key={tag._id}>
+                    <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />
                   </li>
                 ))}
               </ul>
@@ -121,8 +119,7 @@ const HomePage = ({ allTags }) => {
             <TagDetailList {...data} close={handleInitialState} />
           )}
         </div>
-      </main>
-      <Footer />
+      </PublicLayout>
     </>
   );
 };

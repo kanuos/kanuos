@@ -27,6 +27,7 @@ export const CTA = ({
       ? "top-0 scale-100"
       : "top-full group-hover:top-0 group-hover:scale-100 scale-0"
   }`;
+
   if (btnMode) {
     return (
       <button className={wrapper} onClick={cb}>
@@ -43,6 +44,7 @@ export const CTA = ({
       </a>
     );
   }
+
   return (
     <Link href={href}>
       <a className={wrapper}>
