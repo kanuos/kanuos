@@ -18,22 +18,32 @@ export const PUBLIC_URLS = {
   home: {
     name: "home",
     url: "/",
-  },
-  portfolio: {
-    name: "portfolio",
-    url: "/portfolio",
+    base: "/",
+    type: "public",
   },
   blogs: {
     name: "blogs",
     url: "/blogs/page/1",
+    base: "/blogs",
+    type: "public",
   },
   projects: {
     name: "projects",
     url: "/projects/page/1",
+    base: "/projects",
+    type: "public",
   },
   designs: {
     name: "designs",
     url: "/designs/page/1",
+    base: "/designs",
+    type: "public",
+  },
+  portfolio: {
+    name: "portfolio",
+    url: "/portfolio",
+    base: "/portfolio",
+    type: "public",
   },
 };
 
@@ -52,30 +62,32 @@ export const ADMIN_URLS = {
   dashboard: {
     name: "dashboard",
     url: ADMIN_PATH + "/dashboard",
+    base: ADMIN_PATH + "/dashboard",
+    type: "admin",
   },
   projects: {
     name: "projects",
     url: ADMIN_PATH + "/projects",
+    base: ADMIN_PATH + "/projects",
+    type: "admin",
   },
   blogs: {
     name: "blogs",
     url: ADMIN_PATH + "/blogs",
+    base: ADMIN_PATH + "/blogs",
+    type: "admin",
   },
   designs: {
     name: "designs",
     url: ADMIN_PATH + "/designs",
-  },
-  inbox: {
-    name: "inbox",
-    url: ADMIN_PATH + "/inbox",
-  },
-  notes: {
-    name: "notes",
-    url: ADMIN_PATH + "/notes",
+    base: ADMIN_PATH + "/designs",
+    type: "admin",
   },
   tags: {
     name: "tags",
     url: ADMIN_PATH + "/tags",
+    base: ADMIN_PATH + "/tags",
+    type: "admin",
   },
 };
 
@@ -88,19 +100,27 @@ export const SOCIAL = {
 export const PORTFOLIO_LINKS = {
   "about me": {
     name: "about-me",
-    url: "/portfolio/#about-me",
+    url: "/portfolio#about-me",
+    base: "/portfolio#about-me",
+    type: "portfolio",
   },
   "selected works": {
     name: "work",
-    url: "/portfolio/#work",
+    url: "/portfolio#work",
+    base: "/portfolio#work",
+    type: "portfolio",
   },
   "contact me": {
     name: "contact-me",
-    url: "/portfolio/#contact-me",
+    url: "/portfolio#contact-me",
+    base: "/portfolio#contact-me",
+    type: "portfolio",
   },
   "my website": {
     name: "my-website",
     url: "/",
+    base: "/",
+    type: "public",
   },
 };
 

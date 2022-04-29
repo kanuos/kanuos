@@ -1,32 +1,18 @@
 // Portfolio page
 import { useEffect, useContext, useState, useCallback } from "react";
-import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "framer-motion";
 
 // import : internal
-import { HeadComponent } from "../components/Head";
-import { SectionHeader } from "../components/portfolio/SectionHeader";
-import { ThemeContext } from "../contexts/ThemeContext";
-import { getPortfolio } from "../database/user";
-import { VideoBG } from "../components/public/VideoBG";
+import { getPortfolio } from "../../database/user";
 
-import { staticMetadata } from "../utils/portfolio_static";
-import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../utils";
-import InitialLoader from "../components/portfolio/InitialLoader";
-import Showcase from "../components/portfolio/Showcase";
-import ProjectDetailModal from "../components/portfolio/ProjectDetailModal";
-
-const AboutMe = dynamic(() => import("../components/portfolio/AboutMe"));
-const PortfolioHeader = dynamic(() =>
-  import("../components/portfolio/PortfolioHeader")
-);
-const NavBar = dynamic(() =>
-  import("../components/public/Nav").then((m) => m.NavBar)
-);
-const ThemeToggler = dynamic(() =>
-  import("../components/public/ThemeToggler").then((m) => m.ThemeToggler)
-);
-const ContactMe = dynamic(() => import("../components/portfolio/ContactMe"));
+import { staticMetadata } from "../../utils/portfolio_static";
+import PublicLayout from "../../components/Layouts/PublicLayout";
+import { CTA } from "../../components/portfolio/CTA";
+import { Showcase } from "../../components/portfolio/Showcase";
+import { StyledHeader } from "../../components/portfolio/StyledHeader";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { ContactMe } from "../../components/portfolio/ContactMe";
+import { AboutMe } from "../../components/portfolio/AboutMe";
 
 const PortfolioPage = ({ metadata }) => {
   metadata = JSON.parse(metadata);
@@ -37,107 +23,37 @@ const PortfolioPage = ({ metadata }) => {
   };
 
   const { isDarkMode } = useContext(ThemeContext);
-  const [showLoader, setShowLoader] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentProject, setCurrentProject] = useState(null);
-
-  const hideLoader = useCallback(() => setShowLoader(false), []);
-
-  function expandProject(p) {
-    setCurrentProject(() => p);
-    setIsModalOpen(() => true);
-  }
-
-  useEffect(() => {
-    if (!currentProject) return;
-    console.log(currentProject.title);
-  }, [currentProject]);
-
-  // if (!metadata?.portfolio || metadata.portfolio.length === 0) {
-  //   return (
-  //     <>
-  //       <HeadComponent title="Sounak Mukherjee | Portfolio" />
-  //       <ThemeToggler />
-  //       <main
-  //         className={
-  //           "h-screen scrollbar-none w-full overflow-hidden relative grid place-items-center filter bg-opacity-70 " +
-  //           (isDarkMode ? "nav-dark" : "nav-light")
-  //         }
-  //       >
-  //         <VideoBG />
-  //         <div className="flex flex-col items-center justify-center gap-4">
-  //           <small className="font-semibold uppercase text-xs">
-  //             {" "}
-  //             portfolio{" "}
-  //           </small>
-  //           <div className="animate-bounce">
-  //             <JoinLine />
-  //           </div>
-  //           <h1 className="text-7xl w-min text-center capitalize mb-10">
-  //             coming soon!
-  //           </h1>
-  //           <PortfolioLink
-  //             label="go to home"
-  //             href={PUBLIC_URLS.home.url}
-  //             shadow={false}
-  //           />
-  //         </div>
-  //       </main>
-  //     </>
-  //   );
-  // }
 
   return (
-    <>
-      <HeadComponent
-        title="Sounak Mukherjee | Portfolio"
-        content="Check out my full stack web developer portfolio website"
-      />
-      <NavBar type="portfolio" />
-      <ThemeToggler />
-      <InitialLoader
-        showLoader={showLoader}
-        hideLoader={hideLoader}
-        isDarkMode={isDarkMode}
-      />
-      {!showLoader && (
-        <main
-          className={
-            "min-h-screen h-full scrollbar-none w-full overflow-hidden relative filter " +
-            (isDarkMode ? "nav-dark" : "nav-light")
-          }
-        >
-          <VideoBG />
-          <PortfolioHeader />
-          <Showcase
-            projects={projects}
-            isDarkMode={isDarkMode}
-            selectProject={expandProject}
-          />
-          <AboutMe
-            bio={metadata.bio}
-            skills={metadata.skills}
-            techStack={metadata.techStack}
-            isDarkMode={isDarkMode}
-            about={metadata.about}
-          />
-          <ContactMe
-            isDarkMode={isDarkMode}
-            email={metadata.email}
-            social={metadata.social}
-          />
-          {/* <AnimatePresence exitBeforeEnter={true}> */}
-          <ProjectDetailModal
-            key={currentProject?.title ?? ""}
-            isDarkMode={isDarkMode}
-            data={currentProject}
-            show={isModalOpen}
-            close={() => setIsModalOpen(false)}
-          />
-          {/* </AnimatePresence> */}
-        </main>
-      )}
-    </>
+    <PublicLayout
+      metaTitle="Sounak Mukherjee | Portfolio"
+      content="Check out my full stack web developer portfolio website"
+      navType="portfolio"
+    >
+      <StyledHeader styledText={metadata.adminLabel} isDarkMode={isDarkMode}>
+        <>
+          <span className="text-sm md:text-base font-semibold">Hi, I am</span>
+          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-6 w-min">
+            {metadata.fullName}
+          </h1>
+          <p className="w-3/4 text-sm font-semibold opacity-60">
+            {metadata.about}
+          </p>
+          <div className="mt-10">
+            <CTA
+              label="Hire me"
+              btnMode={true}
+              cb={() => alert(123)}
+              isDarkMode={isDarkMode}
+            />
+          </div>
+        </>
+      </StyledHeader>
+
+      <Showcase works={projects} isDarkMode={isDarkMode} />
+      <AboutMe />
+      <ContactMe isDarkMode={isDarkMode} />
+    </PublicLayout>
   );
 };
 

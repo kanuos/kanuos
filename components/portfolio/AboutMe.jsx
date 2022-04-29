@@ -1,146 +1,52 @@
-import { motion } from "framer-motion";
-import { SectionHeader } from "./SectionHeader";
-import { SkillList } from "./SkillList";
-import { MdOutlinePictureAsPdf, MdOutlineDownloading } from "react-icons/md";
+import React from "react";
+import { PORTFOLIO_LINKS } from "../../utils";
 
-const AboutMe = ({ skills, bio, techStack, about, isDarkMode }) => {
-  const text = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere maiores reiciendis nemo, dolor repudiandae et? Corporis natus, accusamus recusandae beatae, quae est, quam culpa reprehenderit in commodi tempora dolores quidem.`;
-
-  const textArr = [
-    {
-      heading: "design",
-      items: [
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-      ],
-    },
-    {
-      heading: "UI/UX",
-      items: [
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-      ],
-    },
-    {
-      heading: "development",
-      items: [
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-      ],
-    },
-    {
-      heading: "databases",
-      items: [
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-        {
-          text: `Lorem ipsum dolor sit amet consectetur.`,
-        },
-      ],
-    },
-  ];
-
+export const AboutMe = ({ isDarkMode }) => {
   return (
-    <motion.section
-      whileInView="show"
-      initial="hide"
-      className="h-auto min-h-screen relative snap-start w-full max-w-3xl mx-auto md:px-10"
+    <div
+      id={PORTFOLIO_LINKS["about me"].name}
+      className="h-screen py-20 flex flex-col items-start justify-center w-full max-w-4xl mx-auto snap-start"
     >
-      <div className="w-11/12 mx-auto">
-        <SectionHeader
-          paddingBottom={false}
-          shadow="let me introduce myself"
-          heading="about sounak"
-          content={`I love creating digital products that are beautiful, responsive, performant and secure!`}
-        />
+      <div className="px-10">
+        <h2 className="text-3xl md:text-5xl font-semibold max-w-xs md:max-w-xl">
+          What I&apos;ll bring to the table
+        </h2>
+        <p className="w-full max-w-lg text-xs font-semibold mt-6 mb-10">
+          It is a long established fact that a reader will be distracted by the
+          readable content of a page when looking at its layout. The point of
+          using Lorem Ipsum is that it has a more-or-less normal distribution of
+          letters, as opposed to using 'Content here, content here', making it
+          look like readable English.
+        </p>
       </div>
-      <div className="p-10 pb-0 flex flex-col items-stretch w-11/12 mx-auto justify-start gap-y-10 mt-10">
-        <p className="w-full text-sm leading-tight">{about}</p>
-        <p className="w-full text-sm leading-tight">{bio || text + text}</p>
-      </div>
-
-      <div className="flex flex-col-reverse items-stretch">
-        <div className="flex flex-col items-stretch">
-          <p className="px-10 text-sm font-semibold leading-tight w-11/12 mx-auto">
-            {skills || text}
+      <ul className="flex flex-col w-full max-w-xl lg:ml-10">
+        <li className="pl-14 pr-10 py-4 border-t border-opacity-10 border-secondary last-of-type:border-b lg:border-none">
+          <strong className="font-semibold text-xs capitalize">
+            UI&ndash;UX
+          </strong>
+          <p className="text-sm leading-3 mt-4 opacity-60 font-semibold">
+            <small>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Accusamus accusantium repudiandae labore eum natus ea in laborum
+              temporibus! Obcaecati vitae culpa saepe velit voluptatibus
+              repellat placeat eius voluptas quasi eaque.
+            </small>
           </p>
-          <ul className="flex flex-col items-stretch justify-start w-full my-10 max-w-lg mx-auto">
-            {textArr.map((el, i) => (
-              <SkillList
-                heading={el.heading}
-                list={el.items}
-                key={i}
-                isDarkMode={isDarkMode}
-              />
-            ))}
-          </ul>
-        </div>
-        <div className="my-10 grid place-items-center">
-          <motion.a
-            className={
-              "text-sm hover:opacity-100 hover:text-primary transition-all cursor-pointer border-y w-full max-w-lg ml-auto px-10 md:px-0 py-6 flex items-center justify-between marker:border-opacity-50 " +
-              (isDarkMode ? "border-light" : "border-dark")
-            }
-          >
-            <p className="flex items-center justify-start gap-x-2">
-              <MdOutlinePictureAsPdf className="text-lg" />
-              <small className="font-black uppercase">my resume</small>
-            </p>
-            <MdOutlineDownloading className="text-lg animate-bounce" />
-          </motion.a>
-        </div>
-      </div>
-    </motion.section>
+        </li>
+        <li className="pl-14 pr-10 py-4 border-t border-opacity-10 border-secondary last-of-type:border-b lg:border-none">
+          <strong className="font-semibold text-xs capitalize">
+            Backend development
+          </strong>
+          <p className="text-sm leading-3 mt-4 opacity-60 font-semibold">
+            <small>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Accusamus accusantium repudiandae labore eum natus ea in laborum
+              temporibus! Obcaecati vitae culpa saepe velit voluptatibus
+              repellat placeat eius voluptas quasi eaque.
+            </small>
+          </p>
+        </li>
+      </ul>
+    </div>
   );
 };
-
-export default AboutMe;

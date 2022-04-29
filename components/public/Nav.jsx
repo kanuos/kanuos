@@ -1,6 +1,5 @@
 // built in imports
-import { useState, useContext, useCallback } from "react";
-import Link from "next/link";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 
 // external imports
@@ -17,20 +16,19 @@ import {
 } from "../../utils";
 import { AUTH_ROUTES } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { VideoBG } from "./VideoBG";
+import { PageLink } from "../portfolio/PageLink";
+import { CTA } from "../portfolio/CTA";
+import { NavContext } from "../../contexts/NavContext";
 
 export const NavBar = ({ type = "public" }) => {
-  const [showMenu, setShowMenu] = useState(false);
-  const { isDarkMode } = useContext(ThemeContext);
-
-  const toggleModal = useCallback(() => setShowMenu((prev) => !prev), []);
+  const { showMenu, toggleNavMenu } = useContext(NavContext);
 
   const r = useRouter();
 
   async function handleLogout() {
     try {
       await axios.get(AUTH_ROUTES.logout);
-      toggleModal();
+      toggleNavMenu();
       r.push(ADMIN_ACCOUNT);
     } catch (error) {
       alert(error);
@@ -38,7 +36,7 @@ export const NavBar = ({ type = "public" }) => {
   }
 
   return (
-    <motion.nav className="z-40">
+    <motion.nav className={`z-40`}>
       {type === "admin" && (
         <button onClick={handleLogout} className="z-40 fixed top-6 left-4">
           <AiOutlineLogout />
@@ -46,8 +44,11 @@ export const NavBar = ({ type = "public" }) => {
       )}
 
       <motion.div
-        onClick={toggleModal}
-        className="z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group rounded-full h-10 w-10 hover:rounded-full fixed top-4 right-2"
+        onClick={toggleNavMenu}
+        className={
+          "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-0 right-0 group transition " +
+          (showMenu ? "bg-primary mix-blend-normal" : "mix-blend-difference")
+        }
       >
         <motion.span
           animate={
@@ -63,15 +64,11 @@ export const NavBar = ({ type = "public" }) => {
                   transition: { type: "spring", stiffness: 400 },
                 }
           }
-          className={`w-6 rounded h-[2px] transition-opacity ${
+          className={`w-6 rounded h-[2px] transition-colors ${
             showMenu
-              ? "bg-primary"
-              : type !== "admin"
-              ? isDarkMode
-                ? "bg-light  group-hover:mr-0 mr-1"
-                : "bg-dark group-hover:mr-0 mr-1"
-              : "bg-dark"
-          } opacity-50 group-hover:opacity-100`}
+              ? "bg-dark group-hover:bg-light"
+              : "group-hover:mr-1 bg-secondary"
+          }`}
         ></motion.span>
         <motion.span
           animate={
@@ -87,34 +84,30 @@ export const NavBar = ({ type = "public" }) => {
                   transition: { type: "spring", stiffness: 400 },
                 }
           }
-          className={`w-6 rounded h-[2px] transition-opacity ${
+          className={`w-6 rounded h-[2px] transition-colors ${
             showMenu
-              ? "bg-primary"
-              : type !== "admin"
-              ? isDarkMode
-                ? "bg-light  group-hover:ml-0 ml-1"
-                : "bg-dark group-hover:ml-0 ml-1"
-              : "bg-dark"
-          } opacity-50 group-hover:opacity-100`}
+              ? "bg-dark group-hover:bg-light"
+              : "group-hover:ml-1 bg-secondary"
+          }`}
         ></motion.span>
       </motion.div>
       <AnimatePresence>
-        <NavMenu showMenu={showMenu} type={type} toggleModal={toggleModal} />
+        <NavMenu type={type} />
       </AnimatePresence>
     </motion.nav>
   );
 };
 
-const NavMenu = ({ showMenu, type = "public", toggleModal }) => {
-  const currentPath = useRouter().pathname;
-  const { isDarkMode } = useContext(ThemeContext);
+const NavMenu = ({ type = "public" }) => {
+  const [currentPath] = useState(useRouter());
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+  const { showMenu, toggleNavMenu } = useContext(NavContext);
 
   const URLS = type in NAV_METADATA ? NAV_METADATA[type] : NAV_METADATA.public;
 
   const variants = {
     container: {
       show: {
-        y: 0,
         x: 0,
         transition: {
           type: "tween",
@@ -124,7 +117,6 @@ const NavMenu = ({ showMenu, type = "public", toggleModal }) => {
         },
       },
       hide: {
-        y: "-100vh",
         x: "100vw",
         transition: {
           type: "tween",
@@ -132,7 +124,6 @@ const NavMenu = ({ showMenu, type = "public", toggleModal }) => {
         },
       },
       exit: {
-        y: "-100vh",
         x: "-100vw",
         transition: {
           when: "afterChildren",
@@ -228,81 +219,94 @@ const NavMenu = ({ showMenu, type = "public", toggleModal }) => {
     },
   };
 
+  function isActive(path) {
+    if (
+      currentPath.asPath === PUBLIC_URLS.home.url &&
+      PUBLIC_URLS.home.url === path.base
+    ) {
+      return true;
+    }
+    if (
+      currentPath.asPath.startsWith(path.base) &&
+      path.base !== PUBLIC_URLS.home.url
+    )
+      return true;
+    return false;
+  }
+
   return (
     <AnimatePresence>
       <motion.section
+        id="nav-menu"
         variants={variants.container}
         initial="hide"
         exit="hide"
         animate={showMenu ? "show" : "hide"}
-        className={
-          "h-screen overflow-hidden w-full fixed inset-0 z-30 " +
-          (isDarkMode ? "nav-dark" : "nav-light")
-        }
+        className={`h-screen overflow-hidden w-full shadow-2xl fixed right-0 top-0 z-30 sm:max-w-md sm:px-6 ${
+          !isDarkMode ? "nav-light" : "nav-dark"
+        }`}
       >
-        <VideoBG />
         <motion.section
           animate={showMenu ? "show" : "hide"}
           variants={variants.section}
           exit="exit"
-          className="w-full max-w-5xl mx-auto h-[95vh] px-10 grid place-items-center"
+          className="w-full mx-auto h-[90vh] my-auto px-10 grid place-items-center z-40 absolute inset-0"
         >
           <motion.ul
             variants={variants.mainUL}
             animate={showMenu ? "show" : "hide"}
             exit="hide"
-            className={`w-fit mx-auto flex flex-col justify-center  ${
-              type === "admin" ? "gap-y-6 items-start" : "gap-y-10 items-center"
-            }`}
+            className={`w-fit flex flex-col justify-center h-full gap-y-8 items-center lg:items-start`}
           >
             {Object.entries(URLS).map(([key, valueObj]) => {
-              let isActive;
-
-              if (
-                [PUBLIC_URLS.home.url, ADMIN_URLS.dashboard.url].includes(
-                  valueObj.url
-                )
-              ) {
-                if (currentPath === valueObj.url) {
-                  isActive = true;
-                }
-              } else {
-                isActive = currentPath.startsWith(valueObj.url);
-              }
-
-              if (type === "portfolio") {
-                isActive = true;
-              }
+              const label = valueObj.name.replace("-", " ");
 
               return (
                 <motion.li
                   variants={variants.li}
                   animate={showMenu ? "show" : "hide"}
                   exit="hide"
+                  onClick={toggleNavMenu}
                   key={key}
                 >
-                  <Link href={valueObj.url}>
-                    <a
-                      onClick={toggleModal}
-                      className={`${
-                        type === "admin"
-                          ? "text-xl"
-                          : "text-4xl md:text-5xl xl:text-6xl"
-                      } block uppercase text-center transition-all bg-gradient-to-r from-primary to-secondary bg-clip-text ${
-                        isActive
-                          ? "opacity-100"
-                          : `${
-                              isDarkMode ? "opacity-25" : "opacity-40"
-                            } hover:opacity-100 scale-75 hover:scale-90 hover:text-transparent `
-                      }`}
-                    >
-                      {valueObj.name.replace("-", " ")}
-                    </a>
-                  </Link>
+                  {["my-website", "portfolio"].includes(
+                    valueObj.name.toLowerCase()
+                  ) ? (
+                    <div className="mt-20 capitalize">
+                      <PageLink
+                        key={currentPath.toString()}
+                        special={true}
+                        href={valueObj.url}
+                        label={label}
+                      />
+                    </div>
+                  ) : (
+                    <PageLink
+                      key={currentPath.toString()}
+                      scrollToTop={valueObj.type !== "portfolio"}
+                      isActive={
+                        valueObj.type !== "portfolio" && isActive(valueObj)
+                      }
+                      href={valueObj.url}
+                      showAfter={false}
+                      label={label?.toUpperCase()}
+                    />
+                  )}
                 </motion.li>
               );
             })}
           </motion.ul>
+          <div className="mt-auto">
+            <CTA
+              btnMode={true}
+              cb={toggleTheme}
+              label="Toggle theme"
+              isDarkMode={isDarkMode}
+            />
+          </div>
+          {/* <button onClick={toggleTheme} className={" mt-auto"}>
+            <small>Toggle theme</small>
+          </button> */}
         </motion.section>
       </motion.section>
     </AnimatePresence>

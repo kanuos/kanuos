@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import "prismjs/themes/prism-okaidia.css";
 import ThemeContextProvider from "../contexts/ThemeContext";
 import { AnimatePresence, motion } from "framer-motion";
+import NavContextProvider from "../contexts/NavContext";
 
 function MyApp({ Component, pageProps, router }) {
   return (
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps, router }) {
           exit={{ x: "-200", opacity: 0 }}
           transition={{ type: "tween", stiffness: 200 }}
         >
-          <Component {...pageProps} />
+          <NavContextProvider>
+            <Component {...pageProps} />
+          </NavContextProvider>
         </motion.div>
       </AnimatePresence>
     </ThemeContextProvider>
