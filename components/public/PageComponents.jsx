@@ -3,11 +3,11 @@ import { useState } from "react";
 
 // external imports
 import { motion } from "framer-motion";
-import { IoChevronDown } from "react-icons/io5";
+import { IoChevronDownCircleOutline, IoCheckmarkCircle } from "react-icons/io5";
 
 // internal imports
 import { Step } from "./PageStepComponent";
-import { PortfolioLink } from "../portfolio/PortfolioLink";
+import { CTA } from "../portfolio/CTA";
 
 export const PageSegment = ({ segment, index, isDarkMode }) => {
   const variants = {
@@ -79,7 +79,7 @@ export const PageSegment = ({ segment, index, isDarkMode }) => {
     },
   };
 
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(!true);
   const [isComplete, setIsComplete] = useState(false);
 
   function toggleReadStatus() {
@@ -92,53 +92,42 @@ export const PageSegment = ({ segment, index, isDarkMode }) => {
       variants={variants.section}
       animate={show ? "show" : "hide"}
       className={
-        "text-sm md:text-base w-full block rounded-md transition-all relative after:absolute after:-z-10 after:inset-0 after:opacity-10 after:blur-lg " +
-        (isDarkMode ? " after:bg-light nav-dark" : "after:bg-dark nav-light")
+        "w-full block rounded-md transition-all shadow-xl " +
+        (isDarkMode ? "nav-dark chapter-dark" : "nav-light chapter-light")
       }
     >
-      <ul className="text-xs flex flex-col items-start gap-1 p-4 pb-0">
+      <ul className="text-xs flex flex-col w-full items-start gap-1 p-4">
         <li>
-          <small className="font-semibold opacity-50">Chapter {index}</small>
+          <small className="font-semibold opacity-60">Chapter {index}</small>
         </li>
         <li className="flex w-full items-center justify-between mb-2">
-          <span className={`font-black peer ${!show ? "text-lg" : "text-sm"}`}>
+          <span className={`font-semibold peer text-lg md:text-xl`}>
             {segment.heading}
           </span>
           <motion.button
             whileHover={{
               scale: 1.1,
-              rotate: show ? 180 : 0,
+              rotate: show && !isComplete ? 180 : 0,
             }}
-            animate={
-              show
-                ? { rotate: 180, borderColor: "currentColor" }
-                : { rotate: 0, borderColor: "transparent" }
-            }
+            animate={show && !isComplete ? { rotate: 180 } : { rotate: 0 }}
             onClick={() => setShow((prev) => !prev)}
             className={
-              "text-lg aspect-square border p-2 rounded-full border-current border-dashed " +
-              (show ? "" : "opacity-50 hover:opacity-100")
+              "aspect-square " + (show ? "" : "opacity-50 hover:opacity-100")
             }
           >
-            <IoChevronDown />
+            {isComplete ? (
+              <IoCheckmarkCircle className="text-secondary text-3xl" />
+            ) : (
+              <IoChevronDownCircleOutline className="text-dark hover:text-primary text-3xl" />
+            )}
           </motion.button>
-        </li>
-        <li>
-          <small
-            className={`font-semibold bg-opacity-10 py-1 px-2.5 rounded ${
-              isComplete
-                ? "text-secondary bg-secondary"
-                : "text-primary bg-primary"
-            }`}
-          >
-            {isComplete ? "Completed" : "Not completed"}
-          </small>
         </li>
       </ul>
 
       <motion.section
         className={
-          "px-4 md:px-6 overflow-hidden w-full " + (show ? "py-6" : "pb-6")
+          "px-4 md:px-6 overflow-hidden w-full max-w-4xl mx-auto " +
+          (show ? "pt-4 pb-16" : "pb-4")
         }
         animate={show ? "show" : "hide"}
         exit="hide"
@@ -148,18 +137,21 @@ export const PageSegment = ({ segment, index, isDarkMode }) => {
           animate={show ? "show" : "hide"}
           variants={variants.body}
           exit="hide"
-          className="mb-10 border-y pb-6"
+          className="mb-10 pb-4"
         >
           {segment.steps?.map((step, i) => (
             <Step step={step} key={i} />
           ))}
         </motion.article>
-
-        <PortfolioLink
-          label={isComplete ? "Chapter completed" : "Mark as complete"}
-          btnMode={true}
-          cb={toggleReadStatus}
-        />
+        <div className="mx-auto w-max">
+          <CTA
+            label={isComplete ? "Chapter completed" : "Mark as complete"}
+            isActive={isComplete}
+            isDarkMode={isDarkMode}
+            btnMode={true}
+            cb={toggleReadStatus}
+          />
+        </div>
       </motion.section>
     </motion.section>
   );

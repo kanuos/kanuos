@@ -14,9 +14,11 @@ export const StyledHeader = ({
             isDarkMode
               ? "bg-[url('/styledDark.webp')]"
               : "bg-[url('/styledImg.webp')]"
-          } bg-clip-text text-transparent text-7xl md:text-8xl xl:text-9xl font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-xs md:max-w-md xl:max-w-xl break-words text-right`}
+          } bg-clip-text text-transparent text-[3.5rem] sm:text-7xl md:text-8xl xl:text-[8.5rem] font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-sm md:max-w-xl break-words text-right flex flex-col`}
         >
-          {styledText}
+          {styledText.split(" ").map((t, i) => (
+            <span key={i}>{t}</span>
+          ))}
         </h2>
       </div>
     </header>

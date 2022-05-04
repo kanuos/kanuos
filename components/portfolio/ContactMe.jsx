@@ -1,8 +1,8 @@
-import React from "react";
+import { IoMailOutline } from "react-icons/io5";
+
 import { CTA } from "./CTA";
 import { PORTFOLIO_LINKS, SOCIAL, SOCIAL_LINKS } from "../../utils";
 import { StyledHeader } from "./StyledHeader";
-import { PageLink } from "./PageLink";
 import { SocialIcons } from "./SocialIcons";
 
 export const ContactMe = ({ isDarkMode }) => {
@@ -14,11 +14,9 @@ export const ContactMe = ({ isDarkMode }) => {
       }`}
     >
       <StyledHeader isDarkMode={!isDarkMode} styledText="let's work together">
-        <section>
-          <h2 className="text-3xl md:text-5xl font-semibold">Say hello</h2>
-          <p
-            className={`w-full max-w-lg text-xs font-semibold mt-6 mb-10 opacity-75`}
-          >
+        <section className="mt-10">
+          <h2 className="text-3xl md:text-5xl font-semibold">Get in touch</h2>
+          <p className={`w-full max-w-lg text-xs mt-6 mb-10 opacity-75`}>
             It is a long established fact that a reader will be distracted by
             the readable content of a page when looking at its layout. The point
             of using Lorem Ipsum is that it has a more-or-less normal
@@ -29,7 +27,12 @@ export const ContactMe = ({ isDarkMode }) => {
             isDarkMode={!isDarkMode}
             externalLink={true}
             href={SOCIAL.mailto}
-            label={SOCIAL.email}
+            label={
+              <div className="inline-flex items-center justify-center gap-2">
+                <IoMailOutline className="group-hover:scale-150 group-hover:rotate-[360deg] transition-all" />
+                {SOCIAL.email}
+              </div>
+            }
           />
         </section>
       </StyledHeader>

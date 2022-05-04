@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import { IoLinkOutline, IoGitBranchOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
 import { isValidURL, STEP_TYPE } from "../../utils";
 
 import Markdown from "react-markdown";
@@ -11,7 +10,6 @@ import "prismjs/components/prism-markup-templating";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-django";
-import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const Step = ({ step }) => {
   const { key, value } = step;
@@ -40,11 +38,8 @@ export const Step = ({ step }) => {
 };
 
 export const MarkdownStep = ({ text }) => {
-  const { isDarkMode } = useContext(ThemeContext);
   return (
-    <article
-      className={`markdown-editor ${isDarkMode ? "md-dark" : "md-light"}`}
-    >
+    <article className="markdown-editor">
       <Markdown>{text}</Markdown>
     </article>
   );
@@ -56,14 +51,10 @@ const CodeStep = ({ code, file, language }) => {
   }, []);
   return (
     <section className="flex flex-col items-stretch">
-      {Boolean(file) && (
-        <p className="text-xs opacity-50 block">
-          <small>{file}</small>
-        </p>
-      )}
+      {Boolean(file) && <p className="text-sm opacity-50 block">{file}</p>}
       <pre className="scrollbar-thin rounded-md">
         <code
-          className={` language-${language} whitespace-pre-line overflow-x-auto block w-max pr-4 `}
+          className={`language-${language} whitespace-pre-line overflow-x-auto block w-max pr-4 `}
         >
           {code.trim()}
         </code>
@@ -89,30 +80,8 @@ const ImageStep = ({ url }) => {
         objectFit="cover"
         alt="Image thumbnail"
         src={url}
-        className="w-full h-full block object-cover drop-shadow-2xl"
+        className="w-full h-full block drop-shadow-2xl"
       />
     </figure>
-  );
-};
-
-export const AnchorStep = ({ label, href, icon = "link" }) => {
-  if (!isValidURL(href)) {
-    return <></>;
-  }
-  return (
-    <p className="text-xs leading-relaxed opacity-50 hover:opacity-100 flex gap-x-2 items-center group w-max">
-      {icon === "link" && <IoLinkOutline className="transition-all" />}
-
-      {icon === "git" && (
-        <IoGitBranchOutline className="opacity-50 group-hover:opacity-100 transition-all" />
-      )}
-      <a
-        href={href}
-        rel="noopener noreferrer"
-        className="inline-flex font-semibold break-words transition-all relative before:absolute before:bottom-0 before:w-full before:h-[1.5px] before:bg-secondary before:-left-full hover:before:left-0 before:transition-all overflow-hidden before:duration-200 capitalize"
-      >
-        {label}
-      </a>
-    </p>
   );
 };

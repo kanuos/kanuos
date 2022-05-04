@@ -102,13 +102,13 @@ const HomePage = ({ allTags }) => {
         <div className="w-full p-10">
           {status === STATUSES.initial && Boolean(allTags.length) && (
             <>
-              <div className="flex flex-col items-start max-w-3xl mx-auto w-full">
+              <div className="flex flex-col items-start max-w-4xl px-10 mx-auto w-full">
                 <h2 className=" font-semibold capitalize">available tags</h2>
                 <p className="text-xs">
                   <small>Total tags : {allTags.length}</small>
                 </p>
               </div>
-              <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 max-w-3xl mx-auto w-full">
+              <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 max-w-4xl px-10 mx-auto w-full">
                 {allTags.map((tag) => (
                   <li key={tag._id}>
                     <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />

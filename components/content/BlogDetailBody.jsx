@@ -1,107 +1,114 @@
 import { useContext } from "react";
 import dynamic from "next/dynamic";
+import Markdown from "react-markdown";
 
 // import : internal
-import { DescHeader } from "../public/DescHeader";
+import { StyledHeader } from "../portfolio/StyledHeader";
 import { PUBLIC_URLS } from "../../utils";
-import { Step } from "../public/PageStepComponent";
-
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { PageLink } from "../portfolio/PageLink";
 
-const ContactModal = dynamic(() => import("../public/ContactModal"));
-const JoinLine = dynamic(() =>
-  import("../public/DescHeader").then((m) => m.JoinLine)
-);
-const AnchorStep = dynamic(() =>
-  import("../public/PageStepComponent").then((m) => m.AnchorStep)
+const Tag = dynamic(() => import("../public/Tag").then((m) => m.Tag));
+const PageSegment = dynamic(() =>
+  import("../public/PageComponents").then((m) => m.PageSegment)
 );
 
-export const BlogDetailBody = ({ blog, adminMode = false }) => {
+export const BlogDetailBody = ({ blog }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
-    <main
-      className={
-        "h-auto w-full min-h-screen relative select-text pb-20 " +
-        (isDarkMode ? "main-dark" : "main-light") +
-        (adminMode ? "" : " px-12 md:px-16")
-      }
-    >
-      <div className="relative h-full w-full max-w-3xl mx-auto">
-        <DescHeader
-          adminMode={adminMode}
-          name={blog.title}
-          date={blog.date}
-          tags={blog.tags}
-          back={PUBLIC_URLS.blogs.url}
-          descType={PUBLIC_URLS.blogs.name}
-        />
-
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start gap-y-2">
-          <p className="leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left">
+    <>
+      <div className="-mt-4">
+        <StyledHeader styledText={blog.category} isDarkMode={isDarkMode}>
+          <PageLink label={"Back to blogs"} href={PUBLIC_URLS.blogs.url} />
+          <h1 className="text-4xl md:text-6xl font-black my-6 w-full max-w-xl">
+            {blog.title}
+          </h1>
+          <p
+            className={
+              "w-3/4 max-w-lg " + (isDarkMode ? "opacity-80" : "opacity-100")
+            }
+          >
             {blog.desc}
           </p>
-        </section>
+          <section className="w-full mx-auto flex flex-col items-start justify-start my-6">
+            <h2 className="text-sm font-semibold">Published On</h2>
+            <p
+              className={
+                "my-2 max-w-3xl mr-auto w-full text-sm " +
+                (isDarkMode ? "opacity-80" : "opacity-100")
+              }
+            >
+              {new Date(blog.date ?? "").toDateString()}
+            </p>
+          </section>
+        </StyledHeader>
+      </div>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mt-10">
-          <ul className="flex flex-col items-start w-full">
-            {blog.page?.map((segment, i) => (
-              <li
-                key={i}
-                className="flex items-center justify-start gap-x-1 my-6 w-full z-10"
-              >
-                <section className="text-sm  w-full rounded relative">
-                  <h2 className="text-2xl capitalize  font-semibold">
-                    {segment?.heading}
-                  </h2>
-                  <div className="ml-2">
-                    <JoinLine />
-                  </div>
-                  <div className="flex items-stretch flex-col gap-y-2">
-                    {segment.steps?.map((s, k) => (
-                      <Step step={s} key={k} />
-                    ))}
-                  </div>
-                </section>
+      <div className="relative h-full w-full max-w-4xl mx-auto -mt-10">
+        <section className="w-full mx-auto flex flex-col items-start justify-start my-10 px-10">
+          <h2 className="text-sm font-semibold">Tags</h2>
+          <ul className="flex flex-wrap items-center my-4 justify-start gap-4 gap-y-3 max-w-3xl mr-auto w-full ">
+            {blog.tags?.map((t, i) => (
+              <li key={i}>
+                <Tag tag={t} />
               </li>
             ))}
           </ul>
         </section>
-
-        <section className="w-full my-10 mx-auto flex flex-col items-start justify-start">
-          <h2 className="text-2xl capitalize  font-semibold">
-            {blog?.outro?.heading}
-          </h2>
-          <div className="ml-1">
-            <JoinLine />
-          </div>
-          <section className="text-sm  w-full break-words">
-            <p className="leading-relaxed text-sm">{blog.outro?.text}</p>
-            <ul className="flex flex-col gap-y-4 my-4">
-              {blog.repo && Object.values(blog.repo).every(Boolean) && (
-                <li>
-                  <AnchorStep
-                    href={blog.repo.href}
-                    label={blog.repo.label}
-                    icon="git"
-                  />
-                </li>
-              )}
-              {blog.demo && Object.values(blog.demo).every(Boolean) && (
-                <li>
-                  <AnchorStep href={blog.demo.href} label={blog.demo.label} />
-                </li>
-              )}
-            </ul>
-            <p className="leading-relaxed text-sm">
-              If you have any queries about this blog, please send me a message
-              stating your query. Don&apos;t forget to mention the blog title in
-              your message. I will get back to you ASAP
-            </p>
-
-            <ContactModal isDarkMode={isDarkMode} />
-          </section>
-        </section>
       </div>
-    </main>
+
+      <section className="w-full flex flex-col items-start justify-start py-10 relative ">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-10 -z-10 pointer-events-none"></div>
+        <ul className="relative z-0 flex flex-col items-start w-full max-w-4xl px-10 mx-auto my-10 gap-y-4 after:h-full">
+          {blog.page.map(({ key, value }, i) => (
+            <li
+              key={i}
+              className="flex items-center justify-start w-full relative z-10"
+            >
+              {key === "markdown" && (
+                <div
+                  className={
+                    "flex flex-col items-start list-outside list-[square] justify-start gap-y-3 max-w-4xl markdown-editor w-full break-normal mb-10 " +
+                    (isDarkMode ? "opacity-80" : "opacity-100")
+                  }
+                >
+                  <Markdown>{value}</Markdown>
+                </div>
+              )}
+              {key === "heading" && (
+                <h2 className="text-2xl md:text-4xl font-semibold max-w-xl mt-6">
+                  <span className="capitalize">{value}</span>
+                </h2>
+              )}
+            </li>
+          ))}
+        </ul>
+        <section className="relative z-0 w-full max-w-4xl mx-auto flex flex-col items-start justify-start px-10">
+          <h2 className="text-2xl md:text-4xl font-semibold max-w-xl mb-6">
+            <span className="capitalize">{blog?.outro?.heading}</span>
+          </h2>
+          <p
+            className={
+              "leading-relaxed " + (isDarkMode ? "opacity-80" : "opacity-100")
+            }
+          >
+            {blog.outro?.text}
+          </p>
+        </section>
+      </section>
+
+      <section className="w-full mx-auto max-w-4xl flex flex-col items-start justify-start my-10 px-10 pb-20">
+        <h2 className="text-sm font-semibold">Resources</h2>
+        <p
+          className={
+            "my-2 max-w-3xl mr-auto w-full text-sm capitalize " +
+            (isDarkMode ? "opacity-80" : "opacity-100")
+          }
+        >
+          REPO + DEMO
+          {/* TODO: complete repo demo */}
+        </p>
+      </section>
+    </>
   );
 };

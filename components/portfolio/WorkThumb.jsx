@@ -106,7 +106,7 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
             {project.title}
           </motion.h3>
           <motion.p
-            className={`px-2 text-sm tracking-tighter font-semibold w-full max-w-sm ${
+            className={`px-2 text-sm tracking-tighter w-full max-w-sm ${
               hovered ? "opacity-90" : "opacity-60"
             } `}
           >
@@ -119,7 +119,7 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
           whileInView="show"
           initial="hide"
           viewport={{ once: true }}
-          className={`h-[25vh] relative overflow-hidden filter rounded-md z-10 drop-shadow-2xl shadow-2xl w-full max-w-xl mx-auto grow ${
+          className={`h-[35vh] relative overflow-hidden filter rounded-md z-10 drop-shadow-2xl shadow-2xl w-full max-w-xl mx-auto grow ${
             hovered ? "grayscale-0" : "grayscale"
           }`}
         >

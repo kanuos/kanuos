@@ -1,118 +1,98 @@
 import { useContext } from "react";
-// import : external
-import {
-  IoCheckmarkCircleOutline,
-  IoGameControllerOutline,
-  IoPricetagOutline,
-} from "react-icons/io5";
+import dynamic from "next/dynamic";
+import Markdown from "react-markdown";
 
 // import : internal
-import { PageSegment } from "../public/PageComponents";
+import { StyledHeader } from "../portfolio/StyledHeader";
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { DescHeader } from "../public/DescHeader";
-import dynamic from "next/dynamic";
+import { PageLink } from "../portfolio/PageLink";
 
-const ContactModal = dynamic(() => import("../public/ContactModal"));
-const AnchorStep = dynamic(() =>
-  import("../public/PageStepComponent").then((m) => m.AnchorStep)
-);
-const JoinLine = dynamic(() =>
-  import("../public/DescHeader").then((m) => m.JoinLine)
+const Tag = dynamic(() => import("../public/Tag").then((m) => m.Tag));
+const PageSegment = dynamic(() =>
+  import("../public/PageComponents").then((m) => m.PageSegment)
 );
 
-export const ProjectDetailBody = ({ project, adminMode = false }) => {
+export const ProjectDetailBody = ({ project }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
-    <main
-      className={
-        "h-auto w-full min-h-screen relative select-text pb-20 " +
-        (isDarkMode ? "main-dark" : "main-light") +
-        (adminMode ? "" : " px-12 md:px-16")
-      }
-    >
-      <div className="relative h-full w-full max-w-3xl mx-auto">
-        <DescHeader
-          projectMode={true}
-          name={project.title}
-          date={project.date}
-          tags={project.tags}
-          back={PUBLIC_URLS.projects.url}
-          adminMode={adminMode}
-          descType={PUBLIC_URLS.projects.name}
-        />
-
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start my-8">
-          <p className="leading-relaxed text-sm first-letter:text-6xl first-letter:float-left first-letter:font-semibold first-letter:mr-2 first-letter:-mt-6 first-letter: first-letter:uppercase float-left lg:text-base">
+    <>
+      <div className="-mt-4">
+        <StyledHeader styledText={project.category} isDarkMode={isDarkMode}>
+          <PageLink
+            label={"Back to Projects"}
+            href={PUBLIC_URLS.projects.url}
+          />
+          <h1 className="text-4xl md:text-6xl font-black my-6 w-full max-w-xl">
+            {project.title}
+          </h1>
+          <p
+            className={
+              "w-3/4 max-w-lg " + (isDarkMode ? "opacity-80" : "opacity-100")
+            }
+          >
             {project.desc}
           </p>
-          <ul className="flex flex-col items-start gap-y-0.5 mt-4">
-            <li className="inline-flex items-center justify-start gap-x-2 text-xs">
-              <IoGameControllerOutline className="text-sm" />
-              <small className="capitalize font-semibold">Difficulty</small>
-            </li>
-            <li className="text-sm">
-              <small className="font-semibold capitalize text-primary">
-                {project.difficulty}
-              </small>
-            </li>
-          </ul>
-          <JoinLine />
-          <ul className="flex flex-col items-start gap-y-0.5 mb-4">
-            <li className="inline-flex items-center justify-start gap-x-2 text-xs">
-              <IoPricetagOutline className="text-sm" />
-              <small className="capitalize font-semibold">Category</small>
-            </li>
-            <li className="text-sm">
-              <small className="font-semibold capitalize text-primary">
-                {project.category}
-              </small>
-            </li>
-          </ul>
-        </section>
+          <section className="w-full mx-auto flex flex-col items-start justify-start my-6">
+            <h2 className="text-sm font-semibold">Published On</h2>
+            <p
+              className={
+                "my-2 max-w-3xl mr-auto w-full text-sm " +
+                (isDarkMode ? "opacity-80" : "opacity-100")
+              }
+            >
+              {new Date(project.date ?? "").toDateString()}
+            </p>
+          </section>
+        </StyledHeader>
+      </div>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mb-16">
-          <h2 className="text-2xl inline-flex items-center justify-start">
-            <span className="capitalize  font-semibold">
-              Project Tech stack used
-            </span>
-          </h2>
-          <JoinLine />
-          <ul className="flex flex-col items-start gap-1">
-            {project.techStack?.map((t, i) => (
-              <li key={i} className="flex items-start justify-start">
-                <span className="text-xs grow block font-semibold opacity-75">
-                  {t.text}
-                </span>
+      <div className="relative h-full w-full max-w-4xl mx-auto -mt-10">
+        <section className="w-full mx-auto flex flex-col items-start justify-start my-10 px-10">
+          <h2 className="text-sm font-semibold">Tags</h2>
+          <ul className="flex flex-wrap items-center my-4 justify-start gap-4 gap-y-3 max-w-3xl mr-auto w-full ">
+            {project.tags?.map((t, i) => (
+              <li key={i}>
+                <Tag tag={t} />
               </li>
             ))}
           </ul>
         </section>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mb-16">
-          <h2 className="text-2xl inline-flex items-center justify-start">
-            <span className="capitalize  font-semibold">Prerequisites</span>
-          </h2>
-          <JoinLine />
-          <ul className="flex flex-col items-start gap-y-4 mt-4 -ml-6">
-            {project.prerequisites.map((p, i) => (
-              <li key={i} className="flex items-start justify-start gap-x-2">
-                <IoCheckmarkCircleOutline className="text-secondary text-lg grow block shrink-0" />
-                <span className=" text-xs grow block">{p.text}</span>
-              </li>
-            ))}
-          </ul>
+        <section className="w-full mx-auto flex flex-col items-start justify-start my-10 px-10">
+          <h2 className="text-sm font-semibold">Difficulty Level</h2>
+          <p
+            className={
+              "my-2 max-w-3xl mr-auto w-full text-sm capitalize " +
+              (isDarkMode ? "opacity-80" : "opacity-100")
+            }
+          >
+            {project.difficulty}
+          </p>
         </section>
 
-        <section className="w-full max-w-3xl mx-auto flex flex-col items-start justify-start mb-10">
-          <h2 className="inline-flex items-center justify-start gap-x-2">
-            <span className="text-2xl capitalize  font-semibold">Chapters</span>
-            <small className="text-xs opacity-70">
-              ({project.chapters.length})
-            </small>
+        <section className="w-full mx-auto flex flex-col items-start justify-start my-10 px-10">
+          <h2 className="text-3xl md:text-5xl font-semibold max-w-xl my-10">
+            Project overview
           </h2>
-          <JoinLine />
-          <p className="leading-relaxed text-sm lg:text-base">
+          <div
+            className={
+              "flex flex-col items-start my-4 list-outside list-[square] justify-start gap-y-3 max-w-4xl markdown-editor w-full " +
+              (isDarkMode ? "opacity-80" : "opacity-100")
+            }
+          >
+            <Markdown>{project.prerequisites}</Markdown>
+          </div>
+        </section>
+      </div>
+
+      <section className="w-full flex flex-col items-start justify-start py-20 relative ">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-10 -z-10 pointer-events-none"></div>
+        <div className="max-w-4xl mx-auto w-full px-10">
+          <h2 className="text-3xl md:text-5xl font-semibold max-w-xl capitalize mb-10">
+            project curriculum
+          </h2>
+          <p className="leading-relaxed mb-6">
             Project <strong className="font-semibold">{project.title}</strong>{" "}
             is classified into{" "}
             <strong className="font-semibold">{project.chapters.length}</strong>{" "}
@@ -128,61 +108,49 @@ export const ProjectDetailBody = ({ project, adminMode = false }) => {
               </>
             )}
           </p>
-          <ul className="flex flex-col items-start w-full mt-6">
-            {project.chapters.map((chapter, i) => (
-              <li
-                key={i}
-                className="flex items-center justify-start my-4 w-full last:after:hidden relative z-10 after:absolute after:w-0.5 after:left-4 after:h-10 after:-bottom-10 after:bg-secondary"
-              >
-                <PageSegment
-                  segment={chapter}
-                  index={i + 1}
-                  isDarkMode={isDarkMode}
-                />
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="w-full mx-auto flex flex-col items-start justify-start gap-y-1">
-          <h2 className="text-2xl capitalize  font-semibold">
-            {project?.outro?.heading}
+        </div>
+        <ul className="flex flex-col items-start w-11/12 max-w-4xl gap-y-10 mx-auto my-10 after:h-full after:absolute relative after:w-0.5 after:bg-secondary after:left-4  md:after:left-10 after:top-0 after:z-0">
+          {project.chapters.map((chapter, i) => (
+            <li
+              key={i}
+              className="flex items-center justify-start w-full relative z-10"
+            >
+              <PageSegment
+                segment={chapter}
+                index={i + 1}
+                isDarkMode={isDarkMode}
+              />
+            </li>
+          ))}
+        </ul>
+        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start px-10">
+          <h2 className="text-3xl md:text-5xl font-semibold max-w-xl mb-6">
+            <span className="text-2xl capitalize font-semibold">
+              {project?.outro?.heading}
+            </span>
           </h2>
-          <JoinLine />
-          <section className="text-sm  w-full break-words">
-            <p className="leading-relaxed text-sm ">{project.outro?.text}</p>
-            <ul className="flex flex-col gap-y-4 my-4">
-              {project.repo && Object.values(project.repo).every(Boolean) && (
-                <li className="inline-flex items-start justify-start gap-2 group w-max">
-                  <AnchorStep
-                    href={project.repo.href}
-                    label={project.repo.label}
-                    icon="git"
-                  />
-                </li>
-              )}
-              {project.demo && Object.values(project.demo).every(Boolean) && (
-                <li className="inline-flex items-start justify-start gap-2 group w-max">
-                  <li className="inline-flex items-start justify-start gap-2 group w-max">
-                    <AnchorStep
-                      href={project.demo.href}
-                      label={project.demo.label}
-                    />
-                  </li>
-                </li>
-              )}
-            </ul>
-
-            <p className="leading-relaxed text-sm">
-              If you have any queries about this project, please send me a
-              message stating your query. Don&apos;t forget to mention the
-              project title in your message. I will get back to you ASAP
-            </p>
-
-            <ContactModal />
-          </section>
+          <p
+            className={
+              "leading-relaxed " + (isDarkMode ? "opacity-80" : "opacity-100")
+            }
+          >
+            {project.outro?.text}
+          </p>
         </section>
-      </div>
-    </main>
+      </section>
+
+      <section className="w-full mx-auto max-w-4xl flex flex-col items-start justify-start my-10 px-10 pb-20">
+        <h2 className="text-sm font-semibold">Resources</h2>
+        <p
+          className={
+            "my-2 max-w-3xl mr-auto w-full text-sm capitalize " +
+            (isDarkMode ? "opacity-80" : "opacity-100")
+          }
+        >
+          REPO + DEMO
+          {/* TODO: complete repo demo */}
+        </p>
+      </section>
+    </>
   );
 };

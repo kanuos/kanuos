@@ -1,9 +1,8 @@
 // Project Detail View
-import dynamic from "next/dynamic";
 
 // import : internal
+import PublicLayout from "../../components/Layouts/PublicLayout";
 import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
-import { HeadComponent } from "../../components/Head";
 import { getIndividualProject, getAllProjects } from "../../database/projects";
 import {
   deFormatURLParamString,
@@ -12,15 +11,6 @@ import {
 } from "../../utils";
 
 // dynamic
-const NavBar = dynamic(() =>
-  import("../../components/public/Nav").then((m) => m.NavBar)
-);
-const Footer = dynamic(() =>
-  import("../../components/public/Footer").then((m) => m.Footer)
-);
-const ThemeToggler = dynamic(() =>
-  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
-);
 
 const ProjectDetail = ({ project }) => {
   project = JSON.parse(project);
@@ -30,13 +20,9 @@ const ProjectDetail = ({ project }) => {
     project.category
   );
   return (
-    <>
-      <HeadComponent title={project.title} content={content} />
-      <NavBar />
-      <ThemeToggler />
+    <PublicLayout metaTitle={project.title} metaDesc={content}>
       <ProjectDetailBody project={project} />
-      <Footer />
-    </>
+    </PublicLayout>
   );
 };
 
