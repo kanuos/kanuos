@@ -242,9 +242,9 @@ const NavMenu = ({ type = "public" }) => {
         initial="hide"
         exit="hide"
         animate={showMenu ? "show" : "hide"}
-        className={`h-screen overflow-hidden w-full shadow-2xl fixed right-0 top-0 z-30 sm:max-w-md sm:px-6 ${
-          !isDarkMode ? "nav-light" : "nav-dark"
-        }`}
+        className={`h-screen overflow-hidden w-full fixed right-0 top-0 z-30 sm:max-w-md sm:px-6 ${
+          showMenu ? "shadow-2xl" : "shadow-none"
+        } ${!isDarkMode ? "nav-light" : "nav-dark"}`}
       >
         <motion.section
           animate={showMenu ? "show" : "hide"}
@@ -304,9 +304,6 @@ const NavMenu = ({ type = "public" }) => {
               isDarkMode={isDarkMode}
             />
           </div>
-          {/* <button onClick={toggleTheme} className={" mt-auto"}>
-            <small>Toggle theme</small>
-          </button> */}
         </motion.section>
       </motion.section>
     </AnimatePresence>
