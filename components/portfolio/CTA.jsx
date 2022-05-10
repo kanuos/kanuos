@@ -38,7 +38,12 @@ export const CTA = ({
   }
   if (externalLink) {
     return (
-      <a className={wrapper} href={href} target="_blank">
+      <a
+        className={wrapper}
+        href={href}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
         <span className={content}>{label}</span>
         <span className={style}></span>
       </a>

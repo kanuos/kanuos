@@ -34,12 +34,8 @@ const PortfolioPage = ({ metadata }) => {
       <StyledHeader styledText={metadata.adminLabel} isDarkMode={isDarkMode}>
         <>
           <span className="text-sm md:text-base font-semibold">Hi, I am</span>
-          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-6 w-min">
-            {metadata.fullName}
-          </h1>
-          <p className="w-3/4 text-sm font-semibold opacity-60">
-            {metadata.about}
-          </p>
+          <h1 className="heading--main w-min">{metadata.fullName}</h1>
+          <p className="content--main">{metadata.about}</p>
           <div className="mt-10">
             <CTA
               label="Hire me"
@@ -51,7 +47,7 @@ const PortfolioPage = ({ metadata }) => {
       </StyledHeader>
 
       <Showcase works={projects} isDarkMode={isDarkMode} />
-      <AboutMe />
+      <AboutMe isDarkMode={isDarkMode} />
       <ContactMe isDarkMode={isDarkMode} />
     </PublicLayout>
   );
@@ -61,17 +57,18 @@ export default PortfolioPage;
 
 export async function getStaticProps() {
   let metadata = {};
+  console.log("portfolio motherload");
   try {
     metadata = await getPortfolio();
     return {
       props: { metadata: JSON.stringify(metadata) },
-      revalidate: 5,
+      revalidate: 1,
     };
   } catch (error) {
     console.log(error);
     return {
       props: { metadata: JSON.stringify({}) },
-      revalidate: 5,
+      revalidate: 1,
     };
   }
 }

@@ -5,9 +5,9 @@ export const Tag = ({ cb = null, tag }) => {
   const { isDarkMode } = useContext(ThemeContext);
 
   const cls = {
-    base: `uppercase font-semibold text-sm border-current border py-0.5 px-3 rounded`,
+    base: `uppercase font-semibold text-xs md:text-sm border-current border-2 py-0.5 px-3 rounded`,
     static() {
-      return `${this.base} `;
+      return `${this.base} ${isDarkMode ? "text-secondary" : "text-primary"}`;
     },
     link() {
       return `${

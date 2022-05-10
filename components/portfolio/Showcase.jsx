@@ -11,9 +11,7 @@ export const Showcase = ({ works = [], isDarkMode = false }) => {
       id={PORTFOLIO_LINKS["selected works"].name}
       className="h-auto min-h-screen p-10 w-full max-w-4xl mx-auto"
     >
-      <h2 className="text-3xl md:text-5xl font-semibold max-w-xl">
-        Selected projects and designs
-      </h2>
+      <h2 className="heading--secondary mb-4">Selected projects and designs</h2>
       <ul className="flex gap-4 items-center justify-start my-8">
         {CATEGORIES.map((el, i) => (
           <li key={i}>

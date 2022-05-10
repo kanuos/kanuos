@@ -14,6 +14,7 @@ import { staticMetadata } from "../utils/portfolio_static";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { CTA } from "../components/portfolio/CTA";
 import { PUBLIC_URLS } from "../utils";
+import { Footer } from "../components/public/Footer";
 
 const STATUSES = {
   initial: "initial",
@@ -78,13 +79,11 @@ const HomePage = ({ allTags }) => {
     <>
       <PublicLayout metaTitle="Welcome to Sounak's website">
         <StyledHeader styledText="search by tags" isDarkMode={isDarkMode}>
-          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-2 w-min">
-            Hello world!
-          </h1>
+          <h1 className="heading--main">&quot;Hello world!&quot;</h1>
           <span className="text-sm md:text-base font-semibold mb-6">
             I&apos;m Sounak. Welcome to my tech journal
           </span>
-          <p className="w-3/4 text-sm opacity-60">
+          <p className="content--main">
             You can search blogs, designs and projects by tags. For ease of
             navigation, I tag them accordingly. Enjoy!
           </p>
@@ -96,19 +95,16 @@ const HomePage = ({ allTags }) => {
             />
           </div>
         </StyledHeader>
-        <div className="-mt-10 text-center text-xs w-full uppercase tracking-widest animate-bounce">
-          <small>scroll</small>
-        </div>
-        <div className="w-full p-10">
+        <div className="w-full p-10 mb-40 max-w-4xl mx-auto">
           {status === STATUSES.initial && Boolean(allTags.length) && (
             <>
-              <div className="flex flex-col items-start max-w-4xl px-10 mx-auto w-full">
+              <div className="flex flex-col items-start w-full">
                 <h2 className=" font-semibold capitalize">available tags</h2>
                 <p className="text-xs">
                   <small>Total tags : {allTags.length}</small>
                 </p>
               </div>
-              <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 max-w-4xl px-10 mx-auto w-full">
+              <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 w-full">
                 {allTags.map((tag) => (
                   <li key={tag._id}>
                     <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />
@@ -124,6 +120,7 @@ const HomePage = ({ allTags }) => {
             <TagDetailList {...data} close={handleInitialState} />
           )}
         </div>
+        <Footer />
       </PublicLayout>
     </>
   );
@@ -133,11 +130,12 @@ export default HomePage;
 
 export async function getStaticProps() {
   try {
+    console.log("hit the motherload");
     const p1 = new Promise((res) => res(getAllTags()));
     const [allTags] = await Promise.allSettled([p1]);
     return {
       props: { allTags: JSON.stringify(allTags.value) },
-      revalidate: 10,
+      revalidate: 1,
     };
   } catch (error) {}
 }

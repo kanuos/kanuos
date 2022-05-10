@@ -2,266 +2,202 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 // import : external
-import {
-  IoDiscSharp,
-  IoCalendarOutline,
-  IoPricetagOutline,
-  IoLeafOutline,
-  IoColorFillOutline,
-  IoRocketOutline,
-  IoMapSharp,
-  IoCameraOutline,
-} from "react-icons/io5";
 import { motion } from "framer-motion";
+import Markdown from "react-markdown";
 
 // import : internal
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import dynamic from "next/dynamic";
+import { PageLink } from "../portfolio/PageLink";
+import { ImageCarousel } from "./ImageCarousel";
+import { DetailHeader } from "../detail/Header";
 
 const JoinLine = dynamic(() =>
   import("../public/DescHeader").then((m) => m.JoinLine)
 );
-const ContactModal = dynamic(() => import("../public/ContactModal"));
 
 export const DesignDetailBody = ({ design, adminMode = false }) => {
   const { isDarkMode } = useContext(ThemeContext);
+
   return (
-    <main
+    <div
       className={
-        "h-auto w-full min-h-screen pb-20 select-text " +
-        (isDarkMode ? "main-dark" : "main-light") +
-        (!adminMode && " px-12 md:px-16")
+        "overflow-hidden relative h-full w-full min-h-screen " +
+        (isDarkMode ? "bg-hero--dark" : "bg-hero--light")
       }
     >
-      <header className="h-auto w-full relative flex flex-col items-start justify-center md:justify-start max-w-3xl mx-auto py-20">
-        {!adminMode && (
-          <Link href={PUBLIC_URLS.designs.url}>
-            <a className="text-xs font-semibold opacity-50 focus:opacity-100 hover:opacity-100 capitalize mb-4">
-              <small>&lt; back to designs</small>
-            </a>
-          </Link>
-        )}
-        <div
-          className={
-            "relative h-fit w-fit flex flex-col items-start justify-center " +
-            (adminMode ? "" : "mt-10")
-          }
-        >
-          <p className="mb-4 uppercase text-xs font-semibold text-primary">
-            <small>ui/ux design</small>
-          </p>
-          <h1 className="text-4xl md:text-6xl font-black capitalize">
-            {design.title}
-          </h1>
-          <JoinLine />
-          <p className="text-sm mt-2 leading-relaxed">{design.desc}</p>
-        </div>
-      </header>
-      <div className="relative h-full w-full max-w-3xl mx-auto">
-        <ul
-          className={
-            "flex flex-col items-start justify-around gap-y-14 h-full relative before:h-full before:absolute before:w-0.5 before:top-0 before:left-0 " +
-            (isDarkMode
-              ? "before:bg-light before:bg-opacity-20"
-              : "before:bg-dark before:bg-opacity-10")
-          }
-        >
-          <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
-            <p className="flex items-center justify-start gap-x-1">
-              <IoCalendarOutline className="text-xs" />
-              <span className="font-semibold text-xs capitalize">
-                created on
-              </span>
-            </p>
-            <span className="text-xs font-semibold">
-              {new Date(design.date || Date.now()).toDateString()}
-            </span>
-          </li>
+      <DetailHeader
+        category={design.category}
+        isDarkMode={isDarkMode}
+        back={{
+          url: PUBLIC_URLS.designs.url,
+          text: "Back to designs",
+        }}
+        title={design.title}
+        desc={design.desc}
+        date={design.date}
+        tags={design.tags}
+      />
 
-          <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
-            <p className="flex items-center justify-start gap-x-1">
-              <IoPricetagOutline className="text-xs" />
-              <span className="font-semibold text-xs capitalize">tags</span>
-            </p>
-            <p className="text-xs font-semibold flex flex-wrap gap-x-4 gap-y-2">
-              {design.tags.map((tag) => (
-                <small key={tag._id} className="uppercase opacity-75">
-                  {tag.tag}
-                </small>
-              ))}
-            </p>
-          </li>
+      <div className="relative h-full w-full max-w-4xl mx-auto">
+        {/* role */}
+        <section className="section-wrapper">
+          <h2 className="heading--secondary mt-10 mb-4">My Role</h2>
+          <div className="markdown-editor-wrapper text-justify">
+            <Markdown>{design.role}</Markdown>
+          </div>
+        </section>
 
-          <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
-            <p className="flex items-center justify-start gap-x-1">
-              <IoLeafOutline className="text-sm" />
-              <span className="font-semibold text-xs capitalize">
-                typography
-              </span>
-            </p>
-            <ul className="text-xs w-full flex flex-col items-start gap-y-8 mt-4">
-              {design.typography.map(({ family, desc }, i) => (
-                <li key={i} className="flex flex-col items-start gap-y-4">
-                  <span className="text-xs font-semibold capitalize">
-                    {family}
-                  </span>
-                  <p className="pl-6 text-sm leading-relaxed">
-                    <small>{desc}</small>
-                  </p>
+        {/* thumbnail */}
+        <figure className="h-[75vh] xl:h-screen w-screen relative flex flex-col items-center justify-evenly">
+          <div className="h-5/6 relative w-full">
+            <Image
+              loader={({ src, width }) => `${src}?w=${width}`}
+              src={design.thumbnail}
+              layout="fill"
+              className="object-cover top-0 left-0 h-full w-full"
+              alt={`Design thumbnail of ${design.title}`}
+            />
+          </div>
+          <figcaption className="content--sub text-center italic">
+            {design.caption}
+          </figcaption>
+        </figure>
+
+        <h2 className="heading--main w-min mx-auto py-20 text-center leading-relaxed">
+          Style Guide
+        </h2>
+        {/* typography */}
+        <section className="section-wrapper pb-20">
+          <h2 className="heading--secondary mb-10">Typography</h2>
+          <ul className="flex flex-col items-start justify-around gap-y-6 w-full py-4 after-line">
+            {design.typography.map(({ family, desc }, i) => (
+              <li
+                key={i}
+                className="relative z-10 flex flex-col justify-center rounded-md w-full md:w-3/5 md:even:ml-auto md:odd:mr-auto gap-4 p-6 md:odd:items-start md:even:items-end group nav-light drop-shadow-xl"
+              >
+                <strong className={`heading--sub`}>{family}</strong>
+                <p className="content--sub text-justify md:group-even:text-right md:group-odd:text-left">
+                  {desc}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* colors */}
+        <section className="section-wrapper pb-20">
+          <h2 className="heading--secondary mb-10">Color palette</h2>
+          <div className="w-full py-4 after-line">
+            <ul className="grid grid-cols-4 gap-y-6 gap-x-6  w-full z-10 relative  rounded-md nav-light drop-shadow-xl p-4">
+              {design.colorPalette.map(({ hex }, i) => (
+                <li key={i} className={`flex flex-col items-center gap-y-2 `}>
+                  <div
+                    style={{
+                      backgroundColor: `${hex}`,
+                    }}
+                    className={`h-10 w-full md:h-20 shadow-lg rounded ${
+                      isDarkMode ? "light-shadow" : "dark-shadow"
+                    }`}
+                  ></div>
+                  <p className={`uppercase content--sub text-center`}>{hex}</p>
                 </li>
               ))}
             </ul>
-          </li>
+          </div>
+        </section>
 
-          <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
-            <p className="flex items-center justify-start gap-x-1">
-              <IoColorFillOutline className="text-sm" />
-              <span className="font-semibold text-xs capitalize">
-                color palette
-              </span>
-            </p>
-            <ul className="text-xs w-full flex flex-col items-start gap-y-8 mt-4 pl-6">
-              {design.colorPalette.map(({ name, hex }, i) => (
-                <li key={i} className="flex items-center gap-4">
-                  <span
-                    className="w-4 h-4 rounded-full filter drop-shadow-lg"
-                    style={{ backgroundColor: hex }}
-                  ></span>
-                  <p className="text-xs font-semibold capitalize">
-                    {name} <span className="opacity-50 uppercase">({hex})</span>
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </li>
+        <h2 className="heading--main w-min mx-auto py-14">User Flow</h2>
+        {/* user flow */}
+        <section className="section-wrapper pb-20">
+          <ul className="w-full gap-y-10 flex flex-col pr-2 after-line--center">
+            {design.userFlowSteps.map(({ images, about, title }, i) => (
+              <motion.li
+                key={i}
+                className="flex flex-col items-start flex-grow relative z-10 rounded-md w-4/5 even:ml-auto odd:mr-auto group"
+              >
+                <section className="relative z-10 bg-light drop-shadow-xl p-4 block w-full rounded-md">
+                  <div className="mb-6 w-full flex flex-col py-2 gap-y-4 group-even:text-right group-odd:text-left">
+                    <strong className="heading--sub">{title}</strong>
+                    <p className="content--sub">{about}</p>
+                  </div>
+                  <ImageCarousel
+                    title={title}
+                    images={images}
+                    miniMode={true}
+                  />
+                </section>
+              </motion.li>
+            ))}
+          </ul>
+        </section>
 
-          <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2 w-full">
-            <p className="flex items-center justify-start gap-x-1">
-              <IoMapSharp className="text-sm" />
-              <span className="font-semibold text-xs capitalize">
-                user flow
-              </span>
-            </p>
-            <motion.ul className="text-xs w-full flex flex-col odd:items-start even:items-end h-auto gap-y-20 relative mt-4 overflow-hidden">
-              {design.userFlowSteps.map(({ page, about, title }, i) => (
-                <motion.li
-                  key={i}
-                  className="flex flex-col items-start flex-grow gap-y-4"
-                >
-                  <figure className="h-full min-h-[75vh] w-full relative rounded-md shadow-2xl overflow-hidden mb-2 z-10">
-                    <Image
-                      loader={({ src, width }) => `${src}?w=${width}&q=100`}
-                      layout="fill"
-                      objectFit="cover"
-                      src={page}
-                      alt={title}
-                      className="h-full w-full object-cover block"
-                    />
-                  </figure>
-                  <span className="z-10  text-xl font-semibold capitalize">
-                    {title}
-                  </span>
-                  <JoinLine />
-                  <p className="w-11/12 z-10 whitespace-pre-line leading-relaxed text-sm">
-                    {about}
-                  </p>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </li>
-
-          <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2">
-            <p className="flex items-center justify-start gap-x-1">
-              <IoRocketOutline className="text-sm" />
-              <span className="font-semibold text-xs capitalize">
-                tools used
-              </span>
-            </p>
-            <ul className="text-xs w-full flex flex-col items-start gap-y-3 mt-4 pl-6">
-              {design.tools.map((tool, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <IoDiscSharp className="text-secondary" />
-                  <span className="text-xs font-semibold capitalize">
-                    {tool?.text}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </li>
-
-          <li className="pl-8 relative before:h-4 before:w-4 before:bg-light before:border-4 before:border-primary before:rounded-full before:absolute before:-left-1.5 before:top-0 flex flex-col items-start gap-2 w-full">
-            <p className="flex items-center justify-start gap-x-1">
-              <IoCameraOutline className="text-sm" />
-              <span className="font-semibold text-xs capitalize">
-                external assets &amp; resources
-              </span>
-            </p>
-            <ul className="text-xs w-full flex flex-col items-start mt-10 gap-y-20">
+        <h2 className="heading--main w-min mx-auto py-14">Screens</h2>
+        <section className="section-wrapper pb-20">
+          <ImageCarousel
+            images={[
+              ...new Set(
+                design.userFlowSteps.map((el) => el.images).flatMap((el) => el)
+              ),
+            ]}
+          />
+        </section>
+        {/* external resources */}
+        <section className="section-wrapper pb-10">
+          <h2 className="heading--secondary mb-10">External Resources</h2>
+          <ul className="w-full block rounded-md drop-shadow-xl">
+            <div className="relative z-10 grid place-items-center grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-6 w-full">
               {design.externalResources.map(
                 ({ poster, courtesy, photographer }, i) => (
                   <li
                     key={i}
-                    className="flex flex-col items-center group w-full"
+                    className="flex flex-col w-full items-center group hover:even:rotate-2 hover:odd:-rotate-2 md:even:rotate-2 md:odd:-rotate-2 md:hover:rotate-0 transition-all"
                   >
-                    <span className=" text-3xl">
-                      #{(i + 1).toString().padStart(2, "0")}
-                    </span>
-                    <JoinLine />
-                    <div className="bg-light w-full h-full min-h-[50vh] md:min-h-[60vh] rounded-md overflow-hidden group-even:rotate-3 group-odd:-rotate-3 p-4 filter drop-shadow-2xl max-w-[28rem]">
-                      <figure className="relative h-full w-full min-h-[50vh] md:min-h-[60vh]">
+                    <div className="bg-light w-full h-48 overflow-hidden p-2.5 filter shadow-xl group-hover:shadow-2xl group-hover:drop-shadow-2xl transition-all">
+                      <figure className="relative w-full h-full">
                         <Image
                           loader={({ src, width }) => `${src}?w=${width}&q=100`}
                           layout="fill"
                           alt={`Pic courtesy ${photographer}`}
                           src={poster}
                           objectFit="cover"
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all"
                         />
                       </figure>
                     </div>
-                    <div className="ml-4 flex flex-col w-full items-center gap-y-1">
-                      <JoinLine />
-                      <p className="text-center font-semibold text-xs capitalize opacity-50">
-                        <small>asset courtesy</small>
+                    <div className="my-4 flex flex-col w-full items-center gap-y-1">
+                      <p className="content--secondary text-center">
+                        <small>Asset Credit</small>
                       </p>
-                      <a
-                        title={`Check out ${photographer}'s profile`}
+                      <PageLink
+                        isExternal={true}
+                        label={photographer}
                         href={courtesy}
-                        referrerPolicy="no-referrer"
-                        target="_blank"
-                        rel="noopener noreferrer nofollow"
-                        className="font-semibold hover:underline hover:text-primary  text-lg capitalize tracking-wider"
-                      >
-                        {photographer}
-                      </a>
+                      />
                     </div>
                   </li>
                 )
               )}
-            </ul>
-          </li>
-        </ul>
+            </div>
+          </ul>
+        </section>
 
-        <section className="w-full mx-auto my-20 flex flex-col items-start justify-start">
-          <h2 className="text-2xl capitalize  font-semibold">
-            That&apos;s all folks
-          </h2>
-          <div className="ml-1">
-            <JoinLine />
+        {/* conclusion */}
+        <section className="section-wrapper pb-20">
+          <h2 className="heading--secondary mb-6">Conclusion</h2>
+          <p className="content--secondary">
+            This project is a work of imagination and bears resemblance with no
+            product. If you want to use this design in your project, please ask
+            me for permission. If you wish to see this design as a project, let
+            me know the same.
+          </p>
+          <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
+            <PageLink label="Source code" href="" />
+            <PageLink label="Live demo" href="" />
           </div>
-          <section className="text-sm  w-full break-words">
-            <p className="leading-relaxed text-sm">
-              This project is a work of imagination and bears resemblance with
-              no product. If you want to use this design in your project, please
-              ask me for permission. If you wish to see this design as a
-              project, let me know the same.
-            </p>
-
-            <ContactModal isDarkMode={isDarkMode} />
-          </section>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
