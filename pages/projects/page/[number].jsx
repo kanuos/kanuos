@@ -15,6 +15,9 @@ import { getAllProjects } from "../../../database/projects";
 const Pagination = dynamic(() =>
   import("../../../components/public/Pagination").then((m) => m.Pagination)
 );
+const Footer = dynamic(() =>
+  import("../../../components/public/Footer").then((m) => m.Footer)
+);
 
 const ProjectList = ({
   projectList,
@@ -28,42 +31,41 @@ const ProjectList = ({
   pageCount = JSON.parse(pageCount);
 
   return (
-    <>
-      <PublicLayout
-        metaTitle="Sounak Mukherjee's Projects"
-        metaDesc="Check out the walkthroughs for various projects using the state-of-the-art technologies"
-      >
-        <div className="px-10 lg:px-0 pt-20 max-w-2xl mx-auto select-text">
-          <PublicHeader
-            data={{ ...PUBLIC_LIST_TYPES.projects, count: totalCount }}
-          />
-        </div>
-        <div className="px-10 lg:px-0 pb-20 max-w-4xl mx-auto">
-          {projectList.length > 0 ? (
-            <>
-              <main className="flex flex-col my-20 gap-20 items-stretch w-full">
-                {projectList.map((project, index) => (
-                  <ProjectThumbnail
-                    key={project._id}
-                    data={project}
-                    index={index + parseInt(pageStartNumber) + 1}
-                  />
-                ))}
-              </main>
-              {projectList.length < totalCount && (
-                <Pagination count={pageCount} baseURL="/projects/page" />
-              )}
-            </>
-          ) : (
-            <main className="h-[30vh] flex flex-col items-center justify-center gap-2">
-              <p className="p-4 rounded-md bg-light text-dark filter drop-shadow-xl">
-                <span className="text-sm">No projects found!</span>
-              </p>
+    <PublicLayout
+      metaTitle="Sounak Mukherjee's Projects"
+      metaDesc="Check out the walkthroughs for various projects using the state-of-the-art technologies"
+    >
+      <div className="px-8 lg:px-0 pt-20 max-w-2xl mx-auto select-text">
+        <PublicHeader
+          data={{ ...PUBLIC_LIST_TYPES.projects, count: totalCount }}
+        />
+      </div>
+      <div className="px-8 lg:px-0 pb-20 max-w-4xl mx-auto">
+        {projectList.length > 0 ? (
+          <>
+            <main className="flex flex-col my-20 gap-20 items-stretch w-full">
+              {projectList.map((project, index) => (
+                <ProjectThumbnail
+                  key={project._id}
+                  data={project}
+                  index={index + parseInt(pageStartNumber) + 1}
+                />
+              ))}
             </main>
-          )}
-        </div>
-      </PublicLayout>
-    </>
+            {projectList.length < totalCount && (
+              <Pagination count={pageCount} baseURL="/projects/page" />
+            )}
+          </>
+        ) : (
+          <main className="h-[30vh] flex flex-col items-center justify-center gap-2">
+            <p className="p-4 rounded-md bg-light text-dark filter drop-shadow-xl">
+              <span className="text-sm">No projects found!</span>
+            </p>
+          </main>
+        )}
+      </div>
+      <Footer />
+    </PublicLayout>
   );
 };
 

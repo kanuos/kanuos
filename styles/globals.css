@@ -113,7 +113,7 @@ code[class*="language-"],
 pre[class*="language-"] {
   white-space: pre-wrap !important;
   word-spacing: 1.5rem;
-  @apply text-sm md:text-base;
+  @apply text-sm;
 }
 
 .markdown-editor-wrapper {
@@ -121,7 +121,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor {
-  @apply my-4 flex flex-col items-stretch text-sm md:text-base;
+  @apply flex flex-col items-stretch text-sm;
   overflow-wrap: break-word !important;
 }
 
@@ -178,24 +178,24 @@ pre[class*="language-"] {
 /* Detail page styles */
 
 .section-wrapper {
-  @apply w-full mx-auto flex flex-col items-start justify-start mb-10 px-8;
+  @apply w-full mx-auto flex flex-col items-start justify-start mb-10 px-8 md:px-10;
 }
 
 .heading--main {
-  @apply text-5xl md:text-7xl font-black my-4 max-w-sm md:max-w-xl leading-none;
+  @apply text-4xl md:text-5xl font-black my-4 max-w-sm md:max-w-xl leading-none;
 }
 
 .heading--secondary {
-  @apply text-xl md:text-3xl font-semibold max-w-xl;
+  @apply text-lg md:text-xl font-semibold max-w-xl;
 }
 
 .heading--sub {
-  @apply text-sm font-semibold md:text-base capitalize;
+  @apply text-sm font-semibold capitalize;
 }
 
 .content--main,
 .content--secondary {
-  @apply text-sm md:text-base leading-snug opacity-70;
+  @apply text-sm leading-snug opacity-70;
 }
 
 .content--main {
@@ -207,7 +207,7 @@ pre[class*="language-"] {
 }
 
 .content--sub {
-  @apply w-full text-xs md:text-sm leading-snug opacity-70;
+  @apply w-full text-xs leading-snug opacity-70;
 }
 
 .after-line,
@@ -219,6 +219,7 @@ pre[class*="language-"] {
   @apply after:left-4;
 }
 
-.after-line--center {
+.after-line--center,
+.md\:after-line--center {
   @apply after:left-1/2 after:-translate-x-1/2;
 }

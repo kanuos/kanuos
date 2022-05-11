@@ -7,6 +7,7 @@ import PublicLayout from "../components/Layouts/PublicLayout";
 import { StyledHeader } from "../components/portfolio/StyledHeader";
 import { CTA } from "../components/portfolio/CTA";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { BsEmojiDizzy } from "react-icons/bs";
 
 const PortfolioPage = () => {
   const router = useRouter();
@@ -18,7 +19,11 @@ const PortfolioPage = () => {
       metaTitle="Error 404"
       content="Page couldn't be found. Sounak Mukherjee's website"
     >
-      <StyledHeader styledText="page not found" isDarkMode={isDarkMode}>
+      <StyledHeader
+        styledText="page not found"
+        isDarkMode={isDarkMode}
+        showScroll={false}
+      >
         <>
           <button
             onClick={() => router.back()}
@@ -26,8 +31,11 @@ const PortfolioPage = () => {
           >
             &lt;&nbsp;Go back
           </button>
-          <h1 className="text-5xl md:text-7xl font-black mt-2 mb-6">Oops :(</h1>
-          <p className="w-3/4 text-xs md:text-sm font-semibold opacity-60 max-w-lg">
+          <div className="flex items-center justify-start gap-x-px">
+            <BsEmojiDizzy className="heading--main" />
+            <h1 className="heading--main">ops</h1>
+          </div>
+          <p className="content--main text-justify mb-6 mt-2">
             It seems that the page you are looking for doesn&apos;t exist or is
             temporarily unavailable.
             <br />

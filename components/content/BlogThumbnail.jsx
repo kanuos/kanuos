@@ -1,11 +1,10 @@
-import Link from "next/link";
 import { useState, useContext } from "react";
 import { PUBLIC_NAVIGATION_URLS } from "../../utils";
 import { JoinLine } from "../public/DescHeader";
 import { motion } from "framer-motion";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { PortfolioLink } from "../portfolio/PortfolioLink";
+import { CTA } from "../portfolio/CTA";
 
 export const BlogThumbnail = ({ data, index, adminMode = false }) => {
   const [hovered, setHovered] = useState(false);
@@ -113,14 +112,14 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
         animate={hovered ? "show" : "hide"}
         className="my-6 capitalize text-xs rounded hidden md:flex items-center justify-center relative overflow-hidden cursor-pointer"
       >
-        <PortfolioLink
+        <CTA
           label={adminMode ? "Open blog in Admin mode" : "Read blog"}
           href={blogURL}
         />
       </motion.div>
 
       <div className="my-6 capitalize text-xs rounded md:hidden flex items-center justify-center relative overflow-hidden cursor-pointer">
-        <PortfolioLink
+        <CTA
           label={adminMode ? "Open blog in Admin mode" : "Read blog"}
           href={blogURL}
         />

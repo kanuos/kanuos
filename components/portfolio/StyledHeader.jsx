@@ -12,7 +12,7 @@ export const StyledHeader = ({
   ));
   return (
     <header className="h-screen w-full mx-auto relative block pt-20">
-      <section className="flex flex-col items-start px-8 h-4/5 md:h-3/4 w-full max-w-4xl mx-auto">
+      <section className="flex flex-col items-start px-8 md:px-10 h-4/5 md:h-3/4 w-full max-w-4xl mx-auto">
         {children}
       </section>
       {showScroll && (
@@ -31,11 +31,16 @@ export const StyledHeader = ({
         className={`absolute bottom-24 right-2 bg-contain bg-repeat w-auto h-auto grid place-items-end pointer-events-none `}
       >
         <h2
+          className={`uppercase absolute z-0 text-6xl sm:text-7xl xl:text-9xl font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-[17rem] sm:max-w-sm md:max-w-md break-words text-right block box-decoration-clone opacity-30`}
+        >
+          {styledContent}
+        </h2>
+        <h2
           className={`styledText uppercase absolute z-10 text-6xl sm:text-7xl ${
             isDarkMode
               ? "bg-[url('/styledDark.webp')]"
               : "bg-[url('/styledImg.webp')]"
-          } opacity-100 xl:text-8xl font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-[17rem] sm:max-w-[30rem] xl:max-w-lg break-words text-right block box-decoration-clone`}
+          } opacity-100 xl:text-9xl font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-[17rem] sm:max-w-sm md:max-w-md break-words text-right block box-decoration-clone`}
         >
           {styledContent}
         </h2>

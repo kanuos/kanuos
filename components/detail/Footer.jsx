@@ -9,12 +9,12 @@ export const Footer = ({ about = "author", content = "" }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
     <footer
-      className={`relative mt-auto text-xs w-full flex flex-col items-center justify-between pb-6 ${
+      className={`relative mt-auto text-xs w-full flex flex-col items-center justify-between ${
         isDarkMode ? "nav-light" : "nav-dark"
       }`}
     >
-      <div className="px-10 w-full max-w-4xl mx-auto">
-        <figure className="relative h-16 w-16 p-1 bg-light block rounded-full -translate-y-1/2 filter drop-shadow-[0_-4px_20px_rgba(23,23,56,.35)]">
+      <div className="px-8 md:px-10 pb-10 w-full max-w-4xl mx-auto">
+        <figure className="relative h-16 w-16 md:w-20 md:h-20 p-1 bg-light block rounded-full -translate-y-1/2 filter drop-shadow-[0_-4px_20px_rgba(23,23,56,.35)]">
           <Image
             src={me}
             className="top-0 object-cover rounded-full h-full w-full"

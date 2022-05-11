@@ -8,16 +8,14 @@ export const PublicHeader = ({ data }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
     <header className="flex flex-col items-start mb-24 gap-y-2">
-      <h1 className="text-5xl md:text-7xl font-black mt-2 mb-6 w-min">
-        {title}
-      </h1>
-      <p className="w-3/4 text-sm opacity-75">{desc}</p>
+      <h1 className="heading--main">{title}</h1>
+      <p className="content--main my-6">{desc}</p>
       {count > 0 && (
-        <strong className="capitalize text-xs font-semibold mt-4">
+        <strong className="heading--sub">
           total {type} : {count}
         </strong>
       )}
-      <div className="mt-10">
+      <div className="mt-4">
         <CTA
           isDarkMode={isDarkMode}
           externalLink={true}
@@ -28,3 +26,5 @@ export const PublicHeader = ({ data }) => {
     </header>
   );
 };
+
+// TODO: CTA search button to search type

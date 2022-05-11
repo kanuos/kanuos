@@ -25,9 +25,7 @@ export const DetailHeader = ({
       </StyledHeader>
       {tags.length > 0 && (
         <section className="section-wrapper max-w-4xl mx-auto">
-          <h2 className="text-sm font-semibold md:text-base">
-            Tag{tags.length === 1 ? "" : "s"}
-          </h2>
+          <h2 className="heading--sub">Tag{tags.length === 1 ? "" : "s"}</h2>
           <ul className="flex flex-wrap items-center my-4 justify-start gap-4 gap-y-3 max-w-3xl mr-auto w-full text-sm">
             {tags?.map((t, i) => (
               <li key={i}>

@@ -12,6 +12,9 @@ import dynamic from "next/dynamic";
 const Pagination = dynamic(() =>
   import("../../../components/public/Pagination").then((m) => m.Pagination)
 );
+const Footer = dynamic(() =>
+  import("../../../components/public/Footer").then((m) => m.Footer)
+);
 
 const DesignList = ({ designList, totalCount, pageStartNumber, pageCount }) => {
   designList = JSON.parse(designList);
@@ -24,12 +27,12 @@ const DesignList = ({ designList, totalCount, pageStartNumber, pageCount }) => {
       metaTitle="Sounak Mukherjee's designs"
       metaDesc="Check out the UI-UX designs and prototypes I designed for various products"
     >
-      <div className="px-10 pt-20 lg:px-0 max-w-2xl mx-auto select-text">
+      <div className="px-8 pt-20 lg:px-0 max-w-2xl mx-auto select-text">
         <PublicHeader
           data={{ ...PUBLIC_LIST_TYPES.designs, count: totalCount }}
         />
       </div>
-      <div className="px-10 pb-20 w-full mx-auto max-w-7xl">
+      <div className="px-8 pb-20 w-full mx-auto max-w-7xl">
         {designList.length > 0 ? (
           <>
             <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-20 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto">
@@ -53,6 +56,7 @@ const DesignList = ({ designList, totalCount, pageStartNumber, pageCount }) => {
           </main>
         )}
       </div>
+      <Footer />
     </PublicLayout>
   );
 };

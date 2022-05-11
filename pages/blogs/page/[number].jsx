@@ -1,28 +1,21 @@
 // BLOG LIST PAGE
 
-import { useContext } from "react";
 // import : internal
-import { HeadComponent } from "../../../components/Head";
 import { PublicHeader } from "../../../components/public/Header";
 import { ITEMS_PER_PAGE, PUBLIC_LIST_TYPES } from "../../../utils";
 import { BlogThumbnail } from "../../../components/content/BlogThumbnail";
 import { getAllBlogs } from "../../../database/blogs";
 
-import { ThemeContext } from "../../../contexts/ThemeContext";
 import dynamic from "next/dynamic";
+import PublicLayout from "../../../components/Layouts/PublicLayout";
 
 // dynamic imports
-const NavBar = dynamic(() =>
-  import("../../../components/public/Nav").then((m) => m.NavBar)
-);
+
 const Footer = dynamic(() =>
   import("../../../components/public/Footer").then((m) => m.Footer)
 );
 const Pagination = dynamic(() =>
   import("../../../components/public/Pagination").then((m) => m.Pagination)
-);
-const ThemeToggler = dynamic(() =>
-  import("../../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
 );
 
 const BlogList = ({ blogList, totalCount, pageStartNumber, pageCount }) => {
@@ -31,53 +24,42 @@ const BlogList = ({ blogList, totalCount, pageStartNumber, pageCount }) => {
   pageStartNumber = JSON.parse(pageStartNumber);
   pageCount = JSON.parse(pageCount);
 
-  const { isDarkMode } = useContext(ThemeContext);
-
   return (
-    <>
-      <HeadComponent
-        title="Sounak Mukherjee's Blogs"
-        content="Check out my blogs where I solve various problems, learn new tech etc"
-      />
-      <NavBar />
-      <ThemeToggler />
-      <strong></strong>
-      <div
-        className={
-          "h-full  min-h-screen scrollbar-thin w-full overflow-hidden " +
-          (isDarkMode ? "main-dark" : "main-light")
-        }
-      >
-        <div className="px-12 lg:px-0 py-20 max-w-3xl mx-auto select-text">
-          <PublicHeader
-            data={{ ...PUBLIC_LIST_TYPES.blogs, count: totalCount }}
-          />
-          {blogList.length > 0 ? (
-            <>
-              <main className="flex flex-col my-20 gap-20 items-stretch w-full gap-y-20 mx-auto">
-                {blogList.map((blog, index) => (
-                  <BlogThumbnail
-                    key={blog._id}
-                    data={blog}
-                    index={index + parseInt(pageStartNumber) + 1}
-                  />
-                ))}
-              </main>
-              {blogList.length < totalCount && (
-                <Pagination count={pageCount} baseURL="/blogs/page" />
-              )}
-            </>
-          ) : (
-            <main className="h-[30vh] flex flex-col items-center justify-center gap-2">
-              <p className="p-4 rounded-md bg-light text-dark filter drop-shadow-xl">
-                <span className="text-sm">No blogs found!</span>
-              </p>
+    <PublicLayout
+      metaTitle="Sounak Mukherjee's blogs"
+      metaDesc="Check out the UI-UX blogs and prototypes I bloged for various products"
+    >
+      <div className="px-8 pt-20 lg:px-0 max-w-2xl mx-auto select-text">
+        <PublicHeader
+          data={{ ...PUBLIC_LIST_TYPES.blogs, count: totalCount }}
+        />
+      </div>
+      <div className="px-8 pb-20 w-full mx-auto max-w-4xl">
+        {blogList.length > 0 ? (
+          <>
+            <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-20 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto">
+              {blogList.map((blog, index) => (
+                <BlogThumbnail
+                  key={blog._id}
+                  data={blog}
+                  index={index + parseInt(pageStartNumber) + 1}
+                />
+              ))}
             </main>
-          )}
-        </div>
+            {blogList.length < totalCount && (
+              <Pagination count={pageCount} baseURL="/blogs/page" />
+            )}
+          </>
+        ) : (
+          <main className="h-[30vh] flex flex-col items-center justify-center gap-2">
+            <p className="p-4 rounded-md bg-light text-dark filter drop-shadow-xl">
+              <span className="text-sm">No blogs found!</span>
+            </p>
+          </main>
+        )}
       </div>
       <Footer />
-    </>
+    </PublicLayout>
   );
 };
 
