@@ -1,7 +1,5 @@
 import { useContext } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import Markdown from "react-markdown";
 
 // import : internal
 import { PUBLIC_URLS } from "../../utils";
@@ -9,14 +7,22 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { DetailHeader } from "../detail/Header";
 import { PageLink } from "../portfolio/PageLink";
 
-const PageSegment = dynamic(() =>
-  import("../public/PageComponents").then((m) => m.PageSegment)
+// dynamic imports
+const CodeStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.CodeStep)
+);
+const ImageStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.ImageStep)
+);
+const MarkdownStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.MarkdownStep)
 );
 
+// React Component
 export const BlogDetailBody = ({ blog }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
-    <div>
+    <div className="overflow-hidden">
       <DetailHeader
         category={blog.category}
         isDarkMode={isDarkMode}
@@ -29,50 +35,77 @@ export const BlogDetailBody = ({ blog }) => {
         date={blog.date}
         tags={blog.tags}
       />
+      <div className="w-full max-w-4xl mx-auto relative md:mt-20">
+        <ul className="relative z-0 flex flex-col items-start w-full pb-10 md:grid md:grid-cols-4">
+          {blog.page.map((step, i) => {
+            const { key, value } = step;
+            return (
+              <li
+                key={i}
+                className={`w-full ${
+                  ["heading", "image"].includes(key)
+                    ? "md:col-start-1 md:col-end-2"
+                    : ""
+                }
+              ${
+                "heading" === key
+                  ? `md:sticky md:top-1 ${isDarkMode ? "bg-dark" : "bg-light"}`
+                  : ""
+              }
+                ${
+                  ["markdown", "code"].includes(key)
+                    ? "md:col-start-2 md:col-end-5"
+                    : ""
+                }`}
+              >
+                {key === "markdown" && (
+                  <section className="section-wrapper">
+                    <MarkdownStep text={value} />
+                  </section>
+                )}
+                {key === "code" && (
+                  <section className="section-wrapper whitespace-pre-line w-full overflow-x-scroll scrollbar-none">
+                    <CodeStep
+                      language={step.language}
+                      code={step.code}
+                      file={step.filename}
+                    />
+                  </section>
+                )}
+                {key === "heading" && (
+                  <h2 className="heading--sub uppercase mb-6 max-w-4xl mx-auto px-8 pb-4">
+                    {value}
+                  </h2>
+                )}
+                {key === "image" && <ImageStep url={value} />}
+              </li>
+            );
+          })}
+        </ul>
+        {/* </section> */}
 
-      {/* <section className="w-full flex flex-col items-start justify-start pb-10 relative "> */}
-      <ul className="relative z-0 flex flex-col items-start w-full pb-10">
-        {blog.page.map(({ key, value }, i) => (
-          <li key={i} className="w-full">
-            {key === "markdown" && (
-              <section className="section-wrapper">
-                <div className="markdown-editor-wrapper">
-                  <Markdown>{value}</Markdown>
-                </div>
-              </section>
+        {/* conclusion */}
+        <section className="section-wrapper pb-20 md:grid md:grid-cols-4">
+          <h2 className="heading--sub uppercase mb-6 md:col-start-1 md:col-end-2 md:sticky md:top-0">
+            {blog.outro?.heading}
+          </h2>
+          <div className="flex flex-col items-start gap-2 md:col-start-2 md:col-end-5">
+            <p className="content--secondary">{blog.outro?.text}</p>
+            {[...Object.values(blog?.repo), ...Object.values(blog?.demo)].every(
+              (el) => Boolean(el.trim())
+            ) && (
+              <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
+                {Object.values(blog.repo).every((el) => Boolean(el.trim())) && (
+                  <PageLink label={blog.repo.label} href={blog.repo.href} />
+                )}
+                {Object.values(blog.demo).every((el) => Boolean(el.trim())) && (
+                  <PageLink label={blog.demo.label} href={blog.demo.href} />
+                )}
+              </div>
             )}
-            {key === "heading" && (
-              <h2 className="heading--secondary max-w-4xl mx-auto px-8 pb-4">
-                {value}
-              </h2>
-            )}
-            {key === "image" && (
-              <figure className="h-[60vh] w-screen block relative my-8">
-                <Image
-                  src={value}
-                  alt=""
-                  layout="fill"
-                  className="h-full w-full object-cover block"
-                  loader={({ src, width }) => `${src}?w=${width}&q=100`}
-                />
-              </figure>
-            )}
-          </li>
-        ))}
-      </ul>
-      {/* </section> */}
-
-      {/* conclusion */}
-      <section className="section-wrapper pb-20">
-        <h2 className="heading--secondary mb-6 capitalize">
-          {blog.outro?.heading}
-        </h2>
-        <p className="content--secondary">{blog.outro?.text}</p>
-        <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
-          <PageLink label="Source code" href="" />
-          <PageLink label="Live demo" href="" />
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

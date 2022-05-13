@@ -15,7 +15,9 @@ export const DetailHeader = ({
   return (
     <>
       <StyledHeader styledText={category} isDarkMode={isDarkMode}>
-        <PageLink label={back.text} href={back.url} />
+        <div className="w-max max-w-xs">
+          <PageLink label={back.text} href={back.url} />
+        </div>
         <h1 className="heading--main leading-none">{title}</h1>
         <p className="content--main ">{desc}</p>
         <section className="w-full mx-auto flex flex-col items-start justify-start my-6">
