@@ -6,10 +6,12 @@ import Markdown from "react-markdown";
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { DetailHeader } from "../detail/Header";
-import { Conclusion } from "../detail/Conclusion";
 
 const PageComponents = dynamic(() =>
   import("../public/PageComponents").then((m) => m.PageComponents)
+);
+const Conclusion = dynamic(() =>
+  import("../detail/Conclusion").then((m) => m.Conclusion)
 );
 
 export const ProjectDetailBody = ({ project }) => {
@@ -18,8 +20,15 @@ export const ProjectDetailBody = ({ project }) => {
   const [activeChapter, setActiveChapter] = useState(0);
   const [completed, setCompleted] = useState(Array(LENGTH).fill(false));
 
-  const toggleCompletionStatus = useCallback(({ i, stat }) =>
-    setCompleted((prev) => prev.map((el, k) => (k === i ? stat : el)))
+  const toggleCompletionStatus = useCallback(
+    ({ i, stat }) =>
+      setCompleted((prev) => prev.map((el, k) => (k === i ? stat : el))),
+    [LENGTH]
+  );
+
+  const setActiveChapterCB = useCallback(
+    (i) => setActiveChapter(() => i),
+    [LENGTH]
   );
 
   return (
@@ -105,7 +114,7 @@ export const ProjectDetailBody = ({ project }) => {
                 <PageComponents
                   key={activeChapter}
                   active={activeChapter}
-                  setActiveChapter={setActiveChapter}
+                  setActiveChapter={setActiveChapterCB}
                   segment={chapter}
                   completed={completed[i]}
                   toggleCompletionStatus={toggleCompletionStatus}

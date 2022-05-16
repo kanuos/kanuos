@@ -5,9 +5,11 @@ import dynamic from "next/dynamic";
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { DetailHeader } from "../detail/Header";
-import { Conclusion } from "../detail/Conclusion";
 
 // dynamic imports
+const Conclusion = dynamic(() =>
+  import("../detail/Conclusion").then((m) => m.Conclusion)
+);
 const CodeStep = dynamic(() =>
   import("../public/PageStepComponent").then((m) => m.CodeStep)
 );

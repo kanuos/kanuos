@@ -7,7 +7,6 @@ import Markdown from "react-markdown";
 // import : internal
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import dynamic from "next/dynamic";
 import { PageLink } from "../portfolio/PageLink";
 import { ImageCarousel } from "./ImageCarousel";
 import { DetailHeader } from "../detail/Header";

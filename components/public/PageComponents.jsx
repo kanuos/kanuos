@@ -1,5 +1,6 @@
 // built in imports
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 
 // external imports
 import { motion } from "framer-motion";
@@ -10,9 +11,19 @@ import {
 } from "react-icons/ai";
 
 // internal imports
-import { MarkdownStep, ImageStep, CodeStep } from "./PageStepComponent";
 import { CTA } from "../portfolio/CTA";
 import { STEP_TYPE } from "../../utils";
+
+// dynamic imports
+const MarkdownStep = dynamic(() =>
+  import("./PageStepComponent").then((m) => m.MarkdownStep)
+);
+const ImageStep = dynamic(() =>
+  import("./PageStepComponent").then((m) => m.ImageStep)
+);
+const CodeStep = dynamic(() =>
+  import("./PageStepComponent").then((m) => m.CodeStep)
+);
 
 export const PageComponents = ({
   segment,
@@ -102,12 +113,12 @@ export const PageComponents = ({
   useEffect(() => {
     if (!show) return;
     setActiveChapter(index - 1);
-  }, [show]);
+  }, [show, index]);
 
   useEffect(() => {
     if (isComplete === completed) return;
     toggleCompletionStatus({ i: index - 1, stat: isComplete });
-  }, [isComplete]);
+  }, [isComplete, completed, index]);
 
   return (
     <motion.section
