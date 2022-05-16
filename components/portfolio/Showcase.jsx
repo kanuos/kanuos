@@ -39,10 +39,12 @@ export const Showcase = ({ works = [], isDarkMode = false }) => {
         </motion.section>
       </AnimatePresence>
       <div className="w-full grid place-items-center h-auto">
-        <PageLink
-          label="Check out my other works"
-          href={PUBLIC_URLS.home.url}
-        />
+        <div>
+          <PageLink
+            label="Check out my other works"
+            href={PUBLIC_URLS.home.url}
+          />
+        </div>
       </div>
     </section>
   );
