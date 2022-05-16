@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { DetailHeader } from "../detail/Header";
-import { PageLink } from "../portfolio/PageLink";
+import { Conclusion } from "../detail/Conclusion";
 
 // dynamic imports
 const CodeStep = dynamic(() =>
@@ -22,7 +22,7 @@ const MarkdownStep = dynamic(() =>
 export const BlogDetailBody = ({ blog }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden relative">
       <DetailHeader
         category={blog.category}
         isDarkMode={isDarkMode}
@@ -36,22 +36,18 @@ export const BlogDetailBody = ({ blog }) => {
         tags={blog.tags}
       />
       <div className="w-full max-w-4xl mx-auto relative md:mt-20">
-        <ul className="relative z-0 flex flex-col items-start w-full pb-10 md:grid md:grid-cols-4">
+        <ul className="relative z-0 flex flex-col items-start w-full pb-10 md:grid md:grid-cols-4 gap-6">
           {blog.page.map((step, i) => {
             const { key, value } = step;
             return (
               <li
                 key={i}
-                className={`w-full ${
+                className={`w-full 
+                ${
                   ["heading", "image"].includes(key)
                     ? "md:col-start-1 md:col-end-2"
                     : ""
                 }
-              ${
-                "heading" === key
-                  ? `md:sticky md:top-1 ${isDarkMode ? "bg-dark" : "bg-light"}`
-                  : ""
-              }
                 ${
                   ["markdown", "code"].includes(key)
                     ? "md:col-start-2 md:col-end-5"
@@ -66,9 +62,9 @@ export const BlogDetailBody = ({ blog }) => {
                 {key === "code" && (
                   <section className="section-wrapper whitespace-pre-line w-full overflow-x-scroll scrollbar-none">
                     <CodeStep
-                      language={step.language}
-                      code={step.code}
-                      file={step.filename}
+                      language={value.language}
+                      code={value.code}
+                      file={value.filename}
                     />
                   </section>
                 )}
@@ -85,26 +81,12 @@ export const BlogDetailBody = ({ blog }) => {
         {/* </section> */}
 
         {/* conclusion */}
-        <section className="section-wrapper pb-20 md:grid md:grid-cols-4">
-          <h2 className="heading--sub uppercase mb-6 md:col-start-1 md:col-end-2 md:sticky md:top-0">
-            {blog.outro?.heading}
-          </h2>
-          <div className="flex flex-col items-start gap-2 md:col-start-2 md:col-end-5">
-            <p className="content--secondary">{blog.outro?.text}</p>
-            {[...Object.values(blog?.repo), ...Object.values(blog?.demo)].every(
-              (el) => Boolean(el.trim())
-            ) && (
-              <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
-                {Object.values(blog.repo).every((el) => Boolean(el.trim())) && (
-                  <PageLink label={blog.repo.label} href={blog.repo.href} />
-                )}
-                {Object.values(blog.demo).every((el) => Boolean(el.trim())) && (
-                  <PageLink label={blog.demo.label} href={blog.demo.href} />
-                )}
-              </div>
-            )}
-          </div>
-        </section>
+        <Conclusion
+          heading={blog.outro?.heading}
+          text={blog.outro?.text}
+          repo={blog.repo}
+          demo={blog.demo}
+        />
       </div>
     </div>
   );

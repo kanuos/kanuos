@@ -1,156 +1,129 @@
-import { useContext } from "react";
+import { useContext, useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import Markdown from "react-markdown";
 
 // import : internal
-import { StyledHeader } from "../portfolio/StyledHeader";
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { PageLink } from "../portfolio/PageLink";
+import { DetailHeader } from "../detail/Header";
+import { Conclusion } from "../detail/Conclusion";
 
-const Tag = dynamic(() => import("../public/Tag").then((m) => m.Tag));
-const PageSegment = dynamic(() =>
-  import("../public/PageComponents").then((m) => m.PageSegment)
+const PageComponents = dynamic(() =>
+  import("../public/PageComponents").then((m) => m.PageComponents)
 );
 
 export const ProjectDetailBody = ({ project }) => {
+  const LENGTH = project.chapters.length;
   const { isDarkMode } = useContext(ThemeContext);
-  return (
-    <>
-      <div className="-mt-4">
-        <StyledHeader styledText={project.category} isDarkMode={isDarkMode}>
-          <PageLink
-            label={"Back to Projects"}
-            href={PUBLIC_URLS.projects.url}
-          />
-          <h1 className="text-4xl md:text-6xl font-black my-6 w-full max-w-xl">
-            {project.title}
-          </h1>
-          <p
-            className={
-              "w-3/4 max-w-lg " + (isDarkMode ? "opacity-80" : "opacity-100")
-            }
-          >
-            {project.desc}
-          </p>
-          <section className="w-full mx-auto flex flex-col items-start justify-start my-6">
-            <h2 className="text-sm font-semibold">Published On</h2>
-            <p
-              className={
-                "my-2 max-w-3xl mr-auto w-full text-sm " +
-                (isDarkMode ? "opacity-80" : "opacity-100")
-              }
-            >
-              {new Date(project.date ?? "").toDateString()}
-            </p>
-          </section>
-        </StyledHeader>
-      </div>
+  const [activeChapter, setActiveChapter] = useState(0);
+  const [completed, setCompleted] = useState(Array(LENGTH).fill(false));
 
-      <div className="relative h-full w-full max-w-4xl mx-auto -mt-10">
-        <section className="w-full mx-auto flex flex-col items-start justify-start my-10 px-10">
-          <h2 className="text-sm font-semibold">Tags</h2>
-          <ul className="flex flex-wrap items-center my-4 justify-start gap-4 gap-y-3 max-w-3xl mr-auto w-full ">
-            {project.tags?.map((t, i) => (
-              <li key={i}>
-                <Tag tag={t} />
+  const toggleCompletionStatus = useCallback(({ i, stat }) =>
+    setCompleted((prev) => prev.map((el, k) => (k === i ? stat : el)))
+  );
+
+  return (
+    <div
+      className={
+        "overflow-hidden relative h-full w-full min-h-screen " +
+        (isDarkMode ? "bg-hero--dark" : "bg-hero--light")
+      }
+    >
+      <DetailHeader
+        category={project.category}
+        isDarkMode={isDarkMode}
+        back={{
+          url: PUBLIC_URLS.projects.url,
+          text: "Back to projects",
+        }}
+        title={project.title}
+        desc={project.desc}
+        date={project.date}
+        tags={project.tags}
+      />
+
+      <div className="relative h-full w-full">
+        <section className="section-wrapper md:mb-20 max-w-4xl mx-auto">
+          <h2 className="heading--sub">Difficulty Level</h2>
+          <p className={"content--secondary capitalize"}>
+            {project.difficulty}
+          </p>
+        </section>
+
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <h2 className="heading--sub uppercase mb-6 md:col-start-1 md:col-end-2">
+            Project overview
+          </h2>
+          <div className="markdown-editor-wrapper md:col-start-2 md:col-end-5">
+            <Markdown>{project.prerequisites}</Markdown>
+          </div>
+        </section>
+
+        <section className="section-wrapper my-28 max-w-5xl mx-auto">
+          <div className="max-w-4xl mx-auto w-full md:grid md:grid-cols-4 gap-6">
+            <h2 className="heading--sub uppercase mb-6 md:col-start-1 md:col-end-2">
+              Project Curriculum
+            </h2>
+            <p className="md:col-start-2 md:col-end-5 content--secondary">
+              Project <strong className="font-semibold">{project.title}</strong>{" "}
+              is classified into{" "}
+              <strong className="font-semibold">{LENGTH}</strong> chapters for
+              the better modulization. By default, all the chapters are marked
+              as unread and you can toggle the completion status of each chapter
+              by clicking on the button at the bottom of each chapter.
+              {project.repo && Object.values(project.repo).every(Boolean) && (
+                <>
+                  <br />
+                  You can find the link to the project&apos;s source code at the
+                  end of the chapters section.
+                </>
+              )}
+            </p>
+          </div>
+          <div className="flex items-center justify-center pt-32 gap-2 w-full">
+            <h3 className="heading--main w-max">Chapters</h3>
+            <p className="text-sm">
+              <sup>({LENGTH})</sup>
+            </p>
+          </div>
+          <p className="text-center text-sm w-full">
+            <small>
+              Completed :{" "}
+              {(Math.round(completed.filter(Boolean).length) * 100) / LENGTH}%
+            </small>
+          </p>
+          <ul className="flex flex-col items-start w-full gap-y-20 mx-auto my-16 md:col-span-full pt-16 after-line--center">
+            {project.chapters.map((chapter, i) => (
+              <li
+                key={i}
+                className={`relative flex items-center justify-start w-full md:w-4/5 even:ml-auto odd:mr-auto rounded-lg overflow-hidden  ${
+                  !isDarkMode
+                    ? "nav-dark dark-shadow"
+                    : "nav-light light-shadow"
+                }`}
+              >
+                <PageComponents
+                  key={activeChapter}
+                  active={activeChapter}
+                  setActiveChapter={setActiveChapter}
+                  segment={chapter}
+                  completed={completed[i]}
+                  toggleCompletionStatus={toggleCompletionStatus}
+                  index={i + 1}
+                  isDarkMode={isDarkMode}
+                />
               </li>
             ))}
           </ul>
         </section>
 
-        <section className="w-full mx-auto flex flex-col items-start justify-start my-10 px-10">
-          <h2 className="text-sm font-semibold">Difficulty Level</h2>
-          <p
-            className={
-              "my-2 max-w-3xl mr-auto w-full text-sm capitalize " +
-              (isDarkMode ? "opacity-80" : "opacity-100")
-            }
-          >
-            {project.difficulty}
-          </p>
-        </section>
-
-        <section className="w-full mx-auto flex flex-col items-start justify-start my-10 px-10">
-          <h2 className="text-3xl md:text-5xl font-semibold max-w-xl my-10">
-            Project overview
-          </h2>
-          <div
-            className={
-              "flex flex-col items-start my-4 list-outside list-[square] justify-start gap-y-3 max-w-4xl markdown-editor w-full " +
-              (isDarkMode ? "opacity-80" : "opacity-100")
-            }
-          >
-            <Markdown>{project.prerequisites}</Markdown>
-          </div>
-        </section>
+        <Conclusion
+          heading={project.outro?.heading}
+          text={project.outro?.text}
+          repo={project?.repo}
+          demo={project?.demo}
+        />
       </div>
-
-      <section className="w-full flex flex-col items-start justify-start py-20 relative ">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-10 -z-10 pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto w-full px-10">
-          <h2 className="text-3xl md:text-5xl font-semibold max-w-xl capitalize mb-10">
-            project curriculum
-          </h2>
-          <p className="leading-relaxed mb-6">
-            Project <strong className="font-semibold">{project.title}</strong>{" "}
-            is classified into{" "}
-            <strong className="font-semibold">{project.chapters.length}</strong>{" "}
-            chapters for the better modulization. By default, all the chapters
-            are marked as unread and you can toggle the completion status of
-            each chapter by clicking on the button at the bottom of each
-            chapter.
-            {project.repo && Object.values(project.repo).every(Boolean) && (
-              <>
-                <br />
-                You can find the link to the project&apos;s source code at the
-                end of the chapters section.
-              </>
-            )}
-          </p>
-        </div>
-        <ul className="flex flex-col items-start w-11/12 max-w-4xl gap-y-10 mx-auto my-10 after:h-full after:absolute relative after:w-0.5 after:bg-secondary after:left-4  md:after:left-10 after:top-0 after:z-0">
-          {project.chapters.map((chapter, i) => (
-            <li
-              key={i}
-              className="flex items-center justify-start w-full relative z-10"
-            >
-              <PageSegment
-                segment={chapter}
-                index={i + 1}
-                isDarkMode={isDarkMode}
-              />
-            </li>
-          ))}
-        </ul>
-        <section className="w-full max-w-4xl mx-auto flex flex-col items-start justify-start px-10">
-          <h2 className="text-3xl md:text-5xl font-semibold max-w-xl mb-6">
-            <span className="text-2xl capitalize font-semibold">
-              {project?.outro?.heading}
-            </span>
-          </h2>
-          <p
-            className={
-              "leading-relaxed " + (isDarkMode ? "opacity-80" : "opacity-100")
-            }
-          >
-            {project.outro?.text}
-          </p>
-        </section>
-      </section>
-
-      <section className="w-full mx-auto max-w-4xl flex flex-col items-start justify-start my-10 px-10 pb-20">
-        <h2 className="text-sm font-semibold">Resources</h2>
-        <p
-          className={
-            "my-2 max-w-3xl mr-auto w-full text-sm capitalize " +
-            (isDarkMode ? "opacity-80" : "opacity-100")
-          }
-        >
-          REPO + DEMO
-          {/* TODO: complete repo demo */}
-        </p>
-      </section>
-    </>
+    </div>
   );
 };

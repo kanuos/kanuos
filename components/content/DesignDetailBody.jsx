@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 // import : external
@@ -199,10 +198,6 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
                 please ask me for permission. If you wish to see this design as
                 a project, let me know the same.
               </p>
-              <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
-                <PageLink label="Source code" href="" />
-                <PageLink label="Live demo" href="" />
-              </div>
             </div>
           </div>
         </section>

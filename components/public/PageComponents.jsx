@@ -1,15 +1,27 @@
 // built in imports
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // external imports
 import { motion } from "framer-motion";
-import { IoChevronDownCircleOutline, IoCheckmarkCircle } from "react-icons/io5";
+import {
+  AiFillDownCircle,
+  AiFillCheckCircle,
+  AiOutlineLoading3Quarters,
+} from "react-icons/ai";
 
 // internal imports
-import { Step } from "./PageStepComponent";
+import { MarkdownStep, ImageStep, CodeStep } from "./PageStepComponent";
 import { CTA } from "../portfolio/CTA";
+import { STEP_TYPE } from "../../utils";
 
-export const PageSegment = ({ segment, index, isDarkMode }) => {
+export const PageComponents = ({
+  segment,
+  index,
+  setActiveChapter,
+  active,
+  completed,
+  toggleCompletionStatus,
+}) => {
   const variants = {
     section: {
       show: {
@@ -79,24 +91,36 @@ export const PageSegment = ({ segment, index, isDarkMode }) => {
     },
   };
 
-  const [show, setShow] = useState(!true);
-  const [isComplete, setIsComplete] = useState(false);
+  const [show, setShow] = useState(active === index - 1);
+  const [isComplete, setIsComplete] = useState(completed);
 
   function toggleReadStatus() {
     setIsComplete((prev) => !prev);
     setShow((prev) => !prev);
   }
 
+  useEffect(() => {
+    if (!show) return;
+    setActiveChapter(index - 1);
+  }, [show]);
+
+  useEffect(() => {
+    if (isComplete === completed) return;
+    toggleCompletionStatus({ i: index - 1, stat: isComplete });
+  }, [isComplete]);
+
   return (
     <motion.section
       variants={variants.section}
       animate={show ? "show" : "hide"}
-      className={
-        "w-full block rounded-md transition-all shadow-xl " +
-        (isDarkMode ? "nav-dark chapter-dark" : "nav-light chapter-light")
-      }
+      className={"w-full block transition-all relative z-20 "}
     >
-      <ul className="text-xs flex flex-col w-full items-start gap-1 p-4">
+      <ul
+        className={
+          "text-xs flex flex-col w-full items-start gap-1 p-6 md:px-10 " +
+          (show ? "border-b border-current mb-6" : "")
+        }
+      >
         <li>
           <small className="font-semibold opacity-60">Chapter {index}</small>
         </li>
@@ -111,14 +135,12 @@ export const PageSegment = ({ segment, index, isDarkMode }) => {
             }}
             animate={show && !isComplete ? { rotate: 180 } : { rotate: 0 }}
             onClick={() => setShow((prev) => !prev)}
-            className={
-              "aspect-square " + (show ? "" : "opacity-50 hover:opacity-100")
-            }
+            className="aspect-square text-xl"
           >
             {isComplete ? (
-              <IoCheckmarkCircle className="text-secondary text-3xl" />
+              <AiFillCheckCircle className="text-secondary" />
             ) : (
-              <IoChevronDownCircleOutline className="text-dark hover:text-primary text-3xl" />
+              <AiFillDownCircle className="hover:text-primary" />
             )}
           </motion.button>
         </li>
@@ -126,7 +148,7 @@ export const PageSegment = ({ segment, index, isDarkMode }) => {
 
       <motion.section
         className={
-          "px-4 md:px-6 overflow-hidden w-full max-w-4xl mx-auto " +
+          "px-6 md:px-10 overflow-hidden w-full " +
           (show ? "pt-4 pb-16" : "pb-4")
         }
         animate={show ? "show" : "hide"}
@@ -137,22 +159,57 @@ export const PageSegment = ({ segment, index, isDarkMode }) => {
           animate={show ? "show" : "hide"}
           variants={variants.body}
           exit="hide"
-          className="mb-10 pb-4"
         >
-          {segment.steps?.map((step, i) => (
-            <Step step={step} key={i} />
+          {segment.steps?.map(({ key, value }, i) => (
+            <section key={i}>
+              {key === STEP_TYPE.markdown && (
+                <div className="md:w-5/6">
+                  <MarkdownStep text={value} />
+                </div>
+              )}
+              {key === STEP_TYPE.code && (
+                <div className="md:w-5/6">
+                  <CodeStep
+                    code={value.code}
+                    file={value.file}
+                    language={value.language}
+                  />
+                </div>
+              )}
+              {key === STEP_TYPE.image && (
+                <ImageStep url={value} projectMode={true} />
+              )}
+            </section>
           ))}
         </motion.article>
-        <div className="mx-auto w-max">
-          <CTA
-            label={isComplete ? "Chapter completed" : "Mark as complete"}
-            isActive={isComplete}
-            isDarkMode={isDarkMode}
-            btnMode={true}
-            cb={toggleReadStatus}
-          />
-        </div>
       </motion.section>
+      <div
+        className={`grid place-content-center ${
+          isComplete ? "bg-secondary py-8" : show ? "bg-primary py-8" : "hidden"
+        }`}
+      >
+        <CTA
+          label={
+            isComplete ? (
+              <div className="flex items-center justify-center gap-x-1 group">
+                <AiFillCheckCircle className="block group-hover:hidden" />
+                <span className="block group-hover:hidden">
+                  Chapter complete!
+                </span>
+                <span className="hidden group-hover:block">Mark as unread</span>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-x-1">
+                <AiOutlineLoading3Quarters className="animate-spin" />
+                <span>Mark chapter as complete</span>
+              </div>
+            )
+          }
+          isActive={isComplete}
+          btnMode={true}
+          cb={toggleReadStatus}
+        />
+      </div>
     </motion.section>
   );
 };

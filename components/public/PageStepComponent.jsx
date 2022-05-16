@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { isValidURL, STEP_TYPE } from "../../utils";
+import { isValidURL } from "../../utils";
 
 import Markdown from "react-markdown";
-
 import Image from "next/image";
 
 import { highlightAll } from "prismjs";
@@ -11,59 +10,36 @@ import "prismjs/components/prism-python";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-django";
 
-export const Step = ({ step }) => {
-  const { key, value } = step;
-  switch (key.toLowerCase()) {
-    case STEP_TYPE.code:
-      return (
-        <CodeStep
-          code={value.code}
-          file={value.file}
-          language={value.language}
-        />
-      );
-
-    case STEP_TYPE.markdown:
-      return <MarkdownStep text={value} />;
-
-    case STEP_TYPE.image:
-      return <ImageStep url={value?.trim()} />;
-
-    case STEP_TYPE.link:
-      return <AnchorStep href={value?.href} label={value?.label} />;
-
-    default:
-      return <></>;
-  }
-};
-
 export const MarkdownStep = ({ text }) => {
   return (
-    <article className="markdown-editor">
+    <article className="markdown-editor-wrapper">
       <Markdown>{text}</Markdown>
     </article>
   );
 };
 
-const CodeStep = ({ code, file, language }) => {
+export const CodeStep = ({ code, file, language }) => {
   useEffect(() => {
     highlightAll();
   }, []);
   return (
-    <section className="flex flex-col items-stretch">
-      {Boolean(file) && <p className="text-sm opacity-50 block">{file}</p>}
-      <pre className="scrollbar-thin rounded-md">
+    <section className="flex flex-col items-stretch w-full my-6 md:my-10">
+      {Boolean(file) && <p className="content--sub">{file}</p>}
+      <pre className="block overflow-x-scroll rounded-md scrollbar-thumb-light scrollbar-track-dark scrollbar-thin border-4 border-double border-dark cursor-move">
         <code
           className={`language-${language} whitespace-pre-line overflow-x-auto block w-max pr-4 `}
         >
           {code.trim()}
         </code>
       </pre>
+      <p className="content--sub text-center">
+        <small>Scroll left-right</small>
+      </p>
     </section>
   );
 };
 
-const ImageStep = ({ url }) => {
+export const ImageStep = ({ url, projectMode = false }) => {
   const [valid, setValid] = useState(false);
 
   useEffect(() => {
@@ -73,14 +49,17 @@ const ImageStep = ({ url }) => {
   if (!valid) return <></>;
 
   return (
-    <figure className="w-full h-full min-h-[75vh] relative block rounded-md overflow-hidden my-2">
+    <figure
+      className={`h-[60vh] ${
+        projectMode ? "w-full mb-6" : "w-screen my-16"
+      } block relative overflow-hidden`}
+    >
       <Image
         loader={({ src, width }) => `${src}?w=${width}&q=100`}
         layout="fill"
-        objectFit="cover"
         alt="Image thumbnail"
         src={url}
-        className="w-full h-full block drop-shadow-2xl"
+        className="w-full h-full block object-cover md:object-scale-down"
       />
     </figure>
   );
