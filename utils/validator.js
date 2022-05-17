@@ -6,7 +6,12 @@ export const TagValidator = Joi.object({
   tag: Joi.string().trim().required(),
 });
 
-const SegmentValidator = Joi.object({
+const LinkValidator = Joi.object({
+  label: Joi.string().trim(),
+  href: Joi.string().trim().uri(),
+});
+
+const StepValidator = Joi.object({
   _id: Joi.any(),
   __v: Joi.any(),
   heading: Joi.string().trim().required(),
@@ -39,34 +44,23 @@ const CommonFields = Joi.object().keys({
   _id: Joi.any(),
   __v: Joi.any(),
   title: Joi.string().required().trim().min(1).max(60),
-  desc: Joi.string().required().trim().min(1),
+  desc: Joi.string().required().trim().min(1).max(200),
+  category: Joi.string().required().trim().min(1).max(15),
   date: Joi.date().allow("").default(Date.now()),
   tags: Joi.array().items(TagValidator).min(1).required(),
   isPublic: Joi.bool().default(false),
   user: Joi.any(),
-  repo: Joi.any().allow(
-    Joi.object({
-      label: Joi.string().trim(),
-      href: Joi.string().trim().uri(),
-    }).length(2)
-  ),
-  demo: Joi.any().allow(
-    Joi.object({
-      label: Joi.string().trim(),
-      href: Joi.string().trim().uri(),
-    }).length(2)
-  ),
+  repo: LinkValidator.keys(),
+  demo: LinkValidator.keys(),
+  outro: Joi.object({
+    heading: Joi.string().trim(),
+    text: Joi.string().trim(),
+  }).required(),
 });
 
 const BlogValidator = CommonFields.keys({
   slug: Joi.string().required().trim().min(1).lowercase(),
-  outro: Joi.object({
-    heading: Joi.string().trim(),
-    text: Joi.string().trim(),
-  })
-    .length(2)
-    .required(),
-  page: Joi.array().items(SegmentValidator).min(1).required(),
+  page: Joi.array().items(StepValidator).min(1).required(),
 });
 
 const ProjectValidator = CommonFields.keys({
@@ -81,34 +75,23 @@ const ProjectValidator = CommonFields.keys({
     .min(1)
     .required(),
   difficulty: Joi.string().trim().lowercase().required().default("beginner"),
-  category: Joi.string().trim().required(),
-  prerequisites: Joi.array()
+  prerequisites: Joi.string().trim().required(),
+  chapters: Joi.array()
     .items(
       Joi.object({
-        _id: Joi.any(),
-        __v: Joi.any(),
-        text: Joi.string().trim(),
-      }).required()
+        heading: Joi.string().trim().required(),
+        steps: Joi.array().items(StepValidator).min(1).required(),
+        index: Joi.any(),
+      })
     )
     .min(1)
     .required(),
-  outro: Joi.object({
-    heading: Joi.string().trim(),
-    text: Joi.string().trim(),
-  }).length(2),
-  chapters: Joi.array().items(SegmentValidator).min(1).required(),
 });
 
-const DesignValidator = Joi.object().keys({
-  _id: Joi.any(),
-  __v: Joi.any(),
-  title: Joi.string().required().trim().min(1).max(15),
-  desc: Joi.string().required().trim().min(1),
-  date: Joi.date().allow("").default(Date.now()),
-  tags: Joi.array().items(TagValidator).min(1).required(),
-  isPublic: Joi.bool().default(false),
-  user: Joi.any(),
+const DesignValidator = CommonFields.keys({
   thumbnail: Joi.string().required().trim().uri(),
+  caption: Joi.string().required().trim(),
+  role: Joi.string().required().trim(),
   typography: Joi.array()
     .required()
     .items(
@@ -127,7 +110,6 @@ const DesignValidator = Joi.object().keys({
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        name: Joi.string().trim().required(),
         hex: Joi.string().trim().required(),
       }).required()
     )
@@ -138,7 +120,7 @@ const DesignValidator = Joi.object().keys({
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        page: Joi.string().trim().uri().required(),
+        images: Joi.array().items(Joi.string().trim().uri().required()),
         title: Joi.string().trim().required(),
         about: Joi.string().trim().required(),
       }).required()
@@ -158,58 +140,6 @@ const DesignValidator = Joi.object().keys({
       }).required()
     )
     .min(1),
-
-  tools: Joi.array()
-    .items(
-      Joi.object({
-        _id: Joi.any(),
-        __v: Joi.any(),
-        text: Joi.string().trim().required(),
-      }).required()
-    )
-    .min(1)
-    .required(),
-});
-
-export const NoteValidator = Joi.object({
-  _id: Joi.any(),
-  __v: Joi.any(),
-  title: Joi.string().trim().required().lowercase(),
-  feature: Joi.string().trim().required(),
-  isComplete: Joi.bool().default(false),
-});
-
-export const MessageValidator = Joi.object({
-  name: Joi.string()
-    .regex(/^[a-zA-Z ]+$/)
-    .trim()
-    .required()
-    .min(2)
-    .max(100)
-    .messages({
-      "any.required": `Please don't try to hack my site`,
-      "string.empty": `Whoops! I didn't get your name..`,
-      "string.pattern.base": `Errr! Please make sure your name contains only characters from the Enligsh alphabet`,
-      "string.min": `Hmph! Your name should be at least 2 characters long`,
-      "string.max": `Sorry for the inconvenience! In case your full name is longer than 100 characters, please provide your first name`,
-    }),
-  email: Joi.string()
-    .trim()
-    .lowercase()
-    .email({
-      tlds: false,
-      allowUnicode: false,
-    })
-    .messages({
-      "any.required": `Please don't try to hack my site`,
-      "string.email": `Please provide a valid email ID so that I can reach out to you`,
-    }),
-  message: Joi.string().trim().required().min(10).max(800).messages({
-    "any.required": `Please don't try to hack my site`,
-    "string.empty": `Whoops! You probably forgot to type in your message for me`,
-    "string.min": `Hmph! Your message should be at least 10 characters long`,
-    "string.max": `Sorry for the inconvenience! Please keep your message length limited to 800 characters`,
-  }),
 });
 
 const LoginValidator = Joi.object({
@@ -226,6 +156,17 @@ const ResetValidator = LoginValidator.keys({
   secret: Joi.string().trim().required(),
 });
 
+export const PortfolioProjectValidator = Joi.object({
+  _id: Joi.any(),
+  __v: Joi.any(),
+  design: Joi.any(),
+  user: Joi.any(),
+  project: Joi.any(),
+  metadata: Joi.string().trim().required(),
+  priority: Joi.number().max(3).min(1).default(1),
+  isShowcased: Joi.bool().default(false),
+});
+
 export const UserProfileValidator = Joi.object({
   _id: Joi.any(),
   __v: Joi.any(),
@@ -233,10 +174,12 @@ export const UserProfileValidator = Joi.object({
     .email({ tlds: { allow: false } })
     .trim()
     .required(),
+  fullName: Joi.string().required().trim(),
+  miniBio: Joi.string().required().trim(),
   bio: Joi.string().required().trim(),
   adminLabel: Joi.string().required().trim(),
   skills: Joi.string().required().trim(),
-  portfolio: Joi.array().items(Joi.any()),
+  portfolio: Joi.array().items(PortfolioProjectValidator).min(1).required(),
   techStack: Joi.array()
     .required()
     .items(
@@ -254,37 +197,6 @@ export const UserProfileValidator = Joi.object({
           ),
       })
     ),
-});
-
-export const PortfolioProjectValidator = Joi.object({
-  _id: Joi.any(),
-  __v: Joi.any(),
-  design: Joi.any(),
-  user: Joi.any(),
-  project: Joi.any(),
-  desc: Joi.string().trim().required(),
-  role: Joi.string().trim().required(),
-  uiux: Joi.array()
-    .required()
-    .items(
-      Joi.object({
-        _id: Joi.any(),
-        __v: Joi.any(),
-        heading: Joi.string().trim().required(),
-        text: Joi.string().trim().required(),
-      }).required()
-    ),
-  dev: Joi.array()
-    .required()
-    .items(
-      Joi.object({
-        _id: Joi.any(),
-        __v: Joi.any(),
-        heading: Joi.string().trim().required(),
-        text: Joi.string().trim().required(),
-      }).required()
-    ),
-  isShowcased: Joi.bool().default(false),
 });
 
 export const ContentValidators = {

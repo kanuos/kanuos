@@ -31,12 +31,12 @@ export const StyledHeader = ({
         className={`absolute bottom-24 sm:bottom-36 right-2 bg-contain bg-repeat w-auto h-auto grid place-items-end pointer-events-none `}
       >
         <h2
-          className={`uppercase absolute z-0 text-5xl sm:text-6xl lg:text-7xl xl:text-9xl font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-[17rem] sm:max-w-sm md:max-w-md lg:max-w-xl break-words text-right block box-decoration-clone opacity-30`}
+          className={`uppercase absolute z-0 text-5xl sm:text-6xl lg:text-7xl xl:text-[6.5rem] font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-[17rem] sm:max-w-sm md:max-w-md lg:max-w-xl break-words text-right block box-decoration-clone opacity-30`}
         >
           {styledContent}
         </h2>
         <h2
-          className={`styledText uppercase absolute z-10 text-5xl sm:text-6xl lg:text-7xl xl:text-9xl ${
+          className={`styledText uppercase absolute z-10 text-5xl sm:text-6xl lg:text-7xl xl:text-[6.5rem] ${
             isDarkMode
               ? "bg-[url('/styledDark.webp')]"
               : "bg-[url('/styledImg.webp')]"

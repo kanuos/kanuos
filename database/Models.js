@@ -16,6 +16,7 @@ export const BlogSchema = new Schema({
     required: true,
     unique: true,
     index: true,
+    maxlength: 60,
   },
   desc: {
     type: String,
@@ -49,6 +50,7 @@ export const BlogSchema = new Schema({
   category: {
     type: String,
     required: true,
+    maxlength: 15,
   },
   repo: {
     type: Object,
@@ -76,6 +78,7 @@ export const ProjectSchema = new Schema({
     required: true,
     unique: true,
     index: true,
+    maxlength: 60,
   },
   desc: {
     type: String,
@@ -116,6 +119,7 @@ export const ProjectSchema = new Schema({
   category: {
     type: String,
     required: true,
+    maxlength: 15,
   },
   repo: {
     type: Object,
@@ -143,6 +147,7 @@ export const DesignSchema = new Schema({
     required: true,
     unique: true,
     index: true,
+    maxlength: 60,
   },
   desc: {
     type: String,
@@ -163,6 +168,7 @@ export const DesignSchema = new Schema({
   category: {
     type: String,
     required: true,
+    maxlength: 15,
   },
   thumbnail: {
     type: String,
@@ -214,15 +220,24 @@ export const UserSchema = new Schema({
     required: true,
     index: true,
   },
+  fullName: {
+    type: String,
+    default: "Sounak Mukherjee",
+  },
   password: {
     type: String,
     required: true,
+  },
+  miniBio: {
+    type: String,
+    default: `Full stack developer based in Ithaca, NY.`,
   },
   bio: {
     type: String,
   },
   adminLabel: {
     type: String,
+    default: "Full stack web developer",
   },
   skills: {
     type: String,
@@ -256,35 +271,16 @@ export const PortfolioSchema = new Schema({
     ref: "project",
     unique: true,
   },
-  desc: {
-    type: String,
-    required: true,
-  },
-  screens: [
-    {
-      type: Object,
-    },
-  ],
   priority: {
     type: Number,
     default: 1,
     max: 3,
     min: 1,
   },
-  role: {
+  metadata: {
     type: String,
     required: true,
   },
-  uiux: [
-    {
-      type: Object,
-    },
-  ],
-  dev: [
-    {
-      type: Object,
-    },
-  ],
   isShowcased: {
     type: Boolean,
     default: false,

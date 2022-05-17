@@ -113,7 +113,7 @@ code[class*="language-"],
 pre[class*="language-"] {
   white-space: pre-wrap !important;
   word-spacing: 1.5rem;
-  @apply text-base;
+  @apply text-sm;
 }
 
 .markdown-editor-wrapper {
@@ -121,7 +121,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor {
-  @apply flex flex-col items-stretch text-base  opacity-80;
+  @apply flex flex-col items-stretch text-sm  opacity-80;
   overflow-wrap: break-word !important;
 }
 
@@ -183,12 +183,12 @@ pre[class*="language-"] {
 }
 
 .heading--sub {
-  @apply text-base font-semibold;
+  @apply text-sm font-semibold;
 }
 
 .content--main,
 .content--secondary {
-  @apply text-base  leading-snug opacity-80;
+  @apply text-sm  leading-snug opacity-80;
 }
 
 .content--main {
@@ -200,7 +200,7 @@ pre[class*="language-"] {
 }
 
 .content--sub {
-  @apply w-full text-base leading-snug opacity-80;
+  @apply w-full text-xs md:text-sm leading-snug opacity-80;
 }
 
 .after-line,

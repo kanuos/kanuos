@@ -10,7 +10,6 @@ import dynamic from "next/dynamic";
 import { Tag } from "../components/public/Tag";
 import { StyledHeader } from "../components/portfolio/StyledHeader";
 import PublicLayout from "../components/Layouts/PublicLayout";
-import { staticMetadata } from "../utils/portfolio_static";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { CTA } from "../components/portfolio/CTA";
 import { PUBLIC_URLS } from "../utils";
