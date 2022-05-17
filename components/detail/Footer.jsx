@@ -9,7 +9,7 @@ export const Footer = ({ about = "author", content = "" }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
     <footer
-      className={`relative mt-auto text-xs w-full flex flex-col items-center justify-between ${
+      className={`relative mt-auto w-full flex flex-col items-center justify-between ${
         isDarkMode ? "nav-light" : "nav-dark"
       }`}
     >
@@ -21,12 +21,12 @@ export const Footer = ({ about = "author", content = "" }) => {
             className="top-0 object-cover rounded-full h-full w-full"
           />
         </figure>
-        <strong className="heading--sub block mb-2">About {about}</strong>
-        <p className="content--sub max-w-lg">
-          {content
-            ? content
-            : `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae aliquid eaque ut magnam maxime veritatis odio esse ipsa accusantium similique, reprehenderit sit eum ipsam. Qui ipsum odit reiciendis cum doloribus?`}
-        </p>
+        {content.trim().length > 0 && (
+          <>
+            <strong className="heading--sub block mb-2">About {about}</strong>
+            <p className="content--sub max-w-lg">{content}</p>
+          </>
+        )}
         <ul className="flex flex-wrap w-full items-center justify-start gap-3 mt-20">
           {Object.entries(SOCIAL_LINKS).map(([social, url]) => (
             <li

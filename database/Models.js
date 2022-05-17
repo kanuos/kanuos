@@ -1,6 +1,4 @@
 import { Schema } from "mongoose";
-import { ADMIN_SELECT_OPTIONS } from "../utils/admin";
-// import conn from "./index";
 
 // Tag Schema for maintaining tags for references to other content models
 export const TagSchema = new Schema({
@@ -11,31 +9,9 @@ export const TagSchema = new Schema({
   },
 });
 
-// Note Schema for notes and future ideas plans
-export const NoteSchema = new Schema({
-  title: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  feature: {
-    type: String,
-    required: true,
-  },
-  isComplete: {
-    type: Boolean,
-    default: false,
-  },
-});
-
 // Blog Schema for CRUD operations of Blogs
 export const BlogSchema = new Schema({
   title: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  slug: {
     type: String,
     required: true,
     unique: true,
@@ -44,6 +20,8 @@ export const BlogSchema = new Schema({
   desc: {
     type: String,
     required: true,
+    maxlength: 200,
+    trim: true,
   },
   tags: [
     {
@@ -55,11 +33,23 @@ export const BlogSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  // start unique to blogs
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
   page: [
     {
       type: Object,
     },
   ],
+  // end unique to blogs
+  category: {
+    type: String,
+    required: true,
+  },
   repo: {
     type: Object,
   },
@@ -79,30 +69,6 @@ export const BlogSchema = new Schema({
   },
 });
 
-// Message schema for incoming client messages and admin management of the same
-export const MessageSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  message: {
-    type: String,
-    required: true,
-  },
-  isRead: {
-    type: Boolean,
-    default: false,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
 // Project Schema for CRUD operations of Projects
 export const ProjectSchema = new Schema({
   title: {
@@ -114,6 +80,8 @@ export const ProjectSchema = new Schema({
   desc: {
     type: String,
     required: true,
+    maxlength: 200,
+    trim: true,
   },
   tags: [
     {
@@ -125,16 +93,16 @@ export const ProjectSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  // start unique to projects
   chapters: [
     {
       type: Object,
     },
   ],
-  prerequisites: [
-    {
-      type: Object,
-    },
-  ],
+  prerequisites: {
+    type: String,
+    required: true,
+  },
   techStack: [
     {
       type: Object,
@@ -143,12 +111,11 @@ export const ProjectSchema = new Schema({
   difficulty: {
     type: String,
     required: true,
-    enum: [...Object.values(ADMIN_SELECT_OPTIONS.difficulty)],
   },
+  // end unique to projects
   category: {
     type: String,
     required: true,
-    enum: [...Object.values(ADMIN_SELECT_OPTIONS.category)],
   },
   repo: {
     type: Object,
@@ -180,6 +147,8 @@ export const DesignSchema = new Schema({
   desc: {
     type: String,
     required: true,
+    maxlength: 200,
+    trim: true,
   },
   tags: [
     {
@@ -191,7 +160,19 @@ export const DesignSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   thumbnail: {
+    type: String,
+    required: true,
+  },
+  caption: {
+    type: String,
+    required: true,
+  },
+  role: {
     type: String,
     required: true,
   },
@@ -206,11 +187,6 @@ export const DesignSchema = new Schema({
     },
   ],
   userFlowSteps: [
-    {
-      type: Object,
-    },
-  ],
-  tools: [
     {
       type: Object,
     },
@@ -314,16 +290,3 @@ export const PortfolioSchema = new Schema({
     default: false,
   },
 });
-
-// const models = conn.models;
-
-// !models.tag && conn.model("tag", TagSchema);
-// !models.note && conn.model("note", NoteSchema);
-// !models.blog && conn.model("blog", BlogSchema);
-// !models.project && conn.model("project", ProjectSchema);
-// !models.message && conn.model("message", MessageSchema);
-// !models.design && conn.model("design", DesignSchema);
-// !models.user && conn.model("user", UserSchema);
-// !models.portfolio && conn.model("portfolio", PortfolioSchema);
-
-// export default conn;

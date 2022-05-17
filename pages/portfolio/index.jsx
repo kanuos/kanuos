@@ -31,24 +31,26 @@ const PortfolioPage = ({ metadata }) => {
       content="Check out my full stack web developer portfolio website"
       navType="portfolio"
     >
-      <StyledHeader styledText={metadata.adminLabel} isDarkMode={isDarkMode}>
-        <>
-          <span className="text-sm md:text-base font-semibold">Hi, I am</span>
-          <h1 className="heading--main w-min">{metadata.fullName}</h1>
-          <p className="content--main">{metadata.about}</p>
-          <div className="mt-10">
-            <CTA
-              label="Hire me"
-              href={PORTFOLIO_LINKS["contact me"].url}
-              isDarkMode={isDarkMode}
-            />
-          </div>
-        </>
-      </StyledHeader>
+      <main className="w-full overflow-x-hidden">
+        <StyledHeader styledText={metadata.adminLabel} isDarkMode={isDarkMode}>
+          <>
+            <span className="text-sm md:text-base font-semibold">Hi, I am</span>
+            <h1 className="heading--main w-min">{metadata.fullName}</h1>
+            <p className="content--main">{metadata.about}</p>
+            <div className="mt-10">
+              <CTA
+                label="Hire me"
+                href={PORTFOLIO_LINKS["contact me"].url}
+                isDarkMode={isDarkMode}
+              />
+            </div>
+          </>
+        </StyledHeader>
 
-      <Showcase works={projects} isDarkMode={isDarkMode} />
-      <AboutMe isDarkMode={isDarkMode} />
-      <ContactMe isDarkMode={isDarkMode} />
+        <Showcase works={projects} isDarkMode={isDarkMode} />
+        <AboutMe isDarkMode={isDarkMode} />
+        <ContactMe isDarkMode={isDarkMode} />
+      </main>
     </PublicLayout>
   );
 };

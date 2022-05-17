@@ -113,12 +113,12 @@ export const PageComponents = ({
   useEffect(() => {
     if (!show) return;
     setActiveChapter(index - 1);
-  }, [show, index]);
+  }, [show, index, setActiveChapter]);
 
   useEffect(() => {
     if (isComplete === completed) return;
     toggleCompletionStatus({ i: index - 1, stat: isComplete });
-  }, [isComplete, completed, index]);
+  }, [isComplete, completed, index, toggleCompletionStatus]);
 
   return (
     <motion.section

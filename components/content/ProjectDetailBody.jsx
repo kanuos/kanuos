@@ -5,8 +5,11 @@ import Markdown from "react-markdown";
 // import : internal
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { DetailHeader } from "../detail/Header";
 
+// dynamic imports
+const DetailHeader = dynamic(() =>
+  import("../detail/Header").then((m) => m.DetailHeader)
+);
 const PageComponents = dynamic(() =>
   import("../public/PageComponents").then((m) => m.PageComponents)
 );
@@ -23,13 +26,10 @@ export const ProjectDetailBody = ({ project }) => {
   const toggleCompletionStatus = useCallback(
     ({ i, stat }) =>
       setCompleted((prev) => prev.map((el, k) => (k === i ? stat : el))),
-    [LENGTH]
+    []
   );
 
-  const setActiveChapterCB = useCallback(
-    (i) => setActiveChapter(() => i),
-    [LENGTH]
-  );
+  const setActiveChapterCB = useCallback((i) => setActiveChapter(() => i), []);
 
   return (
     <div

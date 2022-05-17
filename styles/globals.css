@@ -113,7 +113,7 @@ code[class*="language-"],
 pre[class*="language-"] {
   white-space: pre-wrap !important;
   word-spacing: 1.5rem;
-  @apply text-sm;
+  @apply text-base;
 }
 
 .markdown-editor-wrapper {
@@ -121,7 +121,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor {
-  @apply flex flex-col items-stretch text-sm  opacity-80;
+  @apply flex flex-col items-stretch text-base  opacity-80;
   overflow-wrap: break-word !important;
 }
 
@@ -175,20 +175,20 @@ pre[class*="language-"] {
 }
 
 .heading--main {
-  @apply text-2xl sm:text-4xl md:text-5xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
+  @apply text-3xl sm:text-5xl md:text-6xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
 }
 
 .heading--secondary {
-  @apply text-lg md:text-xl font-semibold max-w-xl;
+  @apply text-xl md:text-2xl font-semibold max-w-xl;
 }
 
 .heading--sub {
-  @apply text-sm  font-semibold;
+  @apply text-base font-semibold;
 }
 
 .content--main,
 .content--secondary {
-  @apply text-sm  leading-snug opacity-80;
+  @apply text-base  leading-snug opacity-80;
 }
 
 .content--main {
@@ -200,7 +200,7 @@ pre[class*="language-"] {
 }
 
 .content--sub {
-  @apply w-full text-xs leading-snug opacity-80;
+  @apply w-full text-base leading-snug opacity-80;
 }
 
 .after-line,

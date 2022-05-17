@@ -10,9 +10,8 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
         x: 0,
         opacity: 1,
         transition: {
-          type: "linear",
-          duration: 0.5,
-          delay: 0.5,
+          type: "spring",
+          duration: 0.25,
           staggerChildren: 0.25,
         },
       },
@@ -31,9 +30,8 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
         x: 0,
         opacity: 1,
         transition: {
-          type: "linear",
-          duration: 0.5,
-          delay: 0.5,
+          type: "spring",
+          duration: 0.25,
           staggerChildren: 0.25,
         },
       },
@@ -52,7 +50,7 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
         opacity: 1,
         transition: {
           type: "linear",
-          staggerChildren: 0.5,
+          staggerChildren: 0.25,
           when: "beforeChildren",
         },
       },

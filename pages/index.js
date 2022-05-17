@@ -78,7 +78,11 @@ const HomePage = ({ allTags }) => {
   return (
     <>
       <PublicLayout metaTitle="Welcome to Sounak's website">
-        <StyledHeader styledText="search by tags" isDarkMode={isDarkMode}>
+        <StyledHeader
+          styledText="search by tags"
+          isDarkMode={isDarkMode}
+          showScroll={allTags.length > 0}
+        >
           <h1 className="heading--main">&quot;Hello world!&quot;</h1>
           <span className="text-sm md:text-base font-semibold mb-6">
             I&apos;m Sounak. Welcome to my tech journal
