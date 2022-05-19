@@ -14,30 +14,19 @@ const LinkValidator = Joi.object({
 const StepValidator = Joi.object({
   _id: Joi.any(),
   __v: Joi.any(),
-  heading: Joi.string().trim().required(),
-  index: Joi.any(),
-  steps: Joi.array()
-    .items(
-      Joi.object({
-        _id: Joi.any(),
-        __v: Joi.any(),
-        key: Joi.string().trim().required(),
-        value: [
-          Joi.string().trim().required(),
-          Joi.object({
-            code: Joi.string().required(),
-            language: Joi.string().required(),
-            file: Joi.string().required(),
-          }).length(3),
-          Joi.object({
-            label: Joi.string().required(),
-            href: Joi.string().required().uri(),
-          }).length(2),
-        ],
-      })
-    )
-    .required()
-    .min(1),
+  key: Joi.string().trim().required(),
+  value: [
+    // text, markdown
+    Joi.string().trim().required(),
+    // image url
+    Joi.string().trim().uri().required(),
+    // code block
+    Joi.object({
+      code: Joi.string().required(),
+      language: Joi.string().trim().lowercase().required(),
+      file: Joi.string().trim().required(),
+    }),
+  ],
 });
 
 const CommonFields = Joi.object().keys({
@@ -175,8 +164,7 @@ export const UserProfileValidator = Joi.object({
     .trim()
     .required(),
   fullName: Joi.string().required().trim(),
-  miniBio: Joi.string().required().trim(),
-  bio: Joi.string().required().trim(),
+  about: Joi.string().required().trim(),
   adminLabel: Joi.string().required().trim(),
   skills: Joi.string().required().trim(),
   portfolio: Joi.array().items(PortfolioProjectValidator).min(1).required(),
@@ -187,14 +175,7 @@ export const UserProfileValidator = Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         heading: Joi.string().trim().required(),
-        items: Joi.array()
-          .required()
-          .min(1)
-          .items(
-            Joi.object({
-              text: Joi.string().required().trim(),
-            })
-          ),
+        text: Joi.string().required().trim(),
       })
     ),
 });

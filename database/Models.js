@@ -228,11 +228,7 @@ export const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  miniBio: {
-    type: String,
-    default: `Full stack developer based in Ithaca, NY.`,
-  },
-  bio: {
+  about: {
     type: String,
   },
   adminLabel: {

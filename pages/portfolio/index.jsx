@@ -31,7 +31,7 @@ const PortfolioPage = ({ metadata }) => {
       >
         <main className="h-screen w-screen grid place-items-center">
           <StyledHeader
-            styledText="Sounak's Portfolio•page"
+            styledText="Sounak Portfolio•page"
             isDarkMode={isDarkMode}
             showScroll={false}
           >
@@ -78,7 +78,11 @@ const PortfolioPage = ({ metadata }) => {
         </StyledHeader>
 
         <Showcase works={metadata.portfolio} isDarkMode={isDarkMode} />
-        <AboutMe isDarkMode={isDarkMode} />
+        <AboutMe
+          skills={metadata.skills}
+          techStack={metadata.techStack}
+          isDarkMode={isDarkMode}
+        />
         <ContactMe isDarkMode={isDarkMode} />
       </main>
     </PublicLayout>

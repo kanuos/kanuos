@@ -10,7 +10,7 @@ export const PageLink = ({
   special = false,
   scrollToTop = true,
 }) => {
-  const cls = `inline-block w-max max-w-lg py-0.5 content--sub relative after:absolute after:h-[1.5px] hover:after:w-full after:left-0 after:-bottom-1 after:bg-secondary after:rounded-full font-semibold after:transition-all ${
+  const cls = `inline-block text-sm w-max max-w-lg py-0.5 content--sub relative after:absolute after:h-[1.5px] hover:after:w-full after:left-0 after:-bottom-1 after:bg-secondary after:rounded-full font-semibold after:transition-all ${
     special
       ? "hover:text-secondary opacity-100 after:w-4"
       : isActive

@@ -1,9 +1,17 @@
 import React from "react";
 import { PORTFOLIO_LINKS } from "../../utils";
-import { CgDice1, CgDice2, CgDice3, CgFile } from "react-icons/cg";
+import {
+  CgDice1,
+  CgDice2,
+  CgDice3,
+  CgDice4,
+  CgDice5,
+  CgDice6,
+  CgFile,
+} from "react-icons/cg";
 import { CTA } from "./CTA";
 
-export const AboutMe = ({ isDarkMode }) => {
+export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
   return (
     <div
       id={PORTFOLIO_LINKS["about me"].name}
@@ -13,47 +21,26 @@ export const AboutMe = ({ isDarkMode }) => {
         <h2 className="heading--secondary mb-4 md:mb-8">
           What I bring to the table
         </h2>
-        <p className="content--secondary max-w-xl mb-10">
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using making it look like readable English.
-        </p>
+        <p className="content--secondary max-w-xl mb-10">{skills}</p>
       </div>
       <ul className="flex flex-col w-full max-w-xl mx-auto gap-y-16 pt-6 pb-48 after-line--center">
-        <SkillGroup
-          heading="UI-UX and designing"
-          isDarkMode={isDarkMode}
-          left={true}
-          text="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus
-            accusantium repudiandae labore eum natus ea in laborum temporibus!
-            Obcaecati vitae culpa saepe velit voluptatibus repellat placeat eius
-            voluptas quasi eaque."
-        >
-          <CgDice1 />
-        </SkillGroup>
-        <SkillGroup
-          left={false}
-          heading="Programming and logic"
-          isDarkMode={isDarkMode}
-          text="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus
-            accusantium repudiandae labore eum natus ea in laborum temporibus!
-            Obcaecati vitae culpa saepe velit voluptatibus repellat placeat eius
-            voluptas quasi eaque."
-        >
-          <CgDice2 />
-        </SkillGroup>
-        <SkillGroup
-          left={true}
-          heading="Tools and utilities"
-          isDarkMode={isDarkMode}
-          text="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus
-            accusantium repudiandae labore eum natus ea in laborum temporibus!
-            Obcaecati vitae culpa saepe velit voluptatibus repellat placeat eius
-            voluptas quasi eaque."
-        >
-          <CgDice3 />
-        </SkillGroup>
+        {techStack.map(({ heading, text }, i) => (
+          <li className="w-full" key={i}>
+            <SkillGroup
+              heading={heading}
+              isDarkMode={isDarkMode}
+              left={i % 2 ? false : true}
+              text={text}
+            >
+              {i === 0 && <CgDice1 />}
+              {i === 1 && <CgDice2 />}
+              {i === 2 && <CgDice3 />}
+              {i === 3 && <CgDice4 />}
+              {i === 4 && <CgDice5 />}
+              {i === 5 && <CgDice6 />}
+            </SkillGroup>
+          </li>
+        ))}
       </ul>
       <div className="w-max mx-auto pb-20">
         <CTA

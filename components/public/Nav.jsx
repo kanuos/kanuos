@@ -5,12 +5,10 @@ import { useRouter } from "next/router";
 // external imports
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
-import { AiOutlineLogout } from "react-icons/ai";
 
 // internal imports
 import {
   ADMIN_ACCOUNT,
-  ADMIN_URLS,
   NAV_METADATA,
   PUBLIC_URLS,
 } from "../../utils";
@@ -23,26 +21,8 @@ import { NavContext } from "../../contexts/NavContext";
 export const NavBar = ({ type = "public" }) => {
   const { showMenu, toggleNavMenu } = useContext(NavContext);
 
-  const r = useRouter();
-
-  async function handleLogout() {
-    try {
-      await axios.get(AUTH_ROUTES.logout);
-      toggleNavMenu();
-      r.push(ADMIN_ACCOUNT);
-    } catch (error) {
-      alert(error);
-    }
-  }
-
   return (
     <motion.nav className={`z-40`}>
-      {type === "admin" && (
-        <button onClick={handleLogout} className="z-40 fixed top-6 left-4">
-          <AiOutlineLogout />
-        </button>
-      )}
-
       <motion.div
         onClick={toggleNavMenu}
         className={
@@ -234,6 +214,18 @@ const NavMenu = ({ type = "public" }) => {
     return false;
   }
 
+  const r = useRouter();
+
+  async function handleLogout() {
+    try {
+      await axios.get(AUTH_ROUTES.logout);
+      toggleNavMenu();
+      r.push(ADMIN_ACCOUNT);
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   return (
     <AnimatePresence>
       <motion.section
@@ -296,6 +288,16 @@ const NavMenu = ({ type = "public" }) => {
               );
             })}
           </motion.ul>
+          {type === "admin" && (
+            <CTA
+              btnMode={true}
+              cb={handleLogout}
+              label="Logout"
+              isDarkMode={isDarkMode}
+              isActive={true}
+            />
+          )}
+
           <div className="mt-auto">
             <CTA
               btnMode={true}

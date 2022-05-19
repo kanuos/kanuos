@@ -113,7 +113,7 @@ export async function updatePassword(user) {
 
 export async function getPortfolio() {
   const user = await UserModel.findOne({})
-    .select("skills bio portfolio techStack adminLabel")
+    .select("skills about portfolio techStack adminLabel email fullName")
     .populate({
       path: "portfolio",
       populate: {
