@@ -167,7 +167,7 @@ export const UserProfileValidator = Joi.object({
   about: Joi.string().required().trim(),
   adminLabel: Joi.string().required().trim(),
   skills: Joi.string().required().trim(),
-  portfolio: Joi.array().items(PortfolioProjectValidator).min(1).required(),
+  portfolio: Joi.array().items(PortfolioProjectValidator),
   techStack: Joi.array()
     .required()
     .items(
