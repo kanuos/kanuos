@@ -18,10 +18,7 @@ const PortfolioPage = ({ metadata }) => {
   metadata = JSON.parse(metadata);
   const { isDarkMode } = useContext(ThemeContext);
 
-  const validPortfolioMetadata = Object.values(metadata).some(
-    (el) => Boolean(el) === true
-  );
-
+  const validPortfolioMetadata = metadata?.portfolio?.length;
   if (!validPortfolioMetadata) {
     return (
       <PublicLayout

@@ -15,25 +15,25 @@ const FORM_FIELDS = {
     {
       name: "email",
       type: "string",
-      placeholder: "Full name",
+      placeholder: "Public Email ID",
       split: true,
     },
     {
       name: "about",
       type: "string",
-      placeholder: "Full name",
+      placeholder: "Profile description",
       split: false,
     },
     {
       name: "adminLabel",
       type: "string",
-      placeholder: "Full name",
+      placeholder: "Admin label",
       split: false,
     },
     {
       name: "skills",
       type: "markdown",
-      placeholder: "Full name",
+      placeholder: "Skillset in words",
       split: false,
     },
     {
@@ -57,6 +57,40 @@ const FORM_FIELDS = {
       ],
     },
   ],
+  account: [
+    {
+      name: "email",
+      type: "string",
+      placeholder: "ADMIN email ID",
+      split: false,
+    },
+    {
+      name: "password",
+      type: "string",
+      placeholder: "ADMIN password",
+      split: false,
+    },
+  ],
+  reset: [
+    {
+      name: "email",
+      type: "string",
+      placeholder: "ADMIN email ID",
+      split: false,
+    },
+    {
+      name: "password",
+      type: "string",
+      placeholder: "ADMIN password",
+      split: false,
+    },
+    {
+      name: "secret",
+      type: "string",
+      placeholder: "ADMIN secret code",
+      split: false,
+    },
+  ],
 };
 
 const CMSForm = ({
@@ -65,9 +99,10 @@ const CMSForm = ({
   heading = "",
   isDarkMode,
   getFormData,
+  btnLabel = "Save Changes",
 }) => {
   const INIT = {};
-  FORM_FIELDS[type].forEach(
+  FORM_FIELDS[type]?.forEach(
     ({ name, isArray }) => (INIT[name] = isArray ? [] : "")
   );
   const [currentState, setCurrentState] = useState({ ...INIT, ...init });
@@ -113,50 +148,41 @@ const CMSForm = ({
         {FORM_FIELDS[type]?.map((field) => {
           const { name, type, split, placeholder, layout } = field;
           return (
-            <section
-              key={name}
-              className={`${
-                split ? "" : "col-span-full"
-              } w-full flex flex-col items-start gap-2`}
-            >
-              <label
-                htmlFor={name}
-                className="content--sub capitalize font-semibold"
-              >
-                {name}
-              </label>
-
+            <section key={name}>
               {type === "string" && (
                 <StringInput
+                  name={name}
                   placeholder={placeholder}
                   value={currentState[name]}
                   setValue={(p) =>
                     setCurrentState((prev) => ({ ...prev, [name]: p }))
                   }
-                  split={true}
+                  split={split}
                 />
               )}
 
               {type === "markdown" && (
                 <MarkdownInput
+                  name={name}
                   placeholder={placeholder}
                   value={currentState[name]}
                   setValue={(p) =>
                     setCurrentState((prev) => ({ ...prev, [name]: p }))
                   }
-                  split={false}
+                  split={split}
                 />
               )}
 
               {type === "array" && (
                 <div className="pl-4 my-4 w-full border-l-4 border-secondary border-double">
                   <ArrayInput
+                    name={name}
                     value={currentState[name]}
                     layout={layout}
                     isDarkMode={isDarkMode}
                     getArrayItem={(data) => addItemToList(data, name)}
                     deleteArrayItem={(data) => deleteItemFromList(data, name)}
-                    split={false}
+                    split={split}
                   />
                 </div>
               )}
@@ -164,11 +190,11 @@ const CMSForm = ({
           );
         })}
 
-        <div className="w-max mx-auto">
+        <div className="w-max mr-auto mt-10">
           <CTA
             btnMode={true}
             btnType="submit"
-            label="Save changes"
+            label={btnLabel}
             isDarkMode={isDarkMode}
             isActive={true}
             cb={() => null}

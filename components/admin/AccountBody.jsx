@@ -1,27 +1,28 @@
 // imports : built in
-import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import { useContext, useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
 // imports : external
-import { motion } from "framer-motion";
 import axios from "axios";
 
 // imports : internal
 import {
-  ADMIN_RESET,
   ADMIN_ACCOUNT,
-  getEmptyState,
-  LOGIN_STEPS,
-  REGISTER_STEPS,
-  RESET_PASSWORD_STEPS,
+  ADMIN_RESET,
   ADMIN_URLS,
   PUBLIC_URLS,
 } from "../../utils";
-import { InputField } from "../public/InputField";
-import { JoinLine } from "../public/DescHeader";
+
 import { AUTH_ROUTES } from "../../utils/admin";
 import { AuthValidators } from "../../utils/validator";
+import CMSForm from "./forms/CMS";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { PageLink } from "../portfolio/PageLink";
+
+const LoadSpinner = dynamic(() =>
+  import("../../components/public/Loader").then((m) => m.LoadSpinner)
+);
 
 async function adminAuthCB(type, credentials) {
   try {
@@ -51,180 +52,122 @@ async function adminAuthCB(type, credentials) {
 
 export const LoginBody = () => {
   const r = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   async function handleLogin(cred) {
+    setIsSubmitting(true);
     const success = await adminAuthCB("login", cred);
     if (success) {
       r.push(ADMIN_URLS.dashboard.url);
     }
+    setIsSubmitting(false);
+  }
+
+  if (isSubmitting) {
+    return (
+      <div className="h-screen grid place-items-center">
+        <LoadSpinner text="Logging In" />
+      </div>
+    );
   }
   return (
-    <div className="flex flex-col items-center justify-center main-light h-full min-h-screen relative">
-      <Link href={PUBLIC_URLS.home.url}>
-        <a className="absolute top-4 z-20 right-4 text-xs font-semibold opacity-50 hover:opacity-100">
-          Go to home
-        </a>
-      </Link>
-      <AccountBody type="login" fields={LOGIN_STEPS} cb={handleLogin} />
+    <div className="flex flex-col items-center justify-center main-light p-8 h-full min-h-screen relative">
+      <div className="w-max">
+        <PageLink href={PUBLIC_URLS.home.url} label="Go to Home" />
+      </div>
+      <AccountBody
+        type="account"
+        heading="login"
+        cb={handleLogin}
+        btnLabel="Sign In"
+      />
+      <div className="w-max">
+        <PageLink href={ADMIN_RESET} label="Forgot password" />
+      </div>
     </div>
   );
 };
 
 export const PasswordReset = () => {
   const r = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   async function handleReset(cred) {
+    setIsSubmitting(true);
     const success = await adminAuthCB("reset", cred);
+    setIsSubmitting(false);
     if (success) {
       r.push(ADMIN_ACCOUNT);
     }
   }
+  if (isSubmitting) {
+    return (
+      <div className="h-screen grid place-items-center">
+        <LoadSpinner text="Resetting password" />
+      </div>
+    );
+  }
   return (
-    <div className="flex flex-col items-center justify-center main-light h-full min-h-screenrelative">
-      <Link href={PUBLIC_URLS.home.url}>
-        <a className="absolute top-4 z-20 right-4 text-xs font-semibold opacity-50 hover:opacity-100">
-          Go to home
-        </a>
-      </Link>
+    <div className="flex flex-col items-center justify-center p-8 main-light h-full min-h-screen relative">
+      <div className="w-max">
+        <PageLink href={PUBLIC_URLS.home.url} label="Go to Home" />
+      </div>
       <AccountBody
-        type="password reset"
-        fields={RESET_PASSWORD_STEPS}
+        type="reset"
+        heading="password reset"
         cb={handleReset}
+        btnLabel="Reset"
       />
+      <div className="w-max">
+        <PageLink href={ADMIN_ACCOUNT} label="Login" />
+      </div>
     </div>
   );
 };
 
 export const RegisterBody = ({ onSuccess }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   async function handleRegister(cred) {
+    setIsSubmitting(true);
     const success = await adminAuthCB("register", cred);
+    setIsSubmitting(false);
     if (success) {
       onSuccess(success);
     }
   }
+  if (isSubmitting) {
+    return (
+      <div className="h-screen grid place-items-center">
+        <LoadSpinner text="Signing up.. " />
+      </div>
+    );
+  }
   return (
-    <div className="flex flex-col items-center justify-center main-light h-full min-h-screen relative">
-      <Link href={PUBLIC_URLS.home.url}>
-        <a className="absolute top-4 z-20 right-4 text-xs font-semibold opacity-50 hover:opacity-100">
-          Go to home
-        </a>
-      </Link>
+    <div className="flex flex-col p-8 items-center justify-center main-light h-full min-h-screen relative">
+      <div className="w-max">
+        <PageLink href={PUBLIC_URLS.home.url} label="Go to Home" />
+      </div>
       <AccountBody
-        type="Register"
-        fields={REGISTER_STEPS}
+        type="account"
+        heading="Register"
+        btnLabel="Sign Up"
         cb={handleRegister}
       />
     </div>
   );
 };
 
-const AccountBody = ({ type, fields, cb }) => {
-  const [currentStep, setCurrentStep] = useState(fields[0].field);
-  const [accountDetail, setAccountDetail] = useState(null);
-  const [canSubmit, setCanSubmit] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const getInitialState = useMemo(() => getEmptyState(fields), [fields]);
-
-  useEffect(() => {
-    setAccountDetail(getInitialState);
-  }, [getInitialState]);
-
-  useEffect(() => {
-    if (!accountDetail) return;
-    const values = Object.values(accountDetail);
-    let index = values.findIndex((v) => v.trim() === "");
-
-    const permission = fields
-      .flatMap(({ field, constraints }) => {
-        return Object.values(constraints).map(({ check }) =>
-          check(accountDetail[field])
-        );
-      })
-      .every(Boolean);
-
-    setCanSubmit(permission);
-    if (index !== -1) {
-      setCurrentStep((_) => fields[index]?.field);
-    }
-  }, [accountDetail, canSubmit, fields]);
-
-  function updateState(data) {
-    setAccountDetail((prev) => ({ ...prev, ...data }));
-  }
-
-  const variant = {
-    show: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        when: "beforeChildren",
-        staggerChildren: 0.25,
-      },
-    },
-    hide: {
-      x: "-100%",
-      opacity: 0,
-      transition: { type: "spring", when: "afterChildren" },
-    },
-  };
-
+const AccountBody = ({ type, cb, heading, btnLabel }) => {
+  const { isDarkMode } = useContext(ThemeContext);
   return (
-    <main className="p-10 h-auto flex flex-col items-center justify-center gap-6">
-      <div className="flex flex-col items-center justify-center">
-        <p className="text-xs">
-          <small className="text-secondary font-semibold">ADMIN</small>
-        </p>
-        <h1 className="font-black text-4xl md:text-5xl capitalize">{type}</h1>
-        {type === "login" && (
-          <Link href={ADMIN_RESET}>
-            <a className="text-xs mt-4 opacity-20 hover:opacity-100 transition-all">
-              <small>Click here to reset!</small>
-            </a>
-          </Link>
-        )}
-      </div>
-      <JoinLine />
-      <div className="flex flex-col items-start gap-y-10 w-full">
-        {accountDetail &&
-          fields.map(({ field, desc, constraints }, i) => {
-            const active =
-              accountDetail[field].trim().length > 0 || field === currentStep;
-            return (
-              <motion.section
-                key={field}
-                variants={variant}
-                initial={"hide"}
-                animate={active ? "show" : "hide"}
-                className="w-full flex flex-col items-start gap-y-4 relative after:left-4 after:h-10 after:bg-secondary after:w-0.5 after:absolute after:-top-10 first-of-type:after:hidden"
-              >
-                {accountDetail[field].trim().length === 0 && (
-                  <p className="text-xs font-semibold py-1">{desc}</p>
-                )}
-                <motion.div variants={variant} className="w-full">
-                  <InputField
-                    name={field}
-                    index={i + 1}
-                    total={fields.length}
-                    setEditMode={setEditMode}
-                    value={accountDetail[field]}
-                    constraints={constraints}
-                    getData={updateState}
-                  />
-                </motion.div>
-              </motion.section>
-            );
-          })}
-        <motion.button
-          onClick={() => cb(accountDetail)}
-          variants={variant}
-          animate={canSubmit && !editMode ? "show" : "hide"}
-          className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer select-none"
-        >
-          <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark">
-            {type}
-          </span>
-          <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full -translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
-        </motion.button>
-      </div>
+    <main className="my-auto h-auto flex flex-col items-center justify-center gap-6 w-full">
+      <CMSForm
+        type={type}
+        heading={heading}
+        init={{}}
+        isDarkMode={isDarkMode}
+        getFormData={cb}
+        btnLabel={btnLabel}
+      />
     </main>
   );
 };

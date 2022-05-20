@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useCallback } from "react";
 import dynamic from "next/dynamic";
 
 // import : internal components
@@ -10,13 +10,9 @@ import { isAdminMiddleware } from "../../utils/authLib";
 import { ADMIN_ACCOUNT } from "../../utils";
 import { CTA } from "../../components/portfolio/CTA";
 import { ThemeContext } from "../../contexts/ThemeContext";
-
-// dynamic imports
-const ProfileComponent = dynamic(() =>
-  import("../../components/admin/ProfileComponent").then(
-    (module) => module.ProfileComponent
-  )
-);
+import CMSForm from "../../components/admin/forms/CMS";
+import axios from "axios";
+import { API_ROUTES } from "../../utils/admin";
 
 const PortfolioMgmt = dynamic(() =>
   import("../../components/admin/PortfolioMgmt").then(
@@ -29,6 +25,24 @@ const AdminDashboard = ({ admin }) => {
 
   const [tab, setTab] = useState(0);
   const { isDarkMode } = useContext(ThemeContext);
+
+  const handleProfileUpdate = useCallback(async (formData) => {
+    try {
+      delete formData.portfolio;
+      const { data, error } = (
+        await axios({
+          url: API_ROUTES.profile,
+          method: "PATCH",
+          data: formData,
+          withCredentials: true,
+        })
+      ).data;
+      if (error) throw data;
+      alert("Updated successfully!");
+    } catch (error) {
+      alert("Err: " + error);
+    }
+  }, []);
 
   return (
     <PublicLayout
@@ -53,7 +67,15 @@ const AdminDashboard = ({ admin }) => {
             isDarkMode={isDarkMode}
           />
         </div>
-        {tab === 0 && <ProfileComponent admin={admin} />}
+        {tab === 0 && (
+          <CMSForm
+            type="profile"
+            init={admin}
+            heading="Profile CMS"
+            isDarkMode={isDarkMode}
+            getFormData={handleProfileUpdate}
+          />
+        )}
         {tab === 1 && <PortfolioMgmt projects={admin.portfolio} />}
       </div>
     </PublicLayout>
@@ -75,7 +97,7 @@ export async function getServerSideProps({ req, res }) {
       };
     }
     admin = await getAdminUser("");
-
+    console.log(admin);
     let temp = { ...admin._doc };
     delete temp.password;
 
