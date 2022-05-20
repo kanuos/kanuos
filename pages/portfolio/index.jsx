@@ -66,7 +66,7 @@ const PortfolioPage = ({ metadata }) => {
             <p className="content--main">{metadata.about}</p>
             <div className="mt-10">
               <CTA
-                label="Hire me"
+                label="Let's talk"
                 href={PORTFOLIO_LINKS["contact me"].url}
                 isDarkMode={isDarkMode}
               />
