@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 // import : internal
-import { HeadComponent } from "../../components/Head";
+import PublicLayout from "../../components/Layouts/PublicLayout";
 import { getAllBlogs, getIndividualBlog } from "../../database/blogs";
 import { generateDetailViewMetadata } from "../../utils";
 
@@ -10,15 +10,9 @@ const BlogDetailBody = dynamic(() =>
     (m) => m.BlogDetailBody
   )
 );
-const NavBar = dynamic(() =>
-  import("../../components/public/Nav").then((m) => m.NavBar)
-);
 
 const Footer = dynamic(() =>
-  import("../../components/public/Footer").then((m) => m.Footer)
-);
-const ThemeToggler = dynamic(() =>
-  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
+  import("../../components/detail/Footer").then((m) => m.Footer)
 );
 
 const BlogDetail = ({ blog }) => {
@@ -30,13 +24,11 @@ const BlogDetail = ({ blog }) => {
     "blog"
   );
   return (
-    <>
-      <HeadComponent title={blog.title} content={content} />
-      <NavBar />
-      <ThemeToggler />
+    <PublicLayout metaTitle={"Blog : " + blog.title} metaDesc={content}>
       <BlogDetailBody blog={blog} />
       <Footer />
-    </>
+      {/* TODO: add footer content  */}
+    </PublicLayout>
   );
 };
 

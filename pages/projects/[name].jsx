@@ -1,5 +1,5 @@
 // Project Detail View
-
+import dynamic from "next/dynamic";
 // import : internal
 import PublicLayout from "../../components/Layouts/PublicLayout";
 import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
@@ -11,6 +11,9 @@ import {
 } from "../../utils";
 
 // dynamic
+const Footer = dynamic(() =>
+  import("../../components/detail/Footer").then((m) => m.Footer)
+);
 
 const ProjectDetail = ({ project }) => {
   project = JSON.parse(project);
@@ -22,6 +25,8 @@ const ProjectDetail = ({ project }) => {
   return (
     <PublicLayout metaTitle={project.title} metaDesc={content}>
       <ProjectDetailBody project={project} />
+      <Footer />
+      {/* TODO: add footer content  */}
     </PublicLayout>
   );
 };

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 
 // import : internal
 import { DesignDetailBody } from "../../components/content/DesignDetailBody";
-import { HeadComponent } from "../../components/Head";
+import PublicLayout from "../../components/Layouts/PublicLayout";
 import { getAllDesigns, getIndividualDesign } from "../../database/designs";
 import {
   deFormatURLParamString,
@@ -13,14 +13,8 @@ import {
 
 // dynamic imports
 
-const ThemeToggler = dynamic(() =>
-  import("../../components/public/ThemeToggler").then((m) => m.ThemeToggler)
-);
-const NavBar = dynamic(() =>
-  import("../../components/public/Nav").then((m) => m.NavBar)
-);
 const Footer = dynamic(() =>
-  import("../../components/public/Footer").then((m) => m.Footer)
+  import("../../components/detail/Footer").then((m) => m.Footer)
 );
 
 const DesignDetail = ({ design }) => {
@@ -32,13 +26,11 @@ const DesignDetail = ({ design }) => {
     "design"
   );
   return (
-    <>
-      <HeadComponent title={`Design : ` + design.title} content={content} />
-      <NavBar />
-      <ThemeToggler />
+    <PublicLayout metaTitle={`Design : ` + design.title} metaDesc={content}>
       <DesignDetailBody design={design} />
       <Footer />
-    </>
+      {/* TODO: add footer content  */}
+    </PublicLayout>
   );
 };
 
