@@ -45,103 +45,94 @@ export const ArrayInput = ({
   }
 
   return (
-    <div className="w-full mb-4">
-      <section
-        className={`${
-          split ? "" : "col-span-full"
-        } w-full flex flex-col items-start gap-2`}
-      >
-        {value.length > 0 && (
-          <details className="p-4 mb-2 last-of-type:mb-0 bg-secondary bg-opacity-20 shadow-inner rounded-md w-full">
-            <ul className="flex flex-col">
-              {value.map((items, i) => (
-                <li
-                  key={i}
-                  className={`list-item w-full ${
-                    i === editIndex
-                      ? "opacity-50 cursor-not-allowed line-through"
-                      : "opacity-100"
-                  }`}
-                >
-                  <p className="content--sub my-6">{JSON.stringify(items)}</p>
-                  <ul className="flex items-center mb-4 w-full gap-4">
-                    <CTA
-                      cb={() => getEditData(items, i)}
-                      btnMode={true}
-                      label="Edit"
-                      isDarkMode={isDarkMode}
-                    />
-                    <CTA
-                      cb={() => handleDeleteItem(i)}
-                      btnMode={true}
-                      label="Delete"
-                      isDarkMode={isDarkMode}
-                    />
-                  </ul>
-                </li>
-              ))}
-            </ul>
-            <summary className="content--sub">
-              {name} array : [{value.length}]
-            </summary>
-          </details>
-        )}
+    <section
+      className={`col-span-full w-full flex flex-col items-start gap-2 p-4 border-2 rounded-md border-opacity-25`}
+    >
+      <label htmlFor={name} className="content--sub capitalize font-semibold">
+        {name}
+      </label>
 
-        <label htmlFor={name} className="content--sub capitalize font-semibold">
-          {name}
-        </label>
-
-        <div className="flex flex-col items-stretch gap-6 my-6">
-          {layout.map((field, i) => {
-            const { type, name, placeholder } = field;
-            return (
-              <section
+      {value.length > 0 && (
+        <details className="p-4 my-4 last-of-type:mb-0 bg-secondary bg-opacity-20 shadow-inner rounded-md w-full">
+          <ul className="flex flex-col">
+            {value.map((items, i) => (
+              <li
                 key={i}
-                className={`col-span-full w-full flex flex-col items-start gap-2`}
+                className={`list-item w-full ${
+                  i === editIndex
+                    ? "opacity-50 cursor-not-allowed line-through"
+                    : "opacity-100"
+                }`}
               >
-                <label
-                  htmlFor={name}
-                  className="content--sub capitalize font-semibold"
-                >
-                  {name}
-                </label>
-
-                {type === "string" && (
-                  <StringInput
-                    placeholder={placeholder}
-                    value={currentState[name]}
-                    setValue={(p) =>
-                      setCurrentState((prev) => ({ ...prev, [name]: p }))
-                    }
-                    split={true}
+                <p className="content--sub my-6">{JSON.stringify(items)}</p>
+                <ul className="flex items-center mb-4 w-full gap-4">
+                  <CTA
+                    cb={() => getEditData(items, i)}
+                    btnMode={true}
+                    label="Edit"
+                    isDarkMode={isDarkMode}
                   />
-                )}
-
-                {type === "markdown" && (
-                  <MarkdownInput
-                    placeholder={placeholder}
-                    value={currentState[name]}
-                    setValue={(p) =>
-                      setCurrentState((prev) => ({ ...prev, [name]: p }))
-                    }
-                    split={false}
+                  <CTA
+                    cb={() => handleDeleteItem(i)}
+                    btnMode={true}
+                    label="Delete"
+                    isDarkMode={isDarkMode}
                   />
-                )}
-              </section>
-            );
-          })}
+                </ul>
+              </li>
+            ))}
+          </ul>
+          <summary className="content--sub">
+            {name} array : [{value.length}]
+          </summary>
+        </details>
+      )}
+
+      <div className="flex flex-col items-stretch gap-6 my-2 w-full">
+        {layout.map((field, i) => {
+          const { type, name, placeholder } = field;
+          return (
+            <section
+              key={i}
+              className={`col-span-full w-full flex flex-col items-start gap-2`}
+            >
+              {type === "string" && (
+                <StringInput
+                  name={name}
+                  placeholder={placeholder}
+                  value={currentState[name]}
+                  setValue={(p) =>
+                    setCurrentState((prev) => ({ ...prev, [name]: p }))
+                  }
+                  split={true}
+                />
+              )}
+
+              {type === "markdown" && (
+                <MarkdownInput
+                  name={name}
+                  placeholder={placeholder}
+                  value={currentState[name]}
+                  setValue={(p) =>
+                    setCurrentState((prev) => ({ ...prev, [name]: p }))
+                  }
+                  split={false}
+                />
+              )}
+            </section>
+          );
+        })}
+      </div>
+      {Object.values(currentState).every(Boolean) && (
+        <div className="w-max">
+          <CTA
+            isDarkMode={isDarkMode}
+            label="Add Chapter"
+            btnMode={true}
+            cb={handleAddToArray}
+          />
         </div>
-        {Object.values(currentState).every(Boolean) && (
-          <div className="w-max">
-            <CTA
-              isDarkMode={isDarkMode}
-              label="Add Chapter"
-              btnMode={true}
-              cb={handleAddToArray}
-            />
-          </div>
-        )}
-      </section>
-    </div>
+      )}
+    </section>
   );
 };

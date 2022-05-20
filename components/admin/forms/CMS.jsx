@@ -36,6 +36,7 @@ const FORM_FIELDS = {
       placeholder: "Skillset in words",
       split: false,
     },
+
     {
       name: "techStack",
       type: "array",
@@ -148,9 +149,10 @@ const CMSForm = ({
         {FORM_FIELDS[type]?.map((field) => {
           const { name, type, split, placeholder, layout } = field;
           return (
-            <section key={name}>
+            <>
               {type === "string" && (
                 <StringInput
+                  key={name}
                   name={name}
                   placeholder={placeholder}
                   value={currentState[name]}
@@ -163,6 +165,7 @@ const CMSForm = ({
 
               {type === "markdown" && (
                 <MarkdownInput
+                  key={name}
                   name={name}
                   placeholder={placeholder}
                   value={currentState[name]}
@@ -174,23 +177,22 @@ const CMSForm = ({
               )}
 
               {type === "array" && (
-                <div className="pl-4 my-4 w-full border-l-4 border-secondary border-double">
-                  <ArrayInput
-                    name={name}
-                    value={currentState[name]}
-                    layout={layout}
-                    isDarkMode={isDarkMode}
-                    getArrayItem={(data) => addItemToList(data, name)}
-                    deleteArrayItem={(data) => deleteItemFromList(data, name)}
-                    split={split}
-                  />
-                </div>
+                <ArrayInput
+                  key={name}
+                  name={name}
+                  value={currentState[name]}
+                  layout={layout}
+                  isDarkMode={isDarkMode}
+                  getArrayItem={(data) => addItemToList(data, name)}
+                  deleteArrayItem={(data) => deleteItemFromList(data, name)}
+                  split={true}
+                />
               )}
-            </section>
+            </>
           );
         })}
 
-        <div className="w-max mr-auto mt-10">
+        <div className="w-max mr-auto mt-10 col-span-full">
           <CTA
             btnMode={true}
             btnType="submit"
