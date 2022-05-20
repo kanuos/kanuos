@@ -1,27 +1,23 @@
 // DISPLAY ADMIN PAGES
 //  NOTES CMS
-import dynamic from "next/dynamic";
 import axios from "axios";
-import { useState } from "react";
-import { IoCloseCircleSharp } from "react-icons/io5";
-import { StringField } from "../../../components/admin/InputField";
+import { useState, useContext, useCallback } from "react";
 import { getAllTags } from "../../../database/tags";
 import { ADMIN_ACCOUNT } from "../../../utils";
 import { API_ROUTES } from "../../../utils/admin";
 import { isAdminMiddleware } from "../../../utils/authLib";
 import PublicLayout from "../../../components/Layouts/PublicLayout";
-
-const JoinLine = dynamic(() =>
-  import("../../../components/public/DescHeader").then((m) => m.JoinLine)
-);
+import { ThemeContext } from "../../../contexts/ThemeContext";
+import CMSForm from "../../../components/admin/forms/CMS";
+import { Tag } from "../../../components/public/Tag";
 
 const TagsAdminPage = ({ allTags }) => {
-  const [current, setCurrent] = useState("");
+  const { isDarkMode } = useContext(ThemeContext);
   const [tags, setTags] = useState(allTags ? JSON.parse(allTags) : []);
 
-  async function handleAddTag() {
+  const handleAddTag = useCallback(async function (newTag) {
     try {
-      const newTag = current.trim().toLowerCase();
+      newTag = newTag?.tag?.trim().toLowerCase();
       if (!Boolean(newTag)) throw "Tag cannot be empty";
 
       const existingTag = tags.filter((tag) => tag.tag === newTag);
@@ -39,13 +35,12 @@ const TagsAdminPage = ({ allTags }) => {
 
       if (!tag) throw "Invalid";
       setTags((prev) => [...prev, tag]);
-      setCurrent("");
     } catch (error) {
       alert(error);
     }
-  }
+  });
 
-  async function handleDelete(t) {
+  const handleDelete = useCallback(async function (t) {
     try {
       let permission = confirm("Are you sure you want to delete tag?");
       if (!permission) throw "Delettion cancelled";
@@ -62,35 +57,50 @@ const TagsAdminPage = ({ allTags }) => {
     } catch (error) {
       alert(error);
     }
-  }
+  });
 
   return (
-    <PublicLayout metaTitle="ADMIN | Tags Management">
-      <div className="w-full max-w-4xl px-8 py-20 mx-auto">
-        <h1 className="font-special text-3xl md:text-4xl capitalize">
-          tag management ({tags.length})
-        </h1>
-        <section className="flex flex-col w-full items-stretch my-8">
+    <PublicLayout metaTitle="ADMIN | Tags Management" navType="admin">
+      <div className="w-full max-w-4xl p-8 mx-auto">
+        <CMSForm
+          key={tags.length}
+          heading="Tag management"
+          type="tag"
+          init={{}}
+          btnLabel="Add Tag"
+          isDarkMode={isDarkMode}
+          getFormData={handleAddTag}
+        />
+        <div className="block max-w-prose container mx-auto w-full">
+          <p className="content--sub">Total tags : {tags.length}</p>
+          <div className="flex flex-wrap gap-4 items-center justify-start w-full my-4">
+            {tags
+              .sort((a, b) => a._id - b._id)
+              .map((t) => (
+                <div key={t._id} className="w-max">
+                  <Tag tag={t} cb={() => handleDelete(t)} />
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+      {/* <div className="w-full max-w-4xl px-8 pt-20 mx-auto">
+        <h1 className="heading--main">Tag mgmt ({tags.length})</h1>
+        <div className="my-6">
           <StringField
             name="tag"
             value={current}
             setValue={({ _, v }) => setCurrent(v)}
           />
-          <div className="ml-4">
-            <JoinLine />
-          </div>
-          <button
-            onClick={handleAddTag}
-            className="capitalize text-xs w-max  mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer"
-          >
-            <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
-              Add Tag
-            </span>
-            <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
-          </button>
-        </section>
+        </div>
+        <CTA
+          btnMode={true}
+          label="Add Tag"
+          cb={handleAddTag}
+          isDarkMode={isDarkMode}
+        />
 
-        <ul className="flex flex-wrap gap-4 items-center justify-start w-full pt-4 border-t">
+        <ul className="flex flex-wrap gap-4 items-center justify-start w-full">
           {tags
             .sort((a, b) => a._id - b._id)
             .map((t) => (
@@ -108,7 +118,7 @@ const TagsAdminPage = ({ allTags }) => {
               </li>
             ))}
         </ul>
-      </div>
+      </div> */}
     </PublicLayout>
   );
 };

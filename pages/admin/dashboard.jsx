@@ -51,21 +51,25 @@ const AdminDashboard = ({ admin }) => {
       navType="admin"
     >
       <div className="min-h-screen p-8">
-        <div className="flex items-center justify-center gap-x-4 mb-6">
-          <CTA
-            btnMode={true}
-            isActive={tab === 0}
-            label="Update profile"
-            cb={() => setTab(0)}
-            isDarkMode={isDarkMode}
-          />
-          <CTA
-            btnMode={true}
-            isActive={tab === 1}
-            label="Portfolio Mgmt"
-            cb={() => setTab(1)}
-            isDarkMode={isDarkMode}
-          />
+        <div className="flex items-center justify-start w-full mb-6 container max-w-prose mx-auto">
+          <div className="scale-90">
+            <CTA
+              btnMode={true}
+              isActive={tab === 0}
+              label="Update profile"
+              cb={() => setTab(0)}
+              isDarkMode={isDarkMode}
+            />
+          </div>
+          <div className="scale-90">
+            <CTA
+              btnMode={true}
+              isActive={tab === 1}
+              label="Portfolio Mgmt"
+              cb={() => setTab(1)}
+              isDarkMode={isDarkMode}
+            />
+          </div>
         </div>
         {tab === 0 && (
           <CMSForm

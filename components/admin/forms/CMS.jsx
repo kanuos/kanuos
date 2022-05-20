@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { CTA } from "../../portfolio/CTA";
 import { ArrayInput } from "../inputs/ArrayInput";
 import { MarkdownInput } from "../inputs/Markdown";
@@ -92,6 +92,14 @@ const FORM_FIELDS = {
       split: false,
     },
   ],
+  tag: [
+    {
+      name: "tag",
+      type: "string",
+      placeholder: "Eg. React",
+      split: false,
+    },
+  ],
 };
 
 const CMSForm = ({
@@ -149,10 +157,9 @@ const CMSForm = ({
         {FORM_FIELDS[type]?.map((field) => {
           const { name, type, split, placeholder, layout } = field;
           return (
-            <>
+            <Fragment key={name}>
               {type === "string" && (
                 <StringInput
-                  key={name}
                   name={name}
                   placeholder={placeholder}
                   value={currentState[name]}
@@ -165,7 +172,6 @@ const CMSForm = ({
 
               {type === "markdown" && (
                 <MarkdownInput
-                  key={name}
                   name={name}
                   placeholder={placeholder}
                   value={currentState[name]}
@@ -178,7 +184,6 @@ const CMSForm = ({
 
               {type === "array" && (
                 <ArrayInput
-                  key={name}
                   name={name}
                   value={currentState[name]}
                   layout={layout}
@@ -188,11 +193,11 @@ const CMSForm = ({
                   split={true}
                 />
               )}
-            </>
+            </Fragment>
           );
         })}
 
-        <div className="w-max mr-auto mt-10 col-span-full">
+        <div className="w-max mr-auto my-10 col-span-full">
           <CTA
             btnMode={true}
             btnType="submit"
