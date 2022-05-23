@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 
 // import : internal components
 import PublicLayout from "../../components/Layouts/PublicLayout";
+import layout from "../../utils/cms";
 
 // import : internal
 import { getAdminUser } from "../../database/user";
@@ -73,10 +74,10 @@ const AdminDashboard = ({ admin }) => {
         </div>
         {tab === 0 && (
           <CMSForm
-            type="profile"
             init={admin}
             heading="Profile CMS"
             isDarkMode={isDarkMode}
+            layout={layout.PROFILE_CMS}
             getFormData={handleProfileUpdate}
           />
         )}

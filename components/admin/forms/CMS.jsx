@@ -1,7 +1,7 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useCallback } from "react";
 import { CTA } from "../../portfolio/CTA";
-import { ArrayInput } from "../inputs/ArrayInput";
 import { MarkdownInput } from "../inputs/Markdown";
+import { ArrayInput } from "../inputs/ArrayInput";
 import { StringInput } from "../inputs/String";
 
 const FORM_FIELDS = {
@@ -35,27 +35,6 @@ const FORM_FIELDS = {
       type: "markdown",
       placeholder: "Skillset in words",
       split: false,
-    },
-
-    {
-      name: "techStack",
-      type: "array",
-      layout: [
-        {
-          name: "heading",
-          type: "string",
-          placeholder: "Tech stack heading",
-          split: false,
-          isArray: false,
-        },
-        {
-          name: "text",
-          type: "markdown",
-          placeholder: "Description about stack",
-          split: false,
-          isArray: false,
-        },
-      ],
     },
   ],
   account: [
@@ -106,6 +85,7 @@ const CMSForm = ({
   type = "profile",
   init,
   heading = "",
+  layout = [],
   isDarkMode,
   getFormData,
   btnLabel = "Save Changes",
@@ -115,37 +95,38 @@ const CMSForm = ({
     ({ name, isArray }) => (INIT[name] = isArray ? [] : "")
   );
   const [currentState, setCurrentState] = useState({ ...INIT, ...init });
-
-  function addItemToList({ data, editMode, index }, name) {
-    if (!editMode) {
-      setCurrentState((prev) => ({
-        ...prev,
-        [name]: [...prev[name], data],
-      }));
-    } else {
-      setCurrentState((prev) => ({
-        ...prev,
-        [name]: prev[name].map((el, i) => {
-          if (i === index) {
-            return data;
-          }
-          return el;
-        }),
-      }));
-    }
-  }
-
-  function deleteItemFromList({ data, index }, name) {
-    setCurrentState((prev) => ({
-      ...prev,
-      [name]: prev[name].filter((el, i) => i !== index && !Object.is(data, el)),
-    }));
-  }
+  const [arrayStep, setArrayStep] = useState({});
+  const [editIndex, setEditIndex] = useState(NaN);
 
   function handleFormSubmission(e) {
     e.preventDefault();
+    console.log({ currentState });
     getFormData(currentState);
   }
+
+  const getArrayItem = useCallback((name, newEl, index) => {
+    setCurrentState((prev) => ({
+      ...prev,
+      [name]: !isNaN(index)
+        ? prev[name].map((el, k) => (index === k ? newEl : el))
+        : [...(prev[name] || []), newEl],
+    }));
+    setArrayStep(() => ({}));
+    setEditIndex(() => NaN);
+  }, []);
+
+  const getArrayEditData = useCallback((item, index) => {
+    setEditIndex(() => index);
+    setArrayStep(() => ({ ...item }));
+  }, []);
+
+  const deleteArrayData = useCallback((index, name) => {
+    if (!confirm("Confirm delete?")) return;
+    setCurrentState((prev) => ({
+      ...prev,
+      [name]: prev[name].filter((el, k) => k !== index && el),
+    }));
+  }, []);
 
   return (
     <div className="container max-w-prose mx-auto">
@@ -154,49 +135,72 @@ const CMSForm = ({
         onSubmit={handleFormSubmission}
         className="grid grid-cols-1 md:grid-cols-2 gap-6 my-10"
       >
-        {FORM_FIELDS[type]?.map((field) => {
-          const { name, type, split, placeholder, layout } = field;
-          return (
-            <Fragment key={name}>
-              {type === "string" && (
-                <StringInput
-                  name={name}
-                  placeholder={placeholder}
-                  value={currentState[name]}
-                  setValue={(p) =>
-                    setCurrentState((prev) => ({ ...prev, [name]: p }))
-                  }
-                  split={split}
-                />
-              )}
-
-              {type === "markdown" && (
-                <MarkdownInput
-                  name={name}
-                  placeholder={placeholder}
-                  value={currentState[name]}
-                  setValue={(p) =>
-                    setCurrentState((prev) => ({ ...prev, [name]: p }))
-                  }
-                  split={split}
-                />
-              )}
-
-              {type === "array" && (
-                <ArrayInput
-                  name={name}
-                  value={currentState[name]}
-                  layout={layout}
-                  isDarkMode={isDarkMode}
-                  getArrayItem={(data) => addItemToList(data, name)}
-                  deleteArrayItem={(data) => deleteItemFromList(data, name)}
-                  split={true}
-                />
-              )}
-            </Fragment>
-          );
-        })}
-
+        {layout.map(({ name, type, placeholder, layout, split }) => (
+          <Fragment key={name}>
+            {type === "string" && (
+              <StringInput
+                split={split}
+                name={name}
+                placeholder={placeholder}
+                value={currentState[name]}
+                setValue={(v) =>
+                  setCurrentState((prev) => ({ ...prev, [name]: v }))
+                }
+              />
+            )}
+            {type === "markdown" && (
+              <MarkdownInput
+                split={split}
+                name={name}
+                placeholder={placeholder}
+                value={currentState[name]}
+                setValue={(v) =>
+                  setCurrentState((prev) => ({ ...prev, [name]: v }))
+                }
+              />
+            )}
+            {type === "array" && (
+              <ArrayInput
+                key={name}
+                editIndex={editIndex}
+                parentState={currentState[name]}
+                isDarkMode={isDarkMode}
+                getArrayItem={getArrayItem}
+                getEditData={getArrayEditData}
+                currentState={arrayStep}
+                deleteArrayItem={deleteArrayData}
+                name={name}
+              >
+                {layout.map((el, k) => {
+                  return (
+                    <Fragment key={k}>
+                      {el.type === "string" && (
+                        <StringInput
+                          name={el.name}
+                          placeholder={el.placeholder}
+                          value={arrayStep[el.name]}
+                          setValue={(v) =>
+                            setArrayStep((prev) => ({ ...prev, [el.name]: v }))
+                          }
+                        />
+                      )}
+                      {el.type === "markdown" && (
+                        <MarkdownInput
+                          name={el.name}
+                          placeholder={el.placeholder}
+                          value={arrayStep[el.name]}
+                          setValue={(v) =>
+                            setArrayStep((prev) => ({ ...prev, [el.name]: v }))
+                          }
+                        />
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </ArrayInput>
+            )}
+          </Fragment>
+        ))}
         <div className="w-max mr-auto my-10 col-span-full">
           <CTA
             btnMode={true}
