@@ -1,65 +1,49 @@
-import { JoinLine } from "../public/DescHeader";;
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import { ADMIN_URLS } from "../../utils";
+import { CTA } from "../portfolio/CTA";
+import { Tag } from "../public/Tag";
 
-export const TagSelector = ({ handleTag, tag, next, allTags, prev }) => {
+export const TagSelector = ({
+  handleTag,
+  selectedTags,
+  next,
+  allTags,
+  prev,
+}) => {
   const router = useRouter();
   if (allTags.length === 0) {
-    router.replace(ADMIN_URLS.tags.url)
-    return <></>
+    router.replace(ADMIN_URLS.tags.url);
+    return <></>;
   }
   return (
     <div className="section h-full w-full flex items-start justify-center">
       <section className="flex flex-col items-start gap-y-2  w-full max-w-2xl">
-        <h1 className="font-special text-4xl md:text-5xl capitalize">
-          Select Tags
-        </h1>
-        <JoinLine />
-        <ul className="flex flex-wrap gap-4 items-center justify-start">
-          {allTags.map(t => {
-            let isPresent = Boolean(tag.find(selected => selected._id === t._id));
+        <h1 className="heading--main">Select Tags</h1>
+        <p className="content--main">
+          Total selected tags : {selectedTags.length}
+        </p>
+        <div className="flex flex-wrap gap-4 items-center justify-start mt-4 mb-10">
+          {allTags.map((t) => {
+            let isPresent = Boolean(
+              selectedTags.find((selected) => selected._id === t._id)
+            );
             return (
-            <li key={t._id}
-              onClick={() => handleTag(t)} 
-              className={(isPresent ? 'bg-dark text-light' : 'text-dark opacity-75 hover:text-primary') + " text-xs py-1 px-4 border-2 border-current font-semibold rounded-md uppercase cursor-pointer transition-all"}>
-                <small>
-                  {t.tag}
-                </small>
-            </li>
-          )})}
-        </ul>
+              <div className="w-max" key={t._id}>
+                <Tag tag={t} cb={() => handleTag(t)} isActive={isPresent} />
+              </div>
+            );
+          })}
+        </div>
 
-        <ul className="mt-20 flex items-center justify-start gap-x-8">
+        <ul className="flex items-center justify-start gap-x-8">
+          <li>{prev && <CTA label="← Prev" cb={prev} btnMode={true} />}</li>
           <li>
-          {prev && (
-            <button 
-              onClick={prev}
-              className="capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer group">
-              <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
-                &larr; Prev 
-              </span>
-              <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300"></span>
-            </button>
-          )}
-          </li>
-          <li>
-          {tag.length > 0 && (
-            <button 
-              onClick={next}
-              className="capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer group">
-              <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 border-dark font-semibold">
-                Next &rarr;
-              </span>
-              <span className="py-1.5 px-6 block bg-dark transition-all hover:shadow-xl border-2 border-dark absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300"></span>
-            </button>
-          )}
+            {selectedTags.length > 0 && (
+              <CTA label="Next →" cb={next} btnMode={true} />
+            )}
           </li>
         </ul>
-
-        
       </section>
     </div>
   );
 };
-
-

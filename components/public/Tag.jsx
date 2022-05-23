@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-export const Tag = ({ cb = null, tag }) => {
+export const Tag = ({ cb = null, tag, isActive = false }) => {
   const { isDarkMode } = useContext(ThemeContext);
 
   const cls = {
@@ -16,7 +16,7 @@ export const Tag = ({ cb = null, tag }) => {
         isDarkMode
           ? "opacity-50 hover:opacity-100 hover:text-secondary bg-secondary"
           : "hover:text-primary bg-primary"
-      }`;
+      } ${isActive ? (isDarkMode ? "text-secondary" : "text-primary") : ""}`;
     },
   };
 
