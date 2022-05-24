@@ -10,6 +10,7 @@ import PublicLayout from "../../../components/Layouts/PublicLayout";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import CMSForm from "../../../components/admin/forms/CMS";
 import { Tag } from "../../../components/public/Tag";
+import Layout from "../../../utils/cms";
 
 const TagsAdminPage = ({ allTags }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -67,6 +68,7 @@ const TagsAdminPage = ({ allTags }) => {
           heading="Tag management"
           type="tag"
           init={{}}
+          layout={Layout.TAG_CMS}
           btnLabel="Add Tag"
           isDarkMode={isDarkMode}
           getFormData={handleAddTag}

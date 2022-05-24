@@ -49,6 +49,52 @@ const PROFILE_CMS = [
   },
 ];
 
+const ACCOUNT_CMS = {
+  account: [
+    {
+      name: "email",
+      type: "string",
+      placeholder: "ADMIN email ID",
+      split: false,
+    },
+    {
+      name: "password",
+      type: "string",
+      placeholder: "ADMIN password",
+      split: false,
+    },
+  ],
+  reset: [
+    {
+      name: "email",
+      type: "string",
+      placeholder: "ADMIN email ID",
+      split: false,
+    },
+    {
+      name: "password",
+      type: "string",
+      placeholder: "ADMIN password",
+      split: false,
+    },
+    {
+      name: "secret",
+      type: "string",
+      placeholder: "ADMIN secret code",
+      split: false,
+    },
+  ],
+};
+
+const TAG_CMS = [
+  {
+    name: "tag",
+    type: "string",
+    placeholder: "Tag name eg. React",
+    split: false,
+  },
+];
+
 const BLOG_CMS = [
   {
     name: "title",
@@ -88,46 +134,10 @@ const BLOG_CMS = [
   },
 ];
 
-const ACCOUNT_CMS = {
-  account: [
-    {
-      name: "email",
-      type: "string",
-      placeholder: "ADMIN email ID",
-      split: false,
-    },
-    {
-      name: "password",
-      type: "string",
-      placeholder: "ADMIN password",
-      split: false,
-    },
-  ],
-  reset: [
-    {
-      name: "email",
-      type: "string",
-      placeholder: "ADMIN email ID",
-      split: false,
-    },
-    {
-      name: "password",
-      type: "string",
-      placeholder: "ADMIN password",
-      split: false,
-    },
-    {
-      name: "secret",
-      type: "string",
-      placeholder: "ADMIN secret code",
-      split: false,
-    },
-  ],
-};
-
 export default {
   PROFILE_CMS,
   ACCOUNT_CMS,
+  TAG_CMS,
 };
 
 /*
