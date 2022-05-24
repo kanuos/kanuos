@@ -49,6 +49,117 @@ const PROFILE_CMS = [
   },
 ];
 
+const BLOG_CMS = [
+  {
+    name: "title",
+    type: "string",
+    placeholder: "Blog title",
+    split: true,
+  },
+  {
+    name: "slug",
+    type: "string",
+    placeholder: "Blog slug",
+    split: true,
+  },
+  {
+    name: "desc",
+    type: "markdown",
+    placeholder: "Blog description",
+    split: false,
+  },
+  {
+    name: "category",
+    type: "string",
+    placeholder: "Blog category",
+    split: true,
+  },
+  {
+    name: "page",
+    type: "array",
+    layout: [
+      {
+        name: "key",
+        type: "select",
+        split: true,
+        options: ["string", "markdown", "code", "image"],
+      },
+    ],
+  },
+];
+
+const ACCOUNT_CMS = {
+  account: [
+    {
+      name: "email",
+      type: "string",
+      placeholder: "ADMIN email ID",
+      split: false,
+    },
+    {
+      name: "password",
+      type: "string",
+      placeholder: "ADMIN password",
+      split: false,
+    },
+  ],
+  reset: [
+    {
+      name: "email",
+      type: "string",
+      placeholder: "ADMIN email ID",
+      split: false,
+    },
+    {
+      name: "password",
+      type: "string",
+      placeholder: "ADMIN password",
+      split: false,
+    },
+    {
+      name: "secret",
+      type: "string",
+      placeholder: "ADMIN secret code",
+      split: false,
+    },
+  ],
+};
+
 export default {
   PROFILE_CMS,
+  ACCOUNT_CMS,
 };
+
+/*
+  page: [
+    {
+      type: Object,
+    },
+  ],
+  repo: {
+    type: Object,
+  },
+  demo: {
+    type: Object,
+  },
+  outro: {
+    type: Object,
+  },
+
+  ----------------------------------------------------------------
+
+
+  key: Joi.string().trim().required(),
+  value: [
+    // text, markdown
+    Joi.string().trim().required(),
+    // image url
+    Joi.string().trim().uri().required(),
+    // code block
+    Joi.object({
+      code: Joi.string().required(),
+      language: Joi.string().trim().lowercase().required(),
+      file: Joi.string().trim().required(),
+    }),
+
+ */

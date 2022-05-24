@@ -14,6 +14,7 @@ import {
   PUBLIC_URLS,
 } from "../../utils";
 
+import Layout from "../../utils/cms";
 import { AUTH_ROUTES } from "../../utils/admin";
 import { AuthValidators } from "../../utils/validator";
 import CMSForm from "./forms/CMS";
@@ -164,6 +165,7 @@ const AccountBody = ({ type, cb, heading, btnLabel }) => {
         type={type}
         heading={heading}
         init={{}}
+        layout={Layout.ACCOUNT_CMS[type]}
         isDarkMode={isDarkMode}
         getFormData={cb}
         btnLabel={btnLabel}
