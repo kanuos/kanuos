@@ -50,7 +50,7 @@ export async function getStaticProps({ params }) {
       props: {
         design: JSON.stringify(design),
       },
-      revalidate: 10,
+      revalidate: 1,
     };
   }
 }

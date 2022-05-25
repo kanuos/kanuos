@@ -26,7 +26,7 @@ const ProjectDetail = ({ project }) => {
     <PublicLayout metaTitle={project.title} metaDesc={content}>
       <ProjectDetailBody project={project} />
       <Footer />
-      {/* TODO: add footer content  */}
+      {/* TODO: add footer content */}
     </PublicLayout>
   );
 };
@@ -47,7 +47,7 @@ export async function getStaticProps({ params }) {
       props: {
         project: JSON.stringify(project),
       },
-      revalidate: 10,
+      revalidate: 1,
     };
   }
 }
