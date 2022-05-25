@@ -1,73 +1,29 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 
-export const LoadSpinner = ({text='Loading'}) => {
-
-   
+export const LoadSpinner = ({ text = "Loading" }) => {
   return (
-    <div className="flex flex-col items-center justify-center my-10 gap-y-10">
-        <span className="font-semibold text-center">
-            {text}
+    <div className="my-10 grid place-items-center w-max p-4 select-none">
+      <p className="flex flex-col w-max overflow-hidden items-stretch justify-center gap-1">
+        <motion.span
+          animate={{
+            backgroundColor: ["#FF0066", "#00BFB3"],
+            x: ["-50%", "100%"],
+            width: ["0%", "100%"],
+            transition: {
+              type: "tween",
+              repeat: Infinity,
+              duration: 2,
+            },
+          }}
+          className="h-0.5"
+        ></motion.span>
+        <span className="heading--secondary uppercase tracking-widest">
+          {text}
         </span>
-        <ul className="flex items-center justify-center gap-4">
-            <motion.li 
-                animate={{
-                    scaleY : [.75, 1.5, .5],
-                    backgroundColor : ['rgb(0, 191, 179)', 'rgb(255, 0, 102)', 'rgb(0, 191, 179)'],
-                    origin : 'bottom',
-                    transition : {
-                        stiffness : 1000,
-                        repeat : Infinity,
-                        type : 'spring',
-                        duration : .5,
-                    }
-                }}
-                className="block h-10 w-10"></motion.li>
-            <motion.li 
-                animate={{
-                    scaleY : [.75, 1.5, .5],
-                    backgroundColor : ['rgb(0, 191, 179)', 'rgb(255, 0, 102)', 'rgb(0, 191, 179)'],
-                    origin : 'top',
-                    transition : {
-                        stiffness : 1000,
-                        repeat : Infinity,
-                        type : 'spring',
-                        duration : .75,
-                        delay : .5
-                    }
-                }}
-                className="block h-10 w-10 "></motion.li>
-            <motion.li 
-                animate={{
-                    scaleY : [.75, 1.5, .5],
-                    backgroundColor : ['rgb(0, 191, 179)', 'rgb(255, 0, 102)', 'rgb(0, 191, 179)'],
-                    origin : 'bottom',
-                    transition : {
-                        stiffness : 1000,
-                        repeat : Infinity,
-                        type : 'spring',
-                        duration : .5
-                    }
-                }}
-                className="block h-10 w-10"></motion.li>
-            <motion.li 
-                animate={{
-                    scaleY : [.75, 1.5, .5],
-                    backgroundColor : ['rgb(0, 191, 179)', 'rgb(255, 0, 102)', 'rgb(0, 191, 179)'],
-                    origin : 'top',
-                    transition : {
-                        stiffness : 1000,
-                        repeat : Infinity,
-                        type : 'spring',
-                        duration : .75,
-                        delay : .5
-                    }
-                }}
-                className="block h-10 w-10"></motion.li>
-        </ul>
-        <span className="font-semibold text-center">
-            Please wait
-        </span>
+      </p>
+      <p className="content--sub font-semibold animate-pulse">
+        <small>Please wait</small>
+      </p>
     </div>
-  )
-}
-
+  );
+};
