@@ -30,7 +30,9 @@ export const ArrayInput = ({
                     : "opacity-100"
                 }`}
               >
-                <p className="content--sub my-6">{JSON.stringify(items)}</p>
+                <p className="content--sub my-6 break-words">
+                  {JSON.stringify(items, null, 8)}
+                </p>
                 <ul className="flex items-center mb-4 w-full gap-4">
                   <CTA
                     cb={() => getEditData(items, i)}

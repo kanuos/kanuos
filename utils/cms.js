@@ -122,13 +122,156 @@ const BLOG_CMS = [
   },
   {
     name: "page",
+    type: "page",
+  },
+  {
+    name: "repo",
+    type: "object",
+    layout: [
+      {
+        name: "label",
+        type: "string",
+        placeholder: `Repo label goes here`,
+        split: true,
+      },
+      {
+        name: "href",
+        type: "string",
+        placeholder: `Repo URL goes here`,
+        split: true,
+      },
+    ],
+  },
+  {
+    name: "demo",
+    type: "object",
+    layout: [
+      {
+        name: "label",
+        type: "string",
+        placeholder: `Repo label goes here`,
+        split: true,
+      },
+      {
+        name: "href",
+        type: "string",
+        placeholder: `Repo URL goes here`,
+        split: true,
+      },
+    ],
+  },
+  {
+    name: "outro",
+    type: "object",
+    layout: [
+      {
+        name: "heading",
+        type: "string",
+        placeholder: `Outro heading `,
+        split: true,
+      },
+      {
+        name: "href",
+        type: "markdown",
+        placeholder: `Outro text goes here`,
+        split: true,
+      },
+    ],
+  },
+];
+
+const DESIGN_CMS = [
+  {
+    name: "title",
+    type: "string",
+    placeholder: "Design title",
+    split: true,
+  },
+  {
+    name: "category",
+    type: "string",
+    placeholder: "Design category",
+    split: true,
+  },
+  {
+    name: "desc",
+    type: "markdown",
+    placeholder: "Design description",
+    split: false,
+  },
+  {
+    name: "role",
+    type: "markdown",
+    placeholder: "My role",
+    split: false,
+  },
+  {
+    name: "thumbnail",
+    type: "image",
+    placeholder: "Design thumbnail URL",
+    split: false,
+  },
+  {
+    name: "caption",
+    type: "string",
+    placeholder: "Design thumbnail caption",
+    split: false,
+  },
+  {
+    name: "colorPalette",
     type: "array",
     layout: [
       {
-        name: "key",
-        type: "select",
+        name: "hex",
+        type: "string",
+        placeholder: "Hex color value beginning with #",
+        split: false,
+      },
+    ],
+  },
+  {
+    name: "typography",
+    type: "array",
+    layout: [
+      {
+        name: "family",
+        type: "string",
+        placeholder: "Font family name",
+        split: false,
+      },
+      {
+        name: "desc",
+        type: "markdown",
+        placeholder: "Font family description",
+        split: false,
+      },
+    ],
+  },
+  {
+    name: "userFlowSteps",
+    type: "userFlow",
+  },
+  {
+    name: "externalResources",
+    type: "array",
+    layout: [
+      {
+        name: "poster",
+        type: "string",
+        placeholder: `External image URL`,
         split: true,
-        options: ["string", "markdown", "code", "image"],
+      },
+      {
+        name: "photographer",
+        type: "string",
+        placeholder: `Photographer's name`,
+        split: true,
+      },
+      {
+        name: "href",
+        type: "string",
+        placeholder: `Photographer's social URL`,
+        split: true,
       },
     ],
   },
@@ -138,38 +281,6 @@ export default {
   PROFILE_CMS,
   ACCOUNT_CMS,
   TAG_CMS,
+  blog: BLOG_CMS,
+  design: DESIGN_CMS,
 };
-
-/*
-  page: [
-    {
-      type: Object,
-    },
-  ],
-  repo: {
-    type: Object,
-  },
-  demo: {
-    type: Object,
-  },
-  outro: {
-    type: Object,
-  },
-
-  ----------------------------------------------------------------
-
-
-  key: Joi.string().trim().required(),
-  value: [
-    // text, markdown
-    Joi.string().trim().required(),
-    // image url
-    Joi.string().trim().uri().required(),
-    // code block
-    Joi.object({
-      code: Joi.string().required(),
-      language: Joi.string().trim().lowercase().required(),
-      file: Joi.string().trim().required(),
-    }),
-
- */
