@@ -23,19 +23,19 @@ export const PUBLIC_URLS = {
   },
   blogs: {
     name: "blogs",
-    url: "/blogs/page/1",
+    url: "/blogs/",
     base: "/blogs",
     type: "public",
   },
   projects: {
     name: "projects",
-    url: "/projects/page/1",
+    url: "/projects/",
     base: "/projects",
     type: "public",
   },
   designs: {
     name: "designs",
-    url: "/designs/page/1",
+    url: "/designs/",
     base: "/designs",
     type: "public",
   },
@@ -154,6 +154,7 @@ export function getEmptyState(steps) {
   return obj;
 }
 
+//TODO: delete start
 export const LOGIN_STEPS = [
   {
     field: "email",
@@ -217,6 +218,7 @@ export const RESET_PASSWORD_STEPS = [
     },
   },
 ];
+//TODO: delete end
 
 /**
  *
