@@ -8,6 +8,7 @@ import { PublicHeader } from "../public/Header";
 
 export const AdminListLayout = ({ list = [], type, children }) => {
   // TODO: searchText and handleSearch from parent and prop drill to public header
+  console.log(type);
   return (
     <PublicLayout
       navType="admin"
@@ -24,9 +25,15 @@ export const AdminListLayout = ({ list = [], type, children }) => {
           searchMode={list.length > 0}
         />
       </div>
-      <div className="p-8 w-full mx-auto max-w-4xl">
+      <div className="p-8 w-full mx-auto">
         {list.length > 0 && (
-          <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-20 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto">
+          <main
+            className={
+              type !== PUBLIC_LIST_TYPES.projects
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-20 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto"
+                : "flex flex-col my-20 gap-20 items-stretch w-full max-w-4xl mx-auto"
+            }
+          >
             {children}
           </main>
         )}
@@ -41,3 +48,6 @@ export const AdminListLayout = ({ list = [], type, children }) => {
     </PublicLayout>
   );
 };
+
+// P :
+// B : grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-20 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto

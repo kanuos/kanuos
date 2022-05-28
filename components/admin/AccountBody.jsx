@@ -72,7 +72,7 @@ export const LoginBody = () => {
     );
   }
   return (
-    <div className="flex flex-col items-center justify-center main-light p-8 h-full min-h-screen relative">
+    <div className="flex flex-col items-center justify-center p-8 h-full min-h-screen relative">
       <div className="w-max">
         <PageLink href={PUBLIC_URLS.home.url} label="Go to Home" />
       </div>
@@ -108,7 +108,7 @@ export const PasswordReset = () => {
     );
   }
   return (
-    <div className="flex flex-col items-center justify-center p-8 main-light h-full min-h-screen relative">
+    <div className="flex flex-col items-center justify-center p-8 h-full min-h-screen relative">
       <div className="w-max">
         <PageLink href={PUBLIC_URLS.home.url} label="Go to Home" />
       </div>
@@ -143,7 +143,7 @@ export const RegisterBody = ({ onSuccess }) => {
     );
   }
   return (
-    <div className="flex flex-col p-8 items-center justify-center main-light h-full min-h-screen relative">
+    <div className="flex flex-col p-8 items-center justify-center h-full min-h-screen relative">
       <div className="w-max">
         <PageLink href={PUBLIC_URLS.home.url} label="Go to Home" />
       </div>

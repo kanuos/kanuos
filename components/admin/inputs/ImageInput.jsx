@@ -19,7 +19,7 @@ export const ImageInput = ({
   useEffect(() => {
     if (!typedURL) return;
     setIsValid(() => isValidURL(typedURL));
-  }, [typedURL, isValidURL]);
+  }, [typedURL]);
 
   return (
     <section className={`col-span-full w-full flex flex-col items-start gap-2`}>
@@ -41,6 +41,7 @@ export const ImageInput = ({
           <section className="flex flex-col items-stretch justify-between gap-y-6">
             <div className="relative min-h-[50vh] w-full">
               <Image
+                alt=""
                 src={typedURL}
                 loader={({ src, width }) => `${src}?w=${width}&q=100`}
                 layout="fill"

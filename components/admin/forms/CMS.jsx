@@ -50,46 +50,49 @@ const CMSForm = ({
     if (type !== "content" || !storageKey) return;
     if (!Object.values(currentState).some(Boolean)) return;
     sessionStorage.setItem(storageKey, JSON.stringify(currentState));
-  }, [type, currentState]);
+  }, [type, currentState, storageKey]);
 
   useEffect(() => {
     if (!arrayType) return;
     setArrayStep(() => ({}));
   }, [arrayType]);
 
-  const getArrayItem = useCallback((name, newEl, index) => {
-    // 1. get the allowed keys from layout
-    const allowedKeys = layout
-      .find((el) => el.name === name)
-      ?.layout.map((el) => el.name)
-      .sort();
+  const getArrayItem = useCallback(
+    (name, newEl, index) => {
+      // 1. get the allowed keys from layout
+      const allowedKeys = layout
+        .find((el) => el.name === name)
+        ?.layout.map((el) => el.name)
+        .sort();
 
-    const incomingKeys = Object.keys(newEl).sort();
-    // check if the incoming element conforms to current layout
+      const incomingKeys = Object.keys(newEl).sort();
+      // check if the incoming element conforms to current layout
 
-    if (JSON.stringify(allowedKeys) !== JSON.stringify(incomingKeys)) {
+      if (JSON.stringify(allowedKeys) !== JSON.stringify(incomingKeys)) {
+        setArrayStep(() => ({}));
+        alert("Invalid keys or empty entry");
+        return;
+      }
+
+      // check if incoming item is not empty
+      const isValidEntry = Object.values(newEl).every(Boolean);
+      if (!isValidEntry) {
+        alert(`Fields of ${name} ie ${allowedKeys} cannot be empty`);
+        return;
+      }
+
+      // validate the incoming data
+      setCurrentState((prev) => ({
+        ...prev,
+        [name]: !isNaN(index)
+          ? prev[name].map((el, k) => (index === k ? newEl : el))
+          : [...(prev[name] || []), newEl],
+      }));
       setArrayStep(() => ({}));
-      alert("Invalid keys or empty entry");
-      return;
-    }
-
-    // check if incoming item is not empty
-    const isValidEntry = Object.values(newEl).every(Boolean);
-    if (!isValidEntry) {
-      alert(`Fields of ${name} ie ${allowedKeys} cannot be empty`);
-      return;
-    }
-
-    // validate the incoming data
-    setCurrentState((prev) => ({
-      ...prev,
-      [name]: !isNaN(index)
-        ? prev[name].map((el, k) => (index === k ? newEl : el))
-        : [...(prev[name] || []), newEl],
-    }));
-    setArrayStep(() => ({}));
-    setEditIndex(() => NaN);
-  }, []);
+      setEditIndex(() => NaN);
+    },
+    [layout]
+  );
 
   const getArrayEditData = useCallback((item, index) => {
     setEditIndex(() => index);

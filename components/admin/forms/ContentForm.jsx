@@ -133,7 +133,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
     setType(() => c);
     sessionStorage.removeItem(CONTENT_NAME);
     setContent(() => ({}));
-  });
+  }, []);
 
   const validateContentForPreviewMode = useCallback(
     function (data) {
@@ -155,7 +155,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         errorRef?.current?.scrollIntoView();
       }
     },
-    [type, content]
+    [type, content, tags]
   );
 
   return (
@@ -264,7 +264,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
 
       {/* preview mode */}
       {previewMode && (
-        <div className="my-40">
+        <div className="py-40">
           <h2 className="w-full mx-auto text-center border-y-2 border-current p-4 heading--main">
             Preview Mode
           </h2>

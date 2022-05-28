@@ -16,30 +16,33 @@ const TagsAdminPage = ({ allTags }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const [tags, setTags] = useState(allTags ? JSON.parse(allTags) : []);
 
-  const handleAddTag = useCallback(async function (newTag) {
-    try {
-      newTag = newTag?.tag?.trim().toLowerCase();
-      if (!Boolean(newTag)) throw "Tag cannot be empty";
+  const handleAddTag = useCallback(
+    async function (newTag) {
+      try {
+        newTag = newTag?.tag?.trim().toLowerCase();
+        if (!Boolean(newTag)) throw "Tag cannot be empty";
 
-      const existingTag = tags.filter((tag) => tag.tag === newTag);
-      if (existingTag.length > 0) throw "Tag already exists";
+        const existingTag = tags.filter((tag) => tag.tag === newTag);
+        if (existingTag.length > 0) throw "Tag already exists";
 
-      const { tag } = (
-        await axios({
-          method: "POST",
-          url: API_ROUTES.tags,
-          data: {
-            tag: newTag,
-          },
-        })
-      ).data;
+        const { tag } = (
+          await axios({
+            method: "POST",
+            url: API_ROUTES.tags,
+            data: {
+              tag: newTag,
+            },
+          })
+        ).data;
 
-      if (!tag) throw "Invalid";
-      setTags((prev) => [...prev, tag]);
-    } catch (error) {
-      alert(error);
-    }
-  });
+        if (!tag) throw "Invalid";
+        setTags((prev) => [...prev, tag]);
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [tags]
+  );
 
   const handleDelete = useCallback(async function (t) {
     try {
@@ -58,7 +61,7 @@ const TagsAdminPage = ({ allTags }) => {
     } catch (error) {
       alert(error);
     }
-  });
+  }, []);
 
   return (
     <PublicLayout metaTitle="ADMIN | Tags Management" navType="admin">

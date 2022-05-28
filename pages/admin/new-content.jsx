@@ -1,11 +1,17 @@
+import dynamic from "next/dynamic";
 import { useContext } from "react";
 // import : internal
 import { getAllTags } from "../../database/tags";
-import { ADMIN_ACCOUNT, ADMIN_URLS } from "../../utils";
+import { ADMIN_ACCOUNT } from "../../utils";
 import { isAdminMiddleware } from "../../utils/authLib";
 import PublicLayout from "../../components/Layouts/PublicLayout";
-import { ContentCRUD_Form } from "../../components/admin/forms/ContentForm";
 import { ThemeContext } from "../../contexts/ThemeContext";
+
+const ContentCRUD_Form = dynamic(() =>
+  import("../../components/admin/forms/ContentForm").then(
+    (m) => m.ContentCRUD_Form
+  )
+);
 
 const ContentCMS = ({ allTags }) => {
   const { isDarkMode } = useContext(ThemeContext);
