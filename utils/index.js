@@ -148,78 +148,6 @@ export const PUBLIC_LIST_TYPES = {
   },
 };
 
-export function getEmptyState(steps) {
-  const obj = {};
-  steps.forEach(({ field }) => (obj[field] = ""));
-  return obj;
-}
-
-//TODO: delete start
-export const LOGIN_STEPS = [
-  {
-    field: "email",
-    desc: `Admin email ID`,
-    constraints: {
-      empty: {
-        message: "Email must be non-empty",
-        check(value) {
-          return value.trim().length > 0;
-        },
-      },
-      valid: {
-        message: "Email must be valid",
-        check(value) {
-          let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-          return re.test(value);
-        },
-      },
-    },
-  },
-  {
-    field: "password",
-    desc: `Admin password`,
-    constraints: {
-      empty: {
-        message: "Password cannot be empty",
-        check(value) {
-          return value.trim().length > 0;
-        },
-      },
-      min: {
-        message: "Password must be at least 6 characters long",
-        check(value) {
-          return value.trim().length >= 6;
-        },
-      },
-    },
-  },
-];
-
-export const REGISTER_STEPS = [...LOGIN_STEPS];
-
-export const RESET_PASSWORD_STEPS = [
-  ...LOGIN_STEPS,
-  {
-    field: "secret",
-    desc: `Admin secret`,
-    constraints: {
-      empty: {
-        message: "secret cannot be empty",
-        check(value) {
-          return value.trim().length > 0;
-        },
-      },
-      min: {
-        message: "secret must be at least 6 characters long",
-        check(value) {
-          return value.trim().length >= 6;
-        },
-      },
-    },
-  },
-];
-//TODO: delete end
-
 /**
  *
  * @param {string} str string with spaces viz blog title, project title etc
@@ -264,9 +192,3 @@ export function generateDetailViewMetadata(
   }
   return "";
 }
-
-export const ITEMS_PER_PAGE = {
-  blog: 15,
-  project: 15,
-  design: 45,
-};

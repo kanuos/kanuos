@@ -1,4 +1,5 @@
 import { CTA } from "../../portfolio/CTA";
+import { ImCheckmark, ImCross } from "react-icons/im";
 
 export const ArrayInput = ({
   children,
@@ -10,14 +11,25 @@ export const ArrayInput = ({
   editIndex = null,
   getEditData,
   name = "",
+  arrayType,
 }) => {
   return (
-    <section
-      className={`col-span-full w-full flex flex-col items-start gap-2 p-4 border-2 border-opacity-25 rounded-md`}
+    <details
+      className={`col-span-full w-full flex flex-col items-start gap-2 p-4 border-2 border-opacity-25 rounded-md ${
+        parentState?.length > 0 ? "border-secondary" : "border-primary"
+      }`}
     >
-      <label htmlFor={name} className="content--sub capitalize font-semibold">
-        {name}
-      </label>
+      <summary className={`w-full flex items-center justify-between`}>
+        <label htmlFor={name} className="content--sub capitalize font-semibold">
+          {name}
+        </label>
+        {parentState?.length > 0 ? (
+          <ImCheckmark className="text-secondary cursor-pointer opacity-50 hover:opacity-100 transition-all" />
+        ) : (
+          <ImCross className="text-primary cursor-pointer opacity-50 hover:opacity-100 transition-all" />
+        )}
+      </summary>
+
       {parentState?.length > 0 && (
         <details className="p-4 my-4 last-of-type:mb-0 bg-secondary bg-opacity-20 shadow-inner rounded-md w-full">
           <ul className="flex flex-col">
@@ -59,16 +71,17 @@ export const ArrayInput = ({
       <div className="flex flex-col items-stretch gap-6 my-2 w-full">
         {children}
       </div>
-      {Object.values(currentState).every(Boolean) && (
-        <div className="w-max">
-          <CTA
-            isDarkMode={isDarkMode}
-            label={`Add to list`}
-            btnMode={true}
-            cb={() => getArrayItem(name, currentState, editIndex)}
-          />
-        </div>
-      )}
-    </section>
+      {Object.values(currentState).map(Boolean).every(Boolean) &&
+        arrayType === name && (
+          <div key={JSON.stringify({ currentState, name })} className="w-max">
+            <CTA
+              isDarkMode={isDarkMode}
+              label={`Add to list`}
+              btnMode={true}
+              cb={() => getArrayItem(name, currentState, editIndex)}
+            />
+          </div>
+        )}
+    </details>
   );
 };

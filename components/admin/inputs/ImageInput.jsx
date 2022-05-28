@@ -28,14 +28,16 @@ export const ImageInput = ({
       </label>
 
       <article className="w-full relative">
-        <button
-          type="button"
-          onClick={() => setPreviewMode((prev) => !prev)}
-          className="absolute right-2 -top-6 text-xs text-right opacity-25 font-semibold hover:opacity-100 hover:text-primary transition-all"
-        >
-          <small>Toggle to {previewMode ? "URL" : "Preview"} Mode</small>
-        </button>
-        {previewMode ? (
+        {isValid && Boolean(typedURL.trim()) && (
+          <button
+            type="button"
+            onClick={() => setPreviewMode((prev) => !prev)}
+            className="absolute right-2 -top-6 text-xs text-right opacity-25 font-semibold hover:opacity-100 hover:text-primary transition-all"
+          >
+            <small>Toggle to {previewMode ? "URL" : "Preview"} Mode</small>
+          </button>
+        )}
+        {previewMode && isValid ? (
           <section className="flex flex-col items-stretch justify-between gap-y-6">
             <div className="relative min-h-[50vh] w-full">
               <Image
@@ -53,11 +55,14 @@ export const ImageInput = ({
                 Invalid image URL
               </p>
             )}
-            {isValid && (
+            {isValid && value !== typedURL && (
               <div className="w-max">
                 <CTA
                   btnMode={true}
-                  cb={() => setValue(typedURL)}
+                  cb={() => {
+                    setValue(typedURL);
+                    setPreviewMode(true);
+                  }}
                   isDarkMode={isDarkMode}
                   label="Add Image"
                 />

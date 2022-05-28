@@ -7,6 +7,7 @@ import PublicLayout from "../Layouts/PublicLayout";
 import { PublicHeader } from "../public/Header";
 
 export const AdminListLayout = ({ list = [], type, children }) => {
+  // TODO: searchText and handleSearch from parent and prop drill to public header
   return (
     <PublicLayout
       navType="admin"
@@ -16,19 +17,17 @@ export const AdminListLayout = ({ list = [], type, children }) => {
       <div className="px-8 pt-20 lg:px-0 max-w-2xl mx-auto select-text">
         <PublicHeader
           adminMode={true}
-          data={{ ...PUBLIC_LIST_TYPES[type], count: list.length }}
+          data={{
+            ...PUBLIC_LIST_TYPES[type],
+            count: list.length,
+          }}
+          searchMode={list.length > 0}
         />
       </div>
-      <div className="px-8 pb-20 w-full mx-auto max-w-4xl">
-        {list.length > 0 ? (
+      <div className="p-8 w-full mx-auto max-w-4xl">
+        {list.length > 0 && (
           <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-20 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto">
             {children}
-          </main>
-        ) : (
-          <main className="h-[30vh] block mx-auto max-w-2xl w-full">
-            <span className="text-sm font-semibold text-primary">
-              No {type} found!
-            </span>
           </main>
         )}
       </div>

@@ -1,28 +1,20 @@
 // import : built in
 import { useRouter } from "next/router";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 
 // imports : external
+import axios from "axios";
 import { MdLockOutline, MdLockOpen } from "react-icons/md";
 
 // import : internal components
-import { JSON_EDITOR_STATE } from "../../../components/admin/JSONEditor";
 import { SelectContentType } from "../../../components/admin/SelectContentType";
 
 // import : internal
-import { ADMIN_ACCOUNT, ADMIN_URLS } from "../../../utils";
+import { ADMIN_URLS } from "../../../utils";
 import { API_ROUTES, CONTENT_TYPE } from "../../../utils/admin";
 import { ContentValidators } from "../../../utils/validator";
-import { isAdminMiddleware } from "../../../utils/authLib";
 import Layout from "../../../utils/cms";
-
-// dynamic imports
-const JSONEditor = dynamic(() =>
-  import("../../../components/admin/JSONEditor").then(
-    (module) => module.JSONEditor
-  )
-);
 
 const TagSelector = dynamic(() =>
   import("../../../components/admin/TagSelector").then(
@@ -49,14 +41,18 @@ import CMSForm from "./CMS";
 
 // constants
 const SESSION_NAME = `sounak_admin`;
+const CONTENT_NAME = "sounak_admin_cms_data";
 
-export const ContentCRUD_Form = ({ allTags, heading, isDarkMode }) => {
+export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
+  const errorRef = useRef();
   const router = useRouter();
   const [type, setType] = useState("");
   const [step, setStep] = useState(0);
   const [tags, setTags] = useState([]);
   const [isPublic, setIsPublic] = useState(false);
-  const [content, setContent] = useState({});
+  const [content, setContent] = useState(init);
+  const [previewMode, setPreviewMode] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   const detailCls = `px-4 py-6 rounded-md text-sm block nav-light ${
     isDarkMode ? "light-shadow" : "drop-shadow-xl"
@@ -70,11 +66,6 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode }) => {
       setTags((prev) => [...prev, tag]);
     }
   }
-
-  const handleSetContent = useCallback(function (ctnt) {
-    setContent({ ...ctnt, tags });
-    setStep(3);
-  });
 
   useEffect(() => {
     setContent((prev) => ({ ...prev, isPublic }));
@@ -90,15 +81,24 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode }) => {
   // Initial render/router path change -> set initial settings from session storage
   useEffect(() => {
     const cms = JSON.parse(sessionStorage.getItem(SESSION_NAME));
-    console.log(cms);
-    setType(() => cms.type || "");
-    setTags(() => cms.tags || []);
+    const storedContent = JSON.parse(sessionStorage.getItem(CONTENT_NAME));
+    setType(() => cms?.type || "");
+    setTags(() => cms?.tags || []);
+    storedContent && setContent(() => storedContent);
   }, []);
+
+  useEffect(() => {
+    console.log("content updated", content);
+  }, [content]);
 
   async function handleSubmitToServer() {
     try {
       // validate input                   :: joi
-      const { error, value } = ContentValidators[type].validate(content);
+      const { error, value } = ContentValidators[type].validate({
+        ...content,
+        tags,
+        isPublic,
+      });
       if (error) {
         throw error.details[0].message;
       }
@@ -120,7 +120,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode }) => {
 
       // clear the session storage
       sessionStorage.removeItem(SESSION_NAME);
-      sessionStorage.removeItem(JSON_EDITOR_STATE);
+      sessionStorage.removeItem(CONTENT_NAME);
       // redirect to admin blog list
       router.push(ADMIN_URLS[type + "s"].url);
     } catch (error) {
@@ -131,14 +131,46 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode }) => {
 
   const getContentType = useCallback(function (c) {
     setType(() => c);
+    sessionStorage.removeItem(CONTENT_NAME);
+    setContent(() => ({}));
   });
+
+  const validateContentForPreviewMode = useCallback(
+    function (data) {
+      try {
+        const validator = ContentValidators[type];
+        console.log("validator :", { type, content, data });
+        if (!validator) {
+          throw "Invalid content type";
+        }
+        // validate the content type using JOI validator schemas
+        setContent((prev) => ({ ...prev, ...data }));
+        const { value, error } = validator.validate({ ...data, tags });
+        if (error) throw error;
+
+        console.log(value, error);
+        setPreviewMode(() => true);
+      } catch (error) {
+        setErrMsg(error.toString());
+        errorRef?.current?.scrollIntoView();
+      }
+    },
+    [type, content]
+  );
 
   return (
     <main className="h-full min-h-screen p-8">
       <div className="container max-w-prose mx-auto">
         <h1 className="heading--main block">{heading}</h1>
-
-        <div className="w-full after-line flex flex-col items-stretch gap-y-6">
+        <p
+          ref={errorRef}
+          className={`p-4 text-light text-xs font-semibold w-full rounded-md ${
+            errMsg.trim().length > 0 ? "bg-primary" : "bg-secondary"
+          }`}
+        >
+          <small>{errMsg.trim().length > 0 ? errMsg : "No error"}</small>
+        </p>
+        <div className="w-full after-line flex flex-col items-stretch gap-y-4">
           {/* content type */}
           <details className={detailCls}>
             <SelectContentType
@@ -199,12 +231,15 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode }) => {
           {/* cms */}
           <details className={detailCls}>
             <CMSForm
-              key={step}
-              layout={Layout.BLOG_CMS}
+              storageKey={CONTENT_NAME}
+              type="content"
+              key={JSON.stringify(content, type)}
+              init={content}
+              layout={Layout[type]}
               heading={`${type} content ↓`}
-              btnLabel={`Save changes to ${type}`}
+              btnLabel={`Preview ${type}`}
               isDarkMode={isDarkMode}
-              getFormData={(d) => console.log({ form: d })}
+              getFormData={validateContentForPreviewMode}
             />
             <summary
               className={`block ${
@@ -227,74 +262,55 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode }) => {
         </div>
       </div>
 
-      {step === 3 && (
-        <>
-          <p className="text-center block font-light font-special text-xl border-b pb-1 mb-4">
+      {/* preview mode */}
+      {previewMode && (
+        <div className="my-40">
+          <h2 className="w-full mx-auto text-center border-y-2 border-current p-4 heading--main">
             Preview Mode
-          </p>
+          </h2>
+          <section className="w-full max-w-4xl mx-auto mb-20">
+            {type === CONTENT_TYPE.design.name && (
+              <DesignDetailBody design={content} adminMode={true} />
+            )}
+          </section>
 
-          <button
-            onClick={() => setStep(2)}
-            className="capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer group w-max mx-auto"
-          >
-            <span className="py-1.5 px-6 block z-10 peer transition-all hover:shadow-xl border-2 font-semibold">
-              &larr; Prev
-            </span>
-            <span className="py-1.5 px-6 block transition-all hover:shadow-xl border-2  absolute top-0 left-0 h-full w-full group-odd:-translate-x-full group-even:translate-x-full peer-hover:translate-x-0 z-0 duration-300"></span>
-          </button>
-
-          {type === CONTENT_TYPE.blog.name && (
-            <BlogDetailBody blog={content} adminMode={true} />
-          )}
-          {type === CONTENT_TYPE.project.name && (
-            <ProjectDetailBody project={content} adminMode={true} />
-          )}
-          {type === CONTENT_TYPE.design.name && (
-            <DesignDetailBody design={content} adminMode={true} />
-          )}
-
-          <div className="border-t pt-1 flex flex-col items-center justify-center gap-6">
-            <p className="text-center capitalize font-special text-xl">
-              access status
-            </p>
-            <label htmlFor="public" className="text-sm cursor-pointer group">
-              <p className="flex flex-col gap-2 items-center justify-center">
-                {isPublic ? (
-                  <>
-                    <IoLockOpenOutline className="text-3xl group-hover:animate-bounce inline-block" />
-                    <span className="text-xs font-semibold text-primary">
-                      Public
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <IoLockClosedOutline className="text-3xl group-hover:animate-bounce inline-block" />
-                    <span className="text-xs font-semibold text-primary">
-                      Private
-                    </span>
-                  </>
-                )}
-              </p>
-            </label>
-            <input
-              type="checkbox"
-              checked={isPublic}
-              id="public"
-              className="appearance-none"
-              onChange={() => setIsPublic((prev) => !prev)}
-            />
-
-            <button
-              onClick={handleSubmitToServer}
-              className="capitalize text-xs w-max mx-auto mt-4 rounded flex items-center justify-center relative overflow-hidden cursor-pointer"
-            >
-              <span className="py-1.5 px-6 block z-10 peer hover:text-light transition-all hover:shadow-xl border-2 font-semibold">
-                Submit {type}
-              </span>
-              <span className="py-1.5 px-6 block transition-all hover:shadow-xl border-2 absolute top-0 left-0 h-full w-full translate-y-full peer-hover:translate-y-0 z-0 duration-300"></span>
-            </button>
+          <div className="relative h-full w-full max-w-4xl mx-auto">
+            {/* toggle Access status */}
+            <section className="section-wrapper pb-20">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-x-14">
+                <h2 className="heading--secondary shrink-0 grow">
+                  Access Status
+                </h2>
+                <div className="flex items-center w-full">
+                  <input
+                    type="checkbox"
+                    checked={isPublic}
+                    id="public"
+                    className="hidden"
+                    onChange={() => setIsPublic((prev) => !prev)}
+                  />
+                  <label
+                    htmlFor="public"
+                    className={`content--secondary text-center font-semibold p-2 border-2 border-current ${
+                      isPublic ? "text-secondary" : "text-primary"
+                    }`}
+                  >
+                    {isPublic ? "Public" : "Private"}
+                  </label>
+                </div>
+              </div>
+            </section>
           </div>
-        </>
+
+          <div className="w-max mx-auto">
+            <CTA
+              isDarkMode={isDarkMode}
+              label={`Submit ${type}`}
+              cb={handleSubmitToServer}
+              btnMode={true}
+            />
+          </div>
+        </div>
       )}
     </main>
   );

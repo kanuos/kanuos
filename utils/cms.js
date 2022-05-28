@@ -55,13 +55,13 @@ const ACCOUNT_CMS = {
       name: "email",
       type: "string",
       placeholder: "ADMIN email ID",
-      split: false,
+      split: true,
     },
     {
       name: "password",
       type: "string",
       placeholder: "ADMIN password",
-      split: false,
+      split: true,
     },
   ],
   reset: [
@@ -69,19 +69,19 @@ const ACCOUNT_CMS = {
       name: "email",
       type: "string",
       placeholder: "ADMIN email ID",
-      split: false,
+      split: true,
     },
     {
       name: "password",
       type: "string",
       placeholder: "ADMIN password",
-      split: false,
+      split: true,
     },
     {
       name: "secret",
       type: "string",
       placeholder: "ADMIN secret code",
-      split: false,
+      split: true,
     },
   ],
 };
@@ -215,7 +215,7 @@ const DESIGN_CMS = [
     name: "caption",
     type: "string",
     placeholder: "Design thumbnail caption",
-    split: false,
+    split: true,
   },
   {
     name: "colorPalette",
@@ -225,7 +225,7 @@ const DESIGN_CMS = [
         name: "hex",
         type: "string",
         placeholder: "Hex color value beginning with #",
-        split: false,
+        split: true,
       },
     ],
   },
@@ -237,7 +237,7 @@ const DESIGN_CMS = [
         name: "family",
         type: "string",
         placeholder: "Font family name",
-        split: false,
+        split: true,
       },
       {
         name: "desc",
@@ -257,7 +257,7 @@ const DESIGN_CMS = [
     layout: [
       {
         name: "poster",
-        type: "string",
+        type: "image",
         placeholder: `External image URL`,
         split: true,
       },
@@ -268,7 +268,7 @@ const DESIGN_CMS = [
         split: true,
       },
       {
-        name: "href",
+        name: "courtsey",
         type: "string",
         placeholder: `Photographer's social URL`,
         split: true,

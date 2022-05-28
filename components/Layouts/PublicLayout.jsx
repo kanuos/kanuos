@@ -17,13 +17,17 @@ const PublicLayout = (props) => {
       <HeadComponent title={metaTitle} content={metaDesc} />
       <NavBar type={navType} />
       <main
-        className={`${isDarkMode ? "nav-dark" : "nav-light"} min-h-screen z-0 ${
+        className={`${
+          isDarkMode ? "nav-dark" : "nav-light"
+        } h-screen flex flex-col items-stretch z-0 overflow-hidden ${
           showMenu
             ? "grayscale brightness-50 pointer-events-none"
             : "grayscale-0 brightness-100 pointer-events-auto"
         } transition-all`}
       >
-        {children}
+        <div className="h-auto min-h-screen overflow-y-auto scrollbar-thin w-full">
+          {children}
+        </div>
       </main>
     </>
   );

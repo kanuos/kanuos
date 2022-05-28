@@ -5,7 +5,11 @@ import { ArrayInput } from "../inputs/ArrayInput";
 import { StringInput } from "../inputs/String";
 import { ImageInput } from "../inputs/ImageInput";
 import { ObjectInput } from "../inputs/ObjectInput";
+
+// dynamic
 import UserFlowInput from "../inputs/custom/UserFlowInput";
+import PageInput from "../inputs/custom/PageInput";
+import ChapterInput from "../inputs/custom/ChapterInput";
 
 const CMSForm = ({
   type = "profile",
@@ -23,7 +27,7 @@ const CMSForm = ({
       INIT[name] = {};
       return;
     }
-    if (type === "array") {
+    if (["array", "userFlow"].includes(type)) {
       INIT[name] = [];
       return;
     }
@@ -34,20 +38,24 @@ const CMSForm = ({
     ...init,
   });
   const [arrayStep, setArrayStep] = useState({});
+  const [arrayType, setArrayType] = useState("");
   const [editIndex, setEditIndex] = useState(NaN);
 
   function handleFormSubmission(e) {
     e.preventDefault();
-    console.log({ currentState, init });
     getFormData(currentState);
   }
 
   useEffect(() => {
     if (type !== "content" || !storageKey) return;
     if (!Object.values(currentState).some(Boolean)) return;
-
     sessionStorage.setItem(storageKey, JSON.stringify(currentState));
   }, [type, currentState]);
+
+  useEffect(() => {
+    if (!arrayType) return;
+    setArrayStep(() => ({}));
+  }, [arrayType]);
 
   const getArrayItem = useCallback((name, newEl, index) => {
     // 1. get the allowed keys from layout
@@ -57,9 +65,8 @@ const CMSForm = ({
       .sort();
 
     const incomingKeys = Object.keys(newEl).sort();
-
-    console.log({ allowedKeys, incomingKeys });
     // check if the incoming element conforms to current layout
+
     if (JSON.stringify(allowedKeys) !== JSON.stringify(incomingKeys)) {
       setArrayStep(() => ({}));
       alert("Invalid keys or empty entry");
@@ -111,7 +118,7 @@ const CMSForm = ({
       <form
         onSubmit={handleFormSubmission}
         className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${
-          type === "profile" ? "my-4" : "my-10"
+          ["profile", "content"].includes(type) ? "my-4" : "my-10"
         }`}
       >
         {layout.map(({ name, type, placeholder, layout, split }) => (
@@ -151,11 +158,11 @@ const CMSForm = ({
             )}
             {type === "array" && (
               <ArrayInput
-                key={name}
                 editIndex={editIndex}
                 parentState={currentState[name]}
                 isDarkMode={isDarkMode}
                 getArrayItem={getArrayItem}
+                arrayType={arrayType}
                 getEditData={getArrayEditData}
                 currentState={arrayStep}
                 deleteArrayItem={deleteArrayData}
@@ -169,10 +176,27 @@ const CMSForm = ({
                           name={el.name}
                           placeholder={el.placeholder}
                           value={arrayStep[el.name]}
-                          setValue={(v) =>
-                            setArrayStep((prev) => ({ ...prev, [el.name]: v }))
-                          }
+                          setValue={(v) => {
+                            setArrayType(() => name);
+                            setArrayStep((prev) => ({ ...prev, [el.name]: v }));
+                          }}
                           split={el.split}
+                        />
+                      )}
+                      {el.type === "image" && (
+                        <ImageInput
+                          key={JSON.stringify(arrayStep)}
+                          name={el.name}
+                          placeholder={el.placeholder}
+                          value={arrayStep[el.name]}
+                          setValue={(v) => {
+                            setArrayType(() => name);
+                            setArrayStep((prev) => ({
+                              ...prev,
+                              [el.name]: v,
+                            }));
+                          }}
+                          isDarkMode={isDarkMode}
                         />
                       )}
                       {el.type === "markdown" && (
@@ -180,22 +204,61 @@ const CMSForm = ({
                           name={el.name}
                           placeholder={el.placeholder}
                           value={arrayStep[el.name]}
-                          setValue={(v) =>
-                            setArrayStep((prev) => ({ ...prev, [el.name]: v }))
-                          }
+                          setValue={(v) => {
+                            setArrayType(() => name);
+                            setArrayStep((prev) => ({ ...prev, [el.name]: v }));
+                          }}
                           split={el.split}
                         />
                       )}
-                      {el.type === "image" && (
-                        <ImageInput
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={arrayStep[el.name]}
-                          setValue={(v) =>
-                            setArrayStep((prev) => ({ ...prev, [el.name]: v }))
-                          }
+                      {type === "object" && (
+                        <ObjectInput
+                          key={name}
+                          parentState={currentState[name]}
                           isDarkMode={isDarkMode}
-                        />
+                          getObjectData={(d) => console.log(d)}
+                          name={name}
+                        >
+                          {layout.map((el, k) => {
+                            return (
+                              <Fragment key={k}>
+                                {el.type === "string" && (
+                                  <StringInput
+                                    name={el.name}
+                                    placeholder={el.placeholder}
+                                    value={currentState[name][el.name]}
+                                    setValue={(v) =>
+                                      setCurrentState((prev) => ({
+                                        ...prev,
+                                        [name]: {
+                                          [el.name]: v,
+                                        },
+                                      }))
+                                    }
+                                    split={el.split}
+                                  />
+                                )}
+                                {el.type === "markdown" && (
+                                  <MarkdownInput
+                                    name={el.name}
+                                    placeholder={el.placeholder}
+                                    value={currentState[name][el.name]}
+                                    setValue={(v) =>
+                                      console.log(
+                                        name,
+                                        currentState,
+                                        currentState[name],
+                                        currentState[name][el.name],
+                                        v
+                                      )
+                                    }
+                                    split={el.split}
+                                  />
+                                )}
+                              </Fragment>
+                            );
+                          })}
+                        </ObjectInput>
                       )}
                     </Fragment>
                   );
@@ -204,6 +267,19 @@ const CMSForm = ({
             )}
             {type === "userFlow" && (
               <UserFlowInput
+                key={currentState[name]?.length}
+                isDarkMode={isDarkMode}
+                parentState={currentState[name]}
+                setParentArray={(v) =>
+                  setCurrentState((prev) => ({
+                    ...prev,
+                    [name]: v,
+                  }))
+                }
+              />
+            )}
+            {type === "page" && (
+              <PageInput
                 isDarkMode={isDarkMode}
                 parentArray={currentState[name]}
                 setParentArray={(v) =>
@@ -214,55 +290,18 @@ const CMSForm = ({
                 }
               />
             )}
-            {/* {type === "object" && (
-              <ObjectInput
-                key={name}
-                parentState={currentState[name]}
+            {type === "chapter" && (
+              <ChapterInput
                 isDarkMode={isDarkMode}
-                getObjectData={(d) => console.log(d)}
-                name={name}
-              >
-                {layout.map((el, k) => {
-                  return (
-                    <Fragment key={k}>
-                      {el.type === "string" && (
-                        <StringInput
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={currentState[name][el.name]}
-                          setValue={(v) =>
-                            setCurrentState((prev) => ({
-                              ...prev,
-                              [name]: {
-                                [el.name]: v,
-                              },
-                            }))
-                          }
-                          split={el.split}
-                        />
-                      )}
-                      {el.type === "markdown" && (
-                        <MarkdownInput
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={currentState[name][el.name]}
-                          setValue={(v) =>
-                            console.log(
-                              name,
-                              currentState,
-                              currentState[name],
-                              currentState[name][el.name],
-                              v
-                            )
-                          }
-                          split={el.split}
-                        />
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </ObjectInput>
-            )} */}
+                parentArray={currentState[name]}
+                setParentArray={(v) =>
+                  setCurrentState((prev) => ({
+                    ...prev,
+                    [name]: v,
+                  }))
+                }
+              />
+            )}
           </Fragment>
         ))}
         <div className="w-max mr-auto my-10 col-span-full">

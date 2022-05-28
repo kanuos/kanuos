@@ -39,6 +39,9 @@ const CommonFields = Joi.object().keys({
   tags: Joi.array().items(TagValidator).min(1).required(),
   isPublic: Joi.bool().default(false),
   user: Joi.any(),
+});
+
+const BlogProjectCommon = CommonFields.keys({
   repo: LinkValidator.keys(),
   demo: LinkValidator.keys(),
   outro: Joi.object({
@@ -47,12 +50,12 @@ const CommonFields = Joi.object().keys({
   }).required(),
 });
 
-const BlogValidator = CommonFields.keys({
+const BlogValidator = BlogProjectCommon.keys({
   slug: Joi.string().required().trim().min(1).lowercase(),
   page: Joi.array().items(StepValidator).min(1).required(),
 });
 
-const ProjectValidator = CommonFields.keys({
+const ProjectValidator = BlogProjectCommon.keys({
   techStack: Joi.array()
     .items(
       Joi.object({
@@ -99,7 +102,11 @@ const DesignValidator = CommonFields.keys({
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        hex: Joi.string().trim().required(),
+        hex: Joi.string()
+          .trim()
+          .required()
+          .uppercase()
+          .pattern(/^#[ABCDEF0-9]{6}$/),
       }).required()
     )
     .min(1),
@@ -125,7 +132,7 @@ const DesignValidator = CommonFields.keys({
         __v: Joi.any(),
         poster: Joi.string().trim().uri().required(),
         photographer: Joi.string().trim().required(),
-        courtesy: Joi.string().trim().uri().required(),
+        courtsey: Joi.string().trim().uri().required(),
       }).required()
     )
     .min(1),

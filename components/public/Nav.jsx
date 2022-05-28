@@ -7,11 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 
 // internal imports
-import {
-  ADMIN_ACCOUNT,
-  NAV_METADATA,
-  PUBLIC_URLS,
-} from "../../utils";
+import { ADMIN_ACCOUNT, NAV_METADATA, PUBLIC_URLS } from "../../utils";
 import { AUTH_ROUTES } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { PageLink } from "../portfolio/PageLink";
@@ -248,7 +244,7 @@ const NavMenu = ({ type = "public" }) => {
             variants={variants.mainUL}
             animate={showMenu ? "show" : "hide"}
             exit="hide"
-            className={`w-fit flex flex-col justify-center h-full gap-y-8 items-center lg:items-start`}
+            className={`w-fit flex flex-col justify-center h-full gap-y-8 items-start`}
           >
             {Object.entries(URLS).map(([key, valueObj]) => {
               const label = valueObj.name.replace("-", " ");

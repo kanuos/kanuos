@@ -1,13 +1,16 @@
-import { useContext } from "react";
-import { ThemeContext } from "../../contexts/ThemeContext";
-import { SOCIAL } from "../../utils";
-import { CTA } from "../portfolio/CTA";
+import { StringInput } from "../admin/inputs/String";
 
-export const PublicHeader = ({ data, adminMode = false }) => {
+export const PublicHeader = ({
+  data,
+  adminMode = false,
+  searchMode = false,
+  searchText,
+  handleSearch,
+}) => {
   const { title, desc, count, type } = data;
-  const { isDarkMode } = useContext(ThemeContext);
+
   return (
-    <header className="flex flex-col items-start mb-24 gap-y-2">
+    <header className="flex flex-col items-start mb-10 gap-y-2">
       {adminMode && (
         <small className="content--sub font-semibold -mb-4 text-secondary">
           Admin Mode
@@ -15,23 +18,25 @@ export const PublicHeader = ({ data, adminMode = false }) => {
       )}
       <h1 className="heading--main">{title}</h1>
       <p className="content--main my-6">{desc}</p>
-      {count > 0 && (
-        <strong className="heading--sub">
-          total {type} : {count}
-        </strong>
-      )}
-      {!adminMode && (
-        <div className="mt-4">
-          <CTA
-            isDarkMode={isDarkMode}
-            externalLink={true}
-            href={SOCIAL.mailto}
-            label="Get in touch"
+      {searchMode ? (
+        <>
+          <strong className="heading--sub capitalize">
+            total {type} : {count}
+          </strong>
+          <StringInput
+            value={searchText}
+            s
+            setValue={handleSearch}
+            placeholder={`Search ${type} by title`}
+            split={true}
           />
-        </div>
+        </>
+      ) : (
+        <p className="heading--sub">
+          Sorry! No <span className="text-primary uppercase">{type}</span> are
+          public now.
+        </p>
       )}
     </header>
   );
 };
-
-// TODO: CTA search button to search type
