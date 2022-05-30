@@ -19,6 +19,7 @@ export const PublicListLayout = ({ pageTitle, pageDesc, data, children }) => {
             data={data}
             searchText={searchText}
             handleSearch={getSearchText}
+            searchMode={true}
           />
         </div>
         <div className="px-8 w-full min-h-[50vh] grow mx-auto flex flex-col items-stretch">
