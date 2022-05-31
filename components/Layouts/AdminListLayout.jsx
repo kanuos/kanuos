@@ -29,9 +29,9 @@ export const AdminListLayout = ({ list = [], type, children }) => {
         {list.length > 0 && (
           <main
             className={
-              type !== PUBLIC_LIST_TYPES.projects
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-20 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto"
-                : "flex flex-col my-20 gap-20 items-stretch w-full max-w-4xl mx-auto"
+              type === PUBLIC_LIST_TYPES.designs.type
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-16 md:gap-x-10 p-4 w-full mb-20 max-w-6xl mx-auto justify-center items-center"
+                : "flex flex-col my-16 gap-16 items-stretch w-full max-w-4xl mx-auto"
             }
           >
             {children}

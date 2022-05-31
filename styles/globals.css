@@ -161,7 +161,7 @@ pre[class*="language-"] {
 
 .markdown-editor ol,
 .markdown-editor ul {
-  @apply flex flex-col items-start;
+  @apply pl-4 list-inside list-decimal marker:font-semibold marker:text-secondary;
 }
 
 .markdown-editor li {

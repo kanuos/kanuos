@@ -7,14 +7,17 @@ export const TagValidator = Joi.object({
 });
 
 const LinkValidator = Joi.object({
-  label: Joi.string().trim(),
-  href: Joi.string().trim().uri(),
+  label: Joi.string().trim().required(),
+  href: Joi.string().trim().uri().required(),
 });
 
 const StepValidator = Joi.object({
   _id: Joi.any(),
   __v: Joi.any(),
-  key: Joi.string().trim().required(),
+  key: Joi.string()
+    .trim()
+    .required()
+    .valid("image", "markdown", "code", "heading"),
   value: [
     // text, markdown
     Joi.string().trim().required(),
@@ -45,8 +48,8 @@ const BlogProjectCommon = CommonFields.keys({
   repo: LinkValidator.keys(),
   demo: LinkValidator.keys(),
   outro: Joi.object({
-    heading: Joi.string().trim(),
-    text: Joi.string().trim(),
+    heading: Joi.string().trim().required(),
+    text: Joi.string().trim().required(),
   }).required(),
 });
 

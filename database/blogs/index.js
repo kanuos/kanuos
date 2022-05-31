@@ -38,7 +38,6 @@ export async function getIndividualBlog(adminMode = false, searchBy) {
 
     if (!blog) throw `Blog with id:${searchBy} doesn't exist`;
 
-    console.log(blog);
     return blog;
   }
   // search in client mode

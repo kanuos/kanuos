@@ -11,13 +11,12 @@ import { PageLink } from "../portfolio/PageLink";
 import { ImageCarousel } from "./ImageCarousel";
 import { DetailHeader } from "../detail/Header";
 
-export const DesignDetailBody = ({ design, adminMode = false }) => {
+export const DesignDetailBody = ({ design }) => {
   const { isDarkMode } = useContext(ThemeContext);
-
   return (
     <div
       className={
-        "overflow-hidden relative h-full w-full min-h-screen " +
+        "scrollbar-none overflow-hidden relative h-full w-full min-h-screen " +
         (isDarkMode ? "bg-hero--dark" : "bg-hero--light")
       }
     >
@@ -34,7 +33,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
         tags={design.tags}
       />
 
-      <div className="relative h-full w-full max-w-4xl mx-auto">
+      <div className="relative h-auto w-full max-w-4xl mx-auto">
         {/* role */}
         <section className="section-wrapper">
           <div className="flex flex-col md:flex-row gap-4 mt-10 md:gap-x-14">
@@ -61,7 +60,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
         </figcaption>
       </figure>
 
-      <div className="relative h-full w-full max-w-4xl mx-auto">
+      <div className="relative h-auto w-full max-w-4xl mx-auto">
         <h2 className="heading--main w-min mx-auto py-20 text-center leading-relaxed">
           Style Guide
         </h2>
@@ -105,7 +104,8 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
           </div>
         </section>
       </div>
-      <div className="relative h-full w-full max-w-6xl mx-auto">
+
+      <div className="relative h-auto w-full max-w-6xl mx-auto">
         <h2 className="heading--main w-min mx-auto py-14">User Flow</h2>
         {/* user flow */}
         <section className="section-wrapper pb-20">
@@ -141,11 +141,11 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
       </div>
       <section className="section-wrapper pb-10">
         {/* external resources */}
-        <div className="relative h-full w-full max-w-7xl mx-auto">
+        <div className="relative h-auto w-full max-w-7xl mx-auto">
           <h2 className="heading--secondary mb-10 md:mx-auto md:w-max md:mb-20">
             External Resources
           </h2>
-          <ul className="relative z-10 grid place-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-20 sm:gap-10 w-full">
+          <ul className="relative z-10 grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-20 w-full">
             {design.externalResources.map(
               ({ poster, courtesy, photographer }, i) => (
                 <li
@@ -164,7 +164,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
                       />
                     </figure>
                   </div>
-                  <div className="my-4 flex flex-col w-full items-center gap-y-1">
+                  <div className="my-4 flex flex-col w-full items-center gap-y-1 group-hover:even:-rotate-1 group-hover:odd:rotate-1 md:group-hover:even:rotate-0 md:group-hover:odd:rotate-0">
                     <p className="content--secondary text-center">
                       <small>Asset Credit</small>
                     </p>
@@ -183,7 +183,7 @@ export const DesignDetailBody = ({ design, adminMode = false }) => {
         </div>
       </section>
 
-      <div className="relative h-full w-full max-w-4xl mx-auto">
+      <div className="relative h-auto w-full max-w-4xl mx-auto">
         {/* conclusion */}
         <section className="section-wrapper pb-20">
           <div className="flex flex-col md:flex-row gap-4 mt-10 md:gap-x-14">

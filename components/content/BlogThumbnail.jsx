@@ -1,29 +1,10 @@
-import { useState, useContext } from "react";
 import { PUBLIC_NAVIGATION_URLS } from "../../utils";
 import { JoinLine } from "../public/DescHeader";
 import { motion } from "framer-motion";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import { CTA } from "../portfolio/CTA";
 
 export const BlogThumbnail = ({ data, index, adminMode = false }) => {
-  const [hovered, setHovered] = useState(false);
-  const { isDarkMode } = useContext(ThemeContext);
-
-  const btnVariants = {
-    show: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-      },
-    },
-    hide: {
-      y: "100%",
-      opacity: 0,
-    },
-  };
 
   const articleVariants = {
     left: {
@@ -60,8 +41,6 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
       whileTap="show"
       initial="hide"
       variants={index % 2 === 0 ? articleVariants.left : articleVariants.right}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       className="flex flex-col gap-y-2 even:items-end odd:items-start group max-w-lg even:ml-auto odd:mr-auto"
     >
       <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
@@ -107,18 +86,8 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
           <small>{new Date(data.date).toDateString()}</small>
         </li>
       </ul>
-      <motion.div
-        variants={btnVariants}
-        animate={hovered ? "show" : "hide"}
-        className="my-6 capitalize text-xs rounded hidden md:flex items-center justify-center relative overflow-hidden cursor-pointer"
-      >
-        <CTA
-          label={adminMode ? "Open blog in Admin mode" : "Read blog"}
-          href={blogURL}
-        />
-      </motion.div>
 
-      <div className="my-6 capitalize text-xs rounded md:hidden flex items-center justify-center relative overflow-hidden cursor-pointer">
+      <div className="my-6 capitalize text-xs rounded flex items-center justify-center relative overflow-hidden cursor-pointer">
         <CTA
           label={adminMode ? "Open blog in Admin mode" : "Read blog"}
           href={blogURL}

@@ -27,7 +27,9 @@ const DesignDetail = ({ design }) => {
   );
   return (
     <PublicLayout metaTitle={`Design : ` + design.title} metaDesc={content}>
-      <DesignDetailBody design={design} />
+      <div className="h-auto w-full">
+        <DesignDetailBody design={design} />
+      </div>
       <Footer />
       {/* TODO: add footer content  */}
     </PublicLayout>

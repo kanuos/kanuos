@@ -73,6 +73,11 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
 
   // Whenever content type or selected tag list changes update the session storage to avoid data loss on refresh
   useEffect(() => {
+    const storedData = JSON.parse(sessionStorage.getItem(SESSION_NAME));
+    console.log({ storedData });
+    if (storedData && type && storedData.type !== type) {
+      sessionStorage.removeItem(SESSION_NAME);
+    }
     if (tags.length > 0 || Boolean(type)) {
       sessionStorage.setItem(SESSION_NAME, JSON.stringify({ type, tags }));
     }
@@ -87,9 +92,17 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
     storedContent && setContent(() => storedContent);
   }, []);
 
+  // hide the page error
   useEffect(() => {
-    console.log("content updated", content);
-  }, [content]);
+    if (!errMsg) return;
+    const t = setTimeout(() => {
+      setErrMsg("");
+    }, 1500);
+
+    return () => {
+      clearTimeout(t);
+    };
+  }, [errMsg]);
 
   async function handleSubmitToServer() {
     try {
@@ -165,10 +178,10 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         <p
           ref={errorRef}
           className={`p-4 text-light text-xs font-semibold w-full rounded-md ${
-            errMsg.trim().length > 0 ? "bg-primary" : "bg-secondary"
+            errMsg.trim().length > 0 && "bg-primary"
           }`}
         >
-          <small>{errMsg.trim().length > 0 ? errMsg : "No error"}</small>
+          <small>{errMsg}</small>
         </p>
         <div className="w-full after-line flex flex-col items-stretch gap-y-4">
           {/* content type */}
@@ -271,6 +284,9 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
           <section className="w-full max-w-4xl mx-auto mb-20">
             {type === CONTENT_TYPE.design.name && (
               <DesignDetailBody design={content} adminMode={true} />
+            )}
+            {type === CONTENT_TYPE.blog.name && (
+              <BlogDetailBody blog={content} adminMode={true} />
             )}
           </section>
 

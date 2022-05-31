@@ -15,7 +15,8 @@ const BlogsAdminPage = ({ allBlogs }) => {
         <BlogThumbnail
           key={blog._id}
           data={blog}
-          index={index + parseInt(pageStartNumber) + 1}
+          index={index + 1}
+          adminMode={true}
         />
       ))}
     </AdminListLayout>
