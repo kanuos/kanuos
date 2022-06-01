@@ -24,7 +24,7 @@ const MarkdownStep = dynamic(() =>
 export const BlogDetailBody = ({ blog }) => {
   const { isDarkMode } = useContext(ThemeContext);
   return (
-    <div className="overflow-hidden relative">
+    <div className="overflow-hidden relative h-auto">
       <DetailHeader
         category={blog.category}
         isDarkMode={isDarkMode}
@@ -46,10 +46,13 @@ export const BlogDetailBody = ({ blog }) => {
                 key={i}
                 className={`w-full 
                 ${
-                  ["heading", "image"].includes(key)
-                    ? "md:col-start-1 md:col-end-2"
-                    : ""
+                  ["heading"].includes(key) ? "md:col-start-1 md:col-end-2" : ""
                 }
+                                ${
+                                  ["image"].includes(key)
+                                    ? "md:col-span-full"
+                                    : ""
+                                }
                 ${
                   ["markdown", "code"].includes(key)
                     ? "md:col-start-2 md:col-end-5"

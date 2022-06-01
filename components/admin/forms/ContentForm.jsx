@@ -14,8 +14,10 @@ import { SelectContentType } from "../../../components/admin/SelectContentType";
 import { ADMIN_URLS } from "../../../utils";
 import { API_ROUTES, CONTENT_TYPE } from "../../../utils/admin";
 import { ContentValidators } from "../../../utils/validator";
-import Layout from "../../../utils/cms";
 
+import { CTA } from "../../portfolio/CTA";
+
+// dynamic imports
 const TagSelector = dynamic(() =>
   import("../../../components/admin/TagSelector").then(
     (module) => module.TagSelector
@@ -36,8 +38,16 @@ const DesignDetailBody = dynamic(() =>
     (module) => module.DesignDetailBody
   )
 );
-import { CTA } from "../../portfolio/CTA";
-import CMSForm from "./CMS";
+// import CMSForm from "./CMS";
+const BlogCRUDForm = dynamic(() =>
+  import("./BlogCRUDForm").then((m) => m.BlogCRUDForm)
+);
+const ProjectCRUDForm = dynamic(() =>
+  import("./ProjectCRUDForm").then((m) => m.ProjectCRUDForm)
+);
+const DesignCRUDForm = dynamic(() =>
+  import("./DesignCRUDForm").then((m) => m.DesignCRUDForm)
+);
 
 // constants
 const SESSION_NAME = `sounak_admin`;
@@ -46,13 +56,16 @@ const CONTENT_NAME = "sounak_admin_cms_data";
 export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
   const errorRef = useRef();
   const router = useRouter();
+
+  // component state
   const [type, setType] = useState("");
   const [step, setStep] = useState(0);
   const [tags, setTags] = useState([]);
   const [isPublic, setIsPublic] = useState(false);
   const [content, setContent] = useState(init);
   const [previewMode, setPreviewMode] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
+  const [pageMsg, setPageMsg] = useState("");
+  const [pageErr, setPageErr] = useState(false);
 
   const detailCls = `px-4 py-6 rounded-md text-sm block nav-light ${
     isDarkMode ? "light-shadow" : "drop-shadow-xl"
@@ -74,7 +87,6 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
   // Whenever content type or selected tag list changes update the session storage to avoid data loss on refresh
   useEffect(() => {
     const storedData = JSON.parse(sessionStorage.getItem(SESSION_NAME));
-    console.log({ storedData });
     if (storedData && type && storedData.type !== type) {
       sessionStorage.removeItem(SESSION_NAME);
     }
@@ -86,36 +98,24 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
   // Initial render/router path change -> set initial settings from session storage
   useEffect(() => {
     const cms = JSON.parse(sessionStorage.getItem(SESSION_NAME));
-    const storedContent = JSON.parse(sessionStorage.getItem(CONTENT_NAME));
     setType(() => cms?.type || "");
     setTags(() => cms?.tags || []);
-    storedContent && setContent(() => storedContent);
   }, []);
 
   // hide the page error
   useEffect(() => {
-    if (!errMsg) return;
+    if (!pageMsg) return;
     const t = setTimeout(() => {
-      setErrMsg("");
-    }, 1500);
+      setPageMsg("");
+    }, 2000);
 
     return () => {
       clearTimeout(t);
     };
-  }, [errMsg]);
+  }, [pageMsg]);
 
   async function handleSubmitToServer() {
     try {
-      // validate input                   :: joi
-      const { error, value } = ContentValidators[type].validate({
-        ...content,
-        tags,
-        isPublic,
-      });
-      if (error) {
-        throw error.details[0].message;
-      }
-
       // submit data
       let URL = API_ROUTES[type + "s"];
 
@@ -123,7 +123,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         await axios({
           url: URL,
           method: "POST",
-          data: value,
+          data: content,
         })
       ).data;
 
@@ -131,45 +131,44 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         throw data;
       }
 
+      console.log(data);
+      setPageMsg("Blog submitted successfully");
+      setPageErr(false);
       // clear the session storage
       sessionStorage.removeItem(SESSION_NAME);
       sessionStorage.removeItem(CONTENT_NAME);
       // redirect to admin blog list
       router.push(ADMIN_URLS[type + "s"].url);
     } catch (error) {
-      console.log(error);
-      alert(JSON.stringify(error));
+      setPageErr(true);
+      setPageMsg(error);
     }
   }
+
+  const validateContentForPreviewMode = useCallback(
+    function (contentData) {
+      try {
+        const { value, error } = ContentValidators[type].validate({
+          ...contentData,
+          tags,
+        });
+        if (error) {
+          throw error.details[0].message;
+        }
+        setContent(() => value);
+        setPreviewMode(true);
+      } catch (error) {
+        setPageMsg(error);
+      }
+    },
+    [type]
+  );
 
   const getContentType = useCallback(function (c) {
     setType(() => c);
     sessionStorage.removeItem(CONTENT_NAME);
     setContent(() => ({}));
   }, []);
-
-  const validateContentForPreviewMode = useCallback(
-    function (data) {
-      try {
-        const validator = ContentValidators[type];
-        console.log("validator :", { type, content, data });
-        if (!validator) {
-          throw "Invalid content type";
-        }
-        // validate the content type using JOI validator schemas
-        setContent((prev) => ({ ...prev, ...data }));
-        const { value, error } = validator.validate({ ...data, tags });
-        if (error) throw error;
-
-        console.log(value, error);
-        setPreviewMode(() => true);
-      } catch (error) {
-        setErrMsg(error.toString());
-        errorRef?.current?.scrollIntoView();
-      }
-    },
-    [type, content, tags]
-  );
 
   return (
     <main className="h-full min-h-screen p-8">
@@ -178,12 +177,13 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         <p
           ref={errorRef}
           className={`p-4 text-light text-xs font-semibold w-full rounded-md ${
-            errMsg.trim().length > 0 && "bg-primary"
+            pageMsg.trim().length > 0 &&
+            (pageErr ? "bg-primary" : "bg-secondary")
           }`}
         >
-          <small>{errMsg}</small>
+          <small>{pageMsg}</small>
         </p>
-        <div className="w-full after-line flex flex-col items-stretch gap-y-4">
+        <div className="w-full after-line flex flex-col items-stretch gap-y-4 mb-10">
           {/* content type */}
           <details className={detailCls}>
             <SelectContentType
@@ -243,17 +243,28 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
 
           {/* cms */}
           <details className={detailCls}>
-            <CMSForm
-              storageKey={CONTENT_NAME}
-              type="content"
-              key={JSON.stringify(content, type)}
-              init={content}
-              layout={Layout[type]}
-              heading={`${type} content ↓`}
-              btnLabel={`Preview ${type}`}
-              isDarkMode={isDarkMode}
-              getFormData={validateContentForPreviewMode}
-            />
+            {type === CONTENT_TYPE.blog.name && (
+              <BlogCRUDForm
+                isDarkMode={isDarkMode}
+                getBlog={validateContentForPreviewMode}
+                STORAGE_KEY={CONTENT_NAME}
+              />
+            )}
+            {type === CONTENT_TYPE.project.name && (
+              <ProjectCRUDForm
+                isDarkMode={isDarkMode}
+                getProject={validateContentForPreviewMode}
+                STORAGE_KEY={CONTENT_NAME}
+              />
+            )}
+            {type === CONTENT_TYPE.design.name && (
+              <DesignCRUDForm
+                isDarkMode={isDarkMode}
+                getDesign={validateContentForPreviewMode}
+                STORAGE_KEY={CONTENT_NAME}
+              />
+            )}
+
             <summary
               className={`block ${
                 Boolean(type) && Boolean(tags.length)
@@ -288,6 +299,9 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
             {type === CONTENT_TYPE.blog.name && (
               <BlogDetailBody blog={content} adminMode={true} />
             )}
+            {type === CONTENT_TYPE.project.name && (
+              <ProjectDetailBody project={content} adminMode={true} />
+            )}
           </section>
 
           <div className="relative h-full w-full max-w-4xl mx-auto">
@@ -307,7 +321,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
                   />
                   <label
                     htmlFor="public"
-                    className={`content--secondary text-center font-semibold p-2 border-2 border-current ${
+                    className={`content--secondary text-center font-semibold p-2 border-2 border-current cursor-pointer hover:scale-110 transition-all ${
                       isPublic ? "text-secondary" : "text-primary"
                     }`}
                   >

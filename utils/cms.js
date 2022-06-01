@@ -171,10 +171,119 @@ const BLOG_CMS = [
         split: true,
       },
       {
-        name: "href",
+        name: "text",
         type: "markdown",
         placeholder: `Outro text goes here`,
+        split: false,
+      },
+    ],
+  },
+];
+
+const PROJECT_CMS = [
+  {
+    name: "title",
+    type: "string",
+    placeholder: "Project title",
+    split: true,
+  },
+  {
+    name: "desc",
+    type: "markdown",
+    placeholder: "Project description",
+    split: false,
+  },
+  {
+    name: "category",
+    type: "string",
+    placeholder: "Project category",
+    split: true,
+  },
+  {
+    name: "difficulty",
+    type: "select",
+    placeholder: "Project difficulty",
+    split: true,
+    options: {
+      beginner: "beginner",
+      intermediate: "intermediate",
+      advanced: "advanced",
+    },
+  },
+  {
+    name: "techStack",
+    type: "array",
+    layout: [
+      {
+        name: "text",
+        type: "markdown",
+        split: false,
+        placeholder:
+          "Project tech stack description for thumbnail (max 50 chars)",
+      },
+    ],
+  },
+  {
+    name: "prerequisites",
+    type: "markdown",
+    placeholder: "Project prerequisites",
+    split: false,
+  },
+  {
+    name: "chapters",
+    type: "chapter",
+  },
+  {
+    name: "repo",
+    type: "object",
+    layout: [
+      {
+        name: "label",
+        type: "string",
+        placeholder: `Repo label goes here`,
         split: true,
+      },
+      {
+        name: "href",
+        type: "string",
+        placeholder: `Repo URL goes here`,
+        split: true,
+      },
+    ],
+  },
+  {
+    name: "demo",
+    type: "object",
+    layout: [
+      {
+        name: "label",
+        type: "string",
+        placeholder: `Repo label goes here`,
+        split: true,
+      },
+      {
+        name: "href",
+        type: "string",
+        placeholder: `Repo URL goes here`,
+        split: true,
+      },
+    ],
+  },
+  {
+    name: "outro",
+    type: "object",
+    layout: [
+      {
+        name: "heading",
+        type: "string",
+        placeholder: `Outro heading `,
+        split: true,
+      },
+      {
+        name: "text",
+        type: "markdown",
+        placeholder: `Outro text goes here`,
+        split: false,
       },
     ],
   },
@@ -283,4 +392,5 @@ export default {
   TAG_CMS,
   blog: BLOG_CMS,
   design: DESIGN_CMS,
+  project: PROJECT_CMS,
 };

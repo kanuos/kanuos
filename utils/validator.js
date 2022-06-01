@@ -64,12 +64,17 @@ const ProjectValidator = BlogProjectCommon.keys({
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        text: Joi.string().trim().required(),
+        text: Joi.string().trim().required().max(100),
       }).required()
     )
     .min(1)
     .required(),
-  difficulty: Joi.string().trim().lowercase().required().default("beginner"),
+  difficulty: Joi.string()
+    .trim()
+    .lowercase()
+    .required()
+    .default("beginner")
+    .valid("beginner", "intermediate", "advanced"),
   prerequisites: Joi.string().trim().required(),
   chapters: Joi.array()
     .items(
