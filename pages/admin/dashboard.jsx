@@ -52,8 +52,8 @@ const AdminDashboard = ({ admin }) => {
       navType="admin"
     >
       <div className="min-h-screen p-8">
-        <div className="flex items-center justify-start w-full mb-6 container max-w-prose mx-auto">
-          <div className="scale-90">
+        <div className="flex items-center justify-start w-full mb-6 container max-w-4xl mx-auto gap-4 scale-90 origin-left">
+          <div>
             <CTA
               btnMode={true}
               isActive={tab === 0}
@@ -62,7 +62,7 @@ const AdminDashboard = ({ admin }) => {
               isDarkMode={isDarkMode}
             />
           </div>
-          <div className="scale-90">
+          <div>
             <CTA
               btnMode={true}
               isActive={tab === 1}

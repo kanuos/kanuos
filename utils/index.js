@@ -4,7 +4,7 @@ export const STEP_TYPE = {
   code: "code",
   markdown: "markdown",
   image: "image",
-  link: "link",
+  heading: "heading",
 };
 
 export const SOCIAL_LINKS = {

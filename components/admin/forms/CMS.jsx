@@ -1,15 +1,21 @@
 import { useState, Fragment, useCallback, useEffect } from "react";
-import { CTA } from "../../portfolio/CTA";
-import { MarkdownInput } from "../inputs/Markdown";
-import { ArrayInput } from "../inputs/ArrayInput";
-import { StringInput } from "../inputs/String";
-import { ImageInput } from "../inputs/ImageInput";
-import { ObjectInput } from "../inputs/ObjectInput";
+import dynamic from "next/dynamic";
 
-// dynamic
-import UserFlowInput from "../inputs/custom/UserFlowInput";
-import PageInput from "../inputs/custom/PageInput";
-import ChapterInput from "../inputs/custom/ChapterInput";
+import { CTA } from "../../portfolio/CTA";
+
+// dynamic imports of components
+const MarkdownInput = dynamic(() =>
+  import("../inputs/Markdown").then((m) => m.MarkdownInput)
+);
+const ArrayInput = dynamic(() =>
+  import("../inputs/ArrayInput").then((m) => m.ArrayInput)
+);
+const StringInput = dynamic(() =>
+  import("../inputs/String").then((m) => m.StringInput)
+);
+const ImageInput = dynamic(() =>
+  import("../inputs/ImageInput").then((m) => m.ImageInput)
+);
 
 const CMSForm = ({
   type = "profile",
@@ -21,22 +27,7 @@ const CMSForm = ({
   getFormData,
   btnLabel = "Save Changes",
 }) => {
-  const INIT = {};
-  layout?.forEach(({ name, type }) => {
-    if (type === "object") {
-      INIT[name] = {};
-      return;
-    }
-    if (["array", "userFlow", "page"].includes(type)) {
-      INIT[name] = [];
-      return;
-    }
-    INIT[name] = "";
-  });
-  const [currentState, setCurrentState] = useState({
-    ...INIT,
-    ...init,
-  });
+  const [currentState, setCurrentState] = useState(null);
   const [arrayStep, setArrayStep] = useState({});
   const [arrayType, setArrayType] = useState("");
   const [editIndex, setEditIndex] = useState(NaN);
@@ -46,9 +37,24 @@ const CMSForm = ({
     getFormData(currentState);
   }
 
+  function generateInitStateFromLayout() {
+    const INIT = {};
+    layout?.forEach(({ name, type }) => {
+      if (type === "object") {
+        INIT[name] = {};
+        return;
+      }
+      if (["array", "userFlow", "page", "chapter"].includes(type)) {
+        INIT[name] = [];
+        return;
+      }
+      INIT[name] = "";
+    });
+    return { ...INIT, ...init };
+  }
+
   useEffect(() => {
-    console.log({ currentState });
-    if (type !== "content" || !storageKey) return;
+    if (type !== "content" || !storageKey || !currentState) return;
     if (!Object.values(currentState).some(Boolean)) return;
     sessionStorage.setItem(storageKey, JSON.stringify(currentState));
   }, [type, currentState, storageKey]);
@@ -57,6 +63,10 @@ const CMSForm = ({
     if (!arrayType) return;
     setArrayStep(() => ({}));
   }, [arrayType]);
+
+  useEffect(() => {
+    setCurrentState(() => generateInitStateFromLayout());
+  }, [layout]);
 
   const getArrayItem = useCallback(
     (name, newEl, index) => {
@@ -108,6 +118,8 @@ const CMSForm = ({
     }));
   }, []);
 
+  if (layout.length === 0 || !currentState) return <></>;
+
   return (
     <div className="container max-w-4xl mx-auto">
       <h1
@@ -120,243 +132,101 @@ const CMSForm = ({
         {heading}
       </h1>
       <form
+        key={JSON.stringify(layout)}
         onSubmit={handleFormSubmission}
         className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${
           ["profile", "content"].includes(type) ? "my-4" : "my-10"
         }`}
       >
-        {layout.map(({ name, type, placeholder, layout, split }) => (
-          <Fragment key={name}>
-            {type === "string" && (
-              <StringInput
-                split={split}
-                name={name}
-                placeholder={placeholder}
-                value={currentState[name]}
-                setValue={(v) =>
-                  setCurrentState((prev) => ({ ...prev, [name]: v }))
-                }
-              />
-            )}
-            {type === "markdown" && (
-              <MarkdownInput
-                split={split}
-                name={name}
-                placeholder={placeholder}
-                value={currentState[name]}
-                setValue={(v) =>
-                  setCurrentState((prev) => ({ ...prev, [name]: v }))
-                }
-              />
-            )}
-            {type === "image" && (
-              <ImageInput
-                name={name}
-                placeholder={placeholder}
-                value={currentState[name]}
-                setValue={(v) =>
-                  setCurrentState((prev) => ({ ...prev, [name]: v }))
-                }
-                isDarkMode={isDarkMode}
-              />
-            )}
-            {type === "array" && (
-              <ArrayInput
-                editIndex={editIndex}
-                parentState={currentState[name]}
-                isDarkMode={isDarkMode}
-                getArrayItem={getArrayItem}
-                arrayType={arrayType}
-                getEditData={getArrayEditData}
-                currentState={arrayStep}
-                deleteArrayItem={deleteArrayData}
-                name={name}
-              >
-                {layout.map((el, k) => {
-                  return (
-                    <Fragment key={k}>
-                      {el.type === "string" && (
-                        <StringInput
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={arrayStep[el.name]}
-                          setValue={(v) => {
-                            setArrayType(() => name);
-                            setArrayStep((prev) => ({ ...prev, [el.name]: v }));
-                          }}
-                          split={el.split}
-                        />
-                      )}
-                      {el.type === "image" && (
-                        <ImageInput
-                          key={JSON.stringify(arrayStep)}
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={arrayStep[el.name]}
-                          setValue={(v) => {
-                            setArrayType(() => name);
-                            setArrayStep((prev) => ({
-                              ...prev,
-                              [el.name]: v,
-                            }));
-                          }}
-                          isDarkMode={isDarkMode}
-                        />
-                      )}
-                      {el.type === "markdown" && (
-                        <MarkdownInput
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={arrayStep[el.name]}
-                          setValue={(v) => {
-                            setArrayType(() => name);
-                            setArrayStep((prev) => ({ ...prev, [el.name]: v }));
-                          }}
-                          split={el.split}
-                        />
-                      )}
-                      {type === "object" && (
-                        <ObjectInput
-                          key={name}
-                          parentState={currentState[name]}
-                          isDarkMode={isDarkMode}
-                          getObjectData={(d) => console.log(d)}
-                          name={name}
-                        >
-                          {layout.map((el, k) => {
-                            return (
-                              <Fragment key={k}>
-                                {el.type === "string" && (
-                                  <StringInput
-                                    name={el.name}
-                                    placeholder={el.placeholder}
-                                    value={currentState[name][el.name]}
-                                    setValue={(v) =>
-                                      setCurrentState((prev) => ({
-                                        ...prev,
-                                        [name]: {
-                                          [el.name]: v,
-                                        },
-                                      }))
-                                    }
-                                    split={el.split}
-                                  />
-                                )}
-                                {el.type === "markdown" && (
-                                  <MarkdownInput
-                                    name={el.name}
-                                    placeholder={el.placeholder}
-                                    value={currentState[name][el.name]}
-                                    setValue={(v) =>
-                                      console.log(
-                                        name,
-                                        currentState,
-                                        currentState[name],
-                                        currentState[name][el.name],
-                                        v
-                                      )
-                                    }
-                                    split={el.split}
-                                  />
-                                )}
-                              </Fragment>
-                            );
-                          })}
-                        </ObjectInput>
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </ArrayInput>
-            )}
-            {type === "userFlow" && (
-              <UserFlowInput
-                key={currentState[name]?.length}
-                isDarkMode={isDarkMode}
-                parentState={currentState[name]}
-                setParentArray={(v) =>
-                  setCurrentState((prev) => ({
-                    ...prev,
-                    [name]: v,
-                  }))
-                }
-              />
-            )}
-            {type === "page" && (
-              <PageInput
-                key={currentState[name].length}
-                isDarkMode={isDarkMode}
-                initState={currentState[name]}
-                getPage={(p) => {
-                  console.log(currentState, p);
-                  setCurrentState((prev) => ({ ...prev, page: p }));
-                }}
-              />
-            )}
-            {type === "object" && (
-              <ObjectInput
-                key={name}
-                parentState={currentState[name]}
-                isDarkMode={isDarkMode}
-                getObjectData={null}
-                name={name}
-              >
-                {layout.map((el, k) => {
-                  return (
-                    <Fragment key={k}>
-                      {el.type === "string" && (
-                        <StringInput
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={currentState[name]?.[el.name]}
-                          setValue={(v) => {
-                            setCurrentState((prev) => ({
-                              ...prev,
-                              [name]: {
-                                ...currentState[name],
+        {currentState &&
+          layout.map(({ name, type, placeholder, layout, split, options }) => (
+            <Fragment key={name}>
+              {type === "string" && (
+                <StringInput
+                  split={split}
+                  name={name}
+                  placeholder={placeholder}
+                  value={currentState?.[name]}
+                  setValue={(v) =>
+                    setCurrentState((prev) => ({ ...prev, [name]: v }))
+                  }
+                />
+              )}
+              {type === "markdown" && (
+                <MarkdownInput
+                  split={split}
+                  name={name}
+                  placeholder={placeholder}
+                  value={currentState?.[name]}
+                  setValue={(v) =>
+                    setCurrentState((prev) => ({ ...prev, [name]: v }))
+                  }
+                />
+              )}
+              {type === "image" && (
+                <ImageInput
+                  name={name}
+                  placeholder={placeholder}
+                  value={currentState?.[name]}
+                  setValue={(v) =>
+                    setCurrentState((prev) => ({ ...prev, [name]: v }))
+                  }
+                  isDarkMode={isDarkMode}
+                />
+              )}
+
+              {type === "array" && (
+                <ArrayInput
+                  editIndex={editIndex}
+                  parentState={currentState?.[name]}
+                  isDarkMode={isDarkMode}
+                  getArrayItem={getArrayItem}
+                  arrayType={arrayType}
+                  getEditData={getArrayEditData}
+                  currentState={arrayStep}
+                  deleteArrayItem={deleteArrayData}
+                  name={name}
+                >
+                  {layout.map((el, k) => {
+                    return (
+                      <Fragment key={k}>
+                        {el.type === "string" && (
+                          <StringInput
+                            name={el.name}
+                            placeholder={el.placeholder}
+                            value={arrayStep[el.name]}
+                            setValue={(v) => {
+                              setArrayType(() => name);
+                              setArrayStep((prev) => ({
+                                ...prev,
                                 [el.name]: v,
-                              },
-                            }));
-                          }}
-                          split={el.split}
-                        />
-                      )}
-                      {el.type === "markdown" && (
-                        <MarkdownInput
-                          name={el.name}
-                          placeholder={el.placeholder}
-                          value={currentState[name]?.[el.name]}
-                          setValue={(v) =>
-                            setCurrentState((prev) => ({
-                              ...prev,
-                              [name]: {
-                                ...currentState[name],
+                              }));
+                            }}
+                            split={el.split}
+                          />
+                        )}
+                        {el.type === "markdown" && (
+                          <MarkdownInput
+                            name={el.name}
+                            placeholder={el.placeholder}
+                            value={arrayStep[el.name]}
+                            setValue={(v) => {
+                              setArrayType(() => name);
+                              setArrayStep((prev) => ({
+                                ...prev,
                                 [el.name]: v,
-                              },
-                            }))
-                          }
-                          split={el.split}
-                        />
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </ObjectInput>
-            )}
-            {type === "chapter" && (
-              <ChapterInput
-                isDarkMode={isDarkMode}
-                parentArray={currentState[name]}
-                setParentArray={(v) =>
-                  setCurrentState((prev) => ({
-                    ...prev,
-                    [name]: v,
-                  }))
-                }
-              />
-            )}
-          </Fragment>
-        ))}
+                              }));
+                            }}
+                            split={el.split}
+                          />
+                        )}
+                      </Fragment>
+                    );
+                  })}
+                </ArrayInput>
+              )}
+            </Fragment>
+          ))}
         <div className="w-max mr-auto my-10 col-span-full">
           <CTA
             btnMode={true}

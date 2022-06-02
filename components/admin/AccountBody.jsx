@@ -60,6 +60,7 @@ export const LoginBody = () => {
     const success = await adminAuthCB("login", cred);
     if (success) {
       r.push(ADMIN_URLS.dashboard.url);
+      return;
     }
     setIsSubmitting(false);
   }

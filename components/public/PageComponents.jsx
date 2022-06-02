@@ -8,6 +8,8 @@ import {
   AiFillDownCircle,
   AiFillCheckCircle,
   AiOutlineLoading3Quarters,
+  AiOutlineBlock,
+  AiOutlineBook,
 } from "react-icons/ai";
 
 // internal imports
@@ -128,15 +130,18 @@ export const PageComponents = ({
     >
       <ul
         className={
-          "text-xs flex flex-col w-full items-start gap-1 p-6 md:px-10 " +
+          "text-xs flex flex-col w-full items-start gap-4 p-6 md:px-10 " +
           (show ? "border-b border-current mb-6" : "")
         }
       >
         <li>
           <small className="font-semibold opacity-60">Chapter {index}</small>
         </li>
-        <li className="flex w-full items-center justify-between mb-2">
-          <span className={`font-semibold peer text-lg md:text-xl`}>
+        <li className="flex w-full items-center justify-between mb-2 gap-2">
+          <AiOutlineBook className="text-xl text-primary" />
+          <span
+            className={`font-semibold peer text-lg md:text-xl capitalize grow text-left`}
+          >
             {segment.heading}
           </span>
           <motion.button
@@ -170,16 +175,28 @@ export const PageComponents = ({
           animate={show ? "show" : "hide"}
           variants={variants.body}
           exit="hide"
+          className="w-full"
         >
           {segment.steps?.map(({ key, value }, i) => (
             <section key={i}>
+              {key === STEP_TYPE.heading && (
+                <h2 className="heading--secondary my-8 capitalize flex items-center">
+                  <AiOutlineBlock className="text-primary" />
+                  {value}
+                </h2>
+              )}
               {key === STEP_TYPE.markdown && (
-                <div className="md:w-5/6">
+                <div className="w-full">
+                  <MarkdownStep text={value} />
+                </div>
+              )}
+              {key === STEP_TYPE.markdown && (
+                <div className="w-full">
                   <MarkdownStep text={value} />
                 </div>
               )}
               {key === STEP_TYPE.code && (
-                <div className="md:w-5/6">
+                <div className="w-full">
                   <CodeStep
                     code={value.code}
                     file={value.file}

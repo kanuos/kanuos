@@ -16,7 +16,7 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       show: {
         opacity: 1,
         scale: 1,
-        position: "relative",
+        height: "auto",
         pointerEvents: "all",
         transition: {
           type: "tween",
@@ -28,11 +28,11 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       hide: {
         opacity: 0,
         scale: 0,
-        position: "absolute",
+        height: "0",
         pointerEvents: "none",
         transition: {
-          type: "tween",
-          when: "afterChildren",
+          type: "linear",
+          duration: 0.25,
         },
       },
     },
@@ -111,7 +111,7 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       variants={index % 2 ? articleVariants.left : articleVariants.right}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`flex flex-col gap-y-2 max-w-lg ${
+      className={`flex flex-col gap-y-2 max-w-lg w-full ${
         index % 2 === 0 ? "ml-auto items-end" : "items-start mr-auto"
       }`}
     >

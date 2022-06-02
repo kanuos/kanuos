@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 
+import { STEP_TYPE } from "../../../../utils";
 import { SelectInput } from "../SelectInput";
 
 const CTA = dynamic(() => import("../../../portfolio/CTA").then((m) => m.CTA));
@@ -16,13 +17,6 @@ const MarkdownInput = dynamic(() =>
 const ObjectInput = dynamic(() =>
   import("../ObjectInput").then((m) => m.ObjectInput)
 );
-
-const ALLOWED_KEYS = {
-  heading: "heading",
-  image: "image",
-  markdown: "markdown",
-  code: "code",
-};
 
 const PageInput = ({ isDarkMode, initState = [], getPage }) => {
   // state for inputs
@@ -78,6 +72,12 @@ const PageInput = ({ isDarkMode, initState = [], getPage }) => {
     }
   }, [state]);
 
+  useEffect(() => {
+    // when the step key changes reset the state and editIndex
+    setEditIndex(false);
+    setState("");
+  }, [keyType]);
+
   return (
     <ArrayInput
       name="Pages"
@@ -94,7 +94,7 @@ const PageInput = ({ isDarkMode, initState = [], getPage }) => {
           init={keyType}
           setValue={(v) => setKeyType(v)}
           name="Key"
-          list={ALLOWED_KEYS}
+          list={STEP_TYPE}
         />
         <div className="flex flex-col items-start justify-start gap-4">
           {["markdown", "heading"].includes(keyType) && (
@@ -169,7 +169,6 @@ const PageInput = ({ isDarkMode, initState = [], getPage }) => {
           )}
         </div>
       </div>
-      State : {JSON.stringify({ state, keyType })}
       {canSubmit && (
         <div className="w-max">
           <CTA

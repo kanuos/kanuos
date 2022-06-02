@@ -34,7 +34,7 @@ export const ProjectDetailBody = ({ project }) => {
   return (
     <div
       className={
-        "overflow-hidden relative h-full w-full min-h-screen " +
+        "overflow-hidden relative h-auto w-full min-h-screen " +
         (isDarkMode ? "bg-hero--dark" : "bg-hero--light")
       }
     >
@@ -52,25 +52,27 @@ export const ProjectDetailBody = ({ project }) => {
       />
 
       <div className="relative h-full w-full">
-        <section className="section-wrapper md:mb-20 max-w-4xl mx-auto">
-          <h2 className="heading--sub">Difficulty Level</h2>
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto">
+          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-2">
+            Difficulty Level
+          </h2>
           <p className={"content--secondary capitalize"}>
             {project.difficulty}
           </p>
         </section>
 
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-          <h2 className="heading--sub uppercase mb-6 md:col-start-1 md:col-end-2">
-            Project overview
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto mt-20">
+          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-2">
+            Prerequisites
           </h2>
           <div className="markdown-editor-wrapper md:col-start-2 md:col-end-5">
             <Markdown>{project.prerequisites}</Markdown>
           </div>
         </section>
 
-        <section className="section-wrapper my-28 max-w-5xl mx-auto">
-          <div className="max-w-4xl mx-auto w-full md:grid md:grid-cols-4 gap-6">
-            <h2 className="heading--sub uppercase mb-6 md:col-start-1 md:col-end-2">
+        <section className="section-wrapper my-28 max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto w-full md:grid md:grid-cols-4 gap-x-6">
+            <h2 className="heading--sub uppercase mb-2 md:col-start-1 md:col-end-2">
               Project Curriculum
             </h2>
             <p className="md:col-start-2 md:col-end-5 content--secondary">
@@ -105,7 +107,7 @@ export const ProjectDetailBody = ({ project }) => {
             {project.chapters.map((chapter, i) => (
               <li
                 key={i}
-                className={`relative flex items-center justify-start w-full md:w-4/5 even:ml-auto odd:mr-auto rounded-lg overflow-hidden  ${
+                className={`relative flex items-center justify-start w-full max-w-prose even:ml-auto odd:mr-auto rounded-lg overflow-hidden  ${
                   !isDarkMode
                     ? "nav-dark dark-shadow"
                     : "nav-light light-shadow"

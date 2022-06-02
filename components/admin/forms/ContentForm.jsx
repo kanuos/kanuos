@@ -142,6 +142,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
     } catch (error) {
       setPageErr(true);
       setPageMsg(error);
+      errorRef.current.scrollIntoView();
     }
   }
 
@@ -157,8 +158,13 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         }
         setContent(() => value);
         setPreviewMode(true);
+        errorRef.current.scrollIntoView();
+        setPageMsg("Valid data. Can be sent");
+        setPageErr(false);
       } catch (error) {
+        errorRef.current.scrollIntoView();
         setPageMsg(error);
+        setPageErr(true);
       }
     },
     [type]
