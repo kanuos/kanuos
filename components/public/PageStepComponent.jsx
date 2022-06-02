@@ -39,7 +39,7 @@ export const CodeStep = ({ code, file, language }) => {
   );
 };
 
-export const ImageStep = ({ url, projectMode = false }) => {
+export const ImageStep = ({ url }) => {
   const [valid, setValid] = useState(false);
 
   useEffect(() => {

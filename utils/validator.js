@@ -140,7 +140,7 @@ const DesignValidator = CommonFields.keys({
         __v: Joi.any(),
         poster: Joi.string().trim().uri().required(),
         photographer: Joi.string().trim().required(),
-        courtsey: Joi.string().trim().uri().required(),
+        courtesy: Joi.string().trim().uri().required(),
       }).required()
     )
     .min(1),

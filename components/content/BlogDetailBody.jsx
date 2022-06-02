@@ -48,11 +48,11 @@ export const BlogDetailBody = ({ blog }) => {
                 ${
                   ["heading"].includes(key) ? "md:col-start-1 md:col-end-2" : ""
                 }
-                                ${
-                                  ["image"].includes(key)
-                                    ? "md:col-span-full"
-                                    : ""
-                                }
+                ${
+                  ["image"].includes(key)
+                    ? "md:col-span-full"
+                    : ""
+                }
                 ${
                   ["markdown", "code"].includes(key)
                     ? "md:col-start-2 md:col-end-5"

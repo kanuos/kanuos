@@ -45,13 +45,13 @@ export const DesignDetailBody = ({ design }) => {
         </section>
       </div>
       {/* thumbnail */}
-      <figure className="h-[75vh] xl:h-screen w-screen relative flex flex-col items-center justify-evenly">
+      <figure className="h-[75vh] xl:h-screen w-full relative flex flex-col items-center justify-evenly">
         <div className="h-5/6 relative w-full">
           <Image
             loader={({ src, width }) => `${src}?w=${width}`}
             src={design.thumbnail}
             layout="fill"
-            className="object-cover top-0 left-0 h-full w-full md:object-scale-down"
+            className="object-cover top-0 left-0 h-full w-full"
             alt={`Design thumbnail of ${design.title}`}
           />
         </div>
@@ -145,14 +145,20 @@ export const DesignDetailBody = ({ design }) => {
           <h2 className="heading--secondary mb-10 md:mx-auto md:w-max md:mb-20">
             External Resources
           </h2>
-          <ul className="relative z-10 grid place-items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-20 w-full">
+          <ul
+            className={
+              design.externalResources.length >= 3
+                ? "relative z-10 grid place-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full"
+                : "relative z-10 flex flex-wrap items-center justify-start md:justify-center gap-6 md:gap-16 w-full"
+            }
+          >
             {design.externalResources.map(
               ({ poster, courtesy, photographer }, i) => (
                 <li
                   key={i}
-                  className="flex flex-col w-full items-center group hover:even:rotate-1 hover:odd:-rotate-1 md:even:rotate-1 md:odd:-rotate-1 md:hover:odd:rotate-0 md:hover:even:rotate-0 md:hover:scale-110 transition-all"
+                  className="flex flex-col w-full max-w-xs even:ml-auto odd:mr-auto md:even:ml-0 md:odd:mr-0 items-center group hover:even:rotate-1 hover:odd:-rotate-1 md:even:rotate-1 md:odd:-rotate-1 md:hover:odd:rotate-0 md:hover:even:rotate-0 md:hover:scale-110 transition-all"
                 >
-                  <div className="bg-light w-full h-48 md:h-60 overflow-hidden p-2.5 filter shadow-xl group-hover:shadow-2xl group-hover:drop-shadow-2xl transition-all">
+                  <div className="bg-light w-full h-48 md:h-60 aspect-square overflow-hidden p-2.5 filter shadow-xl group-hover:shadow-2xl group-hover:drop-shadow-2xl transition-all">
                     <figure className="relative w-full h-full">
                       <Image
                         loader={({ src, width }) => `${src}?w=${width}&q=100`}
@@ -160,6 +166,7 @@ export const DesignDetailBody = ({ design }) => {
                         alt={`Pic courtesy ${photographer}`}
                         src={poster}
                         objectFit="cover"
+                        priority={true}
                         className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all"
                       />
                     </figure>

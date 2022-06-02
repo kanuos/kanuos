@@ -136,7 +136,7 @@ const UserFlowInput = ({ isDarkMode, parentState, setParentArray }) => {
             cb={handleAddUserFlowStep}
             btnMode={true}
             btnType="button"
-            label="Add step"
+            label="Add flow to state"
           />
         </div>
       )}
