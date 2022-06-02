@@ -12,7 +12,12 @@ const ProjectsAdminPage = ({ allProjects }) => {
   return (
     <AdminListLayout list={allProjects} type={PUBLIC_LIST_TYPES.projects.type}>
       {allProjects.map((project, index) => (
-        <ProjectThumbnail key={project._id} data={project} index={index + 1} />
+        <ProjectThumbnail
+          key={project._id}
+          data={project}
+          index={index + 1}
+          adminMode={true}
+        />
       ))}
     </AdminListLayout>
   );

@@ -11,7 +11,7 @@ export const StyledHeader = ({
     </div>
   ));
 
-  const commonCls = `uppercase absolute text-5xl sm:text-6xl lg:text-7xl font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-xs sm:max-w-sm md:max-w-md break-words text-right block box-decoration-clone`;
+  const commonCls = `uppercase absolute text-6xl lg:text-7xl xl:text-8xl font-black bg-contain leading-[0.75] md:leading-[0.75] xl:leading-[0.75] w-min max-w-xs sm:max-w-sm md:max-w-md break-words text-right block box-decoration-clone`;
 
   return (
     <header className="min-h-screen h-full w-full mx-auto relative block pt-20">

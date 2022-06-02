@@ -53,7 +53,7 @@ export const ProjectDetailBody = ({ project }) => {
 
       <div className="relative h-full w-full">
         <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto">
-          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-2">
+          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
             Difficulty Level
           </h2>
           <p className={"content--secondary capitalize"}>
@@ -62,7 +62,7 @@ export const ProjectDetailBody = ({ project }) => {
         </section>
 
         <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto mt-20">
-          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-2">
+          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
             Prerequisites
           </h2>
           <div className="markdown-editor-wrapper md:col-start-2 md:col-end-5">
@@ -72,7 +72,7 @@ export const ProjectDetailBody = ({ project }) => {
 
         <section className="section-wrapper my-28 max-w-4xl mx-auto">
           <div className="max-w-4xl mx-auto w-full md:grid md:grid-cols-4 gap-x-6">
-            <h2 className="heading--sub uppercase mb-2 md:col-start-1 md:col-end-2">
+            <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
               Project Curriculum
             </h2>
             <p className="md:col-start-2 md:col-end-5 content--secondary">
