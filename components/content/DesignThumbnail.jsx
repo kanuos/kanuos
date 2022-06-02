@@ -42,7 +42,11 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
             {data.title}
           </h3>
           <div className="hover:-translate-y-1 transition-all scale-0 group-hover:scale-90 md:scale-90 hover:scale-x-100">
-            <CTA label="View Design" href={designURL} isDarkMode={false} />
+            <CTA
+              label={adminMode ? "View in Admin mode" : "Explore design"}
+              href={designURL}
+              isDarkMode={false}
+            />
           </div>
         </section>
       </motion.article>
