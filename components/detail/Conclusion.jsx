@@ -7,19 +7,15 @@ export const Conclusion = ({ heading, text, repo, demo }) => {
         {heading}
       </h2>
       <div className="flex flex-col items-start gap-2 md:col-start-2 md:col-end-5">
-        <p className="content--secondary">{text}</p>
-        {[...Object.values(repo), ...Object.values(demo)].every((el) =>
-          Boolean(el.trim())
-        ) && (
-          <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
-            {Object.values(repo).every((el) => Boolean(el.trim())) && (
-              <PageLink label={repo.label} href={repo.href} />
-            )}
-            {Object.values(demo).every((el) => Boolean(el.trim())) && (
-              <PageLink label={demo.label} href={demo.href} />
-            )}
-          </div>
-        )}
+        <p className="content--secondary text-justify">{text}</p>
+        <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
+          {repo && Object.values(repo).every((el) => Boolean(el.trim())) && (
+            <PageLink label={repo.label} href={repo.href} />
+          )}
+          {demo && Object.values(demo).every((el) => Boolean(el.trim())) && (
+            <PageLink label={demo.label} href={demo.href} />
+          )}
+        </div>
       </div>
     </section>
   );

@@ -23,7 +23,7 @@ const ProjectDetail = ({ project }) => {
     project.category
   );
   return (
-    <PublicLayout metaTitle={project.title} metaDesc={content}>
+    <PublicLayout metaTitle={"Project : " + project.title} metaDesc={content}>
       <ProjectDetailBody project={project} />
       <Footer />
       {/* TODO: add footer content */}

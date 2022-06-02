@@ -38,7 +38,7 @@ export const BlogDetailBody = ({ blog }) => {
         tags={blog.tags}
       />
       <div className="w-full max-w-4xl mx-auto relative md:mt-20">
-        <ul className="relative z-0 flex flex-col items-start w-full pb-10 md:grid md:grid-cols-4 gap-6">
+        <ul className="relative z-0 flex flex-col items-start w-full pb-10 md:grid md:grid-cols-4 gap-x-6 section-wrapper">
           {blog.page.map((step, i) => {
             const { key, value } = step;
             return (
@@ -49,23 +49,21 @@ export const BlogDetailBody = ({ blog }) => {
                   ["heading"].includes(key) ? "md:col-start-1 md:col-end-2" : ""
                 }
                 ${
-                  ["image"].includes(key)
-                    ? "md:col-span-full"
-                    : ""
+                  ["image", "code"].includes(key) ? "md:col-span-full my-6" : ""
                 }
                 ${
-                  ["markdown", "code"].includes(key)
-                    ? "md:col-start-2 md:col-end-5"
+                  ["markdown"].includes(key)
+                    ? "md:col-start-2 md:col-end-5 gap-2"
                     : ""
                 }`}
               >
                 {key === "markdown" && (
-                  <section className="section-wrapper">
+                  <section className="text-justify">
                     <MarkdownStep text={value} />
                   </section>
                 )}
                 {key === "code" && (
-                  <section className="section-wrapper whitespace-pre-line w-full overflow-x-scroll scrollbar-none">
+                  <section className="whitespace-pre-line w-full overflow-x-scroll scrollbar-none">
                     <CodeStep
                       language={value.language}
                       code={value.code}
@@ -74,7 +72,7 @@ export const BlogDetailBody = ({ blog }) => {
                   </section>
                 )}
                 {key === "heading" && (
-                  <h2 className="heading--sub uppercase mb-6 max-w-4xl mx-auto px-8 pb-4">
+                  <h2 className="heading--sub uppercase mb-4 md:col-start-1 md:col-end-2">
                     {value}
                   </h2>
                 )}

@@ -10,6 +10,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { PageLink } from "../portfolio/PageLink";
 import { ImageCarousel } from "./ImageCarousel";
 import { DetailHeader } from "../detail/Header";
+import { Conclusion } from "../detail/Conclusion";
 
 export const DesignDetailBody = ({ design }) => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -35,12 +36,12 @@ export const DesignDetailBody = ({ design }) => {
 
       <div className="relative h-auto w-full max-w-4xl mx-auto">
         {/* role */}
-        <section className="section-wrapper">
-          <div className="flex flex-col md:flex-row gap-4 mt-10 md:gap-x-14">
-            <h2 className="heading--secondary shrink-0 grow">My Role</h2>
-            <div className="markdown-editor-wrapper text-justify md:w-5/6">
-              <Markdown>{design.role}</Markdown>
-            </div>
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto mt-20">
+          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
+            My role
+          </h2>
+          <div className="markdown-editor-wrapper md:col-start-2 md:col-end-5">
+            <Markdown>{design.role}</Markdown>
           </div>
         </section>
       </div>
@@ -51,7 +52,7 @@ export const DesignDetailBody = ({ design }) => {
             loader={({ src, width }) => `${src}?w=${width}`}
             src={design.thumbnail}
             layout="fill"
-            className="object-cover top-0 left-0 h-full w-full"
+            className="object-cover top-0 left-0 h-full w-full md:object-scale-down"
             alt={`Design thumbnail of ${design.title}`}
           />
         </div>
@@ -192,21 +193,15 @@ export const DesignDetailBody = ({ design }) => {
 
       <div className="relative h-auto w-full max-w-4xl mx-auto">
         {/* conclusion */}
-        <section className="section-wrapper pb-20">
-          <div className="flex flex-col md:flex-row gap-4 mt-10 md:gap-x-14">
-            <h2 className="heading--secondary mb-6 shrink-0 grow">
-              Conclusion
-            </h2>
-            <div className="flex flex-col items-start w-full">
-              <p className="content--secondary text-justify w-11/12 max-w-md">
-                This project is a work of imagination and bears resemblance with
+        <Conclusion
+          heading="Conclusion"
+          text={`This project is a work of imagination and bears resemblance with
                 no product. If you want to use this design in your project,
                 please ask me for permission. If you wish to see this design as
-                a project, let me know the same.
-              </p>
-            </div>
-          </div>
-        </section>
+                a project, let me know the same.`}
+          repo={null}
+          demo={null}
+        />
       </div>
     </div>
   );

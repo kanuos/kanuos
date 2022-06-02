@@ -73,7 +73,7 @@ export const ProjectDetailBody = ({ project }) => {
         <section className="section-wrapper my-28 max-w-4xl mx-auto">
           <div className="max-w-4xl mx-auto w-full md:grid md:grid-cols-4 gap-x-6">
             <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
-              Project Curriculum
+              Synopsis
             </h2>
             <p className="md:col-start-2 md:col-end-5 content--secondary">
               Project <strong className="font-semibold">{project.title}</strong>{" "}
