@@ -27,23 +27,24 @@ const PageInput = ({ isDarkMode, initState = [], getPage }) => {
   const [canSubmit, setCanSubmit] = useState(false);
 
   function handleAddPage() {
-    if (!isNaN(editIndex)) {
-      // edit mode
-      getPage(
-        initState.map((el, k) => {
-          if (k === editIndex) {
-            return {
-              key: keyType,
-              value: state,
-            };
-          }
-          return el;
-        })
-      );
-    } else {
+    let pageArray = [];
+    if (isNaN(editIndex)) {
       // Add new item to array state
-      getPage([...initState, { key: keyType, value: state }]);
+      pageArray = [...initState, { key: keyType, value: state }];
+    } else {
+      // edit mode
+      pageArray = initState.map((el, k) => {
+        if (k === editIndex) {
+          return {
+            key: keyType,
+            value: state,
+          };
+        }
+        return el;
+      });
     }
+
+    getPage(pageArray);
 
     setKeyType("");
     setEditIndex(NaN);
@@ -74,7 +75,7 @@ const PageInput = ({ isDarkMode, initState = [], getPage }) => {
 
   useEffect(() => {
     // when the step key changes reset the state and editIndex
-    setEditIndex(false);
+    setEditIndex(NaN);
     setState("");
   }, [keyType]);
 
@@ -123,9 +124,7 @@ const PageInput = ({ isDarkMode, initState = [], getPage }) => {
               key={keyType}
               parentState={state}
               isDarkMode={isDarkMode}
-              getObjectData={function () {
-                console.log(arguments);
-              }}
+              getObjectData={() => null}
               name={keyType}
             >
               <MarkdownInput

@@ -40,6 +40,10 @@ export const ProjectCRUDForm = ({
   // initial render prefill the project data from session storage if exists
   useEffect(() => {
     if (!Boolean(STORAGE_KEY)) return;
+
+    // dont load data from session storage if init data is already available EDIT mode
+    if (init) return;
+
     // get project data from session storage if exists
     const sessionData = sessionStorage.getItem(STORAGE_KEY || "");
     if (!Boolean(sessionData)) return;
@@ -138,7 +142,7 @@ export const ProjectCRUDForm = ({
 
   return (
     <section className="w-full my-6 flex flex-col items-stretch gap-6">
-      {/* title field , slug field */}
+      {/* title field , difficulty field */}
       <section className="grid w-full grid-cols-1 md:grid-cols-2 gap-4">
         <StringInput
           name="title"
@@ -148,17 +152,17 @@ export const ProjectCRUDForm = ({
           split={true}
         />
         <SelectInput
+          key={project.difficulty}
           init={project.difficulty}
           setValue={(v) => handleUpdate("difficulty", v)}
           name="difficulty"
           list={{
-            beginner: "Beginner",
-            intermediate: "Intermediate",
-            advanced: "Advanced",
+            beginner: "beginner",
+            intermediate: "intermediate",
+            advanced: "advanced",
           }}
         />
       </section>
-
       {/* desc field , category field */}
       <section className="grid gap-4 w-full">
         <MarkdownInput
@@ -181,45 +185,51 @@ export const ProjectCRUDForm = ({
           split={true}
         />
         {/* tech stack array */}
-        <ArrayInput
-          name="techStack"
-          parentState={project.techStack}
-          currentState={{}}
-          isDarkMode={isDarkMode}
-          getArrayItem={() => null}
-          getEditData={(v, i) => {
-            setEditIndex(i);
-            setCurrentTechStack(v.text);
-          }}
-          deleteArrayItem={deleteTechStack}
-          editIndex={editIndex}
-        >
-          <StringInput
-            name="text"
-            value={currentTechStack}
-            setValue={(v) => setCurrentTechStack(v)}
-            placeholder="Current tech stack text"
-            split={true}
-          />
-          {currentTechStack.trim().length > 0 && (
-            <div className="w-max">
-              <CTA
-                label="Add tech stack"
-                cb={addTechStack}
-                btnMode={true}
-                isDarkMode={isDarkMode}
-              />
-            </div>
-          )}
-        </ArrayInput>
+        {Boolean(project.techStack) && (
+          <ArrayInput
+            name="techStack"
+            parentState={project.techStack}
+            key={project.techStack?.length}
+            currentState={{}}
+            isDarkMode={isDarkMode}
+            getArrayItem={() => null}
+            getEditData={(v, i) => {
+              setEditIndex(i);
+              setCurrentTechStack(v.text);
+            }}
+            deleteArrayItem={deleteTechStack}
+            editIndex={editIndex}
+          >
+            <StringInput
+              name="text"
+              value={currentTechStack}
+              setValue={(v) => setCurrentTechStack(v)}
+              placeholder="Current tech stack text"
+              split={true}
+            />
+            {currentTechStack.trim().length > 0 && (
+              <div className="w-max">
+                <CTA
+                  label="Add tech stack"
+                  cb={addTechStack}
+                  btnMode={true}
+                  isDarkMode={isDarkMode}
+                />
+              </div>
+            )}
+          </ArrayInput>
+        )}
       </section>
 
       {/* project Page */}
-      <ChapterInput
-        isDarkMode={isDarkMode}
-        initState={project.chapters}
-        getChapter={(p) => handleUpdate("chapters", p)}
-      />
+      {Boolean(project.chapters) && (
+        <ChapterInput
+          key={project.chapters.length}
+          isDarkMode={isDarkMode}
+          initState={project.chapters}
+          getChapter={(p) => handleUpdate("chapters", p)}
+        />
+      )}
 
       {/* Outro , Repo , Demo */}
       <section className="grid gap-4 w-full">
@@ -248,13 +258,13 @@ export const ProjectCRUDForm = ({
         </ObjectInput>
         <ObjectInput
           name="repo"
-          parentState={project.repo}
+          parentState={project?.repo}
           isDarkMode={isDarkMode}
         >
           <StringInput
             name="label"
             placeholder="Repo label"
-            value={project.repo.label}
+            value={project?.repo?.label}
             setValue={(v) =>
               handleObjectUpdate({ parent: "repo", key: "label", value: v })
             }
@@ -263,7 +273,7 @@ export const ProjectCRUDForm = ({
           <StringInput
             name="href"
             placeholder="Repo URL"
-            value={project.repo.href}
+            value={project?.repo?.href}
             setValue={(v) =>
               handleObjectUpdate({ parent: "repo", key: "href", value: v })
             }
@@ -272,13 +282,13 @@ export const ProjectCRUDForm = ({
         </ObjectInput>
         <ObjectInput
           name="demo"
-          parentState={project.demo}
+          parentState={project?.demo}
           isDarkMode={isDarkMode}
         >
           <StringInput
             name="label"
             placeholder="Demo label"
-            value={project.demo.label}
+            value={project?.demo?.label}
             setValue={(v) =>
               handleObjectUpdate({ parent: "demo", key: "label", value: v })
             }
@@ -287,7 +297,7 @@ export const ProjectCRUDForm = ({
           <StringInput
             name="href"
             placeholder="Demo URL"
-            value={project.demo.href}
+            value={project?.demo?.href}
             setValue={(v) =>
               handleObjectUpdate({ parent: "repo", key: "href", value: v })
             }

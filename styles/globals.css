@@ -118,7 +118,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor code {
-  @apply inline-block m-1 px-2 py-1 rounded font-semibold tracking-wide text-current text-primary bg-primary bg-opacity-10;
+  @apply inline-block mx-1 px-2 py-1 rounded font-semibold tracking-wide text-current text-primary bg-primary bg-opacity-10;
 }
 
 .markdown-editor h1,
@@ -137,6 +137,8 @@ pre[class*="language-"] {
   @apply break-words pl-4 border-l-4 border-secondary font-semibold opacity-100;
 }
 
+.markdown-editor > a,
+.markdown-editor > * > a,
 .markdown-editor a {
   opacity: 1 !important;
   @apply text-current inline-block font-semibold break-words underline underline-offset-2 transition-all origin-center hover:text-secondary;
@@ -163,7 +165,7 @@ pre[class*="language-"] {
 }
 
 .heading--main {
-  @apply text-3xl sm:text-5xl md:text-6xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
+  @apply text-3xl sm:text-4xl md:text-5xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
 }
 
 .heading--secondary {

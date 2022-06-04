@@ -21,7 +21,7 @@ const ContentCMS = ({ allTags }) => {
         allTags={allTags}
         heading="Create new content"
         isDarkMode={isDarkMode}
-        init={{}}
+        init={null}
       />
     </PublicLayout>
   );

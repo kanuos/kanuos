@@ -1,4 +1,5 @@
 import { PageLink } from "../portfolio/PageLink";
+import Markdown from "react-markdown";
 
 export const Conclusion = ({ heading, text, repo, demo }) => {
   return (
@@ -6,8 +7,8 @@ export const Conclusion = ({ heading, text, repo, demo }) => {
       <h2 className="heading--sub uppercase mb-4 md:col-start-1 md:col-end-2">
         {heading}
       </h2>
-      <div className="flex flex-col items-start gap-2 md:col-start-2 md:col-end-5">
-        <p className="content--secondary text-justify">{text}</p>
+      <div className="flex flex-col items-start gap-2 md:col-start-2 md:col-end-5 markdown-editor-wrapper">
+        <Markdown>{text}</Markdown>
         <div className="flex flex-col items-start gap-y-4 pt-6 my-10">
           {repo && Object.values(repo).every((el) => Boolean(el.trim())) && (
             <PageLink label={repo.label} href={repo.href} />

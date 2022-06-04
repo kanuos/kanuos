@@ -39,6 +39,9 @@ export const BlogCRUDForm = ({
   useEffect(() => {
     if (!Boolean(STORAGE_KEY)) return;
     // get blog data from session storage if exists
+
+    // if initial data is present dont load from sessionStorage
+    if (init) return;
     const sessionData = sessionStorage.getItem(STORAGE_KEY || "");
     if (!Boolean(sessionData)) return;
 
@@ -141,23 +144,26 @@ export const BlogCRUDForm = ({
       </section>
 
       {/* Blog Page */}
-      <PageInput
-        isDarkMode={isDarkMode}
-        initState={blog.page}
-        getPage={(p) => handleUpdate("page", p)}
-      />
+      {Boolean(blog.page) && (
+        <PageInput
+          isDarkMode={isDarkMode}
+          key={blog.page?.length}
+          initState={blog.page}
+          getPage={(p) => handleUpdate("page", p)}
+        />
+      )}
 
       {/* Outro , Repo , Demo */}
       <section className="grid gap-4 w-full">
         <ObjectInput
           name="outro"
-          parentState={blog.outro}
+          parentState={blog?.outro}
           isDarkMode={isDarkMode}
         >
           <StringInput
             name="heading"
             placeholder="Outro Heading"
-            value={blog.outro.heading}
+            value={blog?.outro?.heading}
             setValue={(v) =>
               handleObjectUpdate({ parent: "outro", key: "heading", value: v })
             }
@@ -166,7 +172,7 @@ export const BlogCRUDForm = ({
           <MarkdownInput
             name="text"
             placeholder="Outro Text"
-            value={blog.outro.text}
+            value={blog?.outro?.text}
             setValue={(v) =>
               handleObjectUpdate({ parent: "outro", key: "text", value: v })
             }
@@ -198,13 +204,13 @@ export const BlogCRUDForm = ({
         </ObjectInput>
         <ObjectInput
           name="demo"
-          parentState={blog.demo}
+          parentState={blog?.demo}
           isDarkMode={isDarkMode}
         >
           <StringInput
             name="label"
             placeholder="Demo label"
-            value={blog.demo.label}
+            value={blog?.demo?.label}
             setValue={(v) =>
               handleObjectUpdate({ parent: "demo", key: "label", value: v })
             }
@@ -213,7 +219,7 @@ export const BlogCRUDForm = ({
           <StringInput
             name="href"
             placeholder="Demo URL"
-            value={blog.demo.href}
+            value={blog?.demo?.href}
             setValue={(v) =>
               handleObjectUpdate({ parent: "repo", key: "href", value: v })
             }

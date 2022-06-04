@@ -53,15 +53,23 @@ const DesignCRUDForm = dynamic(() =>
 const SESSION_NAME = `sounak_admin`;
 const CONTENT_NAME = "sounak_admin_cms_data";
 
-export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
+export const ContentCRUD_Form = ({
+  allTags,
+  heading,
+  isDarkMode,
+  init,
+  contentType = "",
+  action = "",
+  method = "POST",
+}) => {
   const errorRef = useRef();
   const router = useRouter();
 
   // component state
-  const [type, setType] = useState("");
+  const [type, setType] = useState(contentType);
   const [step, setStep] = useState(0);
-  const [tags, setTags] = useState([]);
-  const [isPublic, setIsPublic] = useState(false);
+  const [tags, setTags] = useState(init?.tags || []);
+  const [isPublic, setIsPublic] = useState(init?.isPublic || false);
   const [content, setContent] = useState(init);
   const [previewMode, setPreviewMode] = useState(false);
   const [pageMsg, setPageMsg] = useState("");
@@ -81,14 +89,23 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
   }
 
   useEffect(() => {
-    setContent((prev) => ({ ...prev, isPublic }));
-  }, [isPublic]);
+    router.events.on("routeChangeStart", resetSession);
+    return () => router.events.off("routeChangeStart", resetSession);
+  }, [router]);
+
+  function resetSession() {
+    console.log("route changed");
+    sessionStorage.removeItem(SESSION_NAME);
+    sessionStorage.removeItem(CONTENT_NAME);
+  }
 
   // Whenever content type or selected tag list changes update the session storage to avoid data loss on refresh
   useEffect(() => {
-    const storedData = JSON.parse(sessionStorage.getItem(SESSION_NAME));
-    if (storedData && type && storedData.type !== type) {
-      sessionStorage.removeItem(SESSION_NAME);
+    if (!init) {
+      const storedData = JSON.parse(sessionStorage.getItem(SESSION_NAME));
+      if (storedData && type && storedData.type !== type) {
+        sessionStorage.removeItem(SESSION_NAME);
+      }
     }
     if (tags.length > 0 || Boolean(type)) {
       sessionStorage.setItem(SESSION_NAME, JSON.stringify({ type, tags }));
@@ -97,6 +114,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
 
   // Initial render/router path change -> set initial settings from session storage
   useEffect(() => {
+    if (init) return;
     const cms = JSON.parse(sessionStorage.getItem(SESSION_NAME));
     setType(() => cms?.type || "");
     setTags(() => cms?.tags || []);
@@ -117,21 +135,22 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
   async function handleSubmitToServer() {
     try {
       // submit data
-      let URL = API_ROUTES[type + "s"];
-
+      let URL = API_ROUTES[type + "s"] + action;
       const { data, err } = (
         await axios({
           url: URL,
-          method: "POST",
-          data: content,
+          method,
+          data: { ...content, isPublic },
         })
       ).data;
 
       if (err) {
-        throw data;
+        if (typeof data === "string") {
+          throw data;
+        }
+        throw JSON.stringify(data);
       }
 
-      console.log(data);
       setPageMsg("Blog submitted successfully");
       setPageErr(false);
       // clear the session storage
@@ -152,6 +171,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         const { value, error } = ContentValidators[type].validate({
           ...contentData,
           tags,
+          isPublic,
         });
         if (error) {
           throw error.details[0].message;
@@ -162,12 +182,13 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
         setPageMsg("Valid data. Can be sent");
         setPageErr(false);
       } catch (error) {
+        console.log("ContentForm.jsx 181 ", error);
         errorRef.current.scrollIntoView();
         setPageMsg(error);
         setPageErr(true);
       }
     },
-    [type]
+    [type, tags]
   );
 
   const getContentType = useCallback(function (c) {
@@ -251,6 +272,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
           <details className={detailCls}>
             {type === CONTENT_TYPE.blog.name && (
               <BlogCRUDForm
+                init={content}
                 isDarkMode={isDarkMode}
                 getBlog={validateContentForPreviewMode}
                 STORAGE_KEY={CONTENT_NAME}
@@ -258,6 +280,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
             )}
             {type === CONTENT_TYPE.project.name && (
               <ProjectCRUDForm
+                init={content}
                 isDarkMode={isDarkMode}
                 getProject={validateContentForPreviewMode}
                 STORAGE_KEY={CONTENT_NAME}
@@ -265,6 +288,7 @@ export const ContentCRUD_Form = ({ allTags, heading, isDarkMode, init }) => {
             )}
             {type === CONTENT_TYPE.design.name && (
               <DesignCRUDForm
+                init={content}
                 isDarkMode={isDarkMode}
                 getDesign={validateContentForPreviewMode}
                 STORAGE_KEY={CONTENT_NAME}

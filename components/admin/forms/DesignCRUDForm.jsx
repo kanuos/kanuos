@@ -53,6 +53,10 @@ export const DesignCRUDForm = ({
   useEffect(() => {
     if (!Boolean(STORAGE_KEY)) return;
     // get design data from session storage if exists
+
+    // if init data is availble ie. EDIT mode return
+    if (init) return;
+
     const sessionData = sessionStorage.getItem(STORAGE_KEY || "");
     if (!Boolean(sessionData)) return;
 
@@ -116,9 +120,6 @@ export const DesignCRUDForm = ({
         [parent]: [...prev[parent], obj],
       }));
     } else {
-      console.log(
-        `Edit ${parent} with ${editIndices[parent]} with ${JSON.stringify(obj)}`
-      );
       setDesign((prev) => ({
         ...prev,
         [parent]: prev[parent].map((el, k) => {
@@ -298,7 +299,7 @@ export const DesignCRUDForm = ({
 
       {/* external resources field */}
       <ArrayInput
-        parentState={design.externalResources}
+        parentState={design?.externalResources}
         currentState={{}}
         name="External Resources"
         editIndex={editIndices.externalResources}
@@ -306,7 +307,7 @@ export const DesignCRUDForm = ({
         deleteArrayItem={(i) => deleteArrayItem("externalResources", i)}
       >
         <ImageInput
-          key={design.externalResources.length}
+          key={design?.externalResources?.length}
           value={poster}
           setValue={(p) => setPoster(p)}
           placeholder="Photo resource URL"
