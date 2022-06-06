@@ -139,7 +139,7 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       >
         {data.desc?.slice(0, 150)}
       </p>
-      <section className="bg-white rounded-md p-4 w-full mt-4 filter shadow-lg">
+      <section className="bg-white rounded-md p-4 pb-0 w-full mt-4 filter shadow-lg">
         <div
           onClick={() => setShowMD((prev) => !prev)}
           className={
