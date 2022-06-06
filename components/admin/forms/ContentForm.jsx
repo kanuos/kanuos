@@ -110,7 +110,7 @@ export const ContentCRUD_Form = ({
     if (tags.length > 0 || Boolean(type)) {
       sessionStorage.setItem(SESSION_NAME, JSON.stringify({ type, tags }));
     }
-  }, [type, tags]);
+  }, [type, tags, init]);
 
   // Initial render/router path change -> set initial settings from session storage
   useEffect(() => {
@@ -118,7 +118,7 @@ export const ContentCRUD_Form = ({
     const cms = JSON.parse(sessionStorage.getItem(SESSION_NAME));
     setType(() => cms?.type || "");
     setTags(() => cms?.tags || []);
-  }, []);
+  }, [init]);
 
   // hide the page error
   useEffect(() => {
@@ -188,7 +188,7 @@ export const ContentCRUD_Form = ({
         setPageErr(true);
       }
     },
-    [type, tags]
+    [type, tags, isPublic]
   );
 
   const getContentType = useCallback(function (c) {

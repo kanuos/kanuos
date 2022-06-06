@@ -1,3 +1,4 @@
+import { useState } from "react";
 // ADMIN blog list
 import { getAllBlogs } from "../../../database/blogs";
 import { ADMIN_ACCOUNT, PUBLIC_LIST_TYPES } from "../../../utils";
@@ -9,16 +10,30 @@ import { AdminListLayout } from "../../../components/Layouts/AdminListLayout";
 const BlogsAdminPage = ({ allBlogs }) => {
   allBlogs = allBlogs ? JSON.parse(allBlogs) : [];
 
+  const [searchText, setSearchText] = useState("");
+
   return (
-    <AdminListLayout list={allBlogs} type={PUBLIC_LIST_TYPES.blogs.type}>
-      {allBlogs.map((blog, index) => (
-        <BlogThumbnail
-          key={blog._id}
-          data={blog}
-          index={index + 1}
-          adminMode={true}
-        />
-      ))}
+    <AdminListLayout
+      type={PUBLIC_LIST_TYPES.blogs.type}
+      totalSize={allBlogs.length}
+      list={allBlogs.filter((el) =>
+        el.title.toLowerCase().includes(searchText.toLowerCase())
+      )}
+      searchText={searchText}
+      getSearchText={setSearchText}
+    >
+      {allBlogs
+        .filter((el) =>
+          el.title.toLowerCase().includes(searchText.toLowerCase())
+        )
+        ?.map((blog, index) => (
+          <BlogThumbnail
+            key={blog._id}
+            data={blog}
+            index={index + 1}
+            adminMode={true}
+          />
+        ))}
     </AdminListLayout>
   );
 };

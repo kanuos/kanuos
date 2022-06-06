@@ -1,3 +1,4 @@
+import { useState } from "react";
 // ADMIN Project list
 
 import { getAllProjects } from "../../../database/projects";
@@ -9,16 +10,30 @@ import { AdminListLayout } from "../../../components/Layouts/AdminListLayout";
 const ProjectsAdminPage = ({ allProjects }) => {
   allProjects = allProjects ? JSON.parse(allProjects) : [];
 
+  const [searchText, setSearchText] = useState("");
+
   return (
-    <AdminListLayout list={allProjects} type={PUBLIC_LIST_TYPES.projects.type}>
-      {allProjects.map((project, index) => (
-        <ProjectThumbnail
-          key={project._id}
-          data={project}
-          index={index + 1}
-          adminMode={true}
-        />
-      ))}
+    <AdminListLayout
+      type={PUBLIC_LIST_TYPES.projects.type}
+      totalSize={allProjects.length}
+      list={allProjects.filter((el) =>
+        el.title.toLowerCase().includes(searchText.toLowerCase())
+      )}
+      searchText={searchText}
+      getSearchText={setSearchText}
+    >
+      {allProjects
+        .filter((el) =>
+          el.title.toLowerCase().includes(searchText.toLowerCase())
+        )
+        ?.map((project, index) => (
+          <ProjectThumbnail
+            key={project._id}
+            data={project}
+            index={index + 1}
+            adminMode={true}
+          />
+        ))}
     </AdminListLayout>
   );
 };

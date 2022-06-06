@@ -1,6 +1,7 @@
 // Project LIST PAGE
 
 // import : built in
+import { useState, useEffect } from "react";
 
 // import : internal components
 import { PUBLIC_LIST_TYPES } from "../../utils";
@@ -10,29 +11,61 @@ import { PublicListLayout } from "../../components/Layouts/PublicListLayout";
 
 const ProjectList = ({ projectList, totalCount }) => {
   projectList = JSON.parse(projectList);
-  totalCount = JSON.parse(totalCount);
+  totalCount = parseInt(JSON.parse(totalCount));
+
+  const [searchText, setSearchText] = useState("");
+  const [count, setCount] = useState(totalCount);
+
+  useEffect(() => {
+    setCount(
+      () =>
+        projectList.filter((el) =>
+          el.title.toLowerCase().includes(searchText.toLowerCase())
+        ).length
+    );
+  }, [searchText]);
 
   return (
     <PublicListLayout
-      pageTitle="Sounak Mukherjee's projects"
-      pageDesc="Check out the walkthroughs for various projects using the state-of-the-art technologies"
+      pageTitle="Sounak Mukherjee's designs"
+      pageDesc="Check out the UI-UX designs and prototypes I designed for various products"
       data={{
         ...PUBLIC_LIST_TYPES.projects,
-        count: totalCount,
+        count,
         searchMode: totalCount > 0,
       }}
+      searchText={searchText}
+      setSearchText={(x) => setSearchText(x)}
     >
-      {totalCount > 0 && (
-        <main className="flex flex-col my-20 gap-20 items-stretch w-full max-w-4xl mx-auto">
-          {projectList.map((project, index) => (
-            <ProjectThumbnail
-              key={project._id}
-              data={project}
-              index={index + 1}
-            />
-          ))}
-        </main>
-      )}
+      <main className="flex flex-col mb-20 gap-20 items-stretch w-full max-w-4xl mx-auto">
+        {count > 0 ? (
+          <>
+            {projectList
+              .filter((el) =>
+                el.title.toLowerCase().includes(searchText.toLowerCase())
+              )
+              .map((project, index) => (
+                <ProjectThumbnail
+                  key={project._id}
+                  data={project}
+                  index={index + 1}
+                />
+              ))}
+          </>
+        ) : (
+          <>
+            {totalCount > 0 ? (
+              <p className="content--sub font-semibold">
+                No project with{" "}
+                <span className="text-primary text-lg">{searchText}</span>{" "}
+                keyword found!{" "}
+              </p>
+            ) : (
+              <></>
+            )}
+          </>
+        )}
+      </main>
     </PublicListLayout>
   );
 };

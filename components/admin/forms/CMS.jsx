@@ -37,21 +37,24 @@ const CMSForm = ({
     getFormData(currentState);
   }
 
-  function generateInitStateFromLayout() {
-    const INIT = {};
-    layout?.forEach(({ name, type }) => {
-      if (type === "object") {
-        INIT[name] = {};
-        return;
-      }
-      if (["array", "userFlow", "page", "chapter"].includes(type)) {
-        INIT[name] = [];
-        return;
-      }
-      INIT[name] = "";
-    });
-    return { ...INIT, ...init };
-  }
+  const generateInitStateFromLayout = useCallback(
+    function () {
+      const INIT = {};
+      layout?.forEach(({ name, type }) => {
+        if (type === "object") {
+          INIT[name] = {};
+          return;
+        }
+        if (["array", "userFlow", "page", "chapter"].includes(type)) {
+          INIT[name] = [];
+          return;
+        }
+        INIT[name] = "";
+      });
+      return { ...INIT, ...init };
+    },
+    [layout, init]
+  );
 
   useEffect(() => {
     if (type !== "content" || !storageKey || !currentState) return;
@@ -66,7 +69,7 @@ const CMSForm = ({
 
   useEffect(() => {
     setCurrentState(() => generateInitStateFromLayout());
-  }, [layout]);
+  }, [layout, generateInitStateFromLayout]);
 
   const getArrayItem = useCallback(
     (name, newEl, index) => {
