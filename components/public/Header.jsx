@@ -1,5 +1,3 @@
-import { StringInput } from "../admin/inputs/String";
-
 export const PublicHeader = ({
   data,
   adminMode = false,
@@ -23,11 +21,16 @@ export const PublicHeader = ({
           <strong className="heading--sub capitalize">
             total {type} : {count}
           </strong>
-          <StringInput
+          <input
+            type="search"
+            className={`w-full focus:shadow-xl will-change-transform transition-all p-3 border-2 rounded-md content--secondary bg-transparent scrollbar-none outline-none focus:outline-none ${
+              Boolean(searchText.trim())
+                ? "focus:border-secondary border-current"
+                : "focus:border-primary"
+            } `}
             value={searchText}
-            setValue={handleSearch}
-            placeholder={`Search ${type} by title.`}
-            split={true}
+            placeholder={`Search ${type} by title...`}
+            onChange={(e) => handleSearch(e.target.value)}
           />
         </>
       ) : (
