@@ -74,7 +74,7 @@ export const ImageInput = ({
           <Textarea
             id={name}
             placeholder={placeholder}
-            className={`w-full border-opacity-75 focus:border-opacity-100 p-3 border-2 rounded-md content--secondary bg-transparent scrollbar-thin min-h-[5rem] resize-y`}
+            className={`w-full border-opacity-75 focus:border-opacity-100 p-3 border-2 rounded-md content--secondary bg-transparent scrollbar-none min-h-[5rem] resize-y`}
             value={typedURL}
             onChange={(e) => setTypedURL(e.target.value)}
           />
