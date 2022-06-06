@@ -20,7 +20,7 @@ const DesignList = ({ designList, totalCount }) => {
           el.title.toLowerCase().includes(searchText.toLowerCase())
         ).length
     );
-  }, [searchText]);
+  }, [searchText, designList]);
   return (
     <PublicListLayout
       pageTitle="Sounak Mukherjee's designs"

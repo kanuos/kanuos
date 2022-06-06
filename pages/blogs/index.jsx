@@ -20,7 +20,7 @@ const BlogList = ({ blogList, totalCount }) => {
           el.title.toLowerCase().includes(searchText.toLowerCase())
         ).length
     );
-  }, [searchText]);
+  }, [searchText, blogList]);
 
   return (
     <PublicListLayout

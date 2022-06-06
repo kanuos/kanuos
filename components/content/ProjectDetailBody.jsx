@@ -17,9 +17,9 @@ const Conclusion = dynamic(() =>
   import("../detail/Conclusion").then((m) => m.Conclusion)
 );
 
-export const ProjectDetailBody = ({ project }) => {
-  const LENGTH = project.chapters.length;
+export const ProjectDetailBody = ({ project = null }) => {
   const { isDarkMode } = useContext(ThemeContext);
+  const LENGTH = project.chapters.length;
   const [activeChapter, setActiveChapter] = useState(0);
   const [completed, setCompleted] = useState(Array(LENGTH).fill(false));
 
@@ -30,6 +30,11 @@ export const ProjectDetailBody = ({ project }) => {
   );
 
   const setActiveChapterCB = useCallback((i) => setActiveChapter(() => i), []);
+
+  console.log(project);
+  if (!project) {
+    return <></>;
+  }
 
   return (
     <div

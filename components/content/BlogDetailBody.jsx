@@ -21,8 +21,11 @@ const MarkdownStep = dynamic(() =>
 );
 
 // React Component
-export const BlogDetailBody = ({ blog }) => {
+export const BlogDetailBody = ({ blog = null }) => {
   const { isDarkMode } = useContext(ThemeContext);
+  console.log({ blog });
+  if (!blog) return <></>;
+
   return (
     <div className="overflow-hidden relative h-auto">
       <DetailHeader

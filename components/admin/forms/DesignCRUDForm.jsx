@@ -63,7 +63,7 @@ export const DesignCRUDForm = ({
     setDesign(() => JSON.parse(sessionData));
     return;
     //   else update the session storage
-  }, []);
+  }, [init, STORAGE_KEY]);
 
   // override the session storage data with the updated design data
   useEffect(() => {
@@ -87,7 +87,7 @@ export const DesignCRUDForm = ({
     if (!checkArr.some(Boolean)) return;
     //   else update the session storage
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(design));
-  }, [design]);
+  }, [design, STORAGE_KEY]);
 
   // callbacks
   function handleSubmitDesign() {

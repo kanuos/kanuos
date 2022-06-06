@@ -14,7 +14,6 @@ export const AdminListLayout = ({
   getSearchText,
   totalSize,
 }) => {
-  // TODO: searchText and handleSearch from parent and prop drill to public header
   return (
     <PublicLayout
       navType="admin"

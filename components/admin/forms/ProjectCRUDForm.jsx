@@ -51,7 +51,7 @@ export const ProjectCRUDForm = ({
     setProject(() => JSON.parse(sessionData));
     return;
     //   else update the session storage
-  }, []);
+  }, [STORAGE_KEY, init]);
 
   // override the session storage data with the updated project data
   useEffect(() => {
@@ -75,7 +75,7 @@ export const ProjectCRUDForm = ({
     if (!checkArr.some(Boolean)) return;
     //   else update the session storage
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(project));
-  }, [project]);
+  }, [project, STORAGE_KEY]);
 
   // callbacks
   function handleSubmitProject() {

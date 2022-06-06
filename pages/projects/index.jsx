@@ -23,7 +23,7 @@ const ProjectList = ({ projectList, totalCount }) => {
           el.title.toLowerCase().includes(searchText.toLowerCase())
         ).length
     );
-  }, [searchText]);
+  }, [searchText, projectList]);
 
   return (
     <PublicListLayout

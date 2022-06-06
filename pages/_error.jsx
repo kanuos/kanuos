@@ -9,7 +9,7 @@ import { CTA } from "../components/portfolio/CTA";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { BsEmojiDizzy } from "react-icons/bs";
 
-const PortfolioPage = () => {
+const ErrorPage = () => {
   const router = useRouter();
 
   const { isDarkMode } = useContext(ThemeContext);
@@ -54,4 +54,4 @@ const PortfolioPage = () => {
   );
 };
 
-export default PortfolioPage;
+export default ErrorPage;

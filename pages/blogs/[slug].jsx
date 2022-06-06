@@ -37,7 +37,6 @@ export default BlogDetail;
 export async function getStaticProps({ params }) {
   let blog;
   try {
-    console.log(params.slug);
     blog = await getIndividualBlog(false, params.slug);
   } catch (error) {
     blog = {};
@@ -53,10 +52,9 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const allBlogs = await getAllBlogs(false);
-  console.log(allBlogs);
   const paths = allBlogs.map((d) => ({ params: { slug: d.slug } }));
   return {
     paths,
-    fallback: false,
+    fallback: "blocking",
   };
 }
