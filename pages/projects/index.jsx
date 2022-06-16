@@ -27,8 +27,8 @@ const ProjectList = ({ projectList, totalCount }) => {
 
   return (
     <PublicListLayout
-      pageTitle="Sounak Mukherjee's designs"
-      pageDesc="Check out the UI-UX designs and prototypes I designed for various products"
+      pageTitle="Sounak Mukherjee's projects"
+      pageDesc="Projects walkthroughs for front end, back-end and full stack cross platform projects"
       data={{
         ...PUBLIC_LIST_TYPES.projects,
         count,

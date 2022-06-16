@@ -24,8 +24,8 @@ const BlogList = ({ blogList, totalCount }) => {
 
   return (
     <PublicListLayout
-      pageTitle="Sounak Mukherjee's designs"
-      pageDesc="Check out the UI-UX designs and prototypes I designed for various products"
+      pageTitle="Sounak Mukherjee's blogs"
+      pageDesc="Technical blogs on web development, coding solutions, concepts and ideas and theories"
       data={{
         ...PUBLIC_LIST_TYPES.blogs,
         count,

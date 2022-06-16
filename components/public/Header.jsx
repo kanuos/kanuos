@@ -23,7 +23,7 @@ export const PublicHeader = ({
           </strong>
           <input
             type="search"
-            className={`w-full focus:shadow-xl will-change-transform transition-all p-3 border-2 rounded-md content--secondary bg-transparent scrollbar-none outline-none focus:outline-none ${
+            className={`w-full focus:shadow-xl will-change-transform transition-all p-3 border-2 border-current rounded-md content--secondary bg-transparent scrollbar-none outline-none focus:outline-none mt-4 mb-10 ${
               Boolean(searchText.trim())
                 ? "focus:border-secondary border-current"
                 : "focus:border-primary"
@@ -34,7 +34,7 @@ export const PublicHeader = ({
           />
         </>
       ) : (
-        <p className="heading--sub">
+        <p className="heading--sub mb-10">
           Sorry! No <span className="text-primary uppercase">{type}</span> are
           public now.
         </p>

@@ -19,7 +19,8 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
         }}
         whileHover={{
           scale: 1.1,
-          rotate: index % 2 ? 2 : -2,
+          rotate: index % 2 ? 1 : -1,
+          transition: { type: "spring", stiffness: 400 },
           shadow: "1px 4px 10px rgba(0,0,0,.10)",
         }}
         whileTap={{ scale: 1.1 }}

@@ -22,11 +22,13 @@ export const DetailHeader = ({
         <p className="content--main my-4">{desc}</p>
         <section className="w-full mx-auto flex flex-col items-start justify-start my-6">
           <h2 className="heading--sub uppercase">Date</h2>
-          <p className="content--main">{new Date(date ?? "").toDateString()}</p>
+          <p className="content--main">
+            <small>{new Date(date ?? "").toDateString()}</small>
+          </p>
         </section>
       </StyledHeader>
       {tags.length > 0 && (
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto mt-20">
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto">
           <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
             Tag
           </h2>
@@ -41,18 +43,6 @@ export const DetailHeader = ({
           </div>
         </section>
       )}
-      {/* {tags.length > 0 && (
-        <section className="section-wrapper max-w-4xl mx-auto">
-          <h2 className="heading--sub">Tag{tags.length === 1 ? "" : "s"}</h2>
-          <ul className="flex flex-wrap items-center my-4 justify-start gap-4 gap-y-3 max-w-3xl mr-auto w-full text-sm">
-            {tags?.map((t, i) => (
-              <li key={i}>
-                <Tag tag={t} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      )} */}
     </>
   );
 };

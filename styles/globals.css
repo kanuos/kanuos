@@ -33,51 +33,23 @@ button:focus {
 }
 
 .styledText {
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-size: 500% 500%;
-  animation: zoom 10s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  animation: shadowXL 3s infinite linear;
 }
 
-.scroll-text {
-  animation: zing cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-}
-
-.scroll-text:nth-child(odd) {
-  animation-duration: 0.4s;
-}
-.scroll-text:nth-child(even) {
-  animation-duration: 0.6s;
-}
-
-@keyframes zing {
+@keyframes shadowXL {
   0% {
-    color: rgb(0 191 179 / 1);
-    transform: scaleY(1.5) scaleX(0.75) rotate(0);
+    transform: scale(1);
+    text-shadow: 5px 5px 2.5rem rgb(255 0 102 / 0.25),
+      -5px -5px 2.5rem rgb(255 0 102 / 0.25);
   }
   50% {
-    color: currentColor;
-    transform: scaleY(1.5) scaleX(0.75) rotate(3deg);
+    transform: scale(0.95);
+    text-shadow: 5px 5px 2.5rem rgb(0 191 179 / 0.25);
   }
-
   100% {
-    color: rgb(255 0 102 /1);
-    transform: scaleY(1) scaleX(1.25) rotate(0);
-  }
-}
-
-@keyframes zoom {
-  0% {
-    background-position: 0% 200%;
-  }
-
-  50% {
-    background-position: 300% 100%;
-  }
-
-  100% {
-    background-position: 200% 0%;
+    transform: scale(1);
+    text-shadow: 5px 5px 2.5rem rgb(0 191 179 / 0.25),
+      -5px -5px 2.5rem rgb(0 191 179 / 0.25);
   }
 }
 
