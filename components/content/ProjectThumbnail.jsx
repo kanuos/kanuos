@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { formatURLParamString, PUBLIC_NAVIGATION_URLS } from "../../utils";
+import { PUBLIC_NAVIGATION_URLS } from "../../utils";
 import { JoinLine } from "../public/DescHeader";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoCubeOutline, IoChevronDown } from "react-icons/io5";
@@ -101,7 +101,7 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
 
   const projectURL = adminMode
     ? ADMIN_EDIT_URL("project", data._id)
-    : PUBLIC_NAVIGATION_URLS.projects + "/" + formatURLParamString(data.title);
+    : PUBLIC_NAVIGATION_URLS.projects + "/" + data.slug;
 
   return (
     <motion.article

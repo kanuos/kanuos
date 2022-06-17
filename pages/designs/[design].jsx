@@ -5,11 +5,7 @@ import dynamic from "next/dynamic";
 import { DesignDetailBody } from "../../components/content/DesignDetailBody";
 import PublicLayout from "../../components/Layouts/PublicLayout";
 import { getAllDesigns, getIndividualDesign } from "../../database/designs";
-import {
-  deFormatURLParamString,
-  formatURLParamString,
-  generateDetailViewMetadata,
-} from "../../utils";
+import { generateDetailViewMetadata } from "../../utils";
 
 // dynamic imports
 
@@ -41,10 +37,7 @@ export default DesignDetail;
 export async function getStaticProps({ params }) {
   let design;
   try {
-    design = await getIndividualDesign(
-      false,
-      deFormatURLParamString(params.design)
-    );
+    design = await getIndividualDesign(false, params.design);
   } catch (error) {
     design = {};
   } finally {
@@ -59,7 +52,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allDesigns = await getAllDesigns(false);
   const paths = allDesigns.map((d) => ({
-    params: { design: formatURLParamString(d.title) },
+    params: { design: d.slug },
   }));
   return {
     paths,

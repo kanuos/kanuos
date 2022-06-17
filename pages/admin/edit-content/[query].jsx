@@ -3,11 +3,18 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import dynamic from "next/dynamic";
 
 // import : internal components
 import PublicLayout from "../../../components/Layouts/PublicLayout";
-import { ContentCRUD_Form } from "../../../components/admin/forms/ContentForm";
-import { CTA } from "../../../components/portfolio/CTA";
+const CTA = dynamic(() =>
+  import("../../../components/portfolio/CTA").then((m) => m.CTA)
+);
+const ContentCRUD_Form = dynamic(() =>
+  import("../../../components/admin/forms/ContentForm").then(
+    (m) => m.ContentCRUD_Form
+  )
+);
 
 // import : internal
 import { getIndividualProject } from "../../../database/projects";

@@ -41,7 +41,6 @@ export async function getIndividualBlog(adminMode = false, searchBy) {
     return blog;
   }
   // search in client mode
-  searchBy = searchBy?.trim().split(" ").join("-");
   blog = await BlogModel.findOne({ slug: searchBy }).populate("tags");
 
   if (!blog) throw `Blog with id:${searchBy} doesn't exist`;
@@ -83,6 +82,11 @@ export async function deleteBlogFromDB(blogID, user) {
   return deletedBlog;
 }
 
+
+
+
+
+
 /**
  * @access private
  * @param blogData => sanitized blog data adhering to Joi's blog schema
@@ -101,6 +105,12 @@ export async function addBlogToDB(blogData) {
   return newBlog;
 }
 
+
+
+
+
+
+
 /**
  *
  * @param {ObjectId} blogID mongoose ObjectID that represents blog ID
@@ -115,6 +125,13 @@ export async function addBlogToDB(blogData) {
 export async function editIndividualBlog(blogID, blogData, user) {
   // check if blog id is valid
   if (!isValidObjectId(blogID)) throw "Invalid Blog ID " + blogID;
+
+  // unique ID blog might have non-unique slug upon edition
+  // check whether the new data title and slug are unique
+  const confictingData = await blogUniqueConstraint(blogData);
+  if (confictingData) {
+    throw `Blog with title or slug exists ${JSON.stringify(confictingData)}`;
+  }
 
   // try to update the data using find and update with upsert set to false
   // if operation returns null it means no data with ID was found

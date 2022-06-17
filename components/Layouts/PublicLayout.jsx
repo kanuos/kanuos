@@ -23,6 +23,7 @@ const PublicLayout = (props) => {
           <Image
             src={bg}
             priority
+            alt="Site background image"
             layout="fill"
             className="object-cover block w-screen h-full pointer-events-none"
           />

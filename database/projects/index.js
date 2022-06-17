@@ -43,7 +43,7 @@ export async function getIndividualProject(adminMode = false, searchBy) {
     return project;
   }
   // search in client mode
-  project = await ProjectModel.findOne({ title: searchBy }).populate("tags");
+  project = await ProjectModel.findOne({ slug: searchBy }).populate("tags");
 
   if (!project) throw `Project with id:${searchBy} doesn't exist`;
 
@@ -59,10 +59,11 @@ export async function getIndividualProject(adminMode = false, searchBy) {
  */
 export async function projectUniqueConstraint(projectData) {
   // check whether new project's slug and title are unique
-  const existingproject = await ProjectModel.findOne({
-    title: projectData.title,
+  const existingProject = await ProjectModel.findOne({
+    $or: [{ title: projectData.title }, { slug: projectData.slug }],
   });
-  return existingproject;
+
+  return existingProject;
 }
 
 /**
@@ -123,6 +124,13 @@ export async function addProjectToDB(projectData) {
 export async function editIndividualProject(projectID, projectData, user) {
   // check if project id is valid
   if (!isValidObjectId(projectID)) throw "Invalid project ID " + projectID;
+
+  // unique ID project might have non-unique slug upon edition
+  // check whether the new data title and slug are unique
+  const confictingData = await projectUniqueConstraint(projectData);
+  if (confictingData) {
+    throw `Project with title or slug exists ${JSON.stringify(confictingData)}`;
+  }
 
   // try to update the data using find and update with upsert set to false
   // if operation returns null it means no data with ID was found

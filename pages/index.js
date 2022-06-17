@@ -85,7 +85,7 @@ const HomePage = ({ allTags }) => {
           showScroll={allTags.length > 0}
         >
           <h1 className="heading--main">Hello world!</h1>
-          <span className="text-sm md:text-base font-semibold mb-6">
+          <span className="text-sm md:text-base font-semibold my-2">
             I&apos;m Sounak. Welcome to my tech journal
           </span>
           <p className="content--main">

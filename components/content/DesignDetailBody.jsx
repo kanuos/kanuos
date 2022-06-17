@@ -14,7 +14,6 @@ import { Conclusion } from "../detail/Conclusion";
 
 export const DesignDetailBody = ({ design = null }) => {
   const { isDarkMode } = useContext(ThemeContext);
-  console.log({ design });
   if (!design) return <></>;
 
   return (

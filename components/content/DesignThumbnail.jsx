@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { formatURLParamString, PUBLIC_NAVIGATION_URLS } from "../../utils";
+import { PUBLIC_NAVIGATION_URLS } from "../../utils";
 import { motion } from "framer-motion";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
 import { CTA } from "../portfolio/CTA";
@@ -8,7 +8,7 @@ import { CTA } from "../portfolio/CTA";
 export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
   const designURL = adminMode
     ? ADMIN_EDIT_URL("design", data._id)
-    : PUBLIC_NAVIGATION_URLS.designs + "/" + formatURLParamString(data.title);
+    : PUBLIC_NAVIGATION_URLS.designs + "/" + data.slug;
   return (
     <div className="flex flex-col items-center justify-center gap-y-6">
       <motion.article

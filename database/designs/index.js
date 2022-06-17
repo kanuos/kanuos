@@ -32,11 +32,27 @@ export async function getIndividualDesign(adminMode = false, searchBy) {
     return design;
   }
   // search in client mode
-  design = await DesignModel.findOne({ title: searchBy }).populate("tags");
+  design = await DesignModel.findOne({ slug: searchBy }).populate("tags");
 
   if (!design) throw `Design with id:${searchBy} doesn't exist`;
 
   return design;
+}
+
+/**
+ * @access private
+ * @param designData => sanitized design data adhering to Joi's design schema
+ * @returns existing design data
+ * @description
+ * receives design data and checks whether design data exists in db
+ */
+export async function designUniqueConstraint(designData) {
+  // check whether new design's slug and title are unique
+  const existingDesign = await DesignModel.findOne({
+    $or: [{ title: designData.title }, { slug: designData.slug }],
+  });
+
+  return existingDesign;
 }
 
 /**
@@ -46,7 +62,7 @@ export async function getIndividualDesign(adminMode = false, searchBy) {
  */
 export async function addDesignToDB(design) {
   // check if design with title exists
-  const existingDesign = await DesignModel.findOne({ title: design.title });
+  const existingDesign = await designUniqueConstraint(design);
   if (existingDesign) throw "Design exists @ id:" + existingDesign._id;
 
   // create a new design document
@@ -72,6 +88,13 @@ export async function deleteDesignFromDB(id, user) {
 
 export async function updateDesignByID(id, design, user) {
   if (!isValidObjectId(id)) throw "Invalid Design ID";
+
+  // unique ID design might have non-unique slug upon edition
+  // check whether the new data title and slug are unique
+  const confictingData = await designUniqueConstraint(design);
+  if (confictingData) {
+    throw `Design with title or slug exists ${JSON.stringify(confictingData)}`;
+  }
 
   const updatedDesign = await DesignModel.findOneAndUpdate(
     { _id: id, user },

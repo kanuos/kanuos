@@ -128,7 +128,7 @@ const CMSForm = ({
       <h1
         className={`${
           ["profile", "content"].includes(type)
-            ? "heading--secondary border-t mt-2.5 text-primary"
+            ? "heading--secondary border-t mt-2.5"
             : "heading--main"
         } capitalize mr-auto pt-4`}
       >

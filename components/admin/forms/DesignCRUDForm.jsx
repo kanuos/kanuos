@@ -48,6 +48,13 @@ export const DesignCRUDForm = ({
   // End of design state
 
   // hooks
+  // generate slug field whenever the blog title updates
+  useEffect(() => {
+    handleUpdate(
+      "slug",
+      design.title?.trim().toLowerCase().replaceAll(" ", "-")
+    );
+  }, [design.title]);
 
   // initial render prefill the design data from session storage if exists
   useEffect(() => {
@@ -97,6 +104,7 @@ export const DesignCRUDForm = ({
   function resetInitialState() {
     return {
       title: init?.title || "",
+      slug: init?.slug || "",
       desc: init?.desc || "",
       category: init?.category || "",
       thumbnail: init?.thumbnail || "",
@@ -175,6 +183,13 @@ export const DesignCRUDForm = ({
           value={design.title}
           setValue={(v) => handleUpdate("title", v)}
           placeholder="Design title"
+          split={true}
+        />
+        <StringInput
+          name="slug"
+          value={design.slug}
+          setValue={(v) => handleUpdate("slug", v)}
+          placeholder="Design unique slug"
           split={true}
         />
         <StringInput
@@ -343,7 +358,7 @@ export const DesignCRUDForm = ({
                   obj: { poster, courtesy, photographer },
                 })
               }
-              label={"Add family to design"}
+              label={"Add external resource"}
             />
           </div>
         )}

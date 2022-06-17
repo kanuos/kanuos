@@ -36,6 +36,13 @@ export const ProjectCRUDForm = ({
   // End of project state
 
   // hooks
+  // generate slug field whenever the blog title updates
+  useEffect(() => {
+    handleUpdate(
+      "slug",
+      project.title?.trim().toLowerCase().replaceAll(" ", "-")
+    );
+  }, [project.title]);
 
   // initial render prefill the project data from session storage if exists
   useEffect(() => {
@@ -85,6 +92,7 @@ export const ProjectCRUDForm = ({
   function resetInitialState() {
     return {
       title: init?.title || "",
+      slug: init?.slug || "",
       desc: init?.desc || "",
       difficulty: init?.difficulty || "",
       category: init?.category || "",
@@ -149,6 +157,13 @@ export const ProjectCRUDForm = ({
           value={project.title}
           setValue={(v) => handleUpdate("title", v)}
           placeholder="project title"
+          split={true}
+        />
+        <StringInput
+          name="slug"
+          value={project.slug}
+          setValue={(v) => handleUpdate("slug", v)}
+          placeholder="Project unique slug"
           split={true}
         />
         <SelectInput

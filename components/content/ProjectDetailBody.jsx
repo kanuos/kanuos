@@ -31,7 +31,6 @@ export const ProjectDetailBody = ({ project = null }) => {
 
   const setActiveChapterCB = useCallback((i) => setActiveChapter(() => i), []);
 
-  console.log(project);
   if (!project) {
     return <></>;
   }

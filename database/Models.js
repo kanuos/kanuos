@@ -34,13 +34,13 @@ export const BlogSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  // start unique to blogs
   slug: {
     type: String,
     required: true,
     unique: true,
     index: true,
   },
+  // start unique to blogs
   page: [
     {
       type: Object,
@@ -95,6 +95,12 @@ export const ProjectSchema = new Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
   },
   // start unique to projects
   chapters: [
@@ -169,6 +175,12 @@ export const DesignSchema = new Schema({
     type: String,
     required: true,
     maxlength: 15,
+  },
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
   },
   thumbnail: {
     type: String,

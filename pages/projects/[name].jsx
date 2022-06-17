@@ -4,11 +4,7 @@ import dynamic from "next/dynamic";
 import PublicLayout from "../../components/Layouts/PublicLayout";
 import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
 import { getIndividualProject, getAllProjects } from "../../database/projects";
-import {
-  deFormatURLParamString,
-  formatURLParamString,
-  generateDetailViewMetadata,
-} from "../../utils";
+import { generateDetailViewMetadata } from "../../utils";
 
 // dynamic
 const Footer = dynamic(() =>
@@ -36,10 +32,7 @@ export default ProjectDetail;
 export async function getStaticProps({ params }) {
   let project;
   try {
-    project = await getIndividualProject(
-      false,
-      deFormatURLParamString(params.name)
-    );
+    project = await getIndividualProject(false, params.name);
   } catch (error) {
     project = {};
   } finally {
@@ -54,7 +47,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allProjects = await getAllProjects(false);
   const paths = allProjects.map((d) => ({
-    params: { name: formatURLParamString(d.title) },
+    params: { name: d.slug },
   }));
   return {
     paths,

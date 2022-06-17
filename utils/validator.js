@@ -42,6 +42,7 @@ const CommonFields = Joi.object().keys({
   tags: Joi.array().items(TagValidator).min(1).required(),
   isPublic: Joi.bool().default(false),
   user: Joi.any(),
+  slug: Joi.string().required().trim().min(1).lowercase(),
 });
 
 const BlogProjectCommon = CommonFields.keys({
@@ -54,7 +55,6 @@ const BlogProjectCommon = CommonFields.keys({
 });
 
 const BlogValidator = BlogProjectCommon.keys({
-  slug: Joi.string().required().trim().min(1).lowercase(),
   page: Joi.array().items(StepValidator).min(1).required(),
 });
 
