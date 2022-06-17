@@ -1,118 +1,158 @@
-import { useState } from 'react'
-import { IoAddCircle } from 'react-icons/io5';
-import { BsToggle2Off, BsToggle2On } from 'react-icons/bs';
+import dynamic from "next/dynamic";
+import { useState, useMemo } from "react";
+import { MdOutlineFingerprint } from "react-icons/md";
 
-import { PortfolioManager } from './PortfolioManager';
+const PortfolioForm = dynamic(() => import("./forms/PortfolioForm"));
 
-export const PortfolioMgmt = ({projects=[]}) => {
-    const [allPortfolios, setAllPortfolios] = useState(projects) 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editData, setEditData] = useState(null)
+export const PortfolioMgmt = ({
+  portfolioProjects = [],
+  isDarkMode,
+  allProjects,
+  allDesigns,
+  submitToServer,
+  init,
+  getEditData,
+  editMode,
+}) => {
+  const [showForm, setShowForm] = useState(
+    portfolioProjects.length === 0 || editMode
+  );
 
-    function getEditData(el){
-      setEditData(el);
-      setIsModalOpen(true);
+  const availableDesigns = useMemo(() => {
+    if (!portfolioProjects.length) {
+      return allDesigns;
     }
+    const portfolioDesignID = portfolioProjects.map((item) => item.design._id);
+    return allDesigns.map((el) => {
+      if (!(el._id in portfolioDesignID)) {
+        return el;
+      }
+    });
+  }, [portfolioProjects, allDesigns]);
 
+  const availableProjects = useMemo(() => {
+    if (!portfolioProjects.length) {
+      return allProjects;
+    }
+    const portfolioProjectID = portfolioProjects.map(
+      (item) => item.project._id
+    );
+    return allProjects.map((el) => {
+      if (!(el._id in portfolioProjectID)) {
+        return el;
+      }
+    });
+  }, [portfolioProjects, allProjects]);
 
-    return (
-    <>
-      <p className="text-xs text-secondary capitalize text-center font-semibold">
-        admin
-      </p>
-      <h1 className="font-special capitalize text-center text-5xl font-black mb-10">
-        portfolio management
-      </h1>
-      
-      <div className="fixed h-screen top-0 right-0 p-6 flex flex-col justify-end">
-          <IoAddCircle onClick={() => setIsModalOpen(true)} className='text-5xl z-20 cursor-pointer hover:rotate-90 transition-all hover:scale-110 origin-center'/>
+  function handleDeleteProjectFromPortfolio(portfolio) {
+    const { _id } = portfolio;
+    if (
+      prompt(`Enter the code ${_id} into the prompt to delete!`).trim() !== _id
+    ) {
+      return;
+    }
+    submitToServer({
+      method: "delete",
+      portfolio,
+    });
+  }
+
+  return (
+    <div className="container max-w-4xl mx-auto">
+      <div className="flex items-center justify-between pt-4 border-t mt-2.5">
+        <h1 className="heading--secondary capitalize">Portfolio Management</h1>
+        {Boolean(availableDesigns.length * availableProjects.length) && (
+          <button
+            type="button"
+            onClick={() => setShowForm((prev) => !prev)}
+            title={`${showForm ? "Hide" : "Show"} form`}
+            className="text-xl hover:text-secondary transition-all"
+          >
+            <MdOutlineFingerprint />
+          </button>
+        )}
       </div>
 
-    {allPortfolios.length === 0 &&
-      <section className="w-full max-w-2xl mx-auto flex flex-col items-center justify-center h-[50vh] select-none">
-        <span className='text-xs opacity-75'>
-            No portfolio projects showcased!
-        </span>
-      </section>}
+      {showForm &&
+        Boolean(availableDesigns.length * availableProjects.length) && (
+          <PortfolioForm
+            init={init}
+            key={JSON.stringify(init || "")}
+            getData={submitToServer}
+            isDarkMode={isDarkMode}
+            availableDesigns={availableDesigns}
+            availableProjects={availableProjects}
+          />
+        )}
 
-    {allPortfolios.length !== 0 &&
-      <section className="w-full max-w-2xl relative z-10 mx-auto flex flex-col items-center justify-center h-auto select-none">
-        <p className="flex flex-col items-start">
-          <span className='text-xs'>
-              Total portfolio projects : {allPortfolios.length}
-          </span>
-          <span className='text-xs'>
-              Showcased projects : {(allPortfolios.filter(el => el.isShowcased)).length}
-          </span>
-        </p>
-        <table className='mt-10 w-full max-w-2xl mx-auto table-auto border-collapse border border-dark'>
-          <thead className='bg-dark text-light'>
-              <tr className='capitalize'>
-                  <th className='border border-light p-2 text-xs font-semibold text-left'>
-                      #ID
-                  </th>
-                  <th className='border border-light p-2 text-xs font-semibold text-left'>
-                      project
-                  </th>
-                  <th className='border border-light p-2 text-xs font-semibold text-left'>
-                      design
-                  </th>
-                  <th className='border border-light p-2 text-xs font-semibold text-left'>
-                      showcased
-                  </th>
-                  <th className='border border-light p-2 text-xs font-semibold text-left'>
-                      actions
-                  </th>
+      {/* portfolio lists */}
+      {portfolioProjects.length > 0 ? (
+        <section className="w-full my-10">
+          <ul className="flex flex-col items-start gap-2 my-6">
+            <li className="flex items-center justify-start gap-x-4 text-xs">
+              <span className="w-10 h-1 bg-secondary block rounded-full"></span>
+              <small className="font-semibold">Showcased</small>
+            </li>
+            <li className="flex items-center justify-start gap-x-4 text-xs">
+              <span className="w-10 h-1 bg-primary block rounded-full"></span>
+              <small className="font-semibold">Not Showcased</small>
+            </li>
+          </ul>
+          <table className="w-full mx-auto table-auto">
+            <thead className="">
+              <tr className="capitalize">
+                <th className="border p-2 text-sm text-left font-black">
+                  <small>Project</small>
+                </th>
+                <th className="border p-2 text-sm text-left font-black">
+                  <small>Design</small>
+                </th>
+                <th className="border p-2 text-sm text-left font-black">
+                  <small>Action</small>
+                </th>
               </tr>
-          </thead>
-          <tbody>
-          {allPortfolios.map((portfolio, i) => (
-            <tr key={portfolio._id}>
-              <td className='border p-2 text-xs border-dark text-left'>
-                {i + 1}  
-              </td>  
-              <td className='border p-2 text-xs border-dark text-left'>
-                {portfolio.project.title}  
-              </td>  
-              <td className='border p-2 text-xs border-dark text-left'>
-                {portfolio.design.title}  
-              </td>  
-              <td className='border p-2 border-dark text-left'>
-                <div className='w-full grid place-content-center'>
-                  {portfolio.isShowcased ? <BsToggle2On className='text-lg text-secondary' /> : <BsToggle2Off className='text-lg text-primary' />}
-                </div>
-              </td>  
-              <td className='border p-2 text-xs border-dark text-left'>
-                <button onClick={() => getEditData(portfolio)} className='w-full text-center uppercase hover:underline hover:text-primary'>
-                  <small>
-                    edit
-                  </small>
-                </button>
-              </td>  
-            </tr>
-          ))}
-          </tbody>
-        </table>
-      </section>}
-
-      {isModalOpen && 
-        <PortfolioManager 
-          add={el => {
-            setAllPortfolios(prev => [...prev, el])
-            setEditData(null)
-          }}
-          del={el => {
-            setAllPortfolios(prev => prev.filter(item => item._id !== el._id))
-            setEditData(null)
-          }}
-          edit={el => {
-            setAllPortfolios(prev => prev.map(item => item._id === el._id ? el : item))
-            setEditData(null)
-          }}
-          existing={allPortfolios}
-          editMode={editData}
-          handleClose={() => setIsModalOpen(false)}/>
-        }
-    </>
-  )
-}
+            </thead>
+            <tbody>
+              {portfolioProjects.map((portfolio, i) => (
+                <tr
+                  key={portfolio._id}
+                  className={
+                    portfolio.isShowcased ? "text-secondary" : "text-primary"
+                  }
+                >
+                  <td className="border p-2 text-xs font-semibold">
+                    #{i + 1}. {portfolio.project.title}
+                  </td>
+                  <td className="border p-2 text-xs font-semibold">
+                    {portfolio.design.title}
+                  </td>
+                  <td className="border p-2 text-xs flex items-center justify-between gap-4">
+                    <button
+                      onClick={() => getEditData(portfolio)}
+                      className="w-full text-center font-semibold uppercase grayscale hover:grayscale-0 transition-all hover:text-secondary border-2 border-current opacity-25 hover:opacity-100"
+                    >
+                      <small>edit</small>
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleDeleteProjectFromPortfolio(portfolio)
+                      }
+                      className="w-full text-center font-semibold uppercase grayscale hover:grayscale-0 transition-all hover:text-primary border-2 border-current opacity-25 hover:opacity-100"
+                    >
+                      <small>delete</small>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      ) : (
+        <ul className="content--secondary list-inside list-disc my-8 marker:text-primary">
+          {availableDesigns.length === 0 && <li>No designs available</li>}
+          {availableProjects.length === 0 && <li>No projects available</li>}
+        </ul>
+      )}
+    </div>
+  );
+};
