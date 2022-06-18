@@ -1,6 +1,5 @@
 // Default error page
 import { useContext } from "react";
-import { useRouter } from "next/router";
 // import : internal
 import { PUBLIC_URLS } from "../utils";
 import PublicLayout from "../components/Layouts/PublicLayout";
@@ -10,8 +9,6 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { BsEmojiDizzy } from "react-icons/bs";
 
 const ErrorPage = () => {
-  const router = useRouter();
-
   const { isDarkMode } = useContext(ThemeContext);
 
   return (
@@ -25,14 +22,8 @@ const ErrorPage = () => {
         showScroll={false}
       >
         <>
-          <button
-            onClick={() => router.back()}
-            className="text-xs md:text-sm font-semibold opacity-60 hover:opacity-100 hover:underline"
-          >
-            &lt;&nbsp;Go back
-          </button>
           <div className="flex items-center justify-start gap-x-px">
-            <BsEmojiDizzy className="heading--main" />
+            <BsEmojiDizzy className="text-4xl" />
             <h1 className="heading--main">ops</h1>
           </div>
           <p className="content--main text-justify mb-6 mt-2">

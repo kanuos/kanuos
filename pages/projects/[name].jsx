@@ -33,14 +33,15 @@ export async function getStaticProps({ params }) {
   let project;
   try {
     project = await getIndividualProject(false, params.name);
-  } catch (error) {
-    project = {};
-  } finally {
     return {
       props: {
         project: JSON.stringify(project),
       },
       revalidate: 1,
+    };
+  } catch (error) {
+    return {
+      notFound: true,
     };
   }
 }

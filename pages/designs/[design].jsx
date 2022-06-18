@@ -38,14 +38,15 @@ export async function getStaticProps({ params }) {
   let design;
   try {
     design = await getIndividualDesign(false, params.design);
-  } catch (error) {
-    design = {};
-  } finally {
     return {
       props: {
         design: JSON.stringify(design),
       },
       revalidate: 1,
+    };
+  } catch (error) {
+    return {
+      notFound: true,
     };
   }
 }

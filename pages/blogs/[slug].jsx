@@ -38,14 +38,15 @@ export async function getStaticProps({ params }) {
   let blog;
   try {
     blog = await getIndividualBlog(false, params.slug);
-  } catch (error) {
-    blog = {};
-  } finally {
     return {
       props: {
         blog: JSON.stringify(blog),
       },
       revalidate: 1,
+    };
+  } catch (error) {
+    return {
+      notFound: true,
     };
   }
 }
