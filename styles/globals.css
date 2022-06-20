@@ -55,6 +55,20 @@ button:focus {
   @apply text-light bg-dark;
 }
 
+.navStyleLink:hover {
+  display: inline-block;
+  animation: zoom 2s ease-out infinite;
+}
+
+@keyframes zoom {
+  from {
+    @apply -translate-y-0.5;
+  }
+  to {
+    @apply translate-y-0.5;
+  }
+}
+
 .light-shadow {
   filter: drop-shadow(0 1px 1rem rgba(255, 255, 255, 0.25));
 }

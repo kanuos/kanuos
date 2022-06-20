@@ -1,16 +1,17 @@
 // built in imports
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 // external imports
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
+import { GiBowenKnot } from "react-icons/gi";
 
 // internal imports
 import { ADMIN_ACCOUNT, NAV_METADATA, PUBLIC_URLS } from "../../utils";
 import { AUTH_ROUTES } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { PageLink } from "../portfolio/PageLink";
 import { CTA } from "../portfolio/CTA";
 import { NavContext } from "../../contexts/NavContext";
 
@@ -140,7 +141,6 @@ const NavMenu = ({ type = "public" }) => {
     mainUL: {
       show: {
         scale: [0.75, 1],
-        opacity: [0.75, 1],
         transition: {
           type: "tween",
           delay: 0.5,
@@ -151,7 +151,6 @@ const NavMenu = ({ type = "public" }) => {
       },
       hide: {
         scale: 0,
-        opacity: 0,
         transition: {
           type: "spring",
           duration: 0.5,
@@ -159,7 +158,6 @@ const NavMenu = ({ type = "public" }) => {
       },
       exit: {
         scale: 0,
-        opacity: 0,
         transition: {
           type: "spring",
           duration: 0.5,
@@ -169,7 +167,6 @@ const NavMenu = ({ type = "public" }) => {
     },
     li: {
       show: {
-        opacity: 1,
         transition: {
           type: "spring",
           duration: 0.25,
@@ -177,7 +174,6 @@ const NavMenu = ({ type = "public" }) => {
         },
       },
       hide: {
-        opacity: 0,
         transition: {
           type: "tween",
           duration: 0.5,
@@ -185,7 +181,6 @@ const NavMenu = ({ type = "public" }) => {
       },
       exit: {
         rotate: 10,
-        opacity: 0,
         transition: {
           type: "tween",
           duration: 0.5,
@@ -238,13 +233,13 @@ const NavMenu = ({ type = "public" }) => {
           animate={showMenu ? "show" : "hide"}
           variants={variants.section}
           exit="exit"
-          className="w-full mx-auto h-[80vh] my-auto px-10 pb-10 grid place-items-center z-40 absolute inset-0"
+          className="w-full mx-auto h-[82vh] my-auto pb-10 grid place-items-center z-40 absolute inset-0"
         >
           <motion.ul
             variants={variants.mainUL}
             animate={showMenu ? "show" : "hide"}
             exit="hide"
-            className={`w-fit flex flex-col justify-center h-full gap-y-8 items-start`}
+            className={`w-full flex flex-col justify-center h-full gap-y-8 items-start`}
           >
             {Object.entries(URLS).map(([key, valueObj]) => {
               const label = valueObj.name.replace("-", " ");
@@ -256,29 +251,85 @@ const NavMenu = ({ type = "public" }) => {
                   exit="hide"
                   onClick={toggleNavMenu}
                   key={key}
+                  className="w-full"
                 >
-                  {["my-website", "portfolio"].includes(
+                  {["main-website", "portfolio"].includes(
                     valueObj.name.toLowerCase()
                   ) ? (
-                    <div className="mt-20 capitalize">
-                      <PageLink
-                        key={currentPath.toString()}
-                        special={true}
-                        href={valueObj.url}
-                        label={label}
-                      />
+                    <div className="mt-20 mb-10 grid grid-cols-3 place-items-center gap-0 group">
+                      <span className="transition-all opacity-0 w-full -translate-x-full group-hover:translate-x-0 col-span-1 h-0.5 bg-gradient-to-r from-primary to-secondary origin-left duration-150 group-hover:opacity-100"></span>
+                      <Link href={valueObj.url}>
+                        <a className="text-sm uppercase tracking-wide col-start-2 col-end-3 w-max">
+                          {label.split("").map((el, k) => {
+                            if (el !== " ") {
+                              return (
+                                <span
+                                  className={`navStyleLink ${
+                                    isDarkMode ? "font-semibold" : "font-black"
+                                  }`}
+                                  key={k}
+                                >
+                                  {el}
+                                </span>
+                              );
+                            }
+                            return (
+                              <span className="text-transparent" key={k}>
+                                {el}
+                              </span>
+                            );
+                          })}
+                        </a>
+                      </Link>
                     </div>
                   ) : (
-                    <PageLink
-                      key={currentPath.toString()}
-                      scrollToTop={valueObj.type !== "portfolio"}
-                      isActive={
-                        valueObj.type !== "portfolio" && isActive(valueObj)
-                      }
-                      href={valueObj.url}
-                      showAfter={false}
-                      label={label?.toUpperCase()}
-                    />
+                    <div className="grid grid-cols-3 place-items-center gap-0">
+                      <Link
+                        scroll={valueObj.type !== "portfolio"}
+                        href={valueObj.url}
+                      >
+                        <a
+                          className={`text-sm tracking-wide col-start-2 col-end-3 w-full flex items-center gap-x-4 transition-all ${
+                            valueObj.type !== "portfolio" && isActive(valueObj)
+                              ? "opacity-100"
+                              : "opacity-40 hover:opacity-100"
+                          } `}
+                        >
+                          <div className="flex flex-col items-center justify-center animate-spin gap-px">
+                            <span
+                              className={
+                                (valueObj.type !== "portfolio" &&
+                                isActive(valueObj)
+                                  ? "bg-secondary"
+                                  : "bg-transparent") +
+                                " text-lg h-2 w-2 rounded-full block"
+                              }
+                            ></span>
+                            <span
+                              className={
+                                (valueObj.type !== "portfolio" &&
+                                isActive(valueObj)
+                                  ? "bg-primary"
+                                  : "bg-transparent") +
+                                " text-lg h-2 w-2 rounded-full block"
+                              }
+                            ></span>
+                          </div>
+                          <span
+                            className={`relative ${
+                              isDarkMode ? "font-semibold" : "font-black"
+                            } transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
+                              valueObj.type !== "portfolio" &&
+                              isActive(valueObj)
+                                ? ""
+                                : "after:bg-secondary after:w-0 hover:after:w-6 after:transition-all after:origin-left"
+                            } `}
+                          >
+                            {label?.toUpperCase()}
+                          </span>
+                        </a>
+                      </Link>
+                    </div>
                   )}
                 </motion.li>
               );
