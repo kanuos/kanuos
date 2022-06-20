@@ -24,7 +24,13 @@ html {
 }
 
 .scrollbar::-webkit-scrollbar {
-  width: 8px !important;
+  width: 0px !important;
+}
+
+@media screen and (min-width: 768px) {
+  .scrollbar::-webkit-scrollbar {
+    width: 8px !important;
+  }
 }
 
 a,
