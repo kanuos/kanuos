@@ -117,7 +117,7 @@ export const PORTFOLIO_LINKS = {
     type: "portfolio",
   },
   "my website": {
-    name: "my-website",
+    name: "main-website",
     url: "/",
     base: "/",
     type: "public",
