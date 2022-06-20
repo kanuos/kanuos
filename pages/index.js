@@ -62,7 +62,6 @@ const HomePage = ({ allTags }) => {
       setStatus(STATUSES.complete);
     } catch (error) {
       setStatus(STATUSES.initial);
-      console.log({ error });
     } finally {
       setSelectedTag("");
     }
@@ -102,7 +101,7 @@ const HomePage = ({ allTags }) => {
         </StyledHeader>
         {Boolean(allTags.length) && (
           <>
-            <div className="w-full p-10 mb-40 max-w-4xl mx-auto">
+            <div className="w-full p-10 mb-40 max-w-5xl mx-auto">
               {status === STATUSES.initial && (
                 <>
                   <div className="flex flex-col items-start w-full">
@@ -141,7 +140,6 @@ export default HomePage;
 
 export async function getStaticProps() {
   try {
-    console.log("hit the motherload");
     const p1 = new Promise((res) => res(getAllTags()));
     const [allTags] = await Promise.allSettled([p1]);
     return {

@@ -20,7 +20,11 @@ body {
 
 html {
   height: -webkit-fill-available !important;
-  @apply scrollbar-none;
+  scroll-behavior: smooth;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px !important;
 }
 
 a,
@@ -85,7 +89,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor-wrapper {
-  @apply flex flex-col items-start list-outside list-[square] justify-start gap-y-3 max-w-4xl markdown-editor w-full whitespace-pre-line;
+  @apply flex flex-col items-start list-outside list-[square] justify-start gap-y-3 max-w-5xl markdown-editor w-full whitespace-pre-line mb-4;
 }
 
 .markdown-editor {

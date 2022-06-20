@@ -9,7 +9,7 @@ export const Showcase = ({ works = [], isDarkMode = false }) => {
   return (
     <section
       id={PORTFOLIO_LINKS["selected works"].name}
-      className="h-auto min-h-screen p-10 w-full max-w-4xl mx-auto"
+      className="h-auto min-h-screen p-10 w-full max-w-5xl mx-auto"
     >
       <h2 className="heading--secondary mb-4">Selected projects and designs</h2>
       <ul className="flex gap-4 items-center justify-start my-8">

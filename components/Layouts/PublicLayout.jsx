@@ -38,7 +38,13 @@ const PublicLayout = (props) => {
             : "grayscale-0 brightness-100 pointer-events-auto"
         } transition-all`}
       >
-        <div className="h-auto min-h-screen pt-10 overflow-y-auto scrollbar-none w-full">
+        <div
+          className={`h-auto min-h-screen pt-10 overflow-y-auto scrollbar w-full ${
+            isDarkMode
+              ? "scrollbar-track-dark scrollbar-thumb-secondary"
+              : "scrollbar-track-light scrollbar-thumb-slate-400"
+          }`}
+        >
           {children}
         </div>
       </main>

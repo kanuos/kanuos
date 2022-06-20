@@ -20,16 +20,22 @@ const Conclusion = dynamic(() =>
 export const ProjectDetailBody = ({ project = null }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const LENGTH = project.chapters.length;
-  const [activeChapter, setActiveChapter] = useState(0);
-  const [completed, setCompleted] = useState(Array(LENGTH).fill(false));
 
-  const toggleCompletionStatus = useCallback(
-    ({ i, stat }) =>
-      setCompleted((prev) => prev.map((el, k) => (k === i ? stat : el))),
-    []
+  const generateInitialActiveChapterList = useCallback(() => {
+    const arr = [...new Array(LENGTH).fill(false)];
+    arr[0] = true;
+    return arr;
+  }, [LENGTH]);
+
+  const [activeChapter, setActiveChapter] = useState(
+    generateInitialActiveChapterList()
   );
 
-  const setActiveChapterCB = useCallback((i) => setActiveChapter(() => i), []);
+  const setActiveChapterCB = useCallback(
+    (i) =>
+      setActiveChapter((prev) => prev.map((el, k) => (i === k ? !el : false))),
+    []
+  );
 
   if (!project) {
     return <></>;
@@ -37,6 +43,7 @@ export const ProjectDetailBody = ({ project = null }) => {
 
   return (
     <div
+      id="project"
       className={
         "overflow-hidden relative h-auto w-full min-h-screen " +
         (isDarkMode ? "bg-hero--dark" : "bg-hero--light")
@@ -56,30 +63,30 @@ export const ProjectDetailBody = ({ project = null }) => {
       />
 
       <div className="relative h-full w-full">
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto">
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-5xl mx-auto">
           <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
             Difficulty Level
           </h2>
-          <p className={"content--secondary capitalize"}>
+          <p className={"content--secondary capitalize font-semibold"}>
             {project.difficulty}
           </p>
         </section>
 
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto mt-20">
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-5xl mx-auto mt-20">
           <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
             Prerequisites
           </h2>
-          <div className="markdown-editor-wrapper md:col-start-2 md:col-end-5">
+          <div className="markdown-editor-wrapper md:col-start-2 md:col-end-5 text-justify">
             <Markdown>{project.prerequisites}</Markdown>
           </div>
         </section>
 
-        <section className="section-wrapper my-28 max-w-4xl mx-auto">
-          <div className="max-w-4xl mx-auto w-full md:grid md:grid-cols-4 gap-x-6">
+        <section className="section-wrapper my-20 max-w-5xl mx-auto">
+          <div className="max-w-5xl mx-auto w-full md:grid md:grid-cols-4 gap-x-6">
             <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
-              Synopsis
+              Chapters
             </h2>
-            <p className="md:col-start-2 md:col-end-5 content--secondary">
+            <p className="md:col-start-2 md:col-end-5 content--secondary text-justify">
               Project <strong className="font-semibold">{project.title}</strong>{" "}
               is classified into{" "}
               <strong className="font-semibold">{LENGTH}</strong> chapters for
@@ -95,36 +102,25 @@ export const ProjectDetailBody = ({ project = null }) => {
               )}
             </p>
           </div>
-          <div className="flex items-center justify-center pt-32 gap-2 w-full">
-            <h3 className="heading--main w-max">Chapters</h3>
-            <p className="text-sm">
-              <sup>({LENGTH})</sup>
-            </p>
-          </div>
-          <p className="text-center text-sm w-full">
-            <small>
-              Completed :{" "}
-              {(Math.round(completed.filter(Boolean).length) * 100) / LENGTH}%
-            </small>
-          </p>
-          <ul className="flex flex-col items-start w-full gap-y-20 mx-auto my-16 md:col-span-full pt-16 after-line--center">
+
+          <ul className="flex flex-col items-start w-full gap-y-10 mx-auto my-8 md:col-span-full pt-8">
             {project.chapters.map((chapter, i) => (
               <li
                 key={i}
-                className={`relative flex items-center justify-start w-full max-w-prose even:ml-auto odd:mr-auto rounded-lg overflow-hidden  ${
+                className={`relative flex items-center justify-start w-full ml-auto rounded-md overflow-hidden  ${
                   !isDarkMode
                     ? "nav-dark dark-shadow"
                     : "nav-light light-shadow"
+                } ${
+                  activeChapter[i] ? "max-w-5xl" : "max-w-prose origin-right"
                 }`}
               >
                 <PageComponents
-                  key={activeChapter}
+                  // key={activeChapter}
                   active={activeChapter}
                   setActiveChapter={setActiveChapterCB}
                   segment={chapter}
-                  completed={completed[i]}
-                  toggleCompletionStatus={toggleCompletionStatus}
-                  index={i + 1}
+                  index={i}
                   isDarkMode={isDarkMode}
                 />
               </li>

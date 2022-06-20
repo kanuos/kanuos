@@ -23,7 +23,6 @@ const MarkdownStep = dynamic(() =>
 // React Component
 export const BlogDetailBody = ({ blog = null }) => {
   const { isDarkMode } = useContext(ThemeContext);
-  console.log({ blog });
   if (!blog) return <></>;
 
   return (
@@ -40,7 +39,7 @@ export const BlogDetailBody = ({ blog = null }) => {
         date={blog.date}
         tags={blog.tags}
       />
-      <div className="w-full max-w-4xl mx-auto relative md:mt-20">
+      <div className="w-full max-w-5xl mx-auto relative md:mt-20">
         <ul className="relative z-0 flex flex-col items-start w-full pb-10 md:grid md:grid-cols-4 gap-x-6 section-wrapper">
           {blog.page.map((step, i) => {
             const { key, value } = step;

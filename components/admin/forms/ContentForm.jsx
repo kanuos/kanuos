@@ -94,7 +94,6 @@ export const ContentCRUD_Form = ({
   }, [router]);
 
   function resetSession() {
-    console.log("route changed");
     sessionStorage.removeItem(SESSION_NAME);
     sessionStorage.removeItem(CONTENT_NAME);
   }
@@ -182,7 +181,6 @@ export const ContentCRUD_Form = ({
         setPageMsg("Valid data. Can be sent");
         setPageErr(false);
       } catch (error) {
-        console.log("ContentForm.jsx 181 ", error);
         errorRef.current.scrollIntoView();
         setPageMsg(error);
         setPageErr(true);
@@ -322,7 +320,7 @@ export const ContentCRUD_Form = ({
           <h2 className="w-full mx-auto text-center border-y-2 border-current p-4 heading--main">
             Preview Mode
           </h2>
-          <section className="w-full max-w-4xl mx-auto mb-20">
+          <section className="w-full max-w-5xl mx-auto mb-20">
             {type === CONTENT_TYPE.design.name && (
               <DesignDetailBody design={content} adminMode={true} />
             )}
@@ -334,7 +332,7 @@ export const ContentCRUD_Form = ({
             )}
           </section>
 
-          <div className="relative h-full w-full max-w-4xl mx-auto">
+          <div className="relative h-full w-full max-w-5xl mx-auto">
             {/* toggle Access status */}
             <section className="section-wrapper pb-20">
               <div className="flex flex-col md:flex-row gap-4 md:gap-x-14">

@@ -17,7 +17,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
       id={PORTFOLIO_LINKS["about me"].name}
       className="min-h-screen pt-20 px-10 flex flex-col items-start justify-center w-full snap-start"
     >
-      <div className="w-full max-w-4xl mx-auto md:max-w-xl">
+      <div className="w-full max-w-5xl mx-auto md:max-w-xl">
         <h2 className="heading--secondary mb-4 md:mb-8">
           What I bring to the table
         </h2>

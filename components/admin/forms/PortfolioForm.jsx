@@ -58,7 +58,7 @@ const PortfolioForm = ({
   }, [portfolio]);
 
   return (
-    <div className="container max-w-4xl mx-auto">
+    <div className="container max-w-5xl mx-auto">
       <form
         onSubmit={handleSubmit}
         className="grid grid-cols-1 md:grid-cols-3 gap-6 my-4"

@@ -314,7 +314,7 @@ export const ProjectCRUDForm = ({
             placeholder="Demo URL"
             value={project?.demo?.href}
             setValue={(v) =>
-              handleObjectUpdate({ parent: "repo", key: "href", value: v })
+              handleObjectUpdate({ parent: "demo", key: "href", value: v })
             }
             split={true}
           />

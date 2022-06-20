@@ -1,19 +1,11 @@
 // built in imports
-import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // external imports
 import { motion } from "framer-motion";
-import {
-  AiFillDownCircle,
-  AiFillCheckCircle,
-  AiOutlineLoading3Quarters,
-  AiOutlineBlock,
-  AiOutlineBook,
-} from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineMinus, AiOutlineBlock } from "react-icons/ai";
 
 // internal imports
-import { CTA } from "../portfolio/CTA";
 import { STEP_TYPE } from "../../utils";
 
 // dynamic imports
@@ -32,8 +24,6 @@ export const PageComponents = ({
   index,
   setActiveChapter,
   active,
-  completed,
-  toggleCompletionStatus,
 }) => {
   const variants = {
     section: {
@@ -41,132 +31,95 @@ export const PageComponents = ({
         height: "auto",
         transition: {
           when: "beforeChildren",
-          delayChildren: 0.5,
+          type: "spring",
         },
       },
       hide: {
         height: "min-content",
         transition: {
-          when: "afterChildren",
-          type: "tween",
-          staggerChildren: 0.5,
-          staggerDirection: -1,
+          type: "spring",
         },
       },
     },
     wrapper: {
       show: {
         opacity: 1,
-        scale: 1,
         height: "auto",
         transition: {
-          type: "tween",
+          type: "spring",
           origin: "bottom",
-          delay: 0.25,
-          staggerChildren: 0.5,
+          staggerChildren: 0.25,
           when: "beforeChildren",
         },
       },
       hide: {
         opacity: 0,
-        scale: 0,
         height: 0,
         transition: {
-          type: "tween",
-          when: "afterChildren",
-          delay: 0.25,
-          staggerChildren: 0.5,
+          type: "spring",
         },
       },
     },
     body: {
       show: {
-        y: 0,
         opacity: 1,
         pointerEvents: "all",
         transition: {
           origin: "bottom",
-          delay: 0.5,
+          type: "spring",
+          when: "beforeChildren",
         },
       },
       hide: {
-        y: "100%",
         opacity: 0,
         pointerEvents: "none",
         transition: {
-          type: "tween",
-          duration: 0.25,
-          delay: 0.25,
-          staggerChildren: 0.5,
-          when: "afterChildren",
+          type: "spring",
         },
       },
     },
   };
 
-  const [show, setShow] = useState(active === index - 1);
-  const [isComplete, setIsComplete] = useState(completed);
+  const show = active[index];
 
-  function toggleReadStatus() {
-    setIsComplete((prev) => !prev);
-    setShow((prev) => !prev);
+  function toggleDisplay() {
+    setActiveChapter(index);
   }
-
-  useEffect(() => {
-    if (!show) return;
-    setActiveChapter(index - 1);
-  }, [show, index, setActiveChapter]);
-
-  useEffect(() => {
-    if (isComplete === completed) return;
-    toggleCompletionStatus({ i: index - 1, stat: isComplete });
-  }, [isComplete, completed, index, toggleCompletionStatus]);
 
   return (
     <motion.section
       variants={variants.section}
       animate={show ? "show" : "hide"}
-      className={"w-full block transition-all relative z-20 "}
+      className={`w-full block transition-all relative z-20 py-2.5 ${
+        show ? "opacity-100" : "opacity-50 hover:opacity-100"
+      }`}
     >
       <ul
         className={
-          "text-xs flex flex-col w-full items-start gap-4 p-6 md:px-10 " +
+          "text-xs flex flex-col w-full items-start gap-1 p-6 " +
           (show ? "border-b border-current mb-6" : "")
         }
       >
-        <li>
-          <small className="font-semibold opacity-60">Chapter {index}</small>
-        </li>
-        <li className="flex w-full items-center justify-between mb-2 gap-2">
-          <AiOutlineBook className="text-xl text-primary" />
+        <li className="flex w-full items-center justify-between gap-2">
+          <p className="font-semibold text-xl">{index + 1}.</p>
           <span
-            className={`font-semibold peer text-lg md:text-xl capitalize grow text-left`}
+            className={`font-semibold peer text-lg capitalize grow text-left`}
           >
             {segment.heading}
           </span>
-          <motion.button
-            whileHover={{
-              scale: 1.1,
-              rotate: show && !isComplete ? 180 : 0,
-            }}
-            animate={show && !isComplete ? { rotate: 180 } : { rotate: 0 }}
-            onClick={() => setShow((prev) => !prev)}
-            className="aspect-square text-xl"
+          <button
+            onClick={toggleDisplay}
+            className={`text-xl ${
+              show ? "hover:text-primary" : "hover:text-secondary"
+            }`}
           >
-            {isComplete ? (
-              <AiFillCheckCircle className="text-secondary" />
-            ) : (
-              <AiFillDownCircle className="hover:text-primary" />
-            )}
-          </motion.button>
+            {!show ? <AiOutlinePlus /> : <AiOutlineMinus />}
+          </button>
         </li>
       </ul>
 
       <motion.section
-        className={
-          "px-6 md:px-10 overflow-hidden w-full " +
-          (show ? "pt-4 pb-16" : "pb-4")
-        }
+        className="px-6 md:px-10 overflow-hidden w-full "
         animate={show ? "show" : "hide"}
         exit="hide"
         variants={variants.wrapper}
@@ -186,17 +139,17 @@ export const PageComponents = ({
                 </h2>
               )}
               {key === STEP_TYPE.markdown && (
-                <div className="w-full">
+                <div className="w-full text-justify">
                   <MarkdownStep text={value} />
                 </div>
               )}
               {key === STEP_TYPE.markdown && (
-                <div className="w-full">
+                <div className="w-full text-justify">
                   <MarkdownStep text={value} />
                 </div>
               )}
               {key === STEP_TYPE.code && (
-                <div className="w-full">
+                <div className="w-full text-justify">
                   <CodeStep
                     code={value.code}
                     file={value.file}
@@ -211,33 +164,6 @@ export const PageComponents = ({
           ))}
         </motion.article>
       </motion.section>
-      <div
-        className={`grid place-content-center ${
-          isComplete ? "bg-secondary py-8" : show ? "bg-primary py-8" : "hidden"
-        }`}
-      >
-        <CTA
-          label={
-            isComplete ? (
-              <div className="flex items-center justify-center gap-x-1 group">
-                <AiFillCheckCircle className="block group-hover:hidden" />
-                <span className="block group-hover:hidden">
-                  Chapter complete!
-                </span>
-                <span className="hidden group-hover:block">Mark as unread</span>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center gap-x-1">
-                <AiOutlineLoading3Quarters className="animate-spin" />
-                <span>Mark chapter as complete</span>
-              </div>
-            )
-          }
-          isActive={isComplete}
-          btnMode={true}
-          cb={toggleReadStatus}
-        />
-      </div>
     </motion.section>
   );
 };

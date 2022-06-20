@@ -124,7 +124,7 @@ const CMSForm = ({
   if (layout.length === 0 || !currentState) return <></>;
 
   return (
-    <div className="container max-w-4xl mx-auto">
+    <div className="container max-w-5xl mx-auto">
       <h1
         className={`${
           ["profile", "content"].includes(type)

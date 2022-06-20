@@ -186,7 +186,7 @@ export const BlogCRUDForm = ({
           <StringInput
             name="label"
             placeholder="Repo label"
-            value={blog.repo.label}
+            value={blog.repo?.label}
             setValue={(v) =>
               handleObjectUpdate({ parent: "repo", key: "label", value: v })
             }
@@ -195,7 +195,7 @@ export const BlogCRUDForm = ({
           <StringInput
             name="href"
             placeholder="Repo URL"
-            value={blog.repo.href}
+            value={blog.repo?.href}
             setValue={(v) =>
               handleObjectUpdate({ parent: "repo", key: "href", value: v })
             }
@@ -221,7 +221,7 @@ export const BlogCRUDForm = ({
             placeholder="Demo URL"
             value={blog?.demo?.href}
             setValue={(v) =>
-              handleObjectUpdate({ parent: "repo", key: "href", value: v })
+              handleObjectUpdate({ parent: "demo", key: "href", value: v })
             }
             split={true}
           />

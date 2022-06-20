@@ -34,94 +34,82 @@ const AdminDashboard = ({ data }) => {
   const [tab, setTab] = useState(0);
   const { isDarkMode } = useContext(ThemeContext);
 
-  const handleProfileUpdate = useCallback(
-    async (formData) => {
-      try {
-        delete formData.portfolio;
-        const { data, error } = (
-          await axios({
-            url: API_ROUTES.profile,
-            method: "PATCH",
-            data: formData,
-            withCredentials: true,
-          })
-        ).data;
-        if (error) throw data;
-        alert("Updated successfully!");
-      } catch (error) {
-        alert("Err: " + error);
+  const handleProfileUpdate = useCallback(async (formData) => {
+    try {
+      delete formData.portfolio;
+      const { data, error } = (
+        await axios({
+          url: API_ROUTES.profile,
+          method: "PATCH",
+          data: formData,
+          withCredentials: true,
+        })
+      ).data;
+      if (error) throw data;
+      alert("Updated successfully!");
+    } catch (error) {
+      alert("Err: " + error);
+    }
+  }, []);
+
+  const getEditData = useCallback((editable) => {
+    setEditMode(true);
+    setEditData(editable);
+  }, []);
+
+  const handleSubmitPortfolio = useCallback(async ({ method, portfolio }) => {
+    try {
+      let url = API_ROUTES.portfolio;
+      // dynamic URL to server
+      switch (method) {
+        case "patch":
+        case "delete":
+          url += `/${portfolio._id}`;
+          break;
       }
-    },
-    [admin]
-  );
 
-  const getEditData = useCallback(
-    (editable) => {
-      setEditMode(true);
-      setEditData(editable);
-    },
-    [editData]
-  );
+      // Send the data to server and wait for response from server
+      const { error, data } = (
+        await axios({
+          url,
+          method,
+          data: portfolio,
+        })
+      ).data;
 
-  const handleSubmitPortfolio = useCallback(
-    async ({ method, portfolio }) => {
-      try {
-        let url = API_ROUTES.portfolio;
-        // dynamic URL to server
-        switch (method) {
-          case "patch":
-          case "delete":
-            url += `/${portfolio._id}`;
-            break;
-        }
-
-        console.log(url, portfolio);
-        // Send the data to server and wait for response from server
-        const { error, data } = (
-          await axios({
-            url,
-            method,
-            data: portfolio,
-          })
-        ).data;
-
-        if (error || !data) {
-          console.log(data);
-          throw data;
-        }
-
-        if (method === "delete") {
-          setPortfolios((prev) => prev.filter((el) => el._id !== data._id));
-          return;
-        }
-
-        if (method === "post") {
-          setPortfolios((prev) => [...prev, data]);
-          setEditData(null);
-          setEditMode(false);
-          return;
-        }
-
-        if (method === "patch") {
-          setPortfolios((prev) =>
-            prev.map((el) => {
-              if (el._id === data._id) {
-                return data;
-              }
-              return el;
-            })
-          );
-          setEditData(null);
-          setEditMode(false);
-          return;
-        }
-      } catch (error) {
-        alert(error);
-        console.log(error);
+      if (error || !data) {
+        throw data;
       }
-    },
-    [allDesigns, allProjects, portfolios]
-  );
+
+      if (method === "delete") {
+        setPortfolios((prev) => prev.filter((el) => el._id !== data._id));
+        return;
+      }
+
+      if (method === "post") {
+        setPortfolios((prev) => [...prev, data]);
+        setEditData(null);
+        setEditMode(false);
+        return;
+      }
+
+      if (method === "patch") {
+        setPortfolios((prev) =>
+          prev.map((el) => {
+            if (el._id === data._id) {
+              return data;
+            }
+            return el;
+          })
+        );
+        setEditData(null);
+        setEditMode(false);
+        return;
+      }
+    } catch (error) {
+      alert(JSON.stringify(error));
+    }
+  }, []);
 
   return (
     <PublicLayout
@@ -130,7 +118,7 @@ const AdminDashboard = ({ data }) => {
       navType="admin"
     >
       <div className="min-h-screen px-8">
-        <div className="flex items-center justify-start w-full mb-6 container max-w-4xl mx-auto gap-4 scale-90 origin-left">
+        <div className="flex items-center justify-start w-full mb-6 container max-w-5xl mx-auto gap-4 scale-90 origin-left">
           <div>
             <CTA
               btnMode={true}
@@ -209,7 +197,6 @@ export async function getServerSideProps({ req, res }) {
       },
     };
   } catch (error) {
-    console.log(error);
     return {
       props: {
         data: JSON.stringify({

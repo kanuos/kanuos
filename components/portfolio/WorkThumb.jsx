@@ -142,10 +142,12 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
         <CTA
           label="View details"
           btnMode={true}
-          cb={() => console.log(project)}
+          cb={() => null}
           isDarkMode={isDarkMode}
         />
       </motion.div>
     </motion.div>
   );
 };
+
+// TODO: launch portfolio project detail on CB

@@ -18,7 +18,7 @@ export const ContactMe = ({ isDarkMode }) => {
         styledText="let's work together"
         showScroll={false}
       >
-        <section className="mt-10 max-w-4xl mx-auto w-full">
+        <section className="mt-10 max-w-5xl mx-auto w-full">
           <h2 className="heading--secondary">Get in touch</h2>
           <p className="content--secondary my-10 max-w-xl text-justify">
             It is a long established fact that a reader will be distracted by

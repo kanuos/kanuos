@@ -90,7 +90,6 @@ export default PortfolioPage;
 
 export async function getStaticProps() {
   let metadata = {};
-  console.log("portfolio motherload");
   try {
     metadata = await getPortfolio();
     metadata = {
@@ -102,7 +101,6 @@ export async function getStaticProps() {
       revalidate: 1,
     };
   } catch (error) {
-    console.log(error);
     return {
       props: { metadata: JSON.stringify({}) },
       revalidate: 1,

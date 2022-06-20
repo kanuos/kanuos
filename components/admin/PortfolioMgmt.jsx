@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { MdOutlineFingerprint } from "react-icons/md";
 
 const PortfolioForm = dynamic(() => import("./forms/PortfolioForm"));
@@ -17,32 +17,22 @@ export const PortfolioMgmt = ({
   const [showForm, setShowForm] = useState(
     portfolioProjects.length === 0 || editMode
   );
+  const [availableDesigns, setAvailableDesigns] = useState([]);
+  const [availableProjects, setAvailableProjects] = useState([]);
 
-  const availableDesigns = useMemo(() => {
-    if (!portfolioProjects.length) {
-      return allDesigns;
-    }
+  useEffect(() => {
     const portfolioDesignID = portfolioProjects.map((item) => item.design._id);
-    return allDesigns.map((el) => {
-      if (!(el._id in portfolioDesignID)) {
-        return el;
-      }
-    });
-  }, [portfolioProjects, allDesigns]);
-
-  const availableProjects = useMemo(() => {
-    if (!portfolioProjects.length) {
-      return allProjects;
-    }
     const portfolioProjectID = portfolioProjects.map(
       (item) => item.project._id
     );
-    return allProjects.map((el) => {
-      if (!(el._id in portfolioProjectID)) {
-        return el;
-      }
-    });
-  }, [portfolioProjects, allProjects]);
+
+    setAvailableDesigns(() =>
+      allDesigns.filter((el) => !portfolioDesignID.includes(el._id))
+    );
+    setAvailableProjects(() =>
+      allProjects.filter((el) => !portfolioProjectID.includes(el._id))
+    );
+  }, [portfolioProjects]);
 
   function handleDeleteProjectFromPortfolio(portfolio) {
     const { _id } = portfolio;
@@ -58,7 +48,7 @@ export const PortfolioMgmt = ({
   }
 
   return (
-    <div className="container max-w-4xl mx-auto">
+    <div className="container max-w-5xl mx-auto">
       <div className="flex items-center justify-between pt-4 border-t mt-2.5">
         <h1 className="heading--secondary capitalize">Portfolio Management</h1>
         {Boolean(availableDesigns.length * availableProjects.length) && (
@@ -77,7 +67,7 @@ export const PortfolioMgmt = ({
         Boolean(availableDesigns.length * availableProjects.length) && (
           <PortfolioForm
             init={init}
-            key={JSON.stringify(init || "")}
+            key={JSON.stringify({ init, portfolioProjects })}
             getData={submitToServer}
             isDarkMode={isDarkMode}
             availableDesigns={availableDesigns}

@@ -1,53 +1,49 @@
 //  BLOG API
 
 import { addBlogToDB, blogUniqueConstraint } from "../../../database/blogs";
-import { isAdminMiddleware } from "../../../utils/authLib"
+import { isAdminMiddleware } from "../../../utils/authLib";
 import { ContentValidators } from "../../../utils/validator";
 
-export default async function blogAPIHandler (req, res) {
-    
-    let blogValidator;
-    try {
-        const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);
-        if (!loggedAsAdmin) throw error
+export default async function blogAPIHandler(req, res) {
+  let blogValidator;
+  try {
+    const { loggedAsAdmin, user, error } = await isAdminMiddleware(req, res);
+    if (!loggedAsAdmin) throw error;
 
-        const { method, body } = req;
+    const { method, body } = req;
 
-        switch(method.toLowerCase()) {
-            case 'post':
-                // Create a new blog document
-                // receives newBlog data from the incoming request body 
-                blogValidator = ContentValidators.blog.validate(body);
+    switch (method.toLowerCase()) {
+      case "post":
+        // Create a new blog document
+        // receives newBlog data from the incoming request body
+        blogValidator = ContentValidators.blog.validate(body);
 
-                // check for validation error
-                if (blogValidator.error) throw blogValidator.error.details[0].message;
+        // check for validation error
+        if (blogValidator.error) throw blogValidator.error.details[0].message;
 
+        // check whether blog exists
+        const existingBlog = await blogUniqueConstraint(blogValidator.value);
+        if (existingBlog) throw "Blog existis @ _id : " + existingBlog._id;
 
-                // check whether blog exists
-                const existingBlog = await blogUniqueConstraint(blogValidator.value)
-                if (existingBlog) throw 'Blog existis @ _id : ' + existingBlog._id;
+        const blog = { ...blogValidator.value, user };
 
-                const blog = {...blogValidator.value, user};
-                
-                // add the sanitized blog data to DB
-                const newBlog = await addBlogToDB(blog);
+        // add the sanitized blog data to DB
+        const newBlog = await addBlogToDB(blog);
 
-                if (!newBlog) throw 'Blog coudln\'t be added!'
+        if (!newBlog) throw "Blog coudln't be added!";
 
-                return res.json({
-                    data : newBlog,
-                    err : false
-                })
-                
-            default :
-                throw 'Invalid method'
-            }
-    } 
-    catch (err) {
-        console.log(err)
         return res.json({
-            data : err,
-            err : true,
-        })
+          data: newBlog,
+          err: false,
+        });
+
+      default:
+        throw "Invalid method";
     }
+  } catch (err) {
+    return res.json({
+      data: err,
+      err: true,
+    });
+  }
 }

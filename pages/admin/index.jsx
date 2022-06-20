@@ -50,7 +50,6 @@ export async function getServerSideProps({ req, res }) {
       props: { adminFromDB: JSON.stringify(admin) },
     };
   } catch (error) {
-    console.log(error);
     return {
       props: { adminFromDB: JSON.stringify({}) },
     };

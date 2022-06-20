@@ -36,9 +36,9 @@ export const DesignDetailBody = ({ design = null }) => {
         tags={design.tags}
       />
 
-      <div className="relative h-auto w-full max-w-4xl mx-auto">
+      <div className="relative h-auto w-full max-w-5xl mx-auto">
         {/* role */}
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto mt-20">
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-5xl mx-auto mt-20">
           <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
             My role
           </h2>
@@ -63,7 +63,7 @@ export const DesignDetailBody = ({ design = null }) => {
         </figcaption>
       </figure>
 
-      <div className="relative h-auto w-full max-w-4xl mx-auto">
+      <div className="relative h-auto w-full max-w-5xl mx-auto">
         <h2 className="heading--main w-min mx-auto py-20 text-center leading-relaxed">
           Style Guide
         </h2>
@@ -120,7 +120,7 @@ export const DesignDetailBody = ({ design = null }) => {
               >
                 <section
                   className={
-                    "relative z-10 p-4 lg:p-8 block w-11/12 max-w-lg rounded-md group-even:ml-auto group-odd:mr-auto lg:flex lg:w-full lg:max-w-4xl lg:gap-x-6 lg:group-even:flex-row-reverse lg:group-odd:flex-row nav-light " +
+                    "relative z-10 p-4 lg:p-8 block w-11/12 max-w-lg rounded-md group-even:ml-auto group-odd:mr-auto lg:flex lg:w-full lg:max-w-5xl lg:gap-x-6 lg:group-even:flex-row-reverse lg:group-odd:flex-row nav-light " +
                     (isDarkMode ? "light-shadow" : "drop-shadow-2xl")
                   }
                 >
@@ -193,7 +193,7 @@ export const DesignDetailBody = ({ design = null }) => {
         </div>
       </section>
 
-      <div className="relative h-auto w-full max-w-4xl mx-auto">
+      <div className="relative h-auto w-full max-w-5xl mx-auto">
         {/* conclusion */}
         <Conclusion
           heading="Conclusion"

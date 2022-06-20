@@ -28,7 +28,7 @@ export const DetailHeader = ({
         </section>
       </StyledHeader>
       {tags.length > 0 && (
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-4xl mx-auto">
+        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-5xl mx-auto">
           <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
             Tag
           </h2>
