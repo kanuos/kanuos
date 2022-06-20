@@ -32,7 +32,7 @@ export const PortfolioMgmt = ({
     setAvailableProjects(() =>
       allProjects.filter((el) => !portfolioProjectID.includes(el._id))
     );
-  }, [portfolioProjects]);
+  }, [portfolioProjects, allDesigns, allProjects]);
 
   function handleDeleteProjectFromPortfolio(portfolio) {
     const { _id } = portfolio;
