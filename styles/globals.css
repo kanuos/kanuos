@@ -43,17 +43,20 @@ button:focus {
 }
 
 .styledText {
-  animation: shadowXL 3s infinite linear;
+  @apply uppercase text-5xl sm:text-6xl pr-4 lg:text-7xl xl:text-8xl font-black bg-contain w-min max-w-xs tracking-tighter sm:max-w-sm md:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-gradient-to-b from-primary to-secondary bg-clip-text;
+  background-size: 300% 300%;
+  animation: shadowXL 5s infinite ease-in;
 }
 
 @keyframes shadowXL {
   0% {
-    text-shadow: 5px 5px 2.5rem rgb(255 0 102 / 0.25),
-      -5px -5px 2.5rem rgb(255 0 102 / 0.25);
+    background-position: 0% 0%;
+  }
+  70% {
+    background-position: 100% 100%;
   }
   100% {
-    text-shadow: 5px 5px 2.5rem rgb(0 191 179 / 0.25),
-      -5px -5px 2.5rem rgb(0 191 179 / 0.25);
+    background-position: 0% 0%;
   }
 }
 
