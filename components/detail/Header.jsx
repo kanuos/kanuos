@@ -18,7 +18,7 @@ export const DetailHeader = ({
         <div className="w-max max-w-xs">
           <PageLink label={back.text} href={back.url} />
         </div>
-        <h1 className="heading--main leading-none">{title}</h1>
+        <h1 className="heading--main leading-none capitalize">{title}</h1>
         <p className="content--main my-4">{desc}</p>
         <section className="w-full mx-auto flex flex-col items-start justify-start my-6">
           <h2 className="heading--sub uppercase">Date</h2>
