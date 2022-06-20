@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
+import { useContext } from "react";
 // import : internal
 import PublicLayout from "../../components/Layouts/PublicLayout";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { getAllBlogs, getIndividualBlog } from "../../database/blogs";
 import { generateDetailViewMetadata } from "../../utils";
 
@@ -11,8 +13,8 @@ const BlogDetailBody = dynamic(() =>
   )
 );
 
-const Footer = dynamic(() =>
-  import("../../components/detail/Footer").then((m) => m.Footer)
+const ContactMe = dynamic(() =>
+  import("../../components/portfolio/ContactMe").then((m) => m.ContactMe)
 );
 
 const BlogDetail = ({ blog }) => {
@@ -23,11 +25,13 @@ const BlogDetail = ({ blog }) => {
     "blog",
     "blog"
   );
+
+  const { isDarkMode } = useContext(ThemeContext);
+
   return (
     <PublicLayout metaTitle={"Blog : " + blog.title} metaDesc={content}>
       <BlogDetailBody blog={blog} />
-      <Footer />
-      {/* TODO: add footer content  */}
+      <ContactMe isDarkMode={isDarkMode} portfolioMode={false} />
     </PublicLayout>
   );
 };

@@ -5,10 +5,12 @@ import PublicLayout from "../../components/Layouts/PublicLayout";
 import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
 import { getIndividualProject, getAllProjects } from "../../database/projects";
 import { generateDetailViewMetadata } from "../../utils";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 // dynamic
-const Footer = dynamic(() =>
-  import("../../components/detail/Footer").then((m) => m.Footer)
+const ContactMe = dynamic(() =>
+  import("../../components/portfolio/ContactMe").then((m) => m.ContactMe)
 );
 
 const ProjectDetail = ({ project }) => {
@@ -18,11 +20,13 @@ const ProjectDetail = ({ project }) => {
     project.tags?.map(({ tag }) => tag)?.toString(),
     project.category
   );
+
+  const { isDarkMode } = useContext(ThemeContext);
+
   return (
     <PublicLayout metaTitle={"Project : " + project.title} metaDesc={content}>
       <ProjectDetailBody project={project} />
-      <Footer />
-      {/* TODO: add footer content */}
+      <ContactMe portfolioMode={false} isDarkMode={isDarkMode} />
     </PublicLayout>
   );
 };

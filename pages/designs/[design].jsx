@@ -1,16 +1,18 @@
 // Project Detail View
 import dynamic from "next/dynamic";
+import { useContext } from "react";
 
 // import : internal
 import { DesignDetailBody } from "../../components/content/DesignDetailBody";
 import PublicLayout from "../../components/Layouts/PublicLayout";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { getAllDesigns, getIndividualDesign } from "../../database/designs";
 import { generateDetailViewMetadata } from "../../utils";
 
 // dynamic imports
 
-const Footer = dynamic(() =>
-  import("../../components/detail/Footer").then((m) => m.Footer)
+const ContactMe = dynamic(() =>
+  import("../../components/portfolio/ContactMe").then((m) => m.ContactMe)
 );
 
 const DesignDetail = ({ design }) => {
@@ -21,13 +23,15 @@ const DesignDetail = ({ design }) => {
     design.tools?.toString(),
     "design"
   );
+
+  const { isDarkMode } = useContext(ThemeContext);
+
   return (
     <PublicLayout metaTitle={`Design : ` + design.title} metaDesc={content}>
       <div className="h-auto w-full">
         <DesignDetailBody design={design} />
       </div>
-      <Footer />
-      {/* TODO: add footer content  */}
+      <ContactMe portfolioMode={false} isDarkMode={isDarkMode} />
     </PublicLayout>
   );
 };

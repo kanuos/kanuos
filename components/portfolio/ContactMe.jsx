@@ -5,7 +5,19 @@ import { PORTFOLIO_LINKS, SOCIAL } from "../../utils";
 import { StyledHeader } from "./StyledHeader";
 import { Footer } from "../public/Footer";
 
-export const ContactMe = ({ isDarkMode }) => {
+export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
+  const CONTENT = portfolioMode
+    ? {
+        styledText: "let's work together",
+        heading: "Get in touch",
+        content: `I am always eager to work on interesting projects. If you have any such intersting projects in mind, please reach out to me and I'll get back to you as soon as possible.`,
+      }
+    : {
+        styledText: "Connect with me",
+        heading: "Contact Me",
+        content: `If you have any doubts about my work please reach out to me. You can use any of my designs, projects or blogs to your use provided you give proper attribution to my site. To learn more about attribution, contact me. I'll respond as soon as possible. `,
+      };
+
   return (
     <div
       id={PORTFOLIO_LINKS["contact me"].name}
@@ -15,17 +27,13 @@ export const ContactMe = ({ isDarkMode }) => {
     >
       <StyledHeader
         isDarkMode={!isDarkMode}
-        styledText="let's work together"
+        styledText={CONTENT.styledText}
         showScroll={false}
       >
         <section className="mt-10 max-w-5xl mx-auto w-full">
-          <h2 className="heading--secondary">Get in touch</h2>
+          <h2 className="heading--secondary">{CONTENT.heading}</h2>
           <p className="content--secondary my-10 max-w-xl text-justify">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum is that it has a more-or-less normal
-            distribution of letters, as opposed to using, making it look like
-            readable English.
+            {CONTENT.content}
           </p>
           <CTA
             isDarkMode={!isDarkMode}
