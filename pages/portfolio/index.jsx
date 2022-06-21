@@ -1,6 +1,7 @@
 // Portfolio page
 import { useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Markdown from "react-markdown";
 
 // import : internal
 import { getPortfolio } from "../../database/user";
@@ -17,7 +18,7 @@ import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
 const PortfolioPage = ({ metadata }) => {
   metadata = JSON.parse(metadata);
   const { isDarkMode } = useContext(ThemeContext);
-
+  console.log(metadata);
   const validPortfolioMetadata = metadata?.portfolio?.length;
   if (!validPortfolioMetadata) {
     return (
@@ -34,7 +35,7 @@ const PortfolioPage = ({ metadata }) => {
           >
             <div className="flex flex-col items-start justify-center">
               <h1 className={`heading--main w-min max-w-xs`}>Coming Soon</h1>
-              <p className="content--main mb-10 mt-4">
+              <p className="content--main mb-10 mt-4 text-justify">
                 Hi there, I am Sounak. The portfolio page you are trying to
                 visit is currently being maintained. You can still visit my
                 blogs, projects and designs in my website. Please follow the
@@ -63,7 +64,9 @@ const PortfolioPage = ({ metadata }) => {
           <>
             <span className="text-sm md:text-base font-semibold">Hi, I am</span>
             <h1 className="heading--main w-min">{metadata.fullName}</h1>
-            <p className="content--main">{metadata.about}</p>
+            <Markdown className="content--main markdown-editor-wrapper">
+              {metadata.about}
+            </Markdown>
             <div className="mt-10">
               <CTA
                 label="Let's talk"
@@ -93,7 +96,7 @@ export async function getStaticProps() {
   try {
     metadata = await getPortfolio();
     metadata = {
-      ...metadata,
+      ...metadata._doc,
       portfolio: metadata.portfolio.filter((el) => el.isShowcased),
     };
     return {

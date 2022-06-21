@@ -1,5 +1,3 @@
-import { AUTH_ROUTES } from "./admin";
-
 export const STEP_TYPE = {
   code: "code",
   markdown: "markdown",
@@ -173,4 +171,14 @@ export function generateDetailViewMetadata(
     return `Check out how I ${type}ed "${title}" using ${category} to implement technologies - ${tags}`;
   }
   return "";
+}
+
+export function titleCase(str) {
+  str = str.trim();
+  if (!Boolean(str)) return str;
+
+  let strArr = str.toLowerCase().split("");
+  strArr[0] = strArr[0].toUpperCase();
+
+  return strArr.join("");
 }

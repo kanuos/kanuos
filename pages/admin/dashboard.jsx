@@ -27,6 +27,8 @@ const PortfolioMgmt = dynamic(() =>
 
 const AdminDashboard = ({ data }) => {
   const { admin, allDesigns, allProjects } = JSON.parse(data);
+
+  const [adminData, setAdminData] = useState(admin);
   const [portfolios, setPortfolios] = useState(admin?.portfolio || []);
   const [editData, setEditData] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -47,6 +49,7 @@ const AdminDashboard = ({ data }) => {
       ).data;
       if (error) throw data;
       alert("Updated successfully!");
+      setAdminData(data);
     } catch (error) {
       alert("Err: " + error);
     }
@@ -140,7 +143,7 @@ const AdminDashboard = ({ data }) => {
         </div>
         {tab === 0 && (
           <CMSForm
-            init={admin}
+            init={adminData}
             heading="Profile CMS"
             isDarkMode={isDarkMode}
             layout={layout.PROFILE_CMS}

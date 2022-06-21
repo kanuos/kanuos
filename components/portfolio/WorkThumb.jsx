@@ -82,10 +82,10 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
         onTap={() => setHovered(true)}
         className={
           "relative snap-top w-full flex flex-col-reverse md:items-center md:gap-x-6 peer " +
-          (i % 2 === 0 ? "md:flex-row-reverse" : "md:flex-row")
+          (i % 2 === 0 ? "md:flex-row-reverse mr-auto" : "md:flex-row ml-auto")
         }
       >
-        <motion.section className="flex flex-col mt-8 max-w-md">
+        <motion.section className="flex flex-col mt-8 max-w-md px-8 sm:px-10">
           <motion.legend className="text-xs px-2">
             <small
               className={`${
@@ -97,18 +97,20 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
           </motion.legend>
           <motion.h3
             variants={variants.content}
-            className={`text-2xl lg:text-3xl mt-1 mb-3 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center tracking-tight ${
-              hovered ? "scale-y-125" : ""
+            className={`text-2xl lg:text-3xl mt-1 mb-3 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center tracking-tight capitalize bg-gradient-to-r ${
+              isDarkMode ? "from-light" : "from-dark"
+            } via-primary to-secondary bg-clip-text ${
+              hovered ? "text-transparent" : "text-current"
             }`}
           >
-            {project.title}
+            {project.project.title}
           </motion.h3>
           <motion.p
             className={`px-2 text-sm tracking-tighter w-full max-w-sm ${
               hovered ? "opacity-90" : "opacity-60"
             } `}
           >
-            {project.desc}
+            {project.project.desc}
           </motion.p>
         </motion.section>
 
@@ -117,23 +119,23 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
           whileInView="show"
           initial="hide"
           viewport={{ once: true }}
-          className={`h-[35vh] relative overflow-hidden filter rounded-md z-10 drop-shadow-2xl shadow-2xl w-full max-w-xl mx-auto grow ${
+          className={`h-[35vh] relative overflow-hidden filter sm:rounded-md z-10 drop-shadow-2xl shadow-2xl w-full max-w-xl grow ${
             hovered ? "grayscale-0" : "grayscale"
           }`}
         >
           <Image
-            className={`h-full w-full max-w-xl object-cover block  filter transition-all`}
+            className={`h-full w-full max-w-2xl object-cover block  filter transition-all`}
             loader={({ src, width }) => `${src}?w=${width}&q=100`}
             priority={true}
             src={project.design.thumbnail}
             layout="fill"
-            alt={project.title}
+            alt={project.design.title + " thumbnail"}
           />
         </motion.figure>
       </motion.article>
 
       <motion.div
-        className={`w-1/2 my-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
+        className={`w-fit my-10 px-8 sm:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
           hovered
             ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
             : "opacity-0 scale-0 pointer-events-none translate-y-full"

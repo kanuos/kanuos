@@ -1,29 +1,27 @@
-import React from "react";
+import Markdown from "react-markdown";
 import { PORTFOLIO_LINKS } from "../../utils";
-import {
-  CgDice1,
-  CgDice2,
-  CgDice3,
-  CgDice4,
-  CgDice5,
-  CgDice6,
-  CgFile,
-} from "react-icons/cg";
+import { CgDice1, CgDice2, CgDice3, CgDice4, CgFile } from "react-icons/cg";
 import { CTA } from "./CTA";
 
 export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
   return (
     <div
       id={PORTFOLIO_LINKS["about me"].name}
-      className="min-h-screen pt-20 px-10 flex flex-col items-start justify-center w-full snap-start"
+      className="min-h-screen pt-20 flex flex-col max-w-5xl mx-auto px-8 md:px-10 items-start justify-center w-full snap-start"
     >
-      <div className="w-full max-w-5xl mx-auto md:max-w-xl">
+      <div className="w-full max-w-3xl mx-auto">
         <h2 className="heading--secondary mb-4 md:mb-8">
           What I bring to the table
         </h2>
-        <p className="content--secondary max-w-xl mb-10">{skills}</p>
+        <Markdown className="markdown-editor max-w-3xl mb-10">
+          {skills}
+        </Markdown>
       </div>
-      <ul className="flex flex-col w-full max-w-xl mx-auto gap-y-16 pt-6 pb-48 after-line--center">
+      <ul
+        className={`flex flex-col w-full mx-auto gap-y-16 pt-16 after-line--center ${
+          techStack.length > 1 ? "pb-48" : "pb-24"
+        }`}
+      >
         {techStack.map(({ heading, text }, i) => (
           <li className="w-full" key={i}>
             <SkillGroup
@@ -36,8 +34,6 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
               {i === 1 && <CgDice2 />}
               {i === 2 && <CgDice3 />}
               {i === 3 && <CgDice4 />}
-              {i === 4 && <CgDice5 />}
-              {i === 5 && <CgDice6 />}
             </SkillGroup>
           </li>
         ))}
@@ -61,22 +57,23 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
 
 const SkillGroup = ({ children, heading, text, isDarkMode, left }) => {
   return (
-    <li
-      className={`relative p-4 rounded-md drop-shadow-xl z-10 w-4/5 max-w-lg md:mt-10 nav-light ${
+    <article
+      className={`relative p-6 rounded-md drop-shadow-xl z-10 md:w-4/5 max-w-lg md:mt-10 nav-light ${
         left ? "mr-auto text-left" : "ml-auto text-right"
       }
       ${isDarkMode ? "light-shadow" : "dark-shadow"}
       `}
     >
       <div
-        className={`absolute -top-4 p-3 bg-secondary text-light rounded-full text-lg drop-shadow-xl ${
-          left ? "right-4" : "left-4"
-        }`}
+        className={`absolute -top-4 p-3 bg-secondary text-light rounded-full text-lg drop-shadow-xl
+         ${left ? "right-4" : "left-4"}`}
       >
         <div className="animate-spin">{children}</div>
       </div>
-      <strong className="heading--sub">{heading}</strong>
-      <p className="content--sub my-4 ">{text}</p>
-    </li>
+      <strong className="md:text-lg lg:text-xl font-semibold break-words">
+        {heading}
+      </strong>
+      <Markdown className="markdown-editor my-4">{text}</Markdown>
+    </article>
   );
 };

@@ -27,7 +27,7 @@ html {
   width: 0px !important;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   .scrollbar::-webkit-scrollbar {
     width: 8px !important;
   }
@@ -43,7 +43,7 @@ button:focus {
 }
 
 .styledText {
-  @apply uppercase text-5xl sm:text-6xl pr-4 lg:text-7xl xl:text-8xl font-black bg-contain w-min max-w-xs tracking-tighter sm:max-w-sm md:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-gradient-to-b from-primary to-secondary bg-clip-text;
+  @apply uppercase text-4xl sm:text-5xl lg:text-6xl pr-4 font-black bg-contain w-min max-w-xs tracking-tighter sm:max-w-sm md:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-gradient-to-b from-primary to-secondary bg-clip-text;
   background-size: 300% 300%;
   animation: shadowXL 5s infinite ease-in;
 }
@@ -83,7 +83,7 @@ button:focus {
 }
 
 .light-shadow {
-  filter: drop-shadow(0 1px 1rem rgba(255, 255, 255, 0.25));
+  filter: drop-shadow(0 1px 1rem rgba(255, 255, 255, 0.15));
 }
 
 .dark-shadow {
@@ -142,9 +142,12 @@ pre[class*="language-"] {
   @apply font-semibold;
 }
 
-.markdown-editor ol,
-.markdown-editor ul {
+.markdown-editor ol {
   @apply pl-4 list-inside list-decimal marker:font-semibold marker:text-secondary;
+}
+
+.markdown-editor ul {
+  @apply py-2 my-4 list-inside list-disc marker:text-secondary;
 }
 
 .markdown-editor li {
@@ -158,11 +161,11 @@ pre[class*="language-"] {
 }
 
 .heading--main {
-  @apply text-3xl sm:text-4xl md:text-5xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
+  @apply text-2xl sm:text-3xl md:text-4xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
 }
 
 .heading--secondary {
-  @apply text-xl md:text-2xl font-semibold max-w-xl;
+  @apply text-lg md:text-xl font-semibold max-w-xl;
 }
 
 .heading--sub {
@@ -171,7 +174,7 @@ pre[class*="language-"] {
 
 .content--main,
 .content--secondary {
-  @apply text-sm  leading-snug opacity-80;
+  @apply text-sm leading-snug opacity-80;
 }
 
 .content--main {

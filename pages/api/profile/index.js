@@ -28,9 +28,13 @@ export default async function userProfileHandler(req, res) {
       sanitizedData.value
     );
 
+    const clientReponse = { ...updatedProfile._doc };
+
+    delete clientReponse.password;
+
     return res.json({
       error: false,
-      data: updatedProfile._id,
+      data: clientReponse,
     });
   } catch (error) {
     return res.json({
