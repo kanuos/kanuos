@@ -7,16 +7,18 @@ export const Tag = ({ cb = null, tag, isActive = false }) => {
   const cls = {
     base: `uppercase font-semibold content--sub border-current border-2 py-0.5 px-3 rounded`,
     static() {
-      return `${this.base} ${isDarkMode ? "text-secondary" : "text-primary"}`;
+      return `${this.base} cursor-default`;
     },
     link() {
-      return `${
-        this.base
-      } transition-all hover:shadow-lg cursor-pointer bg-opacity-0 hover:bg-opacity-5 ${
-        isDarkMode
-          ? "opacity-50 hover:opacity-100 hover:text-secondary bg-secondary"
-          : "hover:text-primary bg-primary"
-      } ${isActive ? (isDarkMode ? "text-secondary" : "text-primary") : ""}`;
+      return `${this.base} transition-all cursor-pointer ${
+        isDarkMode ? "hover:text-secondary" : "hover:text-primary"
+      } ${
+        isActive
+          ? isDarkMode
+            ? "text-secondary"
+            : "text-primary"
+          : "text-current"
+      }`;
     },
   };
 

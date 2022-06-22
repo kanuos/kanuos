@@ -15,12 +15,12 @@ export const StyledHeader = ({
   ));
 
   return (
-    <header className="h-[95vh] w-full mx-auto relative mb-6 pt-4 md:pt-10 grid grid-rows-2 gap-4">
+    <header className="h-[95vh] w-full mx-auto relative mb-6 pt-4 md:pt-10 grid grid-rows-2">
       <section className="flex flex-col items-start px-8 md:px-10 h-auto w-full max-w-5xl mx-auto row-span-1">
         {children}
       </section>
       <div
-        className={`w-full row-span-1 h-auto flex flex-col items-end justify-around pointer-events-none max-w-7xl mx-auto`}
+        className={`w-full row-span-1 h-auto flex flex-col items-end justify-around pointer-events-none max-w-7xl mx-auto mt-auto`}
       >
         <h2
           className={`styledText ${
