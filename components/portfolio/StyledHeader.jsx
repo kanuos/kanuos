@@ -5,6 +5,7 @@ export const StyledHeader = ({
   children,
   styledText = "",
   showScroll = true,
+  isDarkMode = false,
 }) => {
   const styledContent = styledText.split(" ").map((text, i) => (
     <Fragment key={i}>
@@ -21,7 +22,13 @@ export const StyledHeader = ({
       <div
         className={`w-full row-span-1 h-auto flex flex-col items-end justify-around pointer-events-none max-w-7xl mx-auto`}
       >
-        <h2 className="styledText">{styledContent}</h2>
+        <h2
+          className={`styledText ${
+            isDarkMode ? "styledText--dark" : "styledText--light"
+          }`}
+        >
+          {styledContent}
+        </h2>
 
         {showScroll && (
           <div className="w-max mx-auto my-2">

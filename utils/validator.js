@@ -124,7 +124,7 @@ const DesignValidator = CommonFields.keys({
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        images: Joi.array().items(Joi.string().trim().uri().required()),
+        images: Joi.array().items(Joi.string().trim().uri().required()).max(3),
         title: Joi.string().trim().required(),
         about: Joi.string().trim().required(),
       }).required()
@@ -132,18 +132,15 @@ const DesignValidator = CommonFields.keys({
     .required()
     .min(1),
 
-  externalResources: Joi.array()
-    .required()
-    .items(
-      Joi.object({
-        _id: Joi.any(),
-        __v: Joi.any(),
-        poster: Joi.string().trim().uri().required(),
-        photographer: Joi.string().trim().required(),
-        courtesy: Joi.string().trim().uri().required(),
-      }).required()
-    )
-    .min(1),
+  externalResources: Joi.array().items(
+    Joi.object({
+      _id: Joi.any(),
+      __v: Joi.any(),
+      poster: Joi.string().trim().uri().required(),
+      photographer: Joi.string().trim().required(),
+      courtesy: Joi.string().trim().uri().required(),
+    }).required()
+  ),
 });
 
 const LoginValidator = Joi.object({

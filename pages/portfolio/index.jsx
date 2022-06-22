@@ -18,7 +18,6 @@ import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
 const PortfolioPage = ({ metadata }) => {
   metadata = JSON.parse(metadata);
   const { isDarkMode } = useContext(ThemeContext);
-  console.log(metadata);
   const validPortfolioMetadata = metadata?.portfolio?.length;
   if (!validPortfolioMetadata) {
     return (

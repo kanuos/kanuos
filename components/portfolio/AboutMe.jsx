@@ -2,28 +2,22 @@ import Markdown from "react-markdown";
 import { PORTFOLIO_LINKS } from "../../utils";
 import { CgDice1, CgDice2, CgDice3, CgDice4, CgFile } from "react-icons/cg";
 import { CTA } from "./CTA";
+import GridContent from "../detail/GridContent";
 
 export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
   return (
     <div
       id={PORTFOLIO_LINKS["about me"].name}
-      className="min-h-screen pt-20 flex flex-col max-w-5xl mx-auto px-8 md:px-10 items-start justify-center w-full snap-start"
+      className="min-h-screen pt-20 flex flex-col max-w-5xl mx-auto items-start justify-center w-full snap-start p-1"
     >
-      <div className="w-full max-w-3xl mx-auto">
-        <h2 className="heading--secondary mb-4 md:mb-8">
-          What I bring to the table
-        </h2>
-        <Markdown className="markdown-editor max-w-3xl mb-10">
-          {skills}
-        </Markdown>
-      </div>
+      <GridContent text={skills} heading="what i bring to the table" />
       <ul
         className={`flex flex-col w-full mx-auto gap-y-16 pt-16 after-line--center ${
           techStack.length > 1 ? "pb-48" : "pb-24"
         }`}
       >
         {techStack.map(({ heading, text }, i) => (
-          <li className="w-full" key={i}>
+          <li className="w-11/12 mx-auto" key={i}>
             <SkillGroup
               heading={heading}
               isDarkMode={isDarkMode}
@@ -70,7 +64,7 @@ const SkillGroup = ({ children, heading, text, isDarkMode, left }) => {
       >
         <div className="animate-spin">{children}</div>
       </div>
-      <strong className="md:text-lg lg:text-xl font-semibold break-words">
+      <strong className="heading--secondary font-semibold break-words">
         {heading}
       </strong>
       <Markdown className="markdown-editor my-4">{text}</Markdown>
