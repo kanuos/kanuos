@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 // import : internal
 import { PUBLIC_URLS } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import GridContent from "../detail/GridContent";
 
 // dynamic imports
 const DetailHeader = dynamic(() =>
@@ -60,50 +61,26 @@ export const ProjectDetailBody = ({ project = null }) => {
         desc={project.desc}
         date={project.date}
         tags={project.tags}
+        difficulty={project.difficulty}
       />
 
       <div className="relative h-full w-full">
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-5xl mx-auto">
-          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
-            Difficulty Level
-          </h2>
-          <p className={"content--secondary capitalize font-semibold"}>
-            {project.difficulty}
-          </p>
-        </section>
-
-        <section className="section-wrapper md:grid md:grid-cols-4 gap-x-6 max-w-5xl mx-auto mt-20">
-          <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
-            Prerequisites
-          </h2>
-          <div className="markdown-editor-wrapper md:col-start-2 md:col-end-5 text-justify">
-            <Markdown>{project.prerequisites}</Markdown>
-          </div>
-        </section>
+        <GridContent heading="prerequisites" text={project.prerequisites} />
+        <GridContent
+          heading="chapters"
+          text={`Project **${
+            project.title
+          }** is classified into **${LENGTH}** chapters for the better modulization. By default, all the chapters are marked as unread and you can toggle the completion status of each chapter by clicking on the button at the bottom of each chapter.
+              
+              ${
+                project.repo && Object.values(project.repo).every(Boolean)
+                  ? "You can find the link to the project's source code at the end of the chapters section."
+                  : ""
+              }`}
+        />
 
         <section className="section-wrapper my-20 max-w-5xl mx-auto">
-          <div className="max-w-5xl mx-auto w-full md:grid md:grid-cols-4 gap-x-6">
-            <h2 className="heading--sub uppercase md:col-start-1 md:col-end-2 mb-4">
-              Chapters
-            </h2>
-            <p className="md:col-start-2 md:col-end-5 content--secondary text-justify">
-              Project <strong className="font-semibold">{project.title}</strong>{" "}
-              is classified into{" "}
-              <strong className="font-semibold">{LENGTH}</strong> chapters for
-              the better modulization. By default, all the chapters are marked
-              as unread and you can toggle the completion status of each chapter
-              by clicking on the button at the bottom of each chapter.
-              {project.repo && Object.values(project.repo).every(Boolean) && (
-                <>
-                  <br />
-                  You can find the link to the project&apos;s source code at the
-                  end of the chapters section.
-                </>
-              )}
-            </p>
-          </div>
-
-          <ul className="flex flex-col items-start w-full gap-y-10 mx-auto my-8 md:col-span-full pt-8">
+          <ul className="flex flex-col items-start w-full gap-y-10 max-w-5xl mx-auto my-8 md:col-span-full pt-8">
             {project.chapters.map((chapter, i) => (
               <li
                 key={i}

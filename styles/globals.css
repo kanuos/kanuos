@@ -179,12 +179,16 @@ pre[class*="language-"] {
   @apply w-full mx-auto flex flex-col items-start justify-start mb-10 px-8 md:px-10;
 }
 
+.heading--primary {
+  @apply text-3xl sm:text-4xl md:text-5xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
+}
+
 .heading--main {
-  @apply text-2xl sm:text-3xl md:text-4xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
+  @apply text-xl md:text-2xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
 }
 
 .heading--secondary {
-  @apply text-lg md:text-xl font-semibold max-w-xl;
+  @apply text-base md:text-lg font-semibold max-w-xl;
 }
 
 .heading--sub {
