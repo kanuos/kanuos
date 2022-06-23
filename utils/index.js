@@ -124,9 +124,25 @@ export const PORTFOLIO_LINKS = {
   },
 };
 
+export const WORK_LINKS = {
+  portfolio: {
+    name: "portfolio",
+    url: PUBLIC_URLS.portfolio.url,
+    base: PUBLIC_URLS.portfolio.url,
+    type: "work",
+  },
+  "my website": {
+    name: "main-website",
+    url: PUBLIC_URLS.home.url,
+    base: PUBLIC_URLS.home.url,
+    type: "work",
+  },
+};
+
 export const NAV_METADATA = {
   public: PUBLIC_URLS,
   portfolio: PORTFOLIO_LINKS,
+  work: WORK_LINKS,
   admin: ADMIN_URLS,
 };
 

@@ -6,7 +6,6 @@ import Link from "next/link";
 // external imports
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
-import { GiBowenKnot } from "react-icons/gi";
 
 // internal imports
 import { ADMIN_ACCOUNT, NAV_METADATA, PUBLIC_URLS } from "../../utils";
@@ -256,17 +255,25 @@ const NavMenu = ({ type = "public" }) => {
                   {["main-website", "portfolio"].includes(
                     valueObj.name.toLowerCase()
                   ) ? (
-                    <div className="mt-20 mb-10 grid grid-cols-3 place-items-center gap-0 group">
+                    <div
+                      className={`grid grid-cols-3 place-items-center gap-0 group ${
+                        valueObj.type === "work" ? "" : "mt-20 mb-10"
+                      }`}
+                    >
                       <span className="transition-all opacity-0 w-full -translate-x-full group-hover:translate-x-0 col-span-1 h-0.5 bg-gradient-to-r from-primary to-secondary origin-left duration-150 group-hover:opacity-100"></span>
                       <Link href={valueObj.url}>
-                        <a className="text-sm uppercase tracking-wide col-start-2 col-end-3 w-max">
+                        <a
+                          className={`text-sm uppercase tracking-wide col-start-2 ${
+                            valueObj.type === "work"
+                              ? "col-end-4 pl-2 w-full text-left"
+                              : "col-end-3 w-fit"
+                          }`}
+                        >
                           {label.split("").map((el, k) => {
                             if (el !== " ") {
                               return (
                                 <span
-                                  className={`navStyleLink ${
-                                    isDarkMode ? "font-semibold" : "font-black"
-                                  }`}
+                                  className={`navStyleLink font-semibold`}
                                   key={k}
                                 >
                                   {el}
@@ -316,9 +323,7 @@ const NavMenu = ({ type = "public" }) => {
                             ></span>
                           </div>
                           <span
-                            className={`relative ${
-                              isDarkMode ? "font-semibold" : "font-black"
-                            } transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
+                            className={`relative font-semibold transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
                               valueObj.type !== "portfolio" &&
                               isActive(valueObj)
                                 ? ""

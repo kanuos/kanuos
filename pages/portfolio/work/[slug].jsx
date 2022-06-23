@@ -39,7 +39,7 @@ const PortfolioProjectDetailView = ({ data }) => {
     <PublicLayout
       metaTitle={`Sounak's work | ${titleCase(project.title)}`}
       content="Check out my full stack web developer portfolio website"
-      hideNav={true}
+      navType="work"
     >
       <header className="p-8 lg:px-10 overflow-hidden flex flex-col items-stretch gap-y-4 w-full max-w-5xl mx-auto">
         <div className="w-max">
