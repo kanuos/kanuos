@@ -34,8 +34,8 @@ const PublicLayout = (props) => {
           isDarkMode ? "bg-dark text-light" : "bg-light text-dark"
         } bg-opacity-90 h-screen flex flex-col items-stretch z-0 overflow-hidden ${
           showMenu
-            ? "grayscale brightness-50 pointer-events-none"
-            : "grayscale-0 brightness-100 pointer-events-auto"
+            ? "blur-[1.5px] grayscale brightness-50 pointer-events-none"
+            : "blur-0 grayscale-0 brightness-100 pointer-events-auto"
         } transition-all`}
       >
         <div

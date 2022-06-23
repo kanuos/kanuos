@@ -225,7 +225,11 @@ const NavMenu = ({ type = "public" }) => {
         exit="hide"
         animate={showMenu ? "show" : "hide"}
         className={`h-screen overflow-hidden w-full fixed right-0 top-0 z-30 sm:max-w-md sm:px-6 ${
-          showMenu ? "shadow-2xl" : "shadow-none"
+          showMenu
+            ? isDarkMode
+              ? "light-shadow"
+              : "dark-shadow"
+            : "shadow-none"
         } ${!isDarkMode ? "nav-light" : "nav-dark"}`}
       >
         <motion.section
