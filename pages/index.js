@@ -97,7 +97,7 @@ const HomePage = ({ allTags }) => {
               isDarkMode={isDarkMode}
               href={
                 tagAvailability
-                  ? `${PUBLIC_URLS.home.url}/#${SEARCH_ID}`
+                  ? `${PUBLIC_URLS.home.url}#${SEARCH_ID}`
                   : PUBLIC_URLS.portfolio.url
               }
               label={
