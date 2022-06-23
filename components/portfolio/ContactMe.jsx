@@ -48,7 +48,9 @@ export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
           />
         </section>
       </StyledHeader>
-      <Footer />
+      <div className="mt-20 mb-2 w-full">
+        <Footer />
+      </div>
     </div>
   );
 };
