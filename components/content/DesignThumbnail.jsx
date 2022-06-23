@@ -18,20 +18,20 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
         rotate: 0,
         transition: { type: "tween", stiffness: 200 },
       }}
-      className="max-h-[55vh] h-full text-dark bg-light sm:hover:scale-110 grid grid-rows-2 relative mx-auto max-w-md w-full lg:h-full flex-grow group p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md"
+      className="max-h-[25rem] h-full text-dark bg-light sm:hover:scale-110 grid grid-rows-2 relative mx-auto max-w-md w-full lg:h-full flex-grow p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md"
     >
       {/* admin tag */}
 
       {adminMode && (
         <p
-          className={`absolute top-4 left-0 w-fit mx-auto font-semibold content--sub text-center bg-dark text-light p-4 z-20`}
+          className={`absolute top-4 left-0 w-fit mx-auto font-semibold content--sub text-center bg-dark text-light p-4`}
         >
           {!data.isPublic ? "Private" : "Public"}
         </p>
       )}
 
       {/* card image */}
-      <figure className="relative w-full h-full row-start-1 col-span-full z-10 group-hover:row-end-2 row-end-3 rounded-md overflow-hidden transition">
+      <figure className="relative w-full h-full row-start-1 col-span-full z-10 row-end-2 rounded-md overflow-hidden transition">
         <Image
           loader={({ src, width }) => `${src}?w=${width}&q=100`}
           src={data.thumbnail}
@@ -44,7 +44,7 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
 
       {/* card details */}
       <section
-        className={`transition-all transform-gpu duration-300 delay-200 grid grid-rows-6 col-span-full px-4 pb-6 pt-2 row-start-2 row-end-full z-0 group-hover:opacity-100 group-hover:pointer-events-auto opacity-0 pointer-events-none`}
+        className={`transition-all transform-gpu duration-300 delay-200 grid grid-rows-6 col-span-full px-4 pb-6 pt-2 row-start-2 row-end-full`}
       >
         <div className="flex row-span-1 h-full items-center justify-start">
           <p className="text-xs">
@@ -60,12 +60,11 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
           {titleCase(data.desc).slice(0, 50) +
             (data.desc.length > 50 ? "..." : "")}
         </p>
-        <div className="w-max row-start-6 row-end-7 hover:-translate-y-1 drop-shadow-xl transition-all scale-90 origin-left">
+        <div className="w-max row-start-6 row-end-7 scale-90 origin-left">
           <CTA
             label={adminMode ? "View in Admin mode" : "Explore design"}
             href={designURL}
             isDarkMode={false}
-            isActive={true}
           />
         </div>
       </section>

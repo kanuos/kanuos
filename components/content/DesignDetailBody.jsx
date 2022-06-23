@@ -123,7 +123,7 @@ export const DesignDetailBody = ({ design = null }) => {
             } images/posters were used. A link to the artist's account is provided along with the images. I wholeheartedly thank them for letting me use their IP for my design.`}
           />
           <ul className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto gap-20 md:gap-x-6 md:gap-y-12 w-full px-6 place-items-center mt-20">
-            {[...design.externalResources, ...design.externalResources].map(
+            {design.externalResources.map(
               ({ poster, courtesy, photographer }, i) => (
                 <li
                   key={i}

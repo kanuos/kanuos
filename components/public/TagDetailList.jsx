@@ -162,7 +162,7 @@ const GroupList = ({ type, list, tag }) => {
       {type === CONTENT_TYPE.design.name && (
         <>
           {list.length < 4 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-20 p-4 w-full mb-20 max-w-7xl mx-auto justify-center items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-20 p-4 w-full mb-20 max-w-6xl mx-auto justify-center items-center">
               {list.map((design, i) => (
                 <DesignThumbnail
                   key={design._id}

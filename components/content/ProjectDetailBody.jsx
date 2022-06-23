@@ -68,15 +68,7 @@ export const ProjectDetailBody = ({ project = null }) => {
         <GridContent heading="prerequisites" text={project.prerequisites} />
         <GridContent
           heading="chapters"
-          text={`Project **${
-            project.title
-          }** is classified into **${LENGTH}** chapters for the better modulization. By default, all the chapters are marked as unread and you can toggle the completion status of each chapter by clicking on the button at the bottom of each chapter.
-              
-              ${
-                project.repo && Object.values(project.repo).every(Boolean)
-                  ? "You can find the link to the project's source code at the end of the chapters section."
-                  : ""
-              }`}
+          text={`Project **${project.title}** is classified into **${LENGTH}** chapters for the better modulization. By default, all the chapters are marked as unread and you can toggle the completion status of each chapter by clicking on the button at the bottom of each chapter.`}
         />
 
         <section className="section-wrapper my-20 max-w-5xl mx-auto">

@@ -11,9 +11,9 @@ function MyApp({ Component, pageProps, router }) {
       <AnimatePresence exitBeforeEnter>
         <motion.div
           key={router.route}
-          initial={{ x: "200", opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: "-200", opacity: 0 }}
+          initial={{ opacity: 0.25 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0.25 }}
           transition={{ type: "tween", stiffness: 200 }}
         >
           <NavContextProvider>
