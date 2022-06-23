@@ -43,7 +43,7 @@ button:focus {
 }
 
 .styledText {
-  @apply uppercase text-5xl md:text-6xl xl:text-8xl pr-4 font-black bg-contain w-min max-w-sm tracking-tighter md:max-w-md xl:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
+  @apply uppercase text-5xl md:text-6xl xl:text-7xl pr-4 font-black bg-contain w-min max-w-sm tracking-tighter md:max-w-md xl:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
   background-size: 200% 200%;
   animation: shadowXL 8s infinite linear;
 }

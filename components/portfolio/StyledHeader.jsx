@@ -20,7 +20,9 @@ export const StyledHeader = ({
         {children}
       </section>
       <div
-        className={`w-full row-span-1 h-auto flex flex-col items-end justify-around pointer-events-none max-w-7xl mx-auto mt-auto`}
+        className={`w-full row-span-1 h-auto flex flex-col items-end ${
+          showScroll ? "justify-around gap-y-10" : "justify-start"
+        } pointer-events-none max-w-7xl mx-auto mt-auto`}
       >
         <h2
           className={`styledText ${

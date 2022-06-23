@@ -32,8 +32,8 @@ const ErrorPage = () => {
             &lt;&nbsp;Go back
           </button>
           <div className="flex items-center justify-start gap-x-px">
-            <BsEmojiDizzy className="heading--main" />
-            <h1 className="heading--main">ops</h1>
+            <BsEmojiDizzy className="heading--primary" />
+            <h1 className="heading--primary">ops</h1>
           </div>
           <p className="content--main text-justify mb-6 mt-2">
             It seems that the page you are looking for doesn&apos;t exist or is

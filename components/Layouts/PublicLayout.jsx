@@ -11,13 +11,13 @@ import bg from "../../public/hero.webp";
 const NavBar = dynamic(() => import("../public/Nav").then((m) => m.NavBar));
 
 const PublicLayout = (props) => {
-  const { metaTitle, metaDesc, navType, children } = props;
+  const { metaTitle, metaDesc, navType, children, hideNav = false } = props;
   const { isDarkMode } = useContext(ThemeContext);
   const { showMenu } = useContext(NavContext);
   return (
     <>
       <HeadComponent title={metaTitle} content={metaDesc} />
-      <NavBar type={navType} />
+      {!hideNav && <NavBar type={navType} />}
       <div className="fixed top-0 left-0 right-0 h-screen w-screen -z-10">
         <div className="relative w-full h-full block">
           <Image

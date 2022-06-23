@@ -2,8 +2,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { CTA } from "./CTA";
+import { PORTFOLIO_PROJECT_PATH } from "../../utils";
 
-export const WorkThumb = ({ project, i, total, isDarkMode }) => {
+export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
   const variants = {
     projectLeft: {
       show: {
@@ -66,6 +67,10 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
 
   const [hovered, setHovered] = useState(false);
 
+  if (!project) {
+    return <></>;
+  }
+
   return (
     <motion.div
       viewport={{ once: true }}
@@ -85,14 +90,14 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
           (i % 2 === 0 ? "md:flex-row-reverse mr-auto" : "md:flex-row ml-auto")
         }
       >
-        <motion.section className="flex flex-col mt-8 max-w-md px-8 sm:px-10">
+        <motion.section className="flex flex-col mt-8 max-w-md px-8 md:px-10">
           <motion.legend className="text-xs px-2">
             <small
               className={`${
                 hovered ? "text-primary" : "text-current opacity-60"
               } font-semibold transition-all`}
             >
-              Project {i + 1} of {total}
+              {caption}
             </small>
           </motion.legend>
           <motion.h3
@@ -119,12 +124,12 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
           whileInView="show"
           initial="hide"
           viewport={{ once: true }}
-          className={`h-[35vh] relative overflow-hidden filter sm:rounded-md z-10 drop-shadow-2xl shadow-2xl w-full max-w-xl grow ${
+          className={`h-[35vh] relative overflow-hidden filter rounded-md z-10 drop-shadow-2xl shadow-2xl w-11/12 md:w-full max-w-xl grow ${
             hovered ? "grayscale-0" : "grayscale"
           }`}
         >
           <Image
-            className={`h-full w-full max-w-2xl object-cover block  filter transition-all`}
+            className={`h-full w-full max-w-2xl object-cover block filter transition-all`}
             loader={({ src, width }) => `${src}?w=${width}&q=100`}
             priority={true}
             src={project.design.thumbnail}
@@ -135,7 +140,7 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
       </motion.article>
 
       <motion.div
-        className={`w-fit my-10 px-8 sm:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
+        className={`w-fit my-10 px-8 md:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
           hovered
             ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
             : "opacity-0 scale-0 pointer-events-none translate-y-full"
@@ -143,13 +148,10 @@ export const WorkThumb = ({ project, i, total, isDarkMode }) => {
       >
         <CTA
           label="View details"
-          btnMode={true}
-          cb={() => null}
+          href={PORTFOLIO_PROJECT_PATH + project.project.slug}
           isDarkMode={isDarkMode}
         />
       </motion.div>
     </motion.div>
   );
 };
-
-// TODO: launch portfolio project detail on CB

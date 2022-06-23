@@ -40,7 +40,7 @@ export const Showcase = ({ works = [], isDarkMode = false }) => {
               i={i}
               key={project._id}
               isDarkMode={isDarkMode}
-              total={works.length}
+              caption={`Project ${i + 1} of ${works.length}`}
             />
           ))}
         </motion.section>

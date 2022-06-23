@@ -73,17 +73,18 @@ const HomePage = ({ allTags }) => {
     setStatus(STATUSES.initial);
   }
 
+  const SEARCH_ID = "available-tags";
+  const tagAvailability = Boolean(allTags.length);
+
   return (
     <>
       <PublicLayout metaTitle="Welcome to Sounak's website">
         <StyledHeader
-          styledText={
-            Boolean(allTags.length) ? "search by tags" : "sounak mukherjee"
-          }
+          styledText={tagAvailability ? "search by tags" : "sounak mukherjee"}
           isDarkMode={isDarkMode}
           showScroll={allTags.length > 0}
         >
-          <h1 className="heading--main">Hello world!</h1>
+          <h1 className="heading--primary">Hello world!</h1>
           <span className="text-sm md:text-base font-semibold my-2">
             I&apos;m Sounak. Welcome to my tech journal
           </span>
@@ -94,23 +95,28 @@ const HomePage = ({ allTags }) => {
           <div className="mt-10">
             <CTA
               isDarkMode={isDarkMode}
-              href={PUBLIC_URLS.portfolio.url}
-              label="My Portfolio"
+              href={
+                tagAvailability
+                  ? `${PUBLIC_URLS.home.url}/#${SEARCH_ID}`
+                  : PUBLIC_URLS.portfolio.url
+              }
+              label={
+                tagAvailability
+                  ? "Available list of tags"
+                  : "Check out my portfolio"
+              }
             />
           </div>
         </StyledHeader>
-        {Boolean(allTags.length) && (
+        {tagAvailability && (
           <>
-            <div className="w-full p-10 mb-40 max-w-5xl mx-auto">
+            <div id={SEARCH_ID} className="w-full p-10 mb-40 max-w-5xl mx-auto">
               {status === STATUSES.initial && (
                 <>
                   <div className="flex flex-col items-start w-full">
-                    <h2 className=" font-semibold capitalize">
-                      available tags
+                    <h2 className="heading--sub font-semibold">
+                      Total tags : {allTags.length}
                     </h2>
-                    <p className="text-xs">
-                      <small>Total tags : {allTags.length}</small>
-                    </p>
                   </div>
                   <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 w-full">
                     {allTags.map((tag) => (

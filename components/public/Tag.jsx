@@ -10,7 +10,9 @@ export const Tag = ({ cb = null, tag, isActive = false }) => {
       return `${this.base} cursor-default`;
     },
     link() {
-      return `${this.base} transition-all cursor-pointer ${
+      return `${
+        this.base
+      } transition-all cursor-pointer hover:-translate-y-0.5 hover:scale-105 ${
         isDarkMode ? "hover:text-secondary" : "hover:text-primary"
       } ${
         isActive

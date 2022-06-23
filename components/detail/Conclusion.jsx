@@ -1,6 +1,6 @@
 import { PageLink } from "../portfolio/PageLink";
 import GridContent from "./GridContent";
-import { BsLink45Deg, BiGitBranch } from "react-icons/bs";
+import { BiCodeAlt, BiGitBranch } from "react-icons/bi";
 
 export const Conclusion = ({ heading, text, repo, demo }) => {
   return (
@@ -23,7 +23,7 @@ export const Conclusion = ({ heading, text, repo, demo }) => {
         {demo && Object.values(demo).every(Boolean) && (
           <section className="flex flex-col gap-y-2 md:col-start-2 md:col-end-5">
             <div className="flex items-center justify-start gap-1">
-              <BsLink45Deg className=" text-xs" />
+              <BiCodeAlt className=" text-xs" />
               <h2 className="heading--sub uppercase">
                 <small>{demo.label}</small>
               </h2>
