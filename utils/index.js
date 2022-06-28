@@ -89,6 +89,12 @@ export const ADMIN_URLS = {
     base: ADMIN_PATH + "/tags",
     type: "admin",
   },
+  client: {
+    name: "client-home",
+    url: "/",
+    base: "/",
+    type: "admin",
+  },
 };
 
 export const SOCIAL = {

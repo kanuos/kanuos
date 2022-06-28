@@ -11,6 +11,7 @@ export const CTA = ({
   isActive = false,
   btnType = "button",
   tiny = false,
+  scroll = false,
 }) => {
   const wrapper = `text-xs ${
     tiny ? "" : "lg:text-sm"
@@ -57,7 +58,7 @@ export const CTA = ({
   }
 
   return (
-    <Link href={href}>
+    <Link href={href} scroll={scroll}>
       <a className={wrapper}>
         <span className={content}>{label}</span>
         <span className={style}></span>

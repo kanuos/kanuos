@@ -86,104 +86,49 @@ const NavMenu = ({ type = "public" }) => {
       show: {
         x: 0,
         transition: {
-          type: "tween",
-          delayChildren: 1,
-          staggerChildren: 0.5,
+          type: "linear",
           when: "beforeChildren",
         },
       },
-      hide: {
+      exit: {
         x: "100vw",
         transition: {
-          type: "tween",
-          duration: 0.5,
-        },
-      },
-      exit: {
-        x: "-100vw",
-        transition: {
-          when: "afterChildren",
-          type: "tween",
-          duration: 0.5,
-        },
-      },
-    },
-    section: {
-      show: {
-        scale: 1,
-        y: "0",
-        transition: {
-          type: "tween",
-          when: "beforeChildren",
-        },
-      },
-      hide: {
-        scale: 0,
-        rotate: 10,
-        y: "100vh",
-        transition: {
-          type: "tween",
-          duration: 0.5,
-        },
-      },
-      exit: {
-        scale: 0,
-        rotate: 10,
-        y: "-100vh",
-        transition: {
-          type: "tween",
-          when: "afterChildren",
-          duration: 0.5,
+          type: "linear",
         },
       },
     },
     mainUL: {
       show: {
-        scale: [0.75, 1],
+        opacity: 1,
         transition: {
           type: "tween",
-          delay: 0.5,
-          delayChildren: 0.25,
           staggerChildren: 0.25,
           when: "beforeChildren",
         },
       },
-      hide: {
-        scale: 0,
-        transition: {
-          type: "spring",
-          duration: 0.5,
-        },
-      },
       exit: {
-        scale: 0,
+        opacity: 0,
         transition: {
           type: "spring",
-          duration: 0.5,
           when: "afterChildren",
         },
       },
     },
     li: {
       show: {
+        opacity: 1,
+        y: -10,
+        scale: 1,
         transition: {
-          type: "spring",
-          duration: 0.25,
-          when: "beforeChildren",
-        },
-      },
-      hide: {
-        transition: {
-          type: "tween",
-          duration: 0.5,
+          type: "linear",
         },
       },
       exit: {
-        rotate: 10,
+        opacity: 0,
+        y: 0,
+        scale: 0,
         transition: {
-          type: "tween",
-          duration: 0.5,
-          when: "afterChildren",
+          type: "spring",
         },
       },
     },
@@ -221,10 +166,10 @@ const NavMenu = ({ type = "public" }) => {
       <motion.section
         id="nav-menu"
         variants={variants.container}
-        initial="hide"
-        exit="hide"
-        animate={showMenu ? "show" : "hide"}
-        className={`h-screen overflow-hidden w-full fixed right-0 top-0 z-30 sm:max-w-md sm:px-6 ${
+        initial="exit"
+        exit="exit"
+        animate={showMenu ? "show" : "exit"}
+        className={`h-screen overflow-hidden w-full flex flex-col items-center justify-between py-10 fixed right-0 top-0 z-30 sm:max-w-md ${
           showMenu
             ? isDarkMode
               ? "light-shadow"
@@ -232,118 +177,112 @@ const NavMenu = ({ type = "public" }) => {
             : "shadow-none"
         } ${!isDarkMode ? "nav-light" : "nav-dark"}`}
       >
-        <motion.section
-          animate={showMenu ? "show" : "hide"}
-          variants={variants.section}
-          exit="exit"
-          className="w-full mx-auto h-[82vh] my-auto pb-10 grid place-items-center z-40 absolute inset-0"
+        <motion.ul
+          variants={variants.mainUL}
+          className={`w-full flex flex-col justify-center h-3/4 gap-y-8 items-start`}
         >
-          <motion.ul
-            variants={variants.mainUL}
-            animate={showMenu ? "show" : "hide"}
-            exit="hide"
-            className={`w-full flex flex-col justify-center h-full gap-y-8 items-start`}
-          >
-            {Object.entries(URLS).map(([key, valueObj]) => {
-              const label = valueObj.name.replace("-", " ");
+          {Object.entries(URLS).map(([key, valueObj]) => {
+            const label = valueObj.name.replace("-", " ");
 
-              return (
-                <motion.li
-                  variants={variants.li}
-                  animate={showMenu ? "show" : "hide"}
-                  exit="hide"
-                  onClick={toggleNavMenu}
-                  key={key}
-                  className="w-full"
-                >
-                  {["main-website", "portfolio"].includes(
-                    valueObj.name.toLowerCase()
-                  ) ? (
-                    <div
-                      className={`grid grid-cols-3 place-items-center gap-0 group ${
-                        valueObj.type === "work" ? "" : "mt-20 mb-10"
-                      }`}
-                    >
-                      <span className="transition-all opacity-0 w-full -translate-x-full group-hover:translate-x-0 col-span-1 h-0.5 bg-gradient-to-r from-primary to-secondary origin-left duration-150 group-hover:opacity-100"></span>
-                      <Link href={valueObj.url}>
-                        <a
-                          className={`text-sm uppercase tracking-wide col-start-2 ${
-                            valueObj.type === "work"
-                              ? "col-end-4 pl-2 w-full text-left"
-                              : "col-end-3 w-fit"
-                          }`}
-                        >
-                          {label.split("").map((el, k) => {
-                            if (el !== " ") {
-                              return (
-                                <span
-                                  className={`navStyleLink font-semibold`}
-                                  key={k}
-                                >
-                                  {el}
-                                </span>
-                              );
-                            }
+            return (
+              <motion.li
+                variants={variants.li}
+                onClick={toggleNavMenu}
+                key={key}
+                className="w-full"
+              >
+                {["main-website", "portfolio"].includes(
+                  valueObj.name.toLowerCase()
+                ) ? (
+                  <div
+                    className={`grid grid-cols-3 place-items-center gap-0 group ${
+                      valueObj.type === "work" ? "" : "my-20"
+                    }`}
+                  >
+                    <span className="transition-all opacity-0 w-full -translate-x-full group-hover:translate-x-0 col-span-1 h-0.5 bg-gradient-to-r from-primary to-secondary origin-left duration-150 group-hover:opacity-100"></span>
+                    <Link href={valueObj.url}>
+                      <a
+                        className={`text-sm uppercase tracking-wide col-start-2 w-full ${
+                          valueObj.type === "work"
+                            ? "col-end-4 pl-2 text-left"
+                            : "col-end-3 pl-6"
+                        }`}
+                      >
+                        {label.split("").map((el, k) => {
+                          if (el !== " ") {
                             return (
-                              <span className="text-transparent" key={k}>
+                              <span
+                                className={`navStyleLink font-semibold`}
+                                key={k}
+                              >
                                 {el}
                               </span>
                             );
-                          })}
-                        </a>
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-3 place-items-center gap-0">
-                      <Link
-                        scroll={valueObj.type !== "portfolio"}
-                        href={valueObj.url}
+                          }
+                          return (
+                            <span className="text-transparent" key={k}>
+                              {el}
+                            </span>
+                          );
+                        })}
+                      </a>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-3 place-items-center gap-0">
+                    <Link
+                      scroll={valueObj.type !== "portfolio"}
+                      href={valueObj.url}
+                    >
+                      <a
+                        className={`text-sm tracking-wide col-start-2 col-end-3 w-full flex items-center gap-x-4 transition-all ${
+                          valueObj.type !== "portfolio" && isActive(valueObj)
+                            ? "opacity-100"
+                            : "opacity-40 hover:opacity-100"
+                        } `}
                       >
-                        <a
-                          className={`text-sm tracking-wide col-start-2 col-end-3 w-full flex items-center gap-x-4 transition-all ${
+                        <div className="flex flex-col items-center justify-center animate-spin gap-px">
+                          <span
+                            className={
+                              (valueObj.type !== "portfolio" &&
+                              isActive(valueObj)
+                                ? "bg-secondary"
+                                : "bg-transparent") +
+                              " text-lg h-2 w-2 rounded-full block"
+                            }
+                          ></span>
+                          <span
+                            className={
+                              (valueObj.type !== "portfolio" &&
+                              isActive(valueObj)
+                                ? "bg-primary"
+                                : "bg-transparent") +
+                              " text-lg h-2 w-2 rounded-full block"
+                            }
+                          ></span>
+                        </div>
+                        <span
+                          className={`relative font-semibold transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
                             valueObj.type !== "portfolio" && isActive(valueObj)
-                              ? "opacity-100"
-                              : "opacity-40 hover:opacity-100"
+                              ? ""
+                              : "after:bg-secondary after:w-0 hover:after:w-6 after:transition-all after:origin-left"
                           } `}
                         >
-                          <div className="flex flex-col items-center justify-center animate-spin gap-px">
-                            <span
-                              className={
-                                (valueObj.type !== "portfolio" &&
-                                isActive(valueObj)
-                                  ? "bg-secondary"
-                                  : "bg-transparent") +
-                                " text-lg h-2 w-2 rounded-full block"
-                              }
-                            ></span>
-                            <span
-                              className={
-                                (valueObj.type !== "portfolio" &&
-                                isActive(valueObj)
-                                  ? "bg-primary"
-                                  : "bg-transparent") +
-                                " text-lg h-2 w-2 rounded-full block"
-                              }
-                            ></span>
-                          </div>
-                          <span
-                            className={`relative font-semibold transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
-                              valueObj.type !== "portfolio" &&
-                              isActive(valueObj)
-                                ? ""
-                                : "after:bg-secondary after:w-0 hover:after:w-6 after:transition-all after:origin-left"
-                            } `}
-                          >
-                            {label?.toUpperCase()}
-                          </span>
-                        </a>
-                      </Link>
-                    </div>
-                  )}
-                </motion.li>
-              );
-            })}
-          </motion.ul>
+                          {label?.toUpperCase()}
+                        </span>
+                      </a>
+                    </Link>
+                  </div>
+                )}
+              </motion.li>
+            );
+          })}
+        </motion.ul>
+
+        <motion.ul
+          variants={variants.li}
+          className="mt-auto flex items-center justify-around gap-4"
+        >
           {type === "admin" && (
             <CTA
               btnMode={true}
@@ -353,16 +292,13 @@ const NavMenu = ({ type = "public" }) => {
               isActive={true}
             />
           )}
-
-          <div className="mt-auto">
-            <CTA
-              btnMode={true}
-              cb={toggleTheme}
-              label="Toggle theme"
-              isDarkMode={isDarkMode}
-            />
-          </div>
-        </motion.section>
+          <CTA
+            btnMode={true}
+            cb={toggleTheme}
+            label="Toggle theme"
+            isDarkMode={isDarkMode}
+          />
+        </motion.ul>
       </motion.section>
     </AnimatePresence>
   );

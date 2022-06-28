@@ -1,5 +1,6 @@
 // Portfolio page
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -20,13 +21,16 @@ import { PUBLIC_URLS, titleCase } from "../../../utils";
 
 const PortfolioProjectDetailView = ({ data }) => {
   const { isDarkMode } = useContext(ThemeContext);
+  const pageTop = useRef();
+  const router = useRouter();
+
   const {
     currentWork: { project, design, metadata },
     prev,
     next,
   } = JSON.parse(data);
 
-  const aboutProject = `${metadata.metadata}.
+  const aboutProject = `${metadata}.
   
   The tech-stack mostly comprises the following :
   ${project.techStack.map((el) => `\n- **${el.text}**`).join(" ")}`;
@@ -35,13 +39,22 @@ const PortfolioProjectDetailView = ({ data }) => {
     return <></>;
   }
 
+  useEffect(() => {
+    pageTop.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [router.query.slug]);
+
   return (
     <PublicLayout
       metaTitle={`Sounak's work | ${titleCase(project.title)}`}
       content="Check out my full stack web developer portfolio website"
       navType="work"
     >
-      <header className="p-8 lg:px-10 overflow-hidden flex flex-col items-stretch gap-y-4 w-full max-w-5xl mx-auto">
+      <header
+        ref={pageTop}
+        className="p-8 lg:px-10 overflow-hidden flex flex-col items-stretch gap-y-4 w-full max-w-5xl mx-auto"
+      >
         <div className="w-max">
           <PageLink
             href={PUBLIC_URLS.portfolio.url}
@@ -73,7 +86,7 @@ const PortfolioProjectDetailView = ({ data }) => {
             <small>tags</small>
           </h3>
           <ul className="flex flex-wrap gap-4 items-center justify-start">
-            {[...new Set([...project.tags, ...design.tags])].map((tag) => (
+            {project.tags.map((tag) => (
               <li key={tag._id} className="w-max">
                 <Tag tag={tag} />
               </li>
@@ -82,7 +95,7 @@ const PortfolioProjectDetailView = ({ data }) => {
         </section>
       </header>
 
-      <figure className="relative h-auto w-full rounded-lg overflow-hidden p-8 lg:p-10 pb-20 lg:pb-32 after-line--center max-w-7xl mx-auto">
+      <figure className="relative h-auto w-full rounded-lg overflow-hidden p-8 lg:p-10 pb-28 lg:pb-36 after-line--center max-w-7xl mx-auto">
         <Image
           src={design.thumbnail}
           layout="responsive"
@@ -119,7 +132,7 @@ const PortfolioProjectDetailView = ({ data }) => {
                 key={i}
                 isDarkMode={isDarkMode}
                 project={el}
-                i={i + 1}
+                i={i}
                 caption={i === 0 ? "Previous" : "Next"}
               />
             ))}

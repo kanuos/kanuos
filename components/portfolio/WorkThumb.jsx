@@ -162,6 +162,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
           tiny={true}
           href={PORTFOLIO_PROJECT_PATH + project.project.slug}
           isDarkMode={isDarkMode}
+          scroll={true}
         />
       </motion.div>
     </motion.div>
