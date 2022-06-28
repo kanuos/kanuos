@@ -90,7 +90,14 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
           (i % 2 === 0 ? "md:flex-row-reverse mr-auto" : "md:flex-row ml-auto")
         }
       >
-        <motion.section className="flex flex-col mt-8 max-w-md px-8 md:px-10">
+        <motion.section
+          className={
+            "flex flex-col mt-8 max-w-md px-8 md:px-10 " +
+            (i % 2 === 0
+              ? "items-start mr-auto md:mr-0"
+              : "items-end ml-auto md:ml-0 md:items-start")
+          }
+        >
           <motion.legend className="text-xs px-2">
             <small
               className={`${
@@ -103,6 +110,8 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
           <motion.h3
             variants={variants.content}
             className={`text-2xl lg:text-3xl mt-1 mb-3 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center tracking-tight capitalize bg-gradient-to-r ${
+              i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
+            } ${
               isDarkMode ? "from-light" : "from-dark"
             } via-primary to-secondary bg-clip-text ${
               hovered ? "text-transparent" : "text-current"
@@ -112,8 +121,8 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
           </motion.h3>
           <motion.p
             className={`px-2 text-sm tracking-tighter w-full max-w-sm ${
-              hovered ? "opacity-90" : "opacity-60"
-            } `}
+              i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
+            } ${hovered ? "opacity-90" : "opacity-60"} `}
           >
             {project.project.desc}
           </motion.p>
@@ -124,7 +133,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
           whileInView="show"
           initial="hide"
           viewport={{ once: true }}
-          className={`h-[35vh] relative overflow-hidden filter rounded-md z-10 drop-shadow-2xl shadow-2xl w-11/12 md:w-full max-w-xl grow ${
+          className={`h-[35vh] relative overflow-hidden filter rounded-md z-10 drop-shadow-2xl shadow-2xl w-11/12 mx-auto md:mx-0 md:w-full max-w-xl grow ${
             hovered ? "grayscale-0" : "grayscale"
           }`}
         >
@@ -141,6 +150,8 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
 
       <motion.div
         className={`w-fit my-10 px-8 md:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
+          i % 2 === 0 ? "mr-auto md:" : "ml-auto md:"
+        } ${
           hovered
             ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
             : "opacity-0 scale-0 pointer-events-none translate-y-full"
@@ -148,6 +159,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
       >
         <CTA
           label="View details"
+          tiny={true}
           href={PORTFOLIO_PROJECT_PATH + project.project.slug}
           isDarkMode={isDarkMode}
         />

@@ -14,7 +14,7 @@ export const PublicHeader = ({
           Admin Mode
         </small>
       )}
-      <h1 className="heading--main">{title}</h1>
+      <h1 className="heading--primary">{title}</h1>
       <p className="content--main my-6">{desc}</p>
       {searchMode ? (
         <>

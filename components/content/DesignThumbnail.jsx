@@ -18,7 +18,7 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
         rotate: 0,
         transition: { type: "tween", stiffness: 200 },
       }}
-      className="max-h-[25rem] h-full text-dark bg-light sm:hover:scale-110 grid grid-rows-2 relative mx-auto max-w-md w-full lg:h-full flex-grow p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md"
+      className="max-h-[25rem] h-full text-dark bg-light sm:hover:scale-110 grid grid-rows-2 relative mx-auto max-w-md w-full lg:h-full flex-grow p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md transition-shadow"
     >
       {/* admin tag */}
 
@@ -30,21 +30,9 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
         </p>
       )}
 
-      {/* card image */}
-      <figure className="relative w-full h-full row-start-1 col-span-full z-10 row-end-2 rounded-md overflow-hidden transition">
-        <Image
-          loader={({ src, width }) => `${src}?w=${width}&q=100`}
-          src={data.thumbnail}
-          layout="fill"
-          objectFit="cover"
-          className="transition-all"
-          alt={data.title + "'s thumbnail"}
-        />
-      </figure>
-
       {/* card details */}
       <section
-        className={`transition-all transform-gpu duration-300 delay-200 grid grid-rows-6 col-span-full px-4 pb-6 pt-2 row-start-2 row-end-full`}
+        className={`transition-all transform-gpu duration-300 delay-200 grid grid-rows-6 col-span-full px-4 pb-6 pt-2 row-start-2 row-end-full peer`}
       >
         <div className="flex row-span-1 h-full items-center justify-start">
           <p className="text-xs">
@@ -60,14 +48,25 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
           {titleCase(data.desc).slice(0, 50) +
             (data.desc.length > 50 ? "..." : "")}
         </p>
-        <div className="w-max row-start-6 row-end-7 scale-90 origin-left">
+        <div className="w-max row-start-6 row-end-7">
           <CTA
+            tiny={true}
             label={adminMode ? "View in Admin mode" : "Explore design"}
             href={designURL}
             isDarkMode={false}
           />
         </div>
       </section>
+      {/* card image */}
+      <figure className="relative w-full h-full row-start-1 col-span-full row-end-2 rounded-md overflow-hidden transition md:grayscale md:hover:grayscale-0 md:peer-hover:grayscale-0">
+        <Image
+          loader={({ src, width }) => `${src}?w=${width}&q=100`}
+          src={data.thumbnail}
+          layout="fill"
+          objectFit="cover"
+          alt={data.title + "'s thumbnail"}
+        />
+      </figure>
     </motion.article>
   );
 };
