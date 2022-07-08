@@ -14,6 +14,10 @@ module.exports = {
         primary: "#FF0066",
         secondary: "#00BFB3",
       },
+      fontFamily: {
+        title: ["Cabin Sketch", "monospace"],
+        sans: ["Montserrat", "sans-serif"],
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

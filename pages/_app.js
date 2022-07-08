@@ -1,4 +1,3 @@
-import "../styles/fonts.css";
 import "../styles/globals.css";
 import "prismjs/themes/prism-okaidia.css";
 import ThemeContextProvider from "../contexts/ThemeContext";
@@ -14,7 +13,7 @@ function MyApp({ Component, pageProps, router }) {
           initial={{ opacity: 0.25 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0.25 }}
-          transition={{ type: "tween", stiffness: 200 }}
+          transition={{ type: "linear", stiffness: 200 }}
         >
           <NavContextProvider>
             <Component {...pageProps} />

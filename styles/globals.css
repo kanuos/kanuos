@@ -6,6 +6,7 @@
 *::after,
 *::before {
   font-family: "Montserrat", sans-serif;
+  font-weight: 500;
 }
 
 *::selection {
@@ -43,7 +44,7 @@ button:focus {
 }
 
 .styledText {
-  @apply uppercase text-5xl md:text-6xl xl:text-7xl pr-4 font-black bg-contain w-min max-w-sm tracking-tighter md:max-w-md xl:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
+  @apply uppercase text-6xl xl:text-7xl font-title pr-4 font-black bg-contain w-min max-w-sm tracking-tight md:max-w-md xl:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
   background-size: 200% 200%;
   animation: shadowXL 8s infinite linear;
 }
@@ -102,11 +103,12 @@ button:focus {
 }
 
 .light-shadow {
-  filter: drop-shadow(0 1px 1rem rgba(255, 255, 255, 0.15));
+  filter: drop-shadow(0 20px 13px rgb(0 191 179 / 0.05))
+    drop-shadow(0 8px 5px rgb(255 255 255 / 0.05));
 }
 
 .dark-shadow {
-  filter: drop-shadow(0 0 1rem rgba(23, 23, 56, 0.125));
+  @apply drop-shadow-xl;
 }
 
 code[class*="language-"],
@@ -180,7 +182,7 @@ pre[class*="language-"] {
 }
 
 .heading--primary {
-  @apply text-3xl sm:text-4xl md:text-5xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
+  @apply text-5xl md:text-7xl font-bold my-4 w-fit block max-w-sm md:max-w-xl leading-[.85] font-title selection:bg-transparent selection:text-primary;
 }
 
 .heading--main {
