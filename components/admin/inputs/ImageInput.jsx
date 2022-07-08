@@ -23,7 +23,7 @@ export const ImageInput = ({
 
   return (
     <section className={`col-span-full w-full flex flex-col items-start gap-2`}>
-      <label htmlFor={name} className="content--sub capitalize font-semibold">
+      <label htmlFor={name} className="content--sub capitalize font-bold">
         {name}
       </label>
 
@@ -32,7 +32,7 @@ export const ImageInput = ({
           <button
             type="button"
             onClick={() => setPreviewMode((prev) => !prev)}
-            className="absolute right-2 -top-6 text-xs text-right opacity-25 font-semibold hover:opacity-100 hover:text-primary transition-all"
+            className="absolute right-2 -top-6 text-xs text-right opacity-25 font-bold hover:opacity-100 hover:text-primary transition-all"
           >
             <small>Toggle to {previewMode ? "URL" : "Preview"} Mode</small>
           </button>
@@ -52,7 +52,7 @@ export const ImageInput = ({
               />
             </div>
             {!isValid && (
-              <p className="content--sub font-semibold text-primary text-center">
+              <p className="content--sub font-bold text-primary text-center">
                 Invalid image URL
               </p>
             )}

@@ -17,7 +17,7 @@ export const MarkdownInput = ({
         split ? "" : "col-span-full"
       } w-full flex flex-col items-start gap-2`}
     >
-      <label htmlFor={name} className="content--sub capitalize font-semibold">
+      <label htmlFor={name} className="content--sub capitalize font-bold">
         {name}
       </label>
 
@@ -25,7 +25,7 @@ export const MarkdownInput = ({
         <button
           type="button"
           onClick={() => setPreviewMode((prev) => !prev)}
-          className="absolute right-2 -top-6 text-xs text-right opacity-25 font-semibold hover:opacity-100 hover:text-primary transition-all"
+          className="absolute right-2 -top-6 text-xs text-right opacity-25 font-bold hover:opacity-100 hover:text-primary transition-all"
         >
           <small>Toggle to {previewMode ? "Input" : "Preview"} Mode</small>
         </button>

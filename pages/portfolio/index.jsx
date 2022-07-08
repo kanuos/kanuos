@@ -61,7 +61,7 @@ const PortfolioPage = ({ metadata }) => {
       <main className="w-full overflow-x-hidden">
         <StyledHeader styledText={metadata.adminLabel} isDarkMode={isDarkMode}>
           <>
-            <span className="text-sm md:text-base font-semibold">Hi, I am</span>
+            <span className="text-sm md:text-base font-bold">Hi, I am</span>
             <h1 className="heading--primary w-min">{metadata.fullName}</h1>
             <Markdown className="content--main markdown-editor-wrapper">
               {metadata.about}

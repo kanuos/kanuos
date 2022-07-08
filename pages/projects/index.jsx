@@ -55,7 +55,7 @@ const ProjectList = ({ projectList, totalCount }) => {
         ) : (
           <>
             {totalCount > 0 ? (
-              <p className="content--sub font-semibold">
+              <p className="content--sub font-bold">
                 No project with{" "}
                 <span className="text-primary text-lg">{searchText}</span>{" "}
                 keyword found!{" "}

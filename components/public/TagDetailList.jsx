@@ -38,7 +38,7 @@ export const TagDetailList = (props) => {
           isDarkMode ? "nav-light" : "nav-dark"
         }`}
       >
-        <p className="font-semibold text-xs">
+        <p className="font-bold text-xs">
           Searching for{" "}
           <span className="text-primary capitalize text-sm ml-1">{tag}</span>
         </p>
@@ -59,7 +59,7 @@ export const TagDetailList = (props) => {
             }
           >
             <button
-              className="font-semibold text-xs capitalize"
+              className="font-bold text-xs capitalize"
               onClick={() => setActive(CONTENT_TYPE.blog.name)}
             >
               {CONTENT_TYPE.blog.name}
@@ -75,7 +75,7 @@ export const TagDetailList = (props) => {
             }
           >
             <button
-              className="font-semibold text-xs capitalize"
+              className="font-bold text-xs capitalize"
               onClick={() => setActive(CONTENT_TYPE.project.name)}
             >
               {CONTENT_TYPE.project.name}
@@ -91,7 +91,7 @@ export const TagDetailList = (props) => {
             }
           >
             <button
-              className="font-semibold text-xs capitalize"
+              className="font-bold text-xs capitalize"
               onClick={() => setActive(CONTENT_TYPE.design.name)}
             >
               {CONTENT_TYPE.design.name}
@@ -112,7 +112,7 @@ export const TagDetailList = (props) => {
       {!Boolean(project.length || blog.length || design.length) && (
         <p className="text-center flex items-start justify-center gap-1 w-full my-10">
           <span>No content found for</span>
-          <strong className="text-primary capitalize underline underline-offset-4 font-semibold text-sm">
+          <strong className="text-primary capitalize underline underline-offset-4 font-bold text-sm">
             {tag}
           </strong>
         </p>
@@ -127,12 +127,12 @@ const GroupList = ({ type, list, tag }) => {
       <div className="my-10 flex flex-col items-center justify-center gap-2">
         <p className="flex items-center justify-center gap-1 opacity-50">
           <IoPricetagOutline />
-          <span className="capitalize font-semibold text-xs">{tag}</span>
+          <span className="capitalize font-bold text-xs">{tag}</span>
         </p>
         <h3 className="capitalize font-black text-center text-3xl md:text-5xl">
           {type}
         </h3>
-        <p className="text-xs text-primary font-semibold ml-1">
+        <p className="text-xs text-primary font-bold ml-1">
           <small>
             Total {type} : {list.length}
           </small>

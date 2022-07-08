@@ -21,7 +21,7 @@ export const LoadSpinner = ({ text = "Loading" }) => {
           {text}
         </span>
       </p>
-      <p className="content--sub font-semibold animate-pulse">
+      <p className="content--sub font-bold animate-pulse">
         <small>Please wait</small>
       </p>
     </div>

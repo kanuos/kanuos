@@ -132,7 +132,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor code {
-  @apply inline-block mx-1 px-2 py-1 rounded font-semibold tracking-wide text-current text-primary bg-primary bg-opacity-10;
+  @apply inline-block mx-1 px-2 py-1 rounded font-bold tracking-wide text-current text-primary bg-primary bg-opacity-10;
 }
 
 .markdown-editor h1,
@@ -141,30 +141,30 @@ pre[class*="language-"] {
 .markdown-editor h4,
 .markdown-editor h5,
 .markdown-editor h6 {
-  @apply font-semibold w-full break-words block capitalize mb-4;
+  @apply font-bold w-full break-words block capitalize mb-4;
 }
 
 .markdown-editor blockquote {
   @apply block my-2;
 }
 .markdown-editor blockquote > * {
-  @apply break-words pl-4 border-l-4 border-secondary font-semibold opacity-100;
+  @apply break-words pl-4 border-l-4 border-secondary font-bold opacity-100;
 }
 
 .markdown-editor > a,
 .markdown-editor > * > a,
 .markdown-editor a {
   opacity: 1 !important;
-  @apply text-current inline-block font-semibold break-words underline underline-offset-2 transition-all origin-center hover:text-secondary;
+  @apply text-current inline-block font-bold break-words underline underline-offset-2 transition-all origin-center hover:text-secondary;
 }
 
 .markdown-editor strong,
 .markdown-editor a {
-  @apply font-semibold;
+  @apply font-bold;
 }
 
 .markdown-editor ol {
-  @apply pl-4 list-inside list-decimal marker:font-semibold marker:text-secondary;
+  @apply pl-4 list-inside list-decimal marker:font-bold marker:text-secondary;
 }
 
 .markdown-editor ul {
@@ -190,11 +190,11 @@ pre[class*="language-"] {
 }
 
 .heading--secondary {
-  @apply text-base md:text-lg font-semibold max-w-xl;
+  @apply text-base md:text-lg font-bold max-w-xl;
 }
 
 .heading--sub {
-  @apply text-sm font-semibold;
+  @apply text-sm font-bold;
 }
 
 .content--main,

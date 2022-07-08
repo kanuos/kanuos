@@ -11,7 +11,7 @@ export const SelectContentType = ({ getContentType, type = "" }) => {
               name === type ? "bg-secondary border-secondary" : ""
             } bg-opacity-10 p-4 w-full`}
           >
-            <span className="text-sm capitalize font-semibold">{name}</span>
+            <span className="text-sm capitalize font-bold">{name}</span>
             <input
               checked={type === name}
               type="radio"

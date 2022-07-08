@@ -15,7 +15,7 @@ export const CTA = ({
 }) => {
   const wrapper = `text-xs ${
     tiny ? "" : "lg:text-sm"
-  } font-semibold relative inline-block group overflow-hidden hover:shadow-2xl transition-all p-px`;
+  } font-bold relative inline-block group overflow-hidden hover:shadow-2xl transition-all p-px`;
   const content = `z-10 border-2 w-full h-full block py-1.5 ${
     tiny ? "px-4" : "px-6"
   } relative rounded-full transition-all ${

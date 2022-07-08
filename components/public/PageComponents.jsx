@@ -90,9 +90,7 @@ export const PageComponents = ({
     <motion.section
       variants={variants.section}
       animate={show ? "show" : "hide"}
-      className={`w-full block transition-all relative z-20 py-2.5 ${
-        show ? "opacity-100" : "opacity-50 hover:opacity-100"
-      }`}
+      className={`w-full block transition-all relative z-20 py-2.5`}
     >
       <ul
         className={
@@ -101,10 +99,8 @@ export const PageComponents = ({
         }
       >
         <li className="flex w-full items-center justify-between gap-2">
-          <p className="font-semibold text-xl">{index + 1}.</p>
-          <span
-            className={`font-semibold peer text-lg capitalize grow text-left`}
-          >
+          <p className="font-bold text-xl">{index + 1}.</p>
+          <span className={`peer grow text-left heading--secondary mr-auto`}>
             {segment.heading}
           </span>
           <button

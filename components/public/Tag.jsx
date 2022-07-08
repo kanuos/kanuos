@@ -5,7 +5,7 @@ export const Tag = ({ cb = null, tag, isActive = false }) => {
   const { isDarkMode } = useContext(ThemeContext);
 
   const cls = {
-    base: `uppercase font-semibold content--sub border-current border-2 py-0.5 px-3 rounded`,
+    base: `uppercase font-bold content--sub border-current border-2 py-0.5 px-3 rounded`,
     static() {
       return `${this.base} cursor-default`;
     },

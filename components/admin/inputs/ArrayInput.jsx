@@ -20,7 +20,7 @@ export const ArrayInput = ({
       }`}
     >
       <summary className={`w-full flex items-center justify-between`}>
-        <label htmlFor={name} className="content--sub capitalize font-semibold">
+        <label htmlFor={name} className="content--sub capitalize font-bold">
           {name}
         </label>
         {parentState?.length > 0 ? (
@@ -62,7 +62,7 @@ export const ArrayInput = ({
               </li>
             ))}
           </ul>
-          <summary className="content--sub font-semibold">
+          <summary className="content--sub font-bold">
             {name} array : [{parentState.length}]
           </summary>
         </details>

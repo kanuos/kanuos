@@ -201,7 +201,7 @@ export const ContentCRUD_Form = ({
         <h1 className="heading--main block">{heading}</h1>
         <p
           ref={errorRef}
-          className={`p-4 text-light text-xs font-semibold w-full rounded-md ${
+          className={`p-4 text-light text-xs font-bold w-full rounded-md ${
             pageMsg.trim().length > 0 &&
             (pageErr ? "bg-primary" : "bg-secondary")
           }`}
@@ -218,16 +218,16 @@ export const ContentCRUD_Form = ({
             />
             <summary className="cursor-pointer block">
               {type ? (
-                <p className="flex items-center justify-between w-full font-semibold">
+                <p className="flex items-center justify-between w-full font-bold">
                   <span>Content selected :</span>
-                  <strong className="uppercase text-secondary font-semibold">
+                  <strong className="uppercase text-secondary font-bold">
                     {type}
                   </strong>
                 </p>
               ) : (
-                <p className="flex items-center justify-between w-full font-semibold">
+                <p className="flex items-center justify-between w-full font-bold">
                   <span>Content selected :</span>
-                  <strong className="uppercase text-primary font-semibold">
+                  <strong className="uppercase text-primary font-bold">
                     Not selected
                   </strong>
                 </p>
@@ -253,10 +253,10 @@ export const ContentCRUD_Form = ({
               }`}
               onClick={(e) => !Boolean(type) && e.preventDefault()}
             >
-              <p className="flex items-center justify-between w-full font-semibold">
+              <p className="flex items-center justify-between w-full font-bold">
                 <span>Total tags selected :</span>
                 <strong
-                  className={`uppercase font-semibold ${
+                  className={`uppercase font-bold ${
                     tags.length > 0 ? "text-secondary" : "text-primary"
                   }`}
                 >
@@ -301,7 +301,7 @@ export const ContentCRUD_Form = ({
               }`}
               onClick={(e) => !Boolean(type) && e.preventDefault()}
             >
-              <p className="flex items-center justify-between w-full font-semibold">
+              <p className="flex items-center justify-between w-full font-bold">
                 <span>Write {type} content</span>
                 {Boolean(type) && Boolean(tags.length) ? (
                   <MdLockOpen className="text-lg" />
@@ -349,7 +349,7 @@ export const ContentCRUD_Form = ({
                   />
                   <label
                     htmlFor="public"
-                    className={`content--secondary text-center font-semibold p-2 border-2 border-current cursor-pointer hover:scale-110 transition-all ${
+                    className={`content--secondary text-center font-bold p-2 border-2 border-current cursor-pointer hover:scale-110 transition-all ${
                       isPublic ? "text-secondary" : "text-primary"
                     }`}
                   >

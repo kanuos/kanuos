@@ -64,7 +64,7 @@ const SkillGroup = ({ children, heading, text, isDarkMode, left }) => {
       >
         <div className="animate-spin">{children}</div>
       </div>
-      <strong className="heading--secondary font-semibold break-words">
+      <strong className="heading--secondary font-bold break-words">
         {heading}
       </strong>
       <Markdown className="markdown-editor my-4">{text}</Markdown>

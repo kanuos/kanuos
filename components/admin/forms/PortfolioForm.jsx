@@ -97,19 +97,19 @@ const PortfolioForm = ({
         </section>
 
         <section className="w-full flex flex-col gap-2">
-          <span className="content--sub capitalize font-semibold">Status</span>
+          <span className="content--sub capitalize font-bold">Status</span>
           <label htmlFor="showcased" className="flex items-center gap-2">
             {portfolio.isShowcased ? (
               <>
                 <ImCheckboxChecked className="text-secondary" />
-                <small className="font-semibold text-secondary content--sub">
+                <small className="font-bold text-secondary content--sub">
                   Showcased
                 </small>
               </>
             ) : (
               <>
                 <ImCheckboxUnchecked className="text-primary" />
-                <small className="font-semibold text-primary content--sub">
+                <small className="font-bold text-primary content--sub">
                   Not showcased
                 </small>
               </>

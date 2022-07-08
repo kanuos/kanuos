@@ -27,7 +27,7 @@ const ErrorPage = () => {
         <>
           <button
             onClick={() => router.back()}
-            className="text-xs md:text-sm font-semibold opacity-60 hover:opacity-100 hover:underline"
+            className="text-xs md:text-sm font-bold opacity-60 hover:opacity-100 hover:underline"
           >
             &lt;&nbsp;Go back
           </button>

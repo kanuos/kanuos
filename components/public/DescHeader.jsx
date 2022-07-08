@@ -19,7 +19,7 @@ export const DescHeader = (props) => {
       <section className="h-auto w-full max-w-3xl mx-auto">
         {!adminMode && (
           <Link href={back}>
-            <a className="text-xs font-semibold opacity-50 focus:opacity-100 hover:opacity-100 capitalize">
+            <a className="text-xs font-bold opacity-50 focus:opacity-100 hover:opacity-100 capitalize">
               <small>&lt; back to {descType}</small>
             </a>
           </Link>
@@ -30,10 +30,10 @@ export const DescHeader = (props) => {
         <ul className="flex flex-col items-start text-xs gap-y-0.5">
           <li className="inline-flex items-center justify-start gap-x-2 text-xs">
             <IoCalendarClearOutline className="text-sm" />
-            <small className="capitalize font-semibold">Published on</small>
+            <small className="capitalize font-bold">Published on</small>
           </li>
           <li className="text-sm">
-            <small className="font-semibold capitalize text-primary">
+            <small className="font-bold capitalize text-primary">
               {new Date(date).toDateString()}
             </small>
           </li>
@@ -45,13 +45,13 @@ export const DescHeader = (props) => {
           <ul className="flex flex-col items-start gap-y-0.5">
             <li className="inline-flex items-center justify-start gap-x-2 text-xs">
               <IoPricetagOutline className="text-sm" />
-              <small className="capitalize font-semibold">Tags</small>
+              <small className="capitalize font-bold">Tags</small>
             </li>
             <li className="text-xs sm:text-sm w-full">
               <ul className="flex flex-wrap gap-x-4 gap-y-1 w-full items-start justify-start">
                 {tags.map((tag) => (
                   <li key={tag._id}>
-                    <small className="font-semibold block capitalize text-primary">
+                    <small className="font-bold block capitalize text-primary">
                       {tag.tag}
                     </small>
                   </li>

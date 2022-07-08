@@ -81,11 +81,11 @@ export const PortfolioMgmt = ({
           <ul className="flex flex-col items-start gap-2 my-6">
             <li className="flex items-center justify-start gap-x-4 text-xs">
               <span className="w-10 h-1 bg-secondary block rounded-full"></span>
-              <small className="font-semibold">Showcased</small>
+              <small className="font-bold">Showcased</small>
             </li>
             <li className="flex items-center justify-start gap-x-4 text-xs">
               <span className="w-10 h-1 bg-primary block rounded-full"></span>
-              <small className="font-semibold">Not Showcased</small>
+              <small className="font-bold">Not Showcased</small>
             </li>
           </ul>
           <table className="w-full mx-auto table-auto">
@@ -110,16 +110,16 @@ export const PortfolioMgmt = ({
                     portfolio.isShowcased ? "text-secondary" : "text-primary"
                   }
                 >
-                  <td className="border p-2 text-xs font-semibold">
+                  <td className="border p-2 text-xs font-bold">
                     #{i + 1}. {portfolio.project.title}
                   </td>
-                  <td className="border p-2 text-xs font-semibold">
+                  <td className="border p-2 text-xs font-bold">
                     {portfolio.design.title}
                   </td>
                   <td className="border p-2 text-xs flex items-center justify-between gap-4">
                     <button
                       onClick={() => getEditData(portfolio)}
-                      className="w-full text-center font-semibold uppercase grayscale hover:grayscale-0 transition-all hover:text-secondary border-2 border-current opacity-25 hover:opacity-100"
+                      className="w-full text-center font-bold uppercase grayscale hover:grayscale-0 transition-all hover:text-secondary border-2 border-current opacity-25 hover:opacity-100"
                     >
                       <small>edit</small>
                     </button>
@@ -127,7 +127,7 @@ export const PortfolioMgmt = ({
                       onClick={() =>
                         handleDeleteProjectFromPortfolio(portfolio)
                       }
-                      className="w-full text-center font-semibold uppercase grayscale hover:grayscale-0 transition-all hover:text-primary border-2 border-current opacity-25 hover:opacity-100"
+                      className="w-full text-center font-bold uppercase grayscale hover:grayscale-0 transition-all hover:text-primary border-2 border-current opacity-25 hover:opacity-100"
                     >
                       <small>delete</small>
                     </button>

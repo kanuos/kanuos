@@ -13,7 +13,7 @@ export const StringInput = ({
         split ? "" : "col-span-full"
       } w-full flex flex-col items-start gap-2`}
     >
-      <label htmlFor={name} className="content--sub capitalize font-semibold">
+      <label htmlFor={name} className="content--sub capitalize font-bold">
         {name}
       </label>
 

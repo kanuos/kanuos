@@ -4,7 +4,7 @@ export const SelectInput = ({ init = "", setValue, name = "", list = {} }) => {
     <></>
   ) : (
     <section className="w-full flex flex-col items-stretch my-2 gap-2">
-      <label htmlFor={name} className="capitalize font-semibold content--sub">
+      <label htmlFor={name} className="capitalize font-bold content--sub">
         {name}
       </label>
       <select

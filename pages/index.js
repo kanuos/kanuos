@@ -85,7 +85,7 @@ const HomePage = ({ allTags }) => {
           showScroll={allTags.length > 0}
         >
           <h1 className="heading--primary">Hello world!</h1>
-          <span className="text-sm md:text-base font-semibold my-2">
+          <span className="text-sm md:text-base font-bold my-2">
             I&apos;m Sounak. Welcome to my tech journal
           </span>
           <p className="content--main">
@@ -114,7 +114,7 @@ const HomePage = ({ allTags }) => {
               {status === STATUSES.initial && (
                 <>
                   <div className="flex flex-col items-start w-full">
-                    <h2 className="heading--sub font-semibold">
+                    <h2 className="heading--sub font-bold">
                       Total tags : {allTags.length}
                     </h2>
                   </div>
