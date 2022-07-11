@@ -10,12 +10,12 @@ export const PublicHeader = ({
   return (
     <header className="flex flex-col items-start mb-10 gap-y-2">
       {adminMode && (
-        <small className="content--sub font-semibold -mb-4 text-secondary">
+        <small className="content--sub font-bold -mb-4 text-secondary">
           Admin Mode
         </small>
       )}
       <h1 className="heading--primary">{title}</h1>
-      <p className="content--main my-6">{desc}</p>
+      <p className="content--secondary my-6">{desc}</p>
       {searchMode ? (
         <>
           <strong className="heading--sub capitalize">
@@ -23,10 +23,10 @@ export const PublicHeader = ({
           </strong>
           <input
             type="search"
-            className={`w-full focus:shadow-xl will-change-transform transition-all p-3 border-2 border-current rounded-md content--secondary bg-transparent scrollbar-none outline-none focus:outline-none mt-4 mb-10 ${
+            className={`w-full will-change-transform transition-all px-3 py-2.5 border-2 rounded-full bg-transparent opacity-70 focus:opacity-100 scrollbar-none outline-none focus:outline-none mt-4 mb-10 border-current content--secondary font-bold placeholder:italic placeholder:font-normal ${
               Boolean(searchText.trim())
-                ? "focus:border-secondary border-current"
-                : "focus:border-primary"
+                ? "border-solid focus:border-secondary"
+                : "border-dashed focus:border-solid"
             } `}
             value={searchText}
             placeholder={`Search ${type} by title...`}
@@ -35,7 +35,8 @@ export const PublicHeader = ({
         </>
       ) : (
         <p className="heading--sub mb-10">
-          Sorry! No <span className="text-primary uppercase">{type}</span> are
+          Sorry! No{" "}
+          <span className="text-primary font-bold uppercase">{type}</span> are
           public now.
         </p>
       )}

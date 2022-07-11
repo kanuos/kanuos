@@ -88,6 +88,10 @@ button:focus {
   @apply text-light bg-dark;
 }
 
+.nav-dark--light {
+  @apply text-light bg-dark__light;
+}
+
 .navStyleLink:hover {
   display: inline-block;
   animation: zoom 2s ease-out infinite;
@@ -103,8 +107,8 @@ button:focus {
 }
 
 .light-shadow {
-  filter: drop-shadow(0 20px 13px rgb(0 191 179 / 0.05))
-    drop-shadow(0 8px 5px rgb(255 255 255 / 0.05));
+  filter: drop-shadow(5px 20px 13px rgb(0 191 179 / 0.05))
+    drop-shadow(10px 8px 5px rgb(255 255 255 / 0.05));
 }
 
 .dark-shadow {
@@ -123,7 +127,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor {
-  @apply flex flex-col items-stretch text-sm  opacity-80;
+  @apply flex flex-col items-stretch text-sm;
   overflow-wrap: break-word !important;
 }
 
@@ -133,6 +137,11 @@ pre[class*="language-"] {
 
 .markdown-editor code {
   @apply inline-block mx-1 px-2 py-1 rounded font-bold tracking-wide text-current text-primary bg-primary bg-opacity-10;
+}
+
+.bg-dark .markdown-editor-wrapper strong,
+.bg-dark .markdown-editor-wrapper em {
+  @apply text-secondary;
 }
 
 .markdown-editor h1,
@@ -182,11 +191,15 @@ pre[class*="language-"] {
 }
 
 .heading--primary {
-  @apply text-5xl md:text-7xl font-bold my-4 w-fit block max-w-sm md:max-w-xl leading-[.85] font-title selection:bg-transparent selection:text-primary;
+  @apply text-5xl md:text-7xl font-bold w-fit block my-2.5 leading-[.85] font-title selection:bg-transparent selection:text-primary;
+}
+
+.heading--primary--max {
+  @apply max-w-sm md:max-w-xl;
 }
 
 .heading--main {
-  @apply text-xl md:text-2xl font-black my-4 w-fit block max-w-sm md:max-w-xl leading-none;
+  @apply text-xl md:text-2xl font-black my-4 w-full block leading-none;
 }
 
 .heading--secondary {
@@ -199,11 +212,11 @@ pre[class*="language-"] {
 
 .content--main,
 .content--secondary {
-  @apply text-sm leading-snug opacity-80;
+  @apply text-sm lg:text-base leading-snug;
 }
 
 .content--main {
-  @apply max-w-lg w-3/4;
+  @apply max-w-lg w-3/4 opacity-80;
 }
 
 .content--secondary {
@@ -216,7 +229,7 @@ pre[class*="language-"] {
 
 .after-line,
 .after-line--center {
-  @apply relative after:absolute after:bg-secondary after:top-0 after:w-0.5 after:h-full after:-z-10 after:animate-pulse;
+  @apply relative after:absolute after:bg-secondary after:top-0 after:w-0.5 after:h-full  after:animate-pulse;
 }
 
 .after-line {

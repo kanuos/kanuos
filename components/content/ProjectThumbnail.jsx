@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { PUBLIC_NAVIGATION_URLS } from "../../utils";
+import { PUBLIC_NAVIGATION_URLS, titleCase } from "../../utils";
 import { JoinLine } from "../public/DescHeader";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoCubeOutline, IoChevronDown } from "react-icons/io5";
@@ -116,19 +116,22 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       }`}
     >
       <p
-        className={`text-xs font-semibold transition-all ${
+        className={`text-xs transition-all ${
           hovered ? "opacity-100 text-primary" : "opacity-50"
         }`}
       >
-        <small>Project : #{index}</small>
+        <small className="font-bold">Project : #{index}</small>
       </p>
       <h3
-        className={`font-semibold transition-all text-2xl md:text-3xl ${
+        className={`font-bold transition-all text-2xl md:text-3xl ${
           index % 2 === 0 ? "text-right" : "text-left"
         } ${hovered ? "opacity-100" : "opacity-75"}`}
       >
-        {data.title}
+        {titleCase(data.title)}
       </h3>
+      <p className={`text-xs uppercase`}>
+        <small className="font-bold">{data.category}</small>
+      </p>
       <div className={`filter ${hovered ? "grayscale-0" : "grayscale"}`}>
         <JoinLine />
       </div>
@@ -148,7 +151,7 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
         >
           <p className="flex items-center justify-start gap-x-1 pb-2">
             <IoCubeOutline />
-            <small className="text-sm font-semibold capitalize">
+            <small className="text-sm font-bold capitalize">
               Project information
             </small>
           </p>
@@ -172,10 +175,10 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
               <li className="w-full">
                 <ul className="flex flex-col items-start gap-4">
                   <li className="flex items-center justify-start gap-1">
-                    <span className="capitalize font-semibold">Difficulty</span>
+                    <span className="capitalize font-bold">Difficulty</span>
                   </li>
                   <li className="flex w-full items-center justify-between">
-                    <small className="text-xs capitalize font-semibold opacity-60">
+                    <small className="text-xs capitalize font-bold opacity-60">
                       {data.difficulty}
                     </small>
                   </li>
@@ -184,13 +187,13 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
               <li className="w-full">
                 <ul className="flex flex-col items-start gap-4">
                   <li className="flex items-center justify-start gap-1.5">
-                    <span className="capitalize font-semibold">Tech stack</span>
+                    <span className="capitalize font-bold">Tech stack</span>
                   </li>
                   <li className="flex w-full items-center justify-between">
                     <ul className="flex flex-col items-start gap-y-2 gap-x-4">
                       {data.techStack.map((stack, i) => (
                         <li key={i}>
-                          <small className="text-xs font-semibold opacity-60">
+                          <small className="text-xs font-bold opacity-60">
                             {stack.text}
                           </small>
                         </li>
@@ -202,10 +205,10 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
               <li className="w-full">
                 <ul className="flex flex-col items-start gap-4">
                   <li className="flex items-center justify-start gap-1">
-                    <span className="capitalize font-semibold">category</span>
+                    <span className="capitalize font-bold">category</span>
                   </li>
                   <li className="flex w-full items-center justify-between">
-                    <small className="text-xs capitalize font-semibold opacity-60">
+                    <small className="text-xs capitalize font-bold opacity-60">
                       {data.category}
                     </small>
                   </li>
@@ -220,12 +223,10 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
           index % 2 === 0 ? "text-right" : "text-left"
         }`}
       >
-        <li className="text-xs font-semibold capitalize opacity-75">
+        <li className="text-xs font-bold capitalize opacity-75">
           <small>Project Date</small>
         </li>
-        <li
-          className={`text-xs font-semibold ${hovered ? "text-primary" : ""}`}
-        >
+        <li className={`text-xs font-bold ${hovered ? "text-primary" : ""}`}>
           {new Date(data.date).toDateString()}
         </li>
       </ul>

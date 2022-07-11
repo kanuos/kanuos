@@ -22,11 +22,11 @@ export const PublicListLayout = ({
             searchMode={data.searchMode}
           />
         </div>
-        <div className="px-8 w-full min-h-[60vh] grow mx-auto flex flex-col justify-start items-stretch">
+        <div className="px-8 w-full min-h-[85vh] pb-8 grow mx-auto flex flex-col justify-start items-stretch">
           {children}
-          <div className="mt-auto">
-            <Footer />
-          </div>
+        </div>
+        <div className="mt-auto">
+          <Footer />
         </div>
       </PublicLayout>
     </Fragment>

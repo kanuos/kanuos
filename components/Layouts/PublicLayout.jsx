@@ -42,7 +42,7 @@ const PublicLayout = (props) => {
           className={`h-auto min-h-screen pt-10 overflow-y-auto scrollbar w-full ${
             isDarkMode
               ? "scrollbar-track-dark scrollbar-thumb-secondary"
-              : "scrollbar-track-light scrollbar-thumb-slate-400"
+              : "scrollbar-track-light scrollbar-thumb-primary"
           }`}
         >
           {children}

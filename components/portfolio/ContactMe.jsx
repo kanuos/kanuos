@@ -30,8 +30,8 @@ export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
         styledText={CONTENT.styledText}
         showScroll={false}
       >
-        <section className="mt-10 max-w-5xl mx-auto w-full">
-          <h2 className="heading--secondary">{CONTENT.heading}</h2>
+        <section className="mt-10 max-w-4xl mx-auto w-full">
+          <h2 className="heading--main">{CONTENT.heading}</h2>
           <p className="content--secondary my-10 max-w-xl text-justify">
             {CONTENT.content}
           </p>
