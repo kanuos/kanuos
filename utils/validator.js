@@ -36,7 +36,7 @@ const CommonFields = Joi.object().keys({
   _id: Joi.any(),
   __v: Joi.any(),
   title: Joi.string().required().trim().min(1).max(60),
-  desc: Joi.string().required().trim().min(1).max(200),
+  desc: Joi.string().required().trim().min(1).max(600),
   category: Joi.string().required().trim().min(1).max(15),
   date: Joi.date().allow("").default(Date.now()),
   tags: Joi.array().items(TagValidator).min(1).required(),
@@ -75,7 +75,6 @@ const ProjectValidator = BlogProjectCommon.keys({
     .required()
     .default("beginner")
     .valid("beginner", "intermediate", "advanced"),
-  prerequisites: Joi.string().trim().required(),
   chapters: Joi.array()
     .items(
       Joi.object({

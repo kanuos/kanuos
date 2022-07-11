@@ -97,7 +97,6 @@ export const ProjectCRUDForm = ({
       difficulty: init?.difficulty || "",
       category: init?.category || "",
       techStack: init?.techStack || [],
-      prerequisites: init?.prerequisites || "",
       chapters: init?.chapters || [],
       outro: {
         heading: init?.outro?.heading || "",
@@ -185,12 +184,6 @@ export const ProjectCRUDForm = ({
           value={project.desc}
           setValue={(v) => handleUpdate("desc", v)}
           placeholder="project desc"
-        />
-        <MarkdownInput
-          name="prerequisites"
-          value={project.prerequisites}
-          setValue={(v) => handleUpdate("prerequisites", v)}
-          placeholder="project prerequisites"
         />
         <StringInput
           name="category"

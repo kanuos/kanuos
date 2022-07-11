@@ -126,6 +126,10 @@ pre[class*="language-"] {
   @apply flex flex-col items-start list-outside list-[square] justify-start gap-y-3 max-w-5xl markdown-editor w-full whitespace-pre-line mb-4;
 }
 
+.markdown-editor.firstLetter > p:first-of-type {
+  @apply first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-5xl md:first-letter:text-7xl xl:first-letter:text-8xl first-letter:text-primary text-justify;
+}
+
 .markdown-editor {
   @apply flex flex-col items-stretch text-sm;
   overflow-wrap: break-word !important;
@@ -157,7 +161,7 @@ pre[class*="language-"] {
   @apply block my-2;
 }
 .markdown-editor blockquote > * {
-  @apply break-words pl-4 border-l-4 border-secondary font-bold opacity-100;
+  @apply break-words pl-4 border-l-[6px] border-primary italic font-bold;
 }
 
 .markdown-editor > a,

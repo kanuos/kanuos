@@ -202,18 +202,6 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
                   </li>
                 </ul>
               </li>
-              <li className="w-full">
-                <ul className="flex flex-col items-start gap-4">
-                  <li className="flex items-center justify-start gap-1">
-                    <span className="capitalize font-bold">category</span>
-                  </li>
-                  <li className="flex w-full items-center justify-between">
-                    <small className="text-xs capitalize font-bold opacity-60">
-                      {data.category}
-                    </small>
-                  </li>
-                </ul>
-              </li>
             </motion.ul>
           </motion.section>
         </AnimatePresence>

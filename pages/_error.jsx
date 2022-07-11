@@ -1,6 +1,5 @@
 // Default error page
 import { useContext } from "react";
-import { useRouter } from "next/router";
 // import : internal
 import { PUBLIC_URLS } from "../utils";
 import PublicLayout from "../components/Layouts/PublicLayout";
@@ -10,14 +9,13 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { BsEmojiDizzy } from "react-icons/bs";
 
 const ErrorPage = () => {
-  const router = useRouter();
-
   const { isDarkMode } = useContext(ThemeContext);
 
   return (
     <PublicLayout
       metaTitle="Error 404"
-      content="Page couldn't be found. Sounak Mukherjee's website"
+      metaDesc="Page couldn't be found. Sounak Mukherjee's website"
+      errorPage={true}
     >
       <StyledHeader
         styledText="page not found"
@@ -25,17 +23,11 @@ const ErrorPage = () => {
         showScroll={false}
       >
         <>
-          <button
-            onClick={() => router.back()}
-            className="text-xs md:text-sm font-bold opacity-60 hover:opacity-100 hover:underline"
-          >
-            &lt;&nbsp;Go back
-          </button>
           <div className="flex items-center justify-start gap-x-px">
-            <BsEmojiDizzy className="heading--primary" />
+            <BsEmojiDizzy className="text-6xl" />
             <h1 className="heading--primary">ops</h1>
           </div>
-          <p className="content--main text-justify mb-6 mt-2">
+          <p className="content--primary text-justify pt-2">
             It seems that the page you are looking for doesn&apos;t exist or is
             temporarily unavailable.
             <br />

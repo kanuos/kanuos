@@ -108,10 +108,6 @@ export const ProjectSchema = new Schema({
       type: Object,
     },
   ],
-  prerequisites: {
-    type: String,
-    required: true,
-  },
   techStack: [
     {
       type: Object,

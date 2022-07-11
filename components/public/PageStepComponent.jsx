@@ -10,9 +10,13 @@ import "prismjs/components/prism-python";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-django";
 
-export const MarkdownStep = ({ text }) => {
+export const MarkdownStep = ({ text, firstLetter = false }) => {
   return (
-    <article className="markdown-editor-wrapper">
+    <article
+      className={`markdown-editor-wrapper text-justify ${
+        firstLetter ? "firstLetter" : ""
+      }`}
+    >
       <Markdown>{text}</Markdown>
     </article>
   );
@@ -50,14 +54,14 @@ export const ImageStep = ({ url }) => {
 
   return (
     <figure
-      className={`h-auto min-h-[60vh] w-full my-6 block relative overflow-hidden`}
+      className={`h-auto min-h-[75vh] w-full my-6 lg:my-10 block relative overflow-hidden`}
     >
       <Image
         loader={({ src, width }) => `${src}?w=${width}&q=100`}
         layout="fill"
         alt="Image thumbnail"
         src={url}
-        className="w-full h-full block object-cover"
+        className="w-full h-full block object-cover lg:object-scale-down"
       />
     </figure>
   );

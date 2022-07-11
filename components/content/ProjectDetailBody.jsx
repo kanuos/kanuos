@@ -4,10 +4,12 @@ import Markdown from "react-markdown";
 
 // import : internal
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { DifficultyStatus } from "../detail/DifficultyStatus";
 import { PUBLIC_URLS } from "../../utils";
 
 // dynamic imports
+const DifficultyStatus = dynamic(() =>
+  import("../detail/DifficultyStatus").then((m) => m.DifficultyStatus)
+);
 const DetailHeader = dynamic(() =>
   import("../detail/Header").then((m) => m.DetailHeader)
 );

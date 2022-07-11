@@ -9,24 +9,14 @@ export const Conclusion = ({ heading, text, repo, demo }) => {
       </div>
       <div>
         {repo && Object.values(repo).every(Boolean) && (
-          <>
-            <strong className="heading--sub font-bold uppercase">
-              {repo.label}
-            </strong>
-            <div className="w-max">
-              <PageLink isExternal={true} href={repo.href} label={repo.href} />
-            </div>
-          </>
+          <div className="w-max">
+            <PageLink isExternal={true} href={repo.href} label={repo.label} />
+          </div>
         )}
         {demo && Object.values(demo).every(Boolean) && (
-          <>
-            <strong className="heading--sub font-bold uppercase">
-              {demo.label}
-            </strong>
-            <div className="w-max">
-              <PageLink isExternal={true} href={demo.href} label={demo.href} />
-            </div>
-          </>
+          <div className="w-max">
+            <PageLink isExternal={true} href={demo.href} label={demo.label} />
+          </div>
         )}
       </div>
     </div>

@@ -14,7 +14,8 @@ const ErrorPage = () => {
   return (
     <PublicLayout
       metaTitle="Error 404"
-      content="Page couldn't be found. Sounak Mukherjee's website"
+      metaDesc="Page couldn't be found. Sounak Mukherjee's website"
+      errorPage={true}
     >
       <StyledHeader
         styledText="page not found"
@@ -23,16 +24,16 @@ const ErrorPage = () => {
       >
         <>
           <div className="flex items-center justify-start gap-x-px">
-            <BsEmojiDizzy className="text-4xl" />
+            <BsEmojiDizzy className="text-6xl" />
             <h1 className="heading--primary">ops</h1>
           </div>
-          <p className="content--primary text-justify mb-6 mt-2">
+          <p className="content--primary text-justify pt-2">
             It seems that the page you are looking for doesn&apos;t exist or is
             temporarily unavailable.
             <br />
             Sorry for the inconvenience.
           </p>
-          <div className="mt-10">
+          <div className="mt-6">
             <CTA
               label="Go to Home"
               href={PUBLIC_URLS.home.url}

@@ -57,18 +57,18 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
           isEven ? "items-end" : "items-start"
         }`}
       >
-        <p className="text-xs font-semibold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
+        <p className="text-xs font-bold transition-all group-hover:text-primary opacity-50 group-hover:opacity-100">
           <small>Blog : #{index}</small>
         </p>
         {!data.isPublic && (
-          <span className="text-xs mt-2 group-even:text-right group-odd:text-left font-semibold capitalize text-primary">
+          <span className="text-xs mt-2 group-even:text-right group-odd:text-left font-bold capitalize text-primary">
             admin only
           </span>
         )}
         <h3
           className={
             (!data.isPublic && "opacity-50") +
-            " font-semibold opacity-75 group-hover:opacity-100 transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right"
+            " font-bold opacity-75 group-hover:opacity-100 transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right"
           }
         >
           {data.title}
@@ -82,17 +82,19 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
           }`}
         >
           {data.desc?.slice(0, 250)}{" "}
-          <span className="text-primary text-lg font-semibold">.....</span>
+          {data.desc?.length > 250 && (
+            <span className="text-primary font-bold">.....</span>
+          )}
         </p>
         <div
           className={`flex flex-col gap-2 justify-start mt-3 w-full ${
             isEven ? "items-end" : "items-start"
           }`}
         >
-          <span className="text-xs font-semibold capitalize transition-all group-hover:text-primary">
+          <span className="text-xs font-bold capitalize transition-all group-hover:text-primary">
             tags
           </span>
-          <ul className="flex flex-wrap pz-2 opacity-50 group-hover:opacity-100 items-start group-odd:justify-start group-even:justify-end flex-grow gap-x-4 gap-y-2 capitalize font-semibold text-xs">
+          <ul className="flex flex-wrap pz-2 opacity-50 group-hover:opacity-100 items-start group-odd:justify-start group-even:justify-end flex-grow gap-x-4 gap-y-2 capitalize font-bold text-xs">
             {data.tags.map((tag) => (
               <li key={tag._id}>{tag.tag}</li>
             ))}
@@ -100,11 +102,11 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
         </div>
         <ul className="text-sm mt-2 group-even:text-right group-odd:text-left">
           <li>
-            <span className="text-xs font-semibold capitalize transition-all group-hover:text-primary">
+            <span className="text-xs font-bold capitalize transition-all group-hover:text-primary">
               published on
             </span>
           </li>
-          <li className="text-xs font-semibold opacity-75">
+          <li className="text-xs font-bold opacity-75">
             <small>{new Date(data.date).toDateString()}</small>
           </li>
         </ul>

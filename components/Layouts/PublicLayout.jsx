@@ -11,7 +11,7 @@ import bg from "../../public/hero.webp";
 const NavBar = dynamic(() => import("../public/Nav").then((m) => m.NavBar));
 
 const PublicLayout = (props) => {
-  const { metaTitle, metaDesc, navType, children } = props;
+  const { metaTitle, metaDesc, navType, children, errorPage = false } = props;
   const { isDarkMode } = useContext(ThemeContext);
   const { showMenu } = useContext(NavContext);
   return (
@@ -39,11 +39,17 @@ const PublicLayout = (props) => {
         } transition-all`}
       >
         <div
-          className={`h-auto min-h-screen pt-10 overflow-y-auto scrollbar w-full ${
+          className={`w-full pt-10 ${
             isDarkMode
               ? "scrollbar-track-dark scrollbar-thumb-secondary"
               : "scrollbar-track-light scrollbar-thumb-primary"
-          }`}
+          }
+          ${
+            errorPage
+              ? "overflow-hidden h-screen"
+              : "overflow-y-auto h-auto min-h-screen scrollbar"
+          }
+            `}
         >
           {children}
         </div>

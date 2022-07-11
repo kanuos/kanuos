@@ -6,10 +6,12 @@ export const STEP_TYPE = {
 };
 
 export const SOCIAL_LINKS = {
-  linkedin: "https://www.linkedin.com/sounak",
+  linkedin: "https://www.linkedin.com/in/sounak-mukherjee-54b717225",
   github: "https://www.github.com/kanuos",
   gitlab: "https://www.gitlab.com/kanuos",
-  twitter: "https://www.twitter.com/kanuos",
+  stackoverflow: "https://stackoverflow.com/users/10822859/kanuos?tab=profile",
+  // twitter: "https://www.twitter.com/__kanuos__",
+  // instagram: "https://www.instagram.com/_kanuos/",
 };
 
 export const PUBLIC_URLS = {

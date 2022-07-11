@@ -1,4 +1,12 @@
-import { SiGithub, SiGitlab, SiLinkedin, SiTwitter } from "react-icons/si";
+import {
+  SiGithub,
+  SiGitlab,
+  SiLinkedin,
+  SiTwitter,
+  SiStackoverflow,
+  SiInstagram,
+  SiYoutube,
+} from "react-icons/si";
 
 export const SocialIcons = ({ social, url }) => {
   function getIcon(text = "") {
@@ -14,6 +22,15 @@ export const SocialIcons = ({ social, url }) => {
     }
     if (text.includes("twitter")) {
       return <SiTwitter />;
+    }
+    if (text.includes("stackoverflow")) {
+      return <SiStackoverflow />;
+    }
+    if (text.includes("instagram")) {
+      return <SiInstagram />;
+    }
+    if (text.includes("youtube")) {
+      return <SiYoutube />;
     }
   }
   return (

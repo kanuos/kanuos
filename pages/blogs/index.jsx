@@ -34,7 +34,7 @@ const BlogList = ({ blogList, totalCount }) => {
       searchText={searchText}
       setSearchText={(x) => setSearchText(x)}
     >
-      <main className="flex flex-col mb-20 lg:mb-40 gap-20 items-stretch w-full max-w-5xl mx-auto">
+      <main className="flex flex-col mb-20 lg:mb-40 gap-20 items-stretch w-full max-w-4xl mx-auto">
         {count > 0 ? (
           <>
             {blogList
@@ -48,9 +48,11 @@ const BlogList = ({ blogList, totalCount }) => {
         ) : (
           <>
             {totalCount > 0 ? (
-              <p className="content--sub font-bold">
+              <p className="content--sub font-bold text-center">
                 No blog with{" "}
-                <span className="text-primary text-lg">{searchText}</span>{" "}
+                <span className="text-primary font-bold text-lg">
+                  {searchText}
+                </span>{" "}
                 keyword found!{" "}
               </p>
             ) : (
