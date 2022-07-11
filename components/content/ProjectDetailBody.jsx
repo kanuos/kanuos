@@ -35,23 +35,29 @@ export const ProjectDetailBody = ({ project = null }) => {
     return Math.round((totalChaptersCompleted * 100) / LENGTH);
   }, [readReceipts, LENGTH]);
 
+  const getCurrentChapterIndex = useCallback(
+    (index) => {
+      if (index < 0 || index >= LENGTH) {
+        return;
+      }
+      setCurrentChapterIndex(() => index);
+    },
+    [LENGTH]
+  );
+
+  const toggleReadStatus = useCallback(
+    (index) => {
+      if (index < 0 || index >= LENGTH) {
+        return;
+      }
+      setReadReceipts((prev) => prev.map((el, i) => (i !== index ? el : !el)));
+    },
+    [LENGTH]
+  );
+
   if (!project) {
     return <></>;
   }
-
-  const getCurrentChapterIndex = useCallback((index) => {
-    if (index < 0 || index >= LENGTH) {
-      return;
-    }
-    setCurrentChapterIndex(() => index);
-  }, []);
-
-  const toggleReadStatus = useCallback((index) => {
-    if (index < 0 || index >= LENGTH) {
-      return;
-    }
-    setReadReceipts((prev) => prev.map((el, i) => (i !== index ? el : !el)));
-  }, []);
 
   return (
     <div
