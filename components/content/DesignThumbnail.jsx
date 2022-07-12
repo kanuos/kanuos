@@ -18,13 +18,16 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
         rotate: 0,
         transition: { type: "tween", stiffness: 200 },
       }}
-      className="max-h-[25rem] h-full text-dark bg-light sm:hover:scale-110 grid grid-rows-2 relative mx-auto max-w-md w-full lg:h-full flex-grow p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md transition-shadow"
+      whileHover={{
+        scale: 1.05,
+      }}
+      className="h-96 text-dark bg-light grid grid-rows-2 relative mx-auto max-w-md w-full flex-grow p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md transition-shadow"
     >
       {/* admin tag */}
 
       {adminMode && (
         <p
-          className={`absolute top-4 left-0 w-fit mx-auto font-semibold content--sub text-center bg-dark text-light p-4`}
+          className={`absolute top-4 left-0 w-fit mx-auto font-bold content--sub text-center bg-dark text-light p-4`}
         >
           {!data.isPublic ? "Private" : "Public"}
         </p>
@@ -36,15 +39,15 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
       >
         <div className="flex row-span-1 h-full items-center justify-start">
           <p className="text-xs">
-            <small className="bg-primary text-light px-1 py-0.5 rounded font-semibold capitalize">
+            <small className="bg-primary text-light px-1 py-0.5 rounded font-bold capitalize">
               {data.category}
             </small>
           </p>
         </div>
-        <h3 className="heading--sub row-start-2 row-end-3 text-dark mt-1">
+        <h3 className="heading--sub row-start-2 row-end-3 text-dark mt-2">
           {titleCase(data.title)}
         </h3>
-        <p className="content--secondary row-start-3 row-end-6 text-ellipsis">
+        <p className="content--secondary row-start-3 row-end-6 text-ellipsis mt-2.5">
           {titleCase(data.desc).slice(0, 50) +
             (data.desc.length > 50 ? "..." : "")}
         </p>

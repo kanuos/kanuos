@@ -102,14 +102,14 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
             <small
               className={`${
                 hovered ? "text-primary" : "text-current opacity-60"
-              } font-semibold transition-all`}
+              } font-bold transition-all`}
             >
               {caption}
             </small>
           </motion.legend>
           <motion.h3
             variants={variants.content}
-            className={`text-2xl lg:text-3xl mt-1 mb-3 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center tracking-tight capitalize bg-gradient-to-r ${
+            className={`text-2xl lg:text-3xl font-title my-1 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center capitalize bg-gradient-to-r ${
               i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
             } ${
               isDarkMode ? "from-light" : "from-dark"
@@ -119,6 +119,15 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
           >
             {project.project.title}
           </motion.h3>
+          <p className="text-xs px-2 mb-3">
+            <small
+              className={`${
+                hovered ? "text-current" : "text-primary"
+              } uppercase font-bold`}
+            >
+              {project.project.category}
+            </small>
+          </p>
           <motion.p
             className={`px-2 text-sm tracking-tighter w-full max-w-sm ${
               i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"

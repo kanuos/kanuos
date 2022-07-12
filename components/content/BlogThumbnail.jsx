@@ -1,10 +1,14 @@
 // in built + external imports
+import dynamic from "next/dynamic";
 import { useContext } from "react";
 import { motion } from "framer-motion";
 
 // internal imports : components
-import { JoinLine } from "../public/DescHeader";
-import { CTA } from "../portfolio/CTA";
+const Tag = dynamic(() => import("../public/Tag").then((m) => m.Tag));
+const JoinLine = dynamic(() =>
+  import("../public/DescHeader").then((m) => m.JoinLine)
+);
+const CTA = dynamic(() => import("../portfolio/CTA").then((m) => m.CTA));
 
 // internal imports : utils & more
 import { PUBLIC_NAVIGATION_URLS } from "../../utils";
@@ -87,27 +91,24 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
           )}
         </p>
         <div
-          className={`flex flex-col gap-2 justify-start mt-3 w-full ${
-            isEven ? "items-end" : "items-start"
+          className={`flex flex-wrap gap-2 opacity-50 items-center mt-3 w-full group-hover:opacity-100 ${
+            isEven ? "justify-end" : "justify-start"
           }`}
         >
-          <span className="text-xs font-bold capitalize transition-all group-hover:text-primary">
-            tags
-          </span>
-          <ul className="flex flex-wrap pz-2 opacity-50 group-hover:opacity-100 items-start group-odd:justify-start group-even:justify-end flex-grow gap-x-4 gap-y-2 capitalize font-bold text-xs">
-            {data.tags.map((tag) => (
-              <li key={tag._id}>{tag.tag}</li>
-            ))}
-          </ul>
+          {/* <div className="flex flex-wrap opacity-50 group-hover:opacity-100 items-start group-odd:justify-start group-even:justify-end flex-grow gap-x-4 gap-y-2 capitalize font-bold text-xs"> */}
+          {data.tags.map((tag) => (
+            <Tag key={tag._id} tag={tag} />
+          ))}
+          {/* </div> */}
         </div>
         <ul className="text-sm mt-2 group-even:text-right group-odd:text-left">
+          <li className="text-xs font-bold opacity-75">
+            <small>Published on</small>
+          </li>
           <li>
             <span className="text-xs font-bold capitalize transition-all group-hover:text-primary">
-              published on
+              {new Date(data.date).toDateString()}
             </span>
-          </li>
-          <li className="text-xs font-bold opacity-75">
-            <small>{new Date(data.date).toDateString()}</small>
           </li>
         </ul>
       </motion.article>
