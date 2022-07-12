@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 // import : internal
 import { PUBLIC_URLS, titleCase } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { PageLink } from "../portfolio/PageLink";
 
 // dynamic imports
 const DetailHeader = dynamic(() =>
@@ -86,6 +87,10 @@ export const BlogDetailBody = ({ blog = null }) => {
         repo={blog.repo}
         demo={blog.demo}
       />
+      <div className="mx-auto w-max">
+        <PageLink label="Check out all blogs" href={PUBLIC_URLS.blogs.url} />
+        <div className="mx-auto w-max relative after-line--center mt-4 pb-40"></div>
+      </div>
     </div>
   );
 };

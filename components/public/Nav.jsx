@@ -85,15 +85,17 @@ const NavMenu = ({ type = "public" }) => {
     container: {
       show: {
         x: 0,
+        opacity: 1,
         transition: {
-          type: "linear",
-          when: "beforeChildren",
+          type: "tween",
         },
       },
       exit: {
         x: "100vw",
+        opacity: 0,
         transition: {
           type: "linear",
+          duration: 0.75,
         },
       },
     },
@@ -110,23 +112,37 @@ const NavMenu = ({ type = "public" }) => {
         opacity: 0,
         transition: {
           type: "spring",
-          when: "afterChildren",
         },
       },
     },
     li: {
       show: {
         opacity: 1,
-        y: -10,
-        scale: 1,
+        y: 0,
         transition: {
-          type: "linear",
+          type: "spring",
         },
       },
       exit: {
         opacity: 0,
+        y: -10,
+        transition: {
+          type: "spring",
+        },
+      },
+    },
+    btnBox: {
+      show: {
+        opacity: 1,
         y: 0,
-        scale: 0,
+        transition: {
+          type: "spring",
+          delay: 0.75,
+        },
+      },
+      exit: {
+        opacity: 0,
+        y: 100,
         transition: {
           type: "spring",
         },
@@ -212,7 +228,7 @@ const NavMenu = ({ type = "public" }) => {
                           if (el !== " ") {
                             return (
                               <span
-                                className={`navStyleLink font-semibold`}
+                                className={`navStyleLink font-bold`}
                                 key={k}
                               >
                                 {el}
@@ -262,7 +278,7 @@ const NavMenu = ({ type = "public" }) => {
                           ></span>
                         </div>
                         <span
-                          className={`relative font-semibold transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
+                          className={`relative font-bold transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
                             valueObj.type !== "portfolio" && isActive(valueObj)
                               ? ""
                               : "after:bg-secondary after:w-0 hover:after:w-6 after:transition-all after:origin-left"
@@ -280,7 +296,7 @@ const NavMenu = ({ type = "public" }) => {
         </motion.ul>
 
         <motion.ul
-          variants={variants.li}
+          variants={variants.btnBox}
           className="mt-auto flex items-center justify-around gap-4"
         >
           {type === "admin" && (

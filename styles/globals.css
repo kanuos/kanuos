@@ -161,7 +161,7 @@ pre[class*="language-"] {
   @apply block my-2;
 }
 .markdown-editor blockquote > * {
-  @apply break-words pl-4 border-l-[6px] border-primary italic font-bold;
+  @apply break-words pl-4 border-l-[6px] border-primary italic font-bold text-base lg:text-lg;
 }
 
 .markdown-editor > a,

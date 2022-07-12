@@ -31,7 +31,7 @@ export const DetailHeader = ({ title, desc, date, category, tags = [] }) => {
         <small>{dateStr}</small>
       </section>
 
-      <p className="content--secondary text-justify font-bold col-start-2 col-end-5 my-10 md:mt-0 md:row-start-4 lg:col-start-3 lg:col-end-6">
+      <p className="content--secondary font-bold col-start-2 col-end-5 my-10 md:mt-0 md:row-start-4 lg:col-start-3 lg:col-end-6">
         {desc}
       </p>
       {tags.length > 0 && (
