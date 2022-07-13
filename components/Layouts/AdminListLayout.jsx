@@ -37,7 +37,7 @@ export const AdminListLayout = ({
           className={
             type === PUBLIC_LIST_TYPES.designs.type
               ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-20 p-4 w-full mb-20 max-w-6xl mx-auto justify-center items-center"
-              : "flex flex-col mb-20 gap-16 items-stretch w-full max-w-5xl mx-auto"
+              : "flex flex-col mb-20 gap-16 items-stretch w-full max-w-4xl mx-auto"
           }
         >
           {list.length > 0 ? (

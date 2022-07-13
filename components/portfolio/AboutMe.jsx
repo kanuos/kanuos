@@ -2,15 +2,21 @@ import Markdown from "react-markdown";
 import { PORTFOLIO_LINKS } from "../../utils";
 import { CgDice1, CgDice2, CgDice3, CgDice4, CgFile } from "react-icons/cg";
 import { CTA } from "./CTA";
-import GridContent from "../detail/GridContent";
 
 export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
   return (
     <div
       id={PORTFOLIO_LINKS["about me"].name}
-      className="min-h-screen pt-20 flex flex-col max-w-5xl mx-auto items-start justify-center w-full snap-start p-1"
+      className="min-h-screen pt-20 flex flex-col max-w-4xl mx-auto items-start justify-center w-full snap-start p-1"
     >
-      <GridContent text={skills} heading="what i bring to the table" />
+      <div className="flex flex-col items-start mb-10 gap-y-2 md:gap-y-6">
+        <h2 className="heading--main capitalize">
+          What I bring to the table..
+        </h2>
+        <Markdown className="content--secondary text-justify">
+          {skills}
+        </Markdown>
+      </div>
       <ul
         className={`flex flex-col w-full mx-auto gap-y-16 pt-16 after-line--center ${
           techStack.length > 1 ? "pb-48" : "pb-24"

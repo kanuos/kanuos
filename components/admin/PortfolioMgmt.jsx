@@ -48,7 +48,7 @@ export const PortfolioMgmt = ({
   }
 
   return (
-    <div className="container max-w-5xl mx-auto">
+    <div className="container max-w-4xl mx-auto">
       <div className="flex items-center justify-between pt-4 border-t mt-2.5">
         <h1 className="heading--secondary capitalize">Portfolio Management</h1>
         {Boolean(availableDesigns.length * availableProjects.length) && (

@@ -123,7 +123,7 @@ pre[class*="language-"] {
 }
 
 .markdown-editor-wrapper {
-  @apply flex flex-col items-start list-outside list-[square] justify-start gap-y-3 max-w-5xl markdown-editor w-full whitespace-pre-line mb-4;
+  @apply flex flex-col items-start list-outside list-[square] justify-start gap-y-3 max-w-4xl markdown-editor w-full whitespace-pre-line mb-4;
 }
 
 .markdown-editor.firstLetter > p:first-of-type {

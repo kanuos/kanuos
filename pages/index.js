@@ -110,7 +110,7 @@ const HomePage = ({ allTags }) => {
         </StyledHeader>
         {tagAvailability && (
           <>
-            <div id={SEARCH_ID} className="w-full p-10 mb-40 max-w-5xl mx-auto">
+            <div id={SEARCH_ID} className="w-full p-10 mb-40 max-w-4xl mx-auto">
               {status === STATUSES.initial && (
                 <>
                   <div className="flex flex-col items-start w-full">

@@ -65,7 +65,7 @@ const TagsAdminPage = ({ allTags }) => {
 
   return (
     <PublicLayout metaTitle="ADMIN | Tags Management" navType="admin">
-      <div className="w-full max-w-5xl p-8 mx-auto">
+      <div className="w-full max-w-4xl p-8 mx-auto">
         <CMSForm
           key={tags.length}
           heading="Tag management"

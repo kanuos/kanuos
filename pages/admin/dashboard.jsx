@@ -121,7 +121,7 @@ const AdminDashboard = ({ data }) => {
       navType="admin"
     >
       <div className="min-h-screen px-8">
-        <div className="flex items-center justify-start w-full mb-6 container max-w-5xl mx-auto gap-4 scale-90 origin-left">
+        <div className="flex items-center justify-start w-full mb-6 container max-w-4xl mx-auto gap-4 scale-90 origin-left">
           <div>
             <CTA
               btnMode={true}

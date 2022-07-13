@@ -19,12 +19,12 @@ export const Showcase = ({ works = [], isDarkMode = false }) => {
     return works.filter(
       (el) => el.project?.category?.toLowerCase() === keyword?.toLowerCase()
     );
-  }, [keyword]);
+  }, [keyword, works]);
 
   return (
     <section
       id={PORTFOLIO_LINKS["selected works"].name}
-      className="h-auto w-full max-w-5xl mx-auto"
+      className="h-auto w-full max-w-4xl mx-auto"
     >
       <div className="p-10">
         <h2 className="heading--secondary mb-4">
@@ -46,7 +46,7 @@ export const Showcase = ({ works = [], isDarkMode = false }) => {
         </ul>
       </div>
       <AnimatePresence exitBeforeEnter={true}>
-        <motion.section className="py-6 sm:py-20 w-full sm:p-10 flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory max-w-5xl">
+        <motion.section className="py-6 sm:py-20 w-full sm:p-10 flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory max-w-4xl">
           {filteredWork.map((project, i) => (
             <WorkThumb
               project={project}

@@ -140,7 +140,7 @@ const GroupList = ({ type, list, tag }) => {
         <JoinLine />
       </div>
       {type === CONTENT_TYPE.project.name && (
-        <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-5xl mx-auto">
+        <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-4xl mx-auto">
           {list?.map((project, index) => (
             <ProjectThumbnail
               key={project._id}
@@ -152,7 +152,7 @@ const GroupList = ({ type, list, tag }) => {
       )}
 
       {type === CONTENT_TYPE.blog.name && (
-        <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-5xl mx-auto">
+        <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-4xl mx-auto">
           {list?.map((blog, index) => (
             <BlogThumbnail key={blog._id} data={blog} index={index + 1} />
           ))}
@@ -174,7 +174,7 @@ const GroupList = ({ type, list, tag }) => {
             </div>
           )}
           {list.length >= 4 && (
-            <div className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-9 grid-flow-row gap-20 p-4 w-full mb-20 max-w-4xl mx-auto">
               {list.map((design, i) => (
                 <DesignThumbnail
                   key={design._id}
