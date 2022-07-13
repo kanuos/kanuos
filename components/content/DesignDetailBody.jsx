@@ -46,7 +46,7 @@ export const DesignDetailBody = ({ design = null }) => {
       />
 
       {/* thumbnail */}
-      <figure className="h-auto overflow-hidden w-full max-w-7xl mx-auto relative px-8 md:h-[50vh]">
+      <figure className="h-auto overflow-hidden w-full max-w-7xl mx-auto relative px-8">
         <Image
           layout="responsive"
           height={"100%"}
