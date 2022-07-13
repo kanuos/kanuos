@@ -23,12 +23,12 @@ export const DetailHeader = ({ title, desc, date, category, tags = [] }) => {
       <section className="col-start-1 col-end-4 md:col-end-2 content--sub flex flex-col items-start">
         <small>
           <Link href={PUBLIC_URLS.portfolio.url}>
-            <a className="font-bold before:transition-all text-current relative block before:w-full before:bg-gradient-to-r before:from-primary before:to-secondary before:bottom-0 before:h-0.5 overflow-hidden before:absolute before:-translate-x-full hover:before:translate-x-0 opacity-75 hover:opacity-100 transition-opacity">
+            <a className="font-bold before:transition-all text-current hover:underline underline-offset-2 opacity-75 hover:opacity-100 transition-opacity">
               Sounak Mukherjee
             </a>
           </Link>
         </small>
-        <small>{dateStr}</small>
+        <small className="mt-1">{dateStr}</small>
       </section>
 
       <p className="content--secondary font-bold col-start-2 col-end-5 my-10 md:mt-0 md:row-start-4 lg:col-start-3 lg:col-end-6">

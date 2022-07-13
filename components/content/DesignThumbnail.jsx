@@ -47,7 +47,7 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
         <h3 className="heading--sub row-start-2 row-end-3 text-dark mt-2">
           {titleCase(data.title)}
         </h3>
-        <p className="content--secondary row-start-3 row-end-6 text-ellipsis mt-2.5">
+        <p className="content--sub row-start-3 row-end-6 text-ellipsis mt-2.5">
           {titleCase(data.desc).slice(0, 50) +
             (data.desc.length > 50 ? "..." : "")}
         </p>

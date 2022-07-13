@@ -43,9 +43,6 @@ export const BlogDetailBody = ({ blog = null }) => {
         tags={blog.tags}
       />
 
-      {/* 
-      <p className="content--secondary text-justify">
-       */}
       <div
         className={`relative h-full w-full mt-10 py-16  ${
           isDarkMode ? "nav-dark" : "nav-light"
