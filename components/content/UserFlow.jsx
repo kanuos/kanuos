@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { IoGridOutline, IoListOutline } from "react-icons/io5";
 import { CTA } from "../portfolio/CTA";
+import { titleCase } from "../../utils";
 
 export const Screens = ({ steps = [], isDarkMode = false }) => {
   const [gridView, setGridView] = useState(true && steps.length > 3);
@@ -125,7 +126,7 @@ export const UserFlow = ({ steps = [], isDarkMode }) => {
                   </small>
                 </p>
               )}
-              <h3 className="heading--sub mb-4">{title}</h3>
+              <h3 className="heading--sub mb-4">{titleCase(title)}</h3>
               <p className="content--sub">{about}</p>
             </section>
           </motion.li>
