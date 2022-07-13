@@ -16,8 +16,8 @@ module.exports = {
         secondary: "#00BFB3",
       },
       fontFamily: {
-        title: ["Cabin Sketch", "monospace"],
-        sans: ["Montserrat", "sans-serif"],
+        title: ["Playfair Display", "monospace"],
+        sans: ["Poppins", "sans-serif"],
       },
     },
   },

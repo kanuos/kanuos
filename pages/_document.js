@@ -13,9 +13,9 @@ class MyDocument extends Document {
             crossOrigin="true"
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&family=Montserrat:wght@500;700;900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Poppins:wght@500;700;900&display=swap"
             rel="stylesheet"
-          />
+          ></link>
           <Favicon />
         </Head>
         <body>

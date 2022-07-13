@@ -6,7 +6,7 @@ import { IoGridOutline, IoListOutline } from "react-icons/io5";
 import { CTA } from "../portfolio/CTA";
 
 export const Screens = ({ steps = [], isDarkMode = false }) => {
-  const [gridView, setGridView] = useState(true);
+  const [gridView, setGridView] = useState(true && steps.length > 3);
 
   const images = useMemo(() => {
     return steps.flatMap((el) => el.images);
@@ -14,8 +14,12 @@ export const Screens = ({ steps = [], isDarkMode = false }) => {
 
   return (
     <div className="relative w-full">
-      <ul className="flex items-center justify-center gap-4 my-10">
-        <li>
+      <ul
+        className={`flex items-center justify-center gap-4 my-10 ${
+          steps.length > 3 ? "" : "cursor-not-allowed opacity-25"
+        }`}
+      >
+        <li className={steps.length > 3 ? "" : "pointer-events-none"}>
           <CTA
             label={<IoGridOutline />}
             isActive={gridView}
@@ -24,7 +28,7 @@ export const Screens = ({ steps = [], isDarkMode = false }) => {
             isDarkMode={isDarkMode}
           />
         </li>
-        <li>
+        <li className={steps.length > 3 ? "" : "pointer-events-none"}>
           <CTA
             label={<IoListOutline />}
             isActive={!gridView}

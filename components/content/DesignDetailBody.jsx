@@ -184,8 +184,8 @@ export const DesignDetailBody = ({ design = null }) => {
                     key={i}
                     className="flex flex-col w-full max-w-xs even:ml-auto odd:mr-auto md:even:ml-0 md:odd:mr-0 items-start group gap-6"
                   >
-                    <div className="bg-light w-full h-60 aspect-square overflow-hidden p-2.5 filter shadow-xl group-hover:shadow-2xl group-hover:drop-shadow-2xl transition-all group-hover:even:rotate-1 group-hover:odd:-rotate-1 md:group-hover:scale-110">
-                      <figure className="relative w-full h-full">
+                    <div className="bg-light w-full h-72 aspect-square overflow-hidden p-2.5 filter shadow-xl group-hover:shadow-2xl group-hover:drop-shadow-2xl transition-all group-hover:even:rotate-1 group-hover:odd:-rotate-1 md:group-hover:scale-110">
+                      <figure className="relative w-full h-full group">
                         <Image
                           loader={({ src, width }) => `${src}?w=${width}&q=100`}
                           layout="fill"
@@ -195,20 +195,19 @@ export const DesignDetailBody = ({ design = null }) => {
                           priority={true}
                           className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all"
                         />
+                        <figcaption className="absolute inset-0 grid place-items-center bg-light bg-opacity-75 z-20 scale-0 group-hover:scale-100 transition-all">
+                          <div
+                            className="w-max"
+                            title={`Go to ${titleCase(photographer)}'s profile`}
+                          >
+                            <PageLink
+                              isExternal={true}
+                              label={titleCase(photographer)}
+                              href={courtesy}
+                            />
+                          </div>
+                        </figcaption>
                       </figure>
-                    </div>
-
-                    <div className="px-4">
-                      <p className="content--secondary">
-                        <small>Asset Credit</small>
-                      </p>
-                      <div className="w-max">
-                        <PageLink
-                          isExternal={true}
-                          label={titleCase(photographer)}
-                          href={courtesy}
-                        />
-                      </div>
                     </div>
                   </li>
                 )
