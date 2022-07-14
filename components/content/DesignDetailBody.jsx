@@ -43,23 +43,8 @@ export const DesignDetailBody = ({ design = null }) => {
         desc={design.desc}
         date={design.date}
         tags={design.tags}
+        thumbnail={design.thumbnail}
       />
-
-      {/* thumbnail */}
-      <figure className="h-auto overflow-hidden w-full max-w-7xl mx-auto relative px-8">
-        <Image
-          layout="responsive"
-          height={"100%"}
-          width="100%"
-          src={design.thumbnail}
-          className="rounded-lg drop-shadow-xl block object-cover"
-          alt={`Design thumbnail of ${design.title}`}
-          loader={({ src, width }) => `${src}?w=${width}&q=100`}
-        />
-        <figcaption className="content--sub italic text-center mt-2">
-          {titleCase(design.caption)}
-        </figcaption>
-      </figure>
 
       <div className="mt-20 w-full max-w-4xl mx-auto flex items-center justify-center gap-4 flex-wrap">
         <CTA
@@ -156,10 +141,9 @@ export const DesignDetailBody = ({ design = null }) => {
 
         <div>
           <h2 className="heading--main text-center">All pages</h2>
-          <p className="content--secondary opacity-75 text-justify w-3/4 max-w-lg mx-auto">
+          <p className="content--secondary opacity-75 w-3/4 max-w-lg mx-auto mb-10 text-center">
             {titleCase(design.title)} has {design.userFlowSteps.length} pages
-            and are listed below. By default, grid view is selected. To view the
-            full sized images click the list view.
+            and are listed below.
           </p>
           <Screens steps={design.userFlowSteps} isDarkMode={isDarkMode} />
         </div>

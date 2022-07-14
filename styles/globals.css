@@ -44,7 +44,7 @@ button:focus {
 }
 
 .styledText {
-  @apply uppercase text-6xl xl:text-7xl pr-4 font-black bg-contain w-min max-w-sm tracking-tight md:max-w-md xl:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
+  @apply uppercase text-6xl xl:text-[5rem] pr-4 font-black bg-contain w-min max-w-sm tracking-tight md:max-w-md xl:max-w-lg break-words text-right block z-10 opacity-100 text-transparent bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
   background-size: 200% 200%;
   animation: shadowXL 8s infinite linear;
 }
@@ -122,12 +122,18 @@ pre[class*="language-"] {
   @apply text-sm;
 }
 
+pre *,
+pre {
+  font-family: monospace !important;
+  font-size: 1rem !important;
+}
+
 .markdown-editor-wrapper {
   @apply flex flex-col items-start list-outside list-[square] justify-start gap-y-3 max-w-4xl markdown-editor w-full whitespace-pre-line mb-4;
 }
 
 .markdown-editor.firstLetter > p:first-of-type {
-  @apply first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-5xl md:first-letter:text-7xl xl:first-letter:text-8xl first-letter:text-primary text-justify;
+  @apply first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-7xl first-letter:text-primary text-justify;
 }
 
 .markdown-editor {
@@ -194,7 +200,8 @@ pre[class*="language-"] {
   @apply w-full mx-auto flex flex-col items-start justify-start mb-10 px-8 md:px-10;
 }
 
-.heading--primary {
+.heading--primary,
+.heading--primary--max {
   @apply text-5xl md:text-7xl font-bold w-fit block my-2.5 leading-[.85] font-title selection:bg-transparent selection:text-primary;
 }
 

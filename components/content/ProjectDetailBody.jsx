@@ -77,7 +77,7 @@ export const ProjectDetailBody = ({ project = null }) => {
         tags={project.tags}
       />
 
-      <p className="p-8 mt-10 w-full max-w-4xl lg:my-6 mx-auto content--secondary first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-5xl md:first-letter:text-7xl xl:first-letter:text-8xl first-letter:text-primary text-justify">
+      <p className="p-8 pt-20 w-full max-w-4xl lg:my-6 mx-auto content--secondary first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-7xl first-letter:text-primary text-justify">
         Project is classified into{" "}
         <strong className={isDarkMode ? "text-secondary" : "text-current"}>
           {LENGTH}

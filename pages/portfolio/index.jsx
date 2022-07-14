@@ -33,7 +33,9 @@ const PortfolioPage = ({ metadata }) => {
             showScroll={false}
           >
             <div className="flex flex-col items-start justify-center">
-              <h1 className={`heading--primary w-min max-w-xs`}>Coming Soon</h1>
+              <h1 className={`heading--primary--max w-min max-w-xs`}>
+                Coming Soon
+              </h1>
               <p className="content--main mb-10 mt-4 text-justify">
                 Hi there, I am Sounak. The portfolio page you are trying to
                 visit is currently being maintained. You can still visit my
@@ -62,7 +64,7 @@ const PortfolioPage = ({ metadata }) => {
         <StyledHeader styledText={metadata.adminLabel} isDarkMode={isDarkMode}>
           <>
             <span className="text-sm md:text-base font-bold">Hi, I am</span>
-            <h1 className="heading--primary w-min">{metadata.fullName}</h1>
+            <h1 className="heading--primary--max w-min">{metadata.fullName}</h1>
             <Markdown className="content--main markdown-editor-wrapper">
               {metadata.about}
             </Markdown>
