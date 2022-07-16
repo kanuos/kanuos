@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 // import : external
 import { motion } from "framer-motion";
 
@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { PUBLIC_URLS, titleCase } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { PageLink } from "../portfolio/PageLink";
-import { CTA } from "../portfolio/CTA";
 import { DetailHeader } from "../detail/Header";
 import { Conclusion } from "../detail/Conclusion";
 import { Screens, UserFlow } from "./UserFlow";
@@ -15,11 +14,6 @@ import { MarkdownStep } from "../public/PageStepComponent";
 
 export const DesignDetailBody = ({ design = null }) => {
   const { isDarkMode } = useContext(ThemeContext);
-  const [tab, setTab] = useState(0);
-
-  function selectTab(i) {
-    return () => setTab(i);
-  }
 
   if (!design) return <></>;
 
@@ -33,100 +27,83 @@ export const DesignDetailBody = ({ design = null }) => {
       }
     >
       <DetailHeader
-        category={design.category}
-        isDarkMode={isDarkMode}
-        back={{
-          url: PUBLIC_URLS.designs.url,
-          text: "Back to designs",
-        }}
+        caption={
+          <small className="font-bold uppercase">{design.category}</small>
+        }
         title={design.title}
         desc={design.desc}
-        date={design.date}
-        tags={design.tags}
+        items={[
+          {
+            heading: "author",
+            content: (
+              <PageLink
+                href={PUBLIC_URLS.portfolio.url}
+                label="Sounak Mukherjee"
+              />
+            ),
+          },
+          {
+            heading: "tags",
+            content: design.tags.map((tag) => tag.tag),
+          },
+          {
+            heading: "year",
+            content: new Date(design.date).getUTCFullYear(),
+          },
+        ]}
         thumbnail={design.thumbnail}
       />
 
-      <div className="mt-20 w-full max-w-4xl mx-auto flex items-center justify-center gap-4 flex-wrap">
-        <CTA
-          label="My role"
-          cb={selectTab(0)}
-          btnMode={true}
-          isActive={tab === 0}
-          tiny={true}
-          isDarkMode={isDarkMode}
-        />
-        <CTA
-          label="Typography"
-          cb={selectTab(1)}
-          btnMode={true}
-          isActive={tab === 1}
-          tiny={true}
-          isDarkMode={isDarkMode}
-        />
-        <CTA
-          label="Colors"
-          cb={selectTab(2)}
-          btnMode={true}
-          isActive={tab === 2}
-          tiny={true}
-          isDarkMode={isDarkMode}
-        />
-      </div>
-
       {/* role */}
-      {tab === 0 && (
-        <section className="px-8 content--secondary w-full max-w-4xl mx-auto mt-10">
-          <MarkdownStep text={design.role} />
-        </section>
-      )}
+
+      <section className="px-8 content--secondary w-full max-w-4xl mx-auto mt-10">
+        <MarkdownStep text={design.role} />
+      </section>
 
       {/* fonts */}
-      {tab === 1 && (
-        <section className="px-8 w-full max-w-4xl mx-auto mt-10">
-          <ul className="flex flex-col items-start justify-around gap-y-6 w-full py-4">
-            {design.typography.map(({ family, desc }, i) => (
-              <li
-                key={i}
-                className="content--secondary gap-2 max-w-4xl w-full mx-auto"
-              >
-                <h2 className="heading--sub text-primary mb-2">
-                  {titleCase(family)}
-                </h2>
-                <MarkdownStep text={desc} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <section className="px-8 w-full max-w-4xl mx-auto mt-20">
+        <h2 className="heading--main text-center pb-6">Typography</h2>
+
+        <ul className="flex flex-col items-start justify-around gap-y-6 w-full py-4">
+          {design.typography.map(({ family, desc }, i) => (
+            <li
+              key={i}
+              className="content--secondary gap-2 max-w-2xl w-full mx-auto"
+            >
+              <h2 className="heading--sub mb-2">{titleCase(family)}</h2>
+              <MarkdownStep text={desc} />
+            </li>
+          ))}
+        </ul>
+      </section>
 
       {/* colors */}
-      {tab === 2 && (
-        <section className="px-8 w-full max-w-4xl mx-auto mt-10">
-          <ul
-            className={`gap-6 w-full transition-all flex flex-wrap items-center justify-center`}
-          >
-            {colors.map(({ hex }, i) => (
-              <li
-                key={i}
-                className={`w-32 h-32 rounded-full grid place-items-center p-2 ${
-                  isDarkMode ? "light-shadow" : "drop-shadow-xl"
-                }`}
-                style={{
-                  backgroundImage: `linear-gradient(${hex}, ${hex}, ${hex})`,
-                }}
+      <section className="px-8 w-full max-w-4xl mx-auto mt-10">
+        <h2 className="heading--main text-center pb-10">Color Palette</h2>
+        <ul
+          className={`gap-6 w-full transition-all flex flex-wrap items-center justify-center`}
+        >
+          {colors.map(({ hex }, i) => (
+            <li
+              key={i}
+              className={`w-32 h-32 rounded-full grid place-items-center p-2 ${
+                isDarkMode ? "light-shadow" : "drop-shadow-xl"
+              }`}
+              style={{
+                backgroundImage: `linear-gradient(${hex}, ${hex}, ${hex})`,
+              }}
+            >
+              <p
+                className={`w-fit h-auto text-xs rounded-full uppercase ${
+                  isDarkMode ? "nav-dark" : "nav-light"
+                } p-2 text-center`}
               >
-                <p
-                  className={`w-fit h-auto text-xs rounded-full uppercase ${
-                    isDarkMode ? "nav-dark" : "nav-light"
-                  } p-2 text-center`}
-                >
-                  <small className="font-bold">{hex}</small>
-                </p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+                <small className="font-bold">{hex}</small>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       {/* user flow + screens */}
       <section
@@ -135,7 +112,7 @@ export const DesignDetailBody = ({ design = null }) => {
         }`}
       >
         <div>
-          <h2 className="heading--main text-center">User flow</h2>
+          <h2 className="heading--main text-center">User Flow</h2>
           <UserFlow steps={design.userFlowSteps} isDarkMode={isDarkMode} />
         </div>
 

@@ -70,36 +70,54 @@ export const ProjectDetailBody = ({ project = null }) => {
       }
     >
       <DetailHeader
-        category={project.category}
+        caption={
+          <small className="font-bold uppercase">{project.category}</small>
+        }
         title={project.title}
         desc={project.desc}
-        date={project.date}
-        tags={project.tags}
+        items={[
+          {
+            heading: "author",
+            content: (
+              <PageLink
+                href={PUBLIC_URLS.portfolio.url}
+                label="Sounak Mukherjee"
+              />
+            ),
+          },
+          {
+            heading: "tags",
+            content: project.tags.map((tag) => tag.tag),
+          },
+          {
+            heading: "year",
+            content: new Date(project.date).getUTCFullYear(),
+          },
+        ]}
       />
-
-      <p className="p-8 pt-20 w-full max-w-4xl lg:my-6 mx-auto content--secondary first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-7xl first-letter:text-primary text-justify">
-        Project is classified into{" "}
-        <strong className={isDarkMode ? "text-secondary" : "text-current"}>
-          {LENGTH}
-        </strong>{" "}
-        chapters for the better organization. The completion percentage shows
-        what percentage of the content has been read. Check out for the{" "}
-        <strong className={isDarkMode ? "text-secondary" : "text-current"}>
-          source code
-        </strong>{" "}
-        and{" "}
-        <strong className={isDarkMode ? "text-secondary" : "text-current"}>
-          live demo
-        </strong>{" "}
-        of the project at the end of the project walkthrough. For any queries,
-        you can drop an email or ping me up on my social media handles.
-      </p>
 
       <div
         className={`relative h-full w-full my-10 py-10 px-8 ${
           isDarkMode ? "nav-dark" : "nav-light"
         }`}
       >
+        <p className="p-8 pb-20 w-full max-w-2xl lg:my-6 mx-auto content--secondary text-justify">
+          Project is classified into{" "}
+          <strong className={isDarkMode ? "text-secondary" : "text-current"}>
+            {LENGTH}
+          </strong>{" "}
+          chapters for the better organization. The completion percentage shows
+          what percentage of the content has been read. Check out for the{" "}
+          <strong className={isDarkMode ? "text-secondary" : "text-current"}>
+            source code
+          </strong>{" "}
+          and{" "}
+          <strong className={isDarkMode ? "text-secondary" : "text-current"}>
+            live demo
+          </strong>{" "}
+          of the project at the end of the project walkthrough. For any queries,
+          you can drop an email or ping me up on my social media handles.
+        </p>
         {/* metadata section */}
         <h2 className="heading--main w-max mx-auto mb-6 capitalize text-center">
           project information

@@ -1,36 +1,65 @@
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { titleCase } from "../../utils";
 
 export const Screens = ({ steps = [] }) => {
-  const images = useMemo(() => {
-    return steps.flatMap((el) => el.images);
-  }, [steps]);
-
   return (
     <div className="relative w-full">
-      <ul
-        className={`w-full gap-y-10 gap-x-4 py-6 mx-auto flex flex-col max-w-4xl`}
-      >
-        {images.map((img, k) => (
-          <motion.li key={k} className={`block drop-shadow-2xl w-full mx-auto`}>
-            <figure key={k} className={`relative block h-auto w-full`}>
-              <Image
-                layout="responsive"
-                height="0%"
-                width="100%"
-                priority={true}
-                alt={`image #${k + 1}`}
-                src={img}
-                objectFit="cover"
-                loader={({ src, width }) => `${src}?w=${width}&q=100`}
-                className="userflow-img"
-              />
-            </figure>
-          </motion.li>
-        ))}
+      <ul className={`w-full  gap-x-4 py-6 mx-auto flex flex-col`}>
+        {steps.map(({ images }, k) => {
+          images = images.filter(Boolean);
+          const hasMultipleImages = images.length > 1;
+          return (
+            <motion.li
+              key={k}
+              className={`block drop-shadow-2xl w-full mx-auto`}
+            >
+              {hasMultipleImages ? (
+                <div className="w-full h-auto odd:bg-dark__light even:bg-light py-10 lg:py-40">
+                  <figure
+                    className={`relative h-auto w-full grid gap-10 max-w-5xl mx-auto px-8  ${
+                      images.length == 2 ? "grid-cols-2" : "grid-cols-3"
+                    }
+                  `}
+                  >
+                    {images.map((img, i) => (
+                      <Image
+                        layout="responsive"
+                        height="0%"
+                        width="100%"
+                        priority={true}
+                        alt={`image #${i + 1}`}
+                        src={img}
+                        objectFit="contain"
+                        loader={({ src, width }) => `${src}?w=${width}&q=100`}
+                        className="userflow-img"
+                      />
+                    ))}
+                  </figure>
+                </div>
+              ) : (
+                <div className="w-full h-auto odd:bg-dark__light even:bg-light py-10 lg:py-40">
+                  <figure
+                    className={`relative block h-auto w-full max-w-5xl mx-auto px-8`}
+                  >
+                    <Image
+                      layout="responsive"
+                      height="0%"
+                      width="100%"
+                      priority={true}
+                      alt={`image #${k + 1}`}
+                      src={images[0]}
+                      objectFit="contain"
+                      loader={({ src, width }) => `${src}?w=${width}&q=100`}
+                      className="userflow-img"
+                    />
+                  </figure>
+                </div>
+              )}
+            </motion.li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -53,7 +82,7 @@ export const UserFlow = ({ steps = [], isDarkMode }) => {
               } group-odd:rounded-r-md group-even:rounded-l-md`}
             ></div>
             <section
-              className={`row-start-1 w-full z-20 px-4 py-6 rounded-md ${
+              className={`row-start-1 w-full z-20 p-6 rounded-md ${
                 isDarkMode ? "nav-dark--light" : "nav-light"
               } drop-shadow-2xl ${
                 steps.length === 1
@@ -62,9 +91,10 @@ export const UserFlow = ({ steps = [], isDarkMode }) => {
               }`}
             >
               {steps.length > 1 && (
-                <p className="text-xs mb-2">
-                  <small className="px-2 py-1 bg-primary bg-opacity-10 rounded-sm font-bold text-primary">
-                    Step {i + 1} - {steps.length}
+                <p className="text-xs">
+                  <small className="py-1 bg-opacity-10 rounded-sm font-bold text-primary">
+                    {(i + 1).toString().padStart(2, "0")}&nbsp;&mdash;&nbsp;
+                    {steps.length.toString().padStart(2, "0")}
                   </small>
                 </p>
               )}

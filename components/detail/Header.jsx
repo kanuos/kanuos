@@ -1,33 +1,47 @@
 import Image from "next/image";
-import Link from "next/link";
-import { PUBLIC_URLS } from "../../utils";
+import { titleCase } from "../../utils";
 
-import {
-  AiOutlineUser,
-  AiOutlineCalendar,
-  AiOutlineTags,
-} from "react-icons/ai";
+import { InfoGroup } from "../public/InfoGroup";
+import { MarkdownStep } from "../public/PageStepComponent";
 
 export const DetailHeader = ({
+  caption,
   title,
-  desc,
-  date,
-  category,
-  tags = [],
   thumbnail = null,
+  desc,
+  items = [],
 }) => {
-  const d = new Date(date);
-  const dateStr = Intl.DateTimeFormat(undefined, {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate() + 1));
-
   return (
     <>
+      <header>
+        <section className="p-8 max-w-4xl mx-auto grid grid-cols-10 h-auto">
+          <p className="text-xs text-primary w-max">{caption}</p>
+          <h1 className="font-title font-black text-4xl md:text-5xl uppercase col-span-full mt-1 mb-16">
+            {title}
+          </h1>
+
+          <InfoGroup items={items} />
+        </section>
+        {thumbnail && (
+          <figure className="relative h-[75vh] lg:h-[80vh] w-full max-w-6xl mx-auto lg:rounded-md overflow-hidden md:my-6">
+            <Image
+              layout="fill"
+              className="object-cover"
+              loader={({ src, width }) => `${src}?w=${width}&q=100`}
+              src={thumbnail}
+              alt={`${title} poster`}
+            />
+          </figure>
+        )}
+        <div className="px-10 py-16 max-w-4xl mx-auto">
+          <section className="max-w-2xl mr-auto h-auto">
+            <MarkdownStep text={titleCase(desc)} firstLetter={true} />
+          </section>
+        </div>
+      </header>
       {/* thumbnail */}
 
-      {thumbnail && (
+      {/* {thumbnail && (
         <figure className="h-[50vh] md:h-[75vh] overflow-hidden w-full relative">
           <Image
             layout="fill"
@@ -73,7 +87,24 @@ export const DetailHeader = ({
             maiores velit suscipit nobis. Minima, perferendis dolore?
           </span>
         </p>
-      </section>
+      </section> */}
     </>
   );
 };
+
+/*
+[
+              {
+                heading: "role",
+                content: ["web design", "UI-UX development", "API development"],
+              },
+              {
+                heading: "category",
+                content: project.project.category,
+              },
+              {
+                heading: "year",
+                content: new Date(project.project.date).getUTCFullYear(),
+              },
+            ]
+*/

@@ -1,5 +1,5 @@
 // Portfolio page
-import { useContext } from "react";
+import { useContext, useState, useCallback, memo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Markdown from "react-markdown";
 
@@ -14,11 +14,21 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { ContactMe } from "../../components/portfolio/ContactMe";
 import { AboutMe } from "../../components/portfolio/AboutMe";
 import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
+import { WorkDetailModal } from "../../components/portfolio/WorkDetailModal";
+
+const MemoizedWorkModal = memo(WorkDetailModal);
 
 const PortfolioPage = ({ metadata }) => {
   metadata = JSON.parse(metadata);
   const { isDarkMode } = useContext(ThemeContext);
   const validPortfolioMetadata = metadata?.portfolio?.length;
+
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const selectProject = useCallback((p) => {
+    setSelectedProject(() => p);
+  }, []);
+
   if (!validPortfolioMetadata) {
     return (
       <PublicLayout
@@ -55,38 +65,60 @@ const PortfolioPage = ({ metadata }) => {
   }
 
   return (
-    <PublicLayout
-      metaTitle="Sounak Mukherjee | Portfolio"
-      content="Check out my full stack web developer portfolio website"
-      navType="portfolio"
-    >
-      <main className="w-full overflow-x-hidden">
-        <StyledHeader styledText={metadata.adminLabel} isDarkMode={isDarkMode}>
-          <>
-            <span className="text-sm md:text-base font-bold">Hi, I am</span>
-            <h1 className="heading--primary--max w-min">{metadata.fullName}</h1>
-            <Markdown className="content--main markdown-editor-wrapper">
-              {metadata.about}
-            </Markdown>
-            <div className="mt-10">
-              <CTA
-                label="Let's talk"
-                href={PORTFOLIO_LINKS["contact me"].url}
-                isDarkMode={isDarkMode}
-              />
-            </div>
-          </>
-        </StyledHeader>
+    <>
+      {selectedProject && (
+        <AnimatePresence>
+          <MemoizedWorkModal
+            handleSelectProject={selectProject}
+            work={selectedProject}
+            isDarkMode={isDarkMode}
+            allProjects={metadata.portfolio}
+          />
+        </AnimatePresence>
+      )}
 
-        <Showcase works={metadata.portfolio} isDarkMode={isDarkMode} />
-        <AboutMe
-          skills={metadata.skills}
-          techStack={metadata.techStack}
-          isDarkMode={isDarkMode}
-        />
-        <ContactMe isDarkMode={isDarkMode} />
-      </main>
-    </PublicLayout>
+      <PublicLayout
+        metaTitle="Sounak Mukherjee | Portfolio"
+        content="Check out my full stack web developer portfolio website"
+        navType="portfolio"
+      >
+        <main className="w-full overflow-x-hidden">
+          <StyledHeader
+            styledText={metadata.adminLabel}
+            isDarkMode={isDarkMode}
+          >
+            <>
+              <span className="text-sm md:text-base font-bold">Hi, I am</span>
+              <h1 className="heading--primary--max w-min">
+                {metadata.fullName}
+              </h1>
+              <Markdown className="content--main markdown-editor-wrapper">
+                {metadata.about}
+              </Markdown>
+              <div className="mt-10">
+                <CTA
+                  label="Let's talk"
+                  href={PORTFOLIO_LINKS["contact me"].url}
+                  isDarkMode={isDarkMode}
+                />
+              </div>
+            </>
+          </StyledHeader>
+
+          <Showcase
+            works={metadata.portfolio}
+            isDarkMode={isDarkMode}
+            handleSelectProject={selectProject}
+          />
+          <AboutMe
+            skills={metadata.skills}
+            techStack={metadata.techStack}
+            isDarkMode={isDarkMode}
+          />
+          <ContactMe isDarkMode={isDarkMode} />
+        </main>
+      </PublicLayout>
+    </>
   );
 };
 

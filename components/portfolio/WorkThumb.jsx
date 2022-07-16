@@ -2,9 +2,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { CTA } from "./CTA";
-import { PORTFOLIO_PROJECT_PATH } from "../../utils";
 
-export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
+export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
   const variants = {
     projectLeft: {
       show: {
@@ -109,12 +108,8 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
           </motion.legend>
           <motion.h3
             variants={variants.content}
-            className={`text-2xl lg:text-3xl font-title my-1 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center capitalize bg-gradient-to-r ${
+            className={`text-2xl lg:text-3xl my-1 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center capitalize bg-gradient-to-r ${
               i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
-            } ${
-              isDarkMode ? "from-light" : "from-dark"
-            } via-primary to-secondary bg-clip-text ${
-              hovered ? "text-transparent" : "text-current"
             }`}
           >
             {project.project.title}
@@ -169,7 +164,8 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode }) => {
         <CTA
           label="View details"
           tiny={true}
-          href={PORTFOLIO_PROJECT_PATH + project.project.slug}
+          btnMode={true}
+          cb={() => cb(project)}
           isDarkMode={isDarkMode}
           scroll={true}
         />

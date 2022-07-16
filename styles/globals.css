@@ -133,7 +133,7 @@ pre {
 }
 
 .markdown-editor.firstLetter > p:first-of-type {
-  @apply first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-7xl first-letter:text-primary text-justify;
+  @apply first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:-mt-2 first-letter:float-left first-letter:text-7xl text-justify;
 }
 
 .markdown-editor {

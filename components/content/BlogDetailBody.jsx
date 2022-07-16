@@ -31,20 +31,32 @@ export const BlogDetailBody = ({ blog = null }) => {
   return (
     <div className="overflow-hidden relative h-auto">
       <DetailHeader
-        category={blog.category}
-        isDarkMode={isDarkMode}
-        back={{
-          url: PUBLIC_URLS.blogs.url,
-          text: "Back to blogs",
-        }}
+        caption={<small className="font-bold uppercase">{blog.category}</small>}
         title={blog.title}
         desc={blog.desc}
-        date={blog.date}
-        tags={blog.tags}
+        items={[
+          {
+            heading: "author",
+            content: (
+              <PageLink
+                href={PUBLIC_URLS.portfolio.url}
+                label="Sounak Mukherjee"
+              />
+            ),
+          },
+          {
+            heading: "tags",
+            content: blog.tags.map((tag) => tag.tag),
+          },
+          {
+            heading: "year",
+            content: new Date(blog.date).getUTCFullYear(),
+          },
+        ]}
       />
 
       <div
-        className={`relative h-full w-full mt-10 py-16  ${
+        className={`relative h-full w-full py-16 ${
           isDarkMode ? "nav-dark" : "nav-light"
         }`}
       >
@@ -54,7 +66,7 @@ export const BlogDetailBody = ({ blog = null }) => {
             <section className="w-full max-w-4xl mx-auto" key={i}>
               {key === "markdown" && (
                 <section className="px-8 content--secondary">
-                  <MarkdownStep text={value} firstLetter={i === 0} />
+                  <MarkdownStep text={value} />
                 </section>
               )}
               {key === "code" && (

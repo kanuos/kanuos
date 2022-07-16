@@ -13,63 +13,15 @@ import { AUTH_ROUTES } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { CTA } from "../portfolio/CTA";
 import { NavContext } from "../../contexts/NavContext";
+import { CloseBtn } from "./CloseBtn";
 
 export const NavBar = ({ type = "public" }) => {
   const { showMenu, toggleNavMenu } = useContext(NavContext);
 
   return (
     <motion.nav className={`z-40`}>
-      <motion.div
-        onClick={toggleNavMenu}
-        className={
-          "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-0 right-0 group transition " +
-          (showMenu ? "bg-primary mix-blend-normal" : "mix-blend-difference")
-        }
-      >
-        <motion.span
-          animate={
-            showMenu
-              ? {
-                  rotate: 45,
-                  y: 3,
-                  transition: { type: "spring", stiffness: 400 },
-                }
-              : {
-                  rotate: 0,
-                  y: 0,
-                  transition: { type: "spring", stiffness: 400 },
-                }
-          }
-          className={`w-6 rounded h-[2px] transition-colors ${
-            showMenu
-              ? "bg-dark group-hover:bg-light"
-              : "group-hover:mr-1 bg-secondary"
-          }`}
-        ></motion.span>
-        <motion.span
-          animate={
-            showMenu
-              ? {
-                  rotate: -45,
-                  y: -5,
-                  transition: { type: "spring", stiffness: 400 },
-                }
-              : {
-                  rotate: 0,
-                  y: 0,
-                  transition: { type: "spring", stiffness: 400 },
-                }
-          }
-          className={`w-6 rounded h-[2px] transition-colors ${
-            showMenu
-              ? "bg-dark group-hover:bg-light"
-              : "group-hover:ml-1 bg-secondary"
-          }`}
-        ></motion.span>
-      </motion.div>
-      <AnimatePresence>
-        <NavMenu type={type} />
-      </AnimatePresence>
+      <CloseBtn cb={toggleNavMenu} isOpen={showMenu} />
+      <NavMenu type={type} />
     </motion.nav>
   );
 };

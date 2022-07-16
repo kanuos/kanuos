@@ -10,12 +10,12 @@ export const PageLink = ({
   special = false,
   scrollToTop = true,
 }) => {
-  const cls = `inline-block text-sm w-max max-w-lg py-0.5 content--sub relative after:absolute after:h-[1.5px] hover:after:w-full after:left-0 after:-bottom-1 after:bg-secondary after:rounded-full font-bold after:transition-all ${
+  const cls = `inline-block w-max max-w-lg py-0.5 relative after:absolute after:h-[1.5px] hover:after:w-full after:left-0 after:bottom-0 after:bg-secondary after:rounded-full after:transition-all ${
     special
       ? "hover:text-secondary opacity-100 after:w-4"
       : isActive
       ? "after:w-full opacity-100"
-      : `${showAfter ? "after:w-4" : "after:w-0"} opacity-60 hover:opacity-100`
+      : `${showAfter ? "after:w-4" : "after:w-0"}`
   }`;
   if (isExternal) {
     return (
@@ -27,7 +27,10 @@ export const PageLink = ({
 
   return (
     <Link href={href} scroll={scrollToTop}>
-      <a className={cls}>{label}</a>
+      <a className={cls}>
+        {label}
+        {/* <small className="font-bold">{label}</small> */}
+      </a>
     </Link>
   );
 };

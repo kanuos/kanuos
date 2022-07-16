@@ -5,7 +5,11 @@ import { WorkThumb } from "./WorkThumb";
 import { PageLink } from "./PageLink";
 import { PORTFOLIO_LINKS, PUBLIC_URLS, titleCase } from "../../utils";
 
-export const Showcase = ({ works = [], isDarkMode = false }) => {
+export const Showcase = ({
+  works = [],
+  isDarkMode = false,
+  handleSelectProject,
+}) => {
   const CATEGORIES = works.map((el) => titleCase(el.project?.category));
 
   CATEGORIES.unshift("All");
@@ -51,6 +55,7 @@ export const Showcase = ({ works = [], isDarkMode = false }) => {
             <WorkThumb
               project={project}
               i={i}
+              cb={handleSelectProject}
               key={project._id}
               isDarkMode={isDarkMode}
               caption={`Project ${i + 1} of ${filteredWork.length}`}
