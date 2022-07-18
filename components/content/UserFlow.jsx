@@ -1,67 +1,70 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
+import hero from "../../public/hero.webp";
 
 import { titleCase } from "../../utils";
 
 export const Screens = ({ steps = [] }) => {
   return (
-    <div className="relative w-full">
-      <ul className={`w-full  gap-x-4 py-6 mx-auto flex flex-col`}>
-        {steps.map(({ images }, k) => {
-          images = images.filter(Boolean);
-          const hasMultipleImages = images.length > 1;
-          return (
-            <motion.li
-              key={k}
-              className={`block drop-shadow-2xl w-full mx-auto`}
-            >
+    <ul className={`w-full gap-x-4 mx-auto flex flex-col relative`}>
+      {steps.map(({ images }, k) => {
+        images = images.filter(Boolean);
+        const hasMultipleImages = images.length > 1;
+        return (
+          <motion.li
+            key={k}
+            className={`z-10 block drop-shadow-2xl w-full mx-auto`}
+          >
+            <div className="w-full h-auto bg-dark__light py-10 lg:py-20">
               {hasMultipleImages ? (
-                <div className="w-full h-auto odd:bg-dark__light even:bg-light py-10 lg:py-40">
-                  <figure
-                    className={`relative h-auto w-full grid gap-10 max-w-5xl mx-auto px-8  ${
-                      images.length == 2 ? "grid-cols-2" : "grid-cols-3"
-                    }
+                <figure
+                  className={`relative h-auto w-full grid gap-10 max-w-6xl mx-auto px-8  ${
+                    images.length === 1
+                      ? "grid-cols-1"
+                      : images.length === 2
+                      ? "grid-cols-2"
+                      : "grid-cols-3"
+                  }
                   `}
-                  >
-                    {images.map((img, i) => (
-                      <Image
-                        layout="responsive"
-                        height="0%"
-                        width="100%"
-                        priority={true}
-                        alt={`image #${i + 1}`}
-                        src={img}
-                        objectFit="contain"
-                        loader={({ src, width }) => `${src}?w=${width}&q=100`}
-                        className="userflow-img"
-                      />
-                    ))}
-                  </figure>
-                </div>
-              ) : (
-                <div className="w-full h-auto odd:bg-dark__light even:bg-light py-10 lg:py-40">
-                  <figure
-                    className={`relative block h-auto w-full max-w-5xl mx-auto px-8`}
-                  >
+                >
+                  {images.map((img, i) => (
                     <Image
+                      key={i}
                       layout="responsive"
                       height="0%"
                       width="100%"
                       priority={true}
-                      alt={`image #${k + 1}`}
-                      src={images[0]}
+                      alt={`image #${i + 1}`}
+                      src={img}
                       objectFit="contain"
                       loader={({ src, width }) => `${src}?w=${width}&q=100`}
-                      className="userflow-img"
+                      className="userflow-img drop-shadow-xl"
                     />
-                  </figure>
-                </div>
+                  ))}
+                </figure>
+              ) : (
+                <figure
+                  className={`relative block h-auto w-full max-w-4xl mx-auto px-8`}
+                >
+                  <Image
+                    layout="responsive"
+                    height="0%"
+                    width="100%"
+                    priority={true}
+                    alt={`image #${k + 1}`}
+                    src={images[0]}
+                    objectFit="contain"
+                    loader={({ src, width }) => `${src}?w=${width}&q=100`}
+                    className="userflow-img"
+                  />
+                </figure>
               )}
-            </motion.li>
-          );
-        })}
-      </ul>
-    </div>
+            </div>
+          </motion.li>
+        );
+      })}
+      ;
+    </ul>
   );
 };
 

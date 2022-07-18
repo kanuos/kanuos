@@ -15,7 +15,7 @@ export const StyledHeader = ({
   ));
 
   return (
-    <header className="h-[95vh] w-full mx-auto relative mb-6 pt-4 md:pt-10 grid grid-rows-2">
+    <header className="min-h-screen w-full mx-auto relative mb-6 pt-4 md:pt-10 grid grid-rows-2">
       <section className="flex flex-col items-start px-8 h-auto w-full max-w-4xl mx-auto row-span-1">
         {children}
       </section>

@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { motion } from "framer-motion";
 
 // internal imports : components
-const Tag = dynamic(() => import("../public/Tag").then((m) => m.Tag));
 const JoinLine = dynamic(() =>
   import("../public/DescHeader").then((m) => m.JoinLine)
 );
@@ -90,17 +89,6 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
             <span className="text-primary font-bold">.....</span>
           )}
         </p>
-        <div
-          className={`flex flex-wrap gap-2 opacity-50 items-center mt-3 w-full group-hover:opacity-100 ${
-            isEven ? "justify-end" : "justify-start"
-          }`}
-        >
-          {/* <div className="flex flex-wrap opacity-50 group-hover:opacity-100 items-start group-odd:justify-start group-even:justify-end flex-grow gap-x-4 gap-y-2 capitalize font-bold text-xs"> */}
-          {data.tags.map((tag) => (
-            <Tag key={tag._id} tag={tag} />
-          ))}
-          {/* </div> */}
-        </div>
         <ul className="text-sm mt-2 group-even:text-right group-odd:text-left">
           <li className="text-xs font-bold opacity-75">
             <small>Published on</small>

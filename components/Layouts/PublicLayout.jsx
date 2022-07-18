@@ -36,10 +36,10 @@ const PublicLayout = (props) => {
           showMenu
             ? "blur-[1.5px] grayscale brightness-50 pointer-events-none"
             : "blur-0 grayscale-0 brightness-100 pointer-events-auto"
-        } transition-all`}
+        } transition-all scroll-smooth`}
       >
         <div
-          className={`w-full pt-10 ${
+          className={`w-full pt-10 scroll-smooth ${
             isDarkMode
               ? "scrollbar-track-dark scrollbar-thumb-secondary"
               : "scrollbar-track-light scrollbar-thumb-primary"

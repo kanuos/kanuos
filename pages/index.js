@@ -77,68 +77,70 @@ const HomePage = ({ allTags }) => {
   const tagAvailability = Boolean(allTags.length);
 
   return (
-    <>
-      <PublicLayout metaTitle="Welcome to Sounak's website">
-        <StyledHeader
-          styledText={tagAvailability ? "search by tags" : "sounak mukherjee"}
-          isDarkMode={isDarkMode}
-          showScroll={allTags.length > 0}
-        >
-          <h1 className="heading--primary">Hello world!</h1>
-          <span className="text-sm md:text-base font-bold my-2">
-            I&apos;m Sounak. Welcome to my tech journal
-          </span>
-          <p className="content--main">
-            You can search blogs, designs and projects by tags. For ease of
-            navigation, I tag them accordingly. Enjoy!
-          </p>
-          <div className="mt-10">
-            <CTA
-              isDarkMode={isDarkMode}
-              href={
-                tagAvailability
-                  ? `${PUBLIC_URLS.home.url}#${SEARCH_ID}`
-                  : PUBLIC_URLS.portfolio.url
-              }
-              label={
-                tagAvailability
-                  ? "Available list of tags"
-                  : "Check out my portfolio"
-              }
-            />
+    <PublicLayout metaTitle="Welcome to Sounak's website">
+      <StyledHeader
+        styledText={tagAvailability ? "search by tags" : "sounak mukherjee"}
+        isDarkMode={isDarkMode}
+        showScroll={allTags.length > 0}
+      >
+        <h1 className="heading--primary">Hello world!</h1>
+        <span className="text-sm md:text-base font-bold my-2">
+          I&apos;m Sounak. Welcome to my tech journal
+        </span>
+        <p className="content--main">
+          You can search blogs, designs and projects by tags. For ease of
+          navigation, I tag them accordingly. Enjoy!
+        </p>
+        <div className="mt-10">
+          <CTA
+            isDarkMode={isDarkMode}
+            href={
+              tagAvailability
+                ? `${PUBLIC_URLS.home.url}#${SEARCH_ID}`
+                : PUBLIC_URLS.portfolio.url
+            }
+            label={
+              tagAvailability
+                ? "Available list of tags"
+                : "Check out my portfolio"
+            }
+          />
+        </div>
+      </StyledHeader>
+      {tagAvailability && (
+        <>
+          <div id={SEARCH_ID} className="w-full p-10 mb-40">
+            {status === STATUSES.initial && (
+              <section className="w-full max-w-3xl mx-auto">
+                <div className="flex flex-col items-start w-full">
+                  <h2 className="heading--sub font-bold">
+                    Total tags : {allTags.length}
+                  </h2>
+                </div>
+                <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 w-full">
+                  {allTags.map((tag) => (
+                    <li key={tag._id}>
+                      <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {status === STATUSES.loading && (
+              <section className="w-full max-w-3xl mx-auto">
+                <LoadSpinner />
+              </section>
+            )}
+
+            {status === STATUSES.complete && data && (
+              <TagDetailList {...data} close={handleInitialState} />
+            )}
           </div>
-        </StyledHeader>
-        {tagAvailability && (
-          <>
-            <div id={SEARCH_ID} className="w-full p-10 mb-40 max-w-4xl mx-auto">
-              {status === STATUSES.initial && (
-                <>
-                  <div className="flex flex-col items-start w-full">
-                    <h2 className="heading--sub font-bold">
-                      Total tags : {allTags.length}
-                    </h2>
-                  </div>
-                  <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 w-full">
-                    {allTags.map((tag) => (
-                      <li key={tag._id}>
-                        <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-
-              {status === STATUSES.loading && <LoadSpinner />}
-
-              {status === STATUSES.complete && data && (
-                <TagDetailList {...data} close={handleInitialState} />
-              )}
-            </div>
-            <Footer />
-          </>
-        )}
-      </PublicLayout>
-    </>
+          <Footer />
+        </>
+      )}
+    </PublicLayout>
   );
 };
 

@@ -141,6 +141,11 @@ pre {
   overflow-wrap: break-word !important;
 }
 
+.markdown-editor--small {
+  @apply flex flex-col items-stretch text-xs;
+  overflow-wrap: break-word !important;
+}
+
 .markdown-editor p {
   @apply leading-relaxed;
 }
@@ -250,4 +255,14 @@ pre {
 .after-line--center,
 .md\:after-line--center {
   @apply after:left-1/2 after:-translate-x-1/2;
+}
+
+@media screen and (min-width: 1024px) {
+  .skill__card__container:hover > .skill__card:hover {
+    @apply scale-105;
+  }
+
+  .skill__card__container:hover > :not(.skill__card:hover) {
+    @apply scale-90 odd:rotate-3 even:-rotate-3 blur-sm delay-100 transition-transform;
+  }
 }

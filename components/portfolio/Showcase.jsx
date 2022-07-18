@@ -28,9 +28,9 @@ export const Showcase = ({
   return (
     <section
       id={PORTFOLIO_LINKS["selected works"].name}
-      className="h-auto w-full max-w-4xl mx-auto"
+      className="h-auto w-full max-w-6xl mx-auto"
     >
-      <div className="p-10">
+      <div className="p-10 max-w-4xl mx-auto">
         <h2 className="heading--secondary mb-4">
           Selected projects and designs
         </h2>
@@ -50,7 +50,7 @@ export const Showcase = ({
         </ul>
       </div>
       <AnimatePresence exitBeforeEnter={true}>
-        <motion.section className="py-6 sm:py-20 w-full sm:p-10 flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory max-w-4xl">
+        <motion.section className="py-6 sm:py-20 w-full sm:p-10 flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory">
           {filteredWork.map((project, i) => (
             <WorkThumb
               project={project}

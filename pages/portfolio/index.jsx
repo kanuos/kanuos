@@ -1,4 +1,5 @@
 // Portfolio page
+import dynamic from "next/dynamic";
 import { useContext, useState, useCallback, memo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Markdown from "react-markdown";
@@ -6,15 +7,31 @@ import Markdown from "react-markdown";
 // import : internal
 import { getPortfolio } from "../../database/user";
 
-import PublicLayout from "../../components/Layouts/PublicLayout";
-import { CTA } from "../../components/portfolio/CTA";
-import { Showcase } from "../../components/portfolio/Showcase";
-import { StyledHeader } from "../../components/portfolio/StyledHeader";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { ContactMe } from "../../components/portfolio/ContactMe";
-import { AboutMe } from "../../components/portfolio/AboutMe";
 import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
-import { WorkDetailModal } from "../../components/portfolio/WorkDetailModal";
+
+import PublicLayout from "../../components/Layouts/PublicLayout";
+
+const Showcase = dynamic(() =>
+  import("../../components/portfolio/Showcase").then((m) => m.Showcase)
+);
+const CTA = dynamic(() =>
+  import("../../components/portfolio/CTA").then((m) => m.CTA)
+);
+const StyledHeader = dynamic(() =>
+  import("../../components/portfolio/StyledHeader").then((m) => m.StyledHeader)
+);
+const ContactMe = dynamic(() =>
+  import("../../components/portfolio/ContactMe").then((m) => m.ContactMe)
+);
+const AboutMe = dynamic(() =>
+  import("../../components/portfolio/AboutMe").then((m) => m.AboutMe)
+);
+const WorkDetailModal = dynamic(() =>
+  import("../../components/portfolio/WorkDetailModal").then(
+    (m) => m.WorkDetailModal
+  )
+);
 
 const MemoizedWorkModal = memo(WorkDetailModal);
 
@@ -82,7 +99,7 @@ const PortfolioPage = ({ metadata }) => {
         content="Check out my full stack web developer portfolio website"
         navType="portfolio"
       >
-        <main className="w-full overflow-x-hidden">
+        <main className="w-full h-screen">
           <StyledHeader
             styledText={metadata.adminLabel}
             isDarkMode={isDarkMode}
@@ -92,7 +109,7 @@ const PortfolioPage = ({ metadata }) => {
               <h1 className="heading--primary--max w-min">
                 {metadata.fullName}
               </h1>
-              <Markdown className="content--main markdown-editor-wrapper">
+              <Markdown className="content--main markdown-editor-wrapper mt-4">
                 {metadata.about}
               </Markdown>
               <div className="mt-10">

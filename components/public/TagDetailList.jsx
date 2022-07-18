@@ -1,11 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 
-import { IoCloseOutline, IoPricetagOutline } from "react-icons/io5";
+import { IoCloseOutline } from "react-icons/io5";
 
 import { BlogThumbnail } from "../content/BlogThumbnail";
 import { ProjectThumbnail } from "../content/ProjectThumbnail";
 import { DesignThumbnail } from "../content/DesignThumbnail";
-import { JoinLine } from "./DescHeader";
 
 import { CONTENT_TYPE } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -38,12 +37,15 @@ export const TagDetailList = (props) => {
           isDarkMode ? "nav-light" : "nav-dark"
         }`}
       >
-        <p className="font-bold text-xs">
+        <p className="text-xs">
           Searching for{" "}
-          <span className="text-primary capitalize text-sm ml-1">{tag}</span>
+          <span className="text-primary font-bold uppercase text-xs ml-1">
+            {tag}
+          </span>
         </p>
         <button
           onClick={close}
+          title="Click to reset filter"
           className="hover:rotate-90 hover:text-primary hover:scale-110 transition-all"
         >
           <IoCloseOutline />
@@ -62,7 +64,8 @@ export const TagDetailList = (props) => {
               className="font-bold text-xs capitalize"
               onClick={() => setActive(CONTENT_TYPE.blog.name)}
             >
-              {CONTENT_TYPE.blog.name}
+              {CONTENT_TYPE.blog.name}{" "}
+              <sup className="text-primary font-bold">{blog.length}</sup>
             </button>
           </li>
         )}
@@ -78,7 +81,8 @@ export const TagDetailList = (props) => {
               className="font-bold text-xs capitalize"
               onClick={() => setActive(CONTENT_TYPE.project.name)}
             >
-              {CONTENT_TYPE.project.name}
+              {CONTENT_TYPE.project.name}{" "}
+              <sup className="text-primary font-bold">{project.length}</sup>
             </button>
           </li>
         )}
@@ -94,7 +98,8 @@ export const TagDetailList = (props) => {
               className="font-bold text-xs capitalize"
               onClick={() => setActive(CONTENT_TYPE.design.name)}
             >
-              {CONTENT_TYPE.design.name}
+              {CONTENT_TYPE.design.name}{" "}
+              <sup className="text-primary font-bold">{design.length}</sup>
             </button>
           </li>
         )}
@@ -121,23 +126,11 @@ export const TagDetailList = (props) => {
   );
 };
 
-const GroupList = ({ type, list, tag }) => {
+const GroupList = ({ type, list }) => {
   return (
-    <section className="my-10 w-full">
-      <div className="my-10 flex flex-col items-center justify-center gap-2">
-        <p className="flex items-center justify-center gap-1 opacity-50">
-          <IoPricetagOutline />
-          <span className="capitalize font-bold text-xs">{tag}</span>
-        </p>
-        <h3 className="capitalize font-black text-center text-3xl md:text-5xl">
-          {type}
-        </h3>
-        <p className="text-xs text-primary font-bold ml-1">
-          <small>
-            Total {type} : {list.length}
-          </small>
-        </p>
-        <JoinLine />
+    <section className="w-full">
+      <div className="mb-10 w-full grid place-items-center">
+        <h3 className="heading--primary capitalize">{type}</h3>
       </div>
       {type === CONTENT_TYPE.project.name && (
         <div className="flex flex-col items-stretch w-11/12 gap-y-20 max-w-4xl mx-auto">

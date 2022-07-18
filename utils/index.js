@@ -53,8 +53,6 @@ export const PUBLIC_NAVIGATION_URLS = {
   designs: "/designs",
 };
 
-export const PORTFOLIO_PROJECT_PATH = "/portfolio/work/";
-
 const ADMIN_PATH = "/admin";
 export const ADMIN_NEW_CONTENT = ADMIN_PATH + "/new-content";
 export const ADMIN_ACCOUNT = ADMIN_PATH + "/";

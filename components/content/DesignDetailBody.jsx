@@ -134,7 +134,7 @@ export const DesignDetailBody = ({ design = null }) => {
               <h2 className="heading--main capitalize">external resources</h2>
               <p className="content--secondary text-justify">
                 This project uses {design.externalResources.length} assets in
-                its design. Here's a list of all the assets along with the
+                its design. Here&apos;s a list of all the assets along with the
                 artists and links to their accounts!
               </p>
             </div>
