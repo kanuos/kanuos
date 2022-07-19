@@ -17,10 +17,11 @@ import { CloseBtn } from "./CloseBtn";
 
 export const NavBar = ({ type = "public" }) => {
   const { showMenu, toggleNavMenu } = useContext(NavContext);
+  const { isDarkMode } = useContext(ThemeContext);
 
   return (
     <motion.nav className={`z-40`}>
-      <CloseBtn cb={toggleNavMenu} isOpen={showMenu} />
+      <CloseBtn cb={toggleNavMenu} isOpen={showMenu} isDarkMode={isDarkMode} />
       <NavMenu type={type} />
     </motion.nav>
   );

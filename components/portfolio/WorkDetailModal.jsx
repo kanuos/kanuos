@@ -36,7 +36,11 @@ export const WorkDetailModal = ({
       }`}
     >
       <div className="fixed top-2 right-2 z-20">
-        <CloseBtn cb={() => handleSelectProject(null)} isOpen={true} />
+        <CloseBtn
+          cb={() => handleSelectProject(null)}
+          isOpen={true}
+          isDarkMode={isDarkMode}
+        />
       </div>
       <section className="absolute inset-0 z-10 h-auto min-h-screen w-full overflow-y-auto scrollbar-none pt-10">
         <DetailHeader
