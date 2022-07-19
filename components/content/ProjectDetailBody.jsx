@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 // import : internal
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { PUBLIC_URLS } from "../../utils";
+import { MarkdownStep } from "../public/PageStepComponent";
 
 // dynamic imports
 const DifficultyStatus = dynamic(() =>
@@ -74,7 +75,6 @@ export const ProjectDetailBody = ({ project = null }) => {
           <small className="font-bold uppercase">{project.category}</small>
         }
         title={project.title}
-        desc={project.desc}
         items={[
           {
             heading: "author",
@@ -101,23 +101,12 @@ export const ProjectDetailBody = ({ project = null }) => {
           isDarkMode ? "nav-dark" : "nav-light"
         }`}
       >
-        <p className="p-8 pb-20 w-full max-w-2xl lg:my-6 mx-auto content--secondary text-justify">
-          Project is classified into{" "}
-          <strong className={isDarkMode ? "text-secondary" : "text-current"}>
-            {LENGTH}
-          </strong>{" "}
-          chapters for the better organization. The completion percentage shows
-          what percentage of the content has been read. Check out for the{" "}
-          <strong className={isDarkMode ? "text-secondary" : "text-current"}>
-            source code
-          </strong>{" "}
-          and{" "}
-          <strong className={isDarkMode ? "text-secondary" : "text-current"}>
-            live demo
-          </strong>{" "}
-          of the project at the end of the project walkthrough. For any queries,
-          you can drop an email or ping me up on my social media handles.
-        </p>
+        <div className="w-full max-w-4xl mx-auto mb-20">
+          <MarkdownStep text={project.desc} firstLetter={true} />
+          <MarkdownStep
+            text={`Project is classified into ${LENGTH} chapters for the better organization. The completion percentage shows what percentage of the content has been read. Check out for the **source code** and **live demo** of the project at the end of the project walkthrough. For any queries, you can drop an email or ping me up on my social media handles.`}
+          />
+        </div>
         {/* metadata section */}
         <h2 className="heading--main w-max mx-auto mb-6 capitalize text-center">
           project information

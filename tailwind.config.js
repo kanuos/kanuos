@@ -16,7 +16,7 @@ module.exports = {
         secondary: "#00BFB3",
       },
       fontFamily: {
-        title: ["Playfair Display", "monospace"],
+        title: ["Bebas Neue", "monospace"],
         sans: ["Poppins", "sans-serif"],
       },
     },

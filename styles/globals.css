@@ -172,7 +172,7 @@ pre {
   @apply block my-2;
 }
 .markdown-editor blockquote > * {
-  @apply break-words pl-4 border-l-[6px] border-primary italic font-bold text-base lg:text-lg;
+  @apply break-words pl-4 border-l-[6px] border-primary font-bold text-base lg:text-lg;
 }
 
 .markdown-editor > a,
@@ -215,7 +215,7 @@ pre {
 }
 
 .heading--main {
-  @apply text-xl md:text-2xl font-black my-4 w-full block leading-none;
+  @apply text-xl md:text-2xl font-black font-title my-4 w-full block leading-none;
 }
 
 .heading--secondary {

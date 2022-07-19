@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
-import hero from "../../public/hero.webp";
 
 import { titleCase } from "../../utils";
+import { JoinLine } from "../public/DescHeader";
 
 export const Screens = ({ steps = [] }) => {
   return (
@@ -85,22 +85,21 @@ export const UserFlow = ({ steps = [], isDarkMode }) => {
               } group-odd:rounded-r-md group-even:rounded-l-md`}
             ></div>
             <section
-              className={`row-start-1 w-full z-20 p-6 rounded-md ${
+              className={`row-start-1 w-full z-20 p-6 rounded-md max-w-xl relative ${
                 isDarkMode ? "nav-dark--light" : "nav-light"
-              } drop-shadow-2xl ${
-                steps.length === 1
-                  ? "col-span-full row-end-7"
-                  : "row-end-6 group-odd:col-start-1 group-even:col-start-2  group-odd:col-end-6 group-even:col-end-7"
-              }`}
+              } drop-shadow-2xl row-end-6 group-odd:col-start-1 group-even:col-start-2  group-odd:col-end-6 group-even:col-end-7`}
             >
-              {steps.length > 1 && (
-                <p className="text-xs">
-                  <small className="py-1 bg-opacity-10 rounded-sm font-bold text-primary">
-                    {(i + 1).toString().padStart(2, "0")}&nbsp;&mdash;&nbsp;
+              <p className="absolute top-0 group-even:-left-20 group-odd:-right-20 z-0 flex flex-col md:flex-row items-center md:opacity-25">
+                <span className="heading--primary">
+                  {(i + 1).toString().padStart(2, "0")}
+                </span>
+                <div className="md:hidden">
+                  <JoinLine />
+                  <span className="heading--main text-center opacity-25">
                     {steps.length.toString().padStart(2, "0")}
-                  </small>
-                </p>
-              )}
+                  </span>
+                </div>
+              </p>
               <h3 className="heading--sub mb-4">{titleCase(title)}</h3>
               <p className="content--sub">{about}</p>
             </section>

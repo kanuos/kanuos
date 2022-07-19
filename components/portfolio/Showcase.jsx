@@ -31,7 +31,8 @@ export const Showcase = ({
       className="h-auto w-full max-w-6xl mx-auto"
     >
       <div className="p-10 max-w-4xl mx-auto">
-        <h2 className="heading--secondary mb-4">
+        <h1 className="heading--primary">Works</h1>
+        <h2 className="heading--sub opacity-75 mb-4">
           Selected projects and designs
         </h2>
         <ul className="flex gap-y-4 gap-x-2 items-center justify-start my-8 flex-wrap">

@@ -31,7 +31,6 @@ export const DesignDetailBody = ({ design = null }) => {
           <small className="font-bold uppercase">{design.category}</small>
         }
         title={design.title}
-        desc={design.desc}
         items={[
           {
             heading: "author",
@@ -52,71 +51,96 @@ export const DesignDetailBody = ({ design = null }) => {
           },
         ]}
         thumbnail={design.thumbnail}
+        figcaption={design.caption}
       />
-
-      {/* role */}
-
-      <section className="px-8 content--secondary w-full max-w-4xl mx-auto mt-10">
-        <MarkdownStep text={design.role} />
-      </section>
-
-      {/* fonts */}
-      <section className="px-8 w-full max-w-4xl mx-auto mt-20">
-        <h2 className="heading--main text-center pb-6">Typography</h2>
-
-        <ul className="flex flex-col items-start justify-around gap-y-6 w-full py-4">
-          {design.typography.map(({ family, desc }, i) => (
-            <li
-              key={i}
-              className="content--secondary gap-2 max-w-2xl w-full mx-auto"
-            >
-              <h2 className="heading--sub mb-2">{titleCase(family)}</h2>
-              <MarkdownStep text={desc} />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* colors */}
-      <section className="px-8 w-full max-w-4xl mx-auto mt-10">
-        <h2 className="heading--main text-center pb-10">Color Palette</h2>
-        <ul
-          className={`gap-6 w-full transition-all flex flex-wrap items-center justify-center`}
-        >
-          {colors.map(({ hex }, i) => (
-            <li
-              key={i}
-              className={`w-32 h-32 rounded-full grid place-items-center p-2 ${
-                isDarkMode ? "light-shadow" : "drop-shadow-xl"
-              }`}
-              style={{
-                backgroundImage: `linear-gradient(${hex}, ${hex}, ${hex})`,
-              }}
-            >
-              <p
-                className={`w-fit h-auto text-xs rounded-full uppercase ${
-                  isDarkMode ? "nav-dark" : "nav-light"
-                } p-2 text-center`}
-              >
-                <small className="font-bold">{hex}</small>
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
 
       {/* user flow + screens */}
       <section
-        className={`relative h-full w-full my-10 py-20 px-8 ${
+        className={`relative h-full w-full my-10 py-20 ${
           isDarkMode ? "nav-dark" : "nav-light"
         }`}
       >
-        <div>
+        <div className="w-full max-w-4xl mx-auto mb-20 px-8">
+          <MarkdownStep text={design.desc} firstLetter={true} />
+        </div>
+
+        <section className="px-8 content--secondary w-full max-w-4xl mx-auto mt-10">
+          <MarkdownStep text={design.role} />
+        </section>
+
+        {/* fonts */}
+        <section className="px-8 w-full max-w-4xl mx-auto my-20">
+          <h2 className="heading--main text-center pb-6">Typography</h2>
+
+          <article
+            className={`px-8 mt-8 flex flex-col gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-none lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 skill__card__container`}
+          >
+            {design.typography.map(({ family, desc }, i) => (
+              <section
+                key={i}
+                className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform skill__card ${
+                  i % 2
+                    ? "ml-auto lg:ml-0 lg:translate-y-6"
+                    : "mr-auto lg:mr-0 lg:-translate-y-6"
+                } max-w-lg rounded-md drop-shadow-2xl ${
+                  isDarkMode
+                    ? "bg-dark__light text-light"
+                    : "bg-light text-dark"
+                }`}
+              >
+                <strong
+                  className={`heading--sub capitalize font-bold break-words bg-gradient-to-r group-odd:from-primary group-even:from-secondary bg-clip-text lg:group-hover:text-transparent will-change-transform ${
+                    isDarkMode ? "to-light" : "to-dark"
+                  }`}
+                >
+                  {family}
+                </strong>
+                <div className="opacity-50 lg:group-hover:opacity-80 transition-all will-change-transform mt-4 text-xs">
+                  <p className="content--sub">{desc}</p>
+                </div>
+              </section>
+            ))}
+          </article>
+        </section>
+
+        {/* colors */}
+        <section className="px-8 w-full max-w-4xl mx-auto pt-20">
+          <h2 className="heading--main text-center">Color Palette</h2>
+          <div className="text-center w-max mb-4 mx-auto">
+            <MarkdownStep
+              text={`For this project **${colors.length}** colors were picked.`}
+            />
+          </div>
+          <ul
+            className={`gap-6 mt-20 w-full transition-all flex flex-wrap items-center justify-center`}
+          >
+            {colors.map(({ hex }, i) => (
+              <li
+                key={i}
+                className={`w-32 h-32 rounded-full grid place-items-center p-2 ${
+                  isDarkMode ? "light-shadow" : "drop-shadow-xl"
+                }`}
+                style={{
+                  backgroundImage: `linear-gradient(${hex}, ${hex}, ${hex})`,
+                }}
+              >
+                <p
+                  className={`w-fit h-auto text-xs rounded-full uppercase ${
+                    isDarkMode ? "nav-dark" : "nav-light"
+                  } p-2 text-center`}
+                >
+                  <small className="font-bold">{hex}</small>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <div className="px-8 mt-20">
           <h2 className="heading--main text-center">User Flow</h2>
           <UserFlow steps={design.userFlowSteps} isDarkMode={isDarkMode} />
         </div>
 
-        <div>
+        <div className="mt-10">
           <h2 className="heading--main text-center">All pages</h2>
           <p className="content--secondary opacity-75 w-3/4 max-w-lg mx-auto mb-10 text-center">
             {titleCase(design.title)} has {design.userFlowSteps.length} pages
@@ -129,7 +153,7 @@ export const DesignDetailBody = ({ design = null }) => {
       {/* external resources */}
       {design.externalResources.length > 0 && (
         <>
-          <section className="w-full max-w-4xl mx-auto px-8 lg:px-0">
+          <section className="w-full max-w-4xl mx-auto px-8">
             <div className="flex flex-col items-start mb-10 gap-y-2 md:gap-y-6">
               <h2 className="heading--main capitalize">external resources</h2>
               <p className="content--secondary text-justify">

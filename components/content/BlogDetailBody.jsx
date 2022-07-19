@@ -33,7 +33,6 @@ export const BlogDetailBody = ({ blog = null }) => {
       <DetailHeader
         caption={<small className="font-bold uppercase">{blog.category}</small>}
         title={blog.title}
-        desc={blog.desc}
         items={[
           {
             heading: "author",
@@ -60,12 +59,15 @@ export const BlogDetailBody = ({ blog = null }) => {
           isDarkMode ? "nav-dark" : "nav-light"
         }`}
       >
+        <div className="w-full px-8 max-w-4xl mx-auto">
+          <MarkdownStep text={blog.desc} firstLetter={true} />
+        </div>
         {blog.page.map((step, i) => {
           const { key, value } = step;
           return (
             <section className="w-full max-w-4xl mx-auto" key={i}>
               {key === "markdown" && (
-                <section className="px-8 content--secondary">
+                <section className="px-8">
                   <MarkdownStep text={value} />
                 </section>
               )}

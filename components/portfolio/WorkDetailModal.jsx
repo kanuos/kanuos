@@ -43,6 +43,7 @@ export const WorkDetailModal = ({
           caption={caption}
           title={project.title}
           thumbnail={design.thumbnail}
+          figcaption={design.caption}
           desc={work.metadata}
           items={[
             {
@@ -60,9 +61,7 @@ export const WorkDetailModal = ({
           ]}
         />
         <section className="px-8 pt-16 max-w-4xl mx-auto">
-          <h2 className="heading--main font-title font-black text-center">
-            User Flow
-          </h2>
+          <h2 className="heading--main font-black text-center">User Flow</h2>
           <UserFlow steps={design.userFlowSteps} isDarkMode={isDarkMode} />
         </section>
 
