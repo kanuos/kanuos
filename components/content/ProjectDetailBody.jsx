@@ -5,9 +5,11 @@ import Markdown from "react-markdown";
 // import : internal
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { PUBLIC_URLS } from "../../utils";
-import { MarkdownStep } from "../public/PageStepComponent";
 
 // dynamic imports
+const MarkdownStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.MarkdownStep)
+);
 const DifficultyStatus = dynamic(() =>
   import("../detail/DifficultyStatus").then((m) => m.DifficultyStatus)
 );

@@ -115,7 +115,7 @@ const PortfolioPage = ({ metadata }) => {
                     : "heading__portfolio--light-mode"
                 }`}
               >
-                Hi, I'm {metadata.fullName.split(" ")[0]}
+                Hi, I&apos;m {metadata.fullName.split(" ")[0]}
               </h1>
               <div className="max-w-lg text-center w-fit mt-6 mx-auto opacity-75">
                 <Markdown>{metadata.about}</Markdown>

@@ -2,13 +2,17 @@
 import dynamic from "next/dynamic";
 // import : internal
 import PublicLayout from "../../components/Layouts/PublicLayout";
-import { ProjectDetailBody } from "../../components/content/ProjectDetailBody";
 import { getIndividualProject, getAllProjects } from "../../database/projects";
 import { generateDetailViewMetadata } from "../../utils";
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 // dynamic
+const ProjectDetailBody = dynamic(() =>
+  import("../../components/content/ProjectDetailBody").then(
+    (m) => m.ProjectDetailBody
+  )
+);
 const ContactMe = dynamic(() =>
   import("../../components/portfolio/ContactMe").then((m) => m.ContactMe)
 );

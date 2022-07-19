@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import { useContext } from "react";
 
 // import : internal
-import { DesignDetailBody } from "../../components/content/DesignDetailBody";
 import PublicLayout from "../../components/Layouts/PublicLayout";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { getAllDesigns, getIndividualDesign } from "../../database/designs";
@@ -11,6 +10,11 @@ import { generateDetailViewMetadata } from "../../utils";
 
 // dynamic imports
 
+const DesignDetailBody = dynamic(() =>
+  import("../../components/content/DesignDetailBody").then(
+    (m) => m.DesignDetailBody
+  )
+);
 const ContactMe = dynamic(() =>
   import("../../components/portfolio/ContactMe").then((m) => m.ContactMe)
 );

@@ -1,9 +1,12 @@
-import { Fragment } from "react";
+import dynamic from "next/dynamic";
 import { PORTFOLIO_LINKS } from "../../utils";
 import { IoCloudDownloadOutline } from "react-icons/io5";
-import { CTA } from "./CTA";
-import { MarkdownStep } from "../public/PageStepComponent";
 import Markdown from "react-markdown";
+
+const CTA = dynamic(() => import("./CTA").then((m) => m.CTA));
+const MarkdownStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.MarkdownStep)
+);
 
 export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
   return (

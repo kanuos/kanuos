@@ -1,4 +1,5 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useContext } from "react";
 // import : external
 import { motion } from "framer-motion";
@@ -6,11 +7,21 @@ import { motion } from "framer-motion";
 // import : internal
 import { PUBLIC_URLS, titleCase } from "../../utils";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { PageLink } from "../portfolio/PageLink";
-import { DetailHeader } from "../detail/Header";
-import { Conclusion } from "../detail/Conclusion";
-import { Screens, UserFlow } from "./UserFlow";
-import { MarkdownStep } from "../public/PageStepComponent";
+
+const PageLink = dynamic(() =>
+  import("../portfolio/PageLink").then((m) => m.PageLink)
+);
+const DetailHeader = dynamic(() =>
+  import("../detail/Header").then((m) => m.DetailHeader)
+);
+const Conclusion = dynamic(() =>
+  import("../detail/Conclusion").then((m) => m.Conclusion)
+);
+const UserFlow = dynamic(() => import("./UserFlow").then((m) => m.UserFlow));
+const Screens = dynamic(() => import("./UserFlow").then((m) => m.Screens));
+const MarkdownStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.MarkdownStep)
+);
 
 export const DesignDetailBody = ({ design = null }) => {
   const { isDarkMode } = useContext(ThemeContext);

@@ -1,11 +1,16 @@
 // design LIST PAGE
-
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 // import : internal
 import { PUBLIC_LIST_TYPES } from "../../utils";
-import { DesignThumbnail } from "../../components/content/DesignThumbnail";
 import { getAllDesigns } from "../../database/designs";
 import { PublicListLayout } from "../../components/Layouts/PublicListLayout";
+
+const DesignThumbnail = dynamic(() =>
+  import("../../components/content/DesignThumbnail").then(
+    (m) => m.DesignThumbnail
+  )
+);
 
 const DesignList = ({ designList, totalCount }) => {
   designList = JSON.parse(designList) || [];

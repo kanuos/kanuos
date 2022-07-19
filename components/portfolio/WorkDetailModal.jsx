@@ -1,10 +1,22 @@
+import dynamic from "next/dynamic";
 import React from "react";
 
-import { InfoGroup } from "../public/InfoGroup";
-import { CloseBtn } from "../public/CloseBtn";
-import { DetailHeader } from "../detail/Header";
-import { PageLink } from "./PageLink";
-import { UserFlow, Screens } from "../content/UserFlow";
+const InfoGroup = dynamic(() =>
+  import("../public/InfoGroup").then((m) => m.InfoGroup)
+);
+const CloseBtn = dynamic(() =>
+  import("../public/CloseBtn").then((m) => m.CloseBtn)
+);
+const DetailHeader = dynamic(() =>
+  import("../detail/Header").then((m) => m.DetailHeader)
+);
+const PageLink = dynamic(() => import("./PageLink").then((m) => m.PageLink));
+const UserFlow = dynamic(() =>
+  import("../content/UserFlow").then((m) => m.UserFlow)
+);
+const Screens = dynamic(() =>
+  import("../content/UserFlow").then((m) => m.Screens)
+);
 
 export const WorkDetailModal = ({
   isDarkMode,

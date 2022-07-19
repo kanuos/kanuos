@@ -1,9 +1,11 @@
+import dynamic from "next/dynamic";
 import { useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CTA } from "./CTA";
-import { WorkThumb } from "./WorkThumb";
-import { PageLink } from "./PageLink";
 import { PORTFOLIO_LINKS, PUBLIC_URLS, titleCase } from "../../utils";
+
+const CTA = dynamic(() => import("./CTA").then((m) => m.CTA));
+const WorkThumb = dynamic(() => import("./WorkThumb").then((m) => m.WorkThumb));
+const PageLink = dynamic(() => import("./PageLink").then((m) => m.PageLink));
 
 export const Showcase = ({
   works = [],
