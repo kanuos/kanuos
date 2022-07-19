@@ -54,14 +54,17 @@ export const ImageStep = ({ url }) => {
 
   return (
     <figure
-      className={`h-auto min-h-[75vh] w-full my-6 lg:my-10 block relative overflow-hidden`}
+      className={`h-auto w-full my-6 lg:my-10 block relative overflow-hidden`}
     >
       <Image
         loader={({ src, width }) => `${src}?w=${width}&q=100`}
-        layout="fill"
+        layout="responsive"
+        height="100%"
+        width="100%"
         alt="Image thumbnail"
         src={url}
-        className="w-full h-full block object-cover lg:object-scale-down"
+        objectFit="cover"
+        className="w-full h-full block object-cover max-w-6xl rounded-md"
       />
     </figure>
   );

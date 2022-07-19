@@ -12,13 +12,21 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
       className={`min-h-screen mt-40 flex flex-col items-start justify-center w-full h-auto`}
     >
       <div className="px-8 w-full max-w-2xl mx-auto">
-        <h1 className="heading--primary">About Me</h1>
-        <div className="mt-4">
+        <h2
+          className={`heading__portfolio ${
+            isDarkMode
+              ? "heading__portfolio--dark-mode"
+              : "heading__portfolio--light-mode"
+          }`}
+        >
+          About Me
+        </h2>
+        <div className="mt-10">
           <MarkdownStep text={skills} />
         </div>
       </div>
       <article
-        className={`px-8 flex flex-col pt-10 pb-40 lg:py-0 lg:my-20 gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-6xl lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 skill__card__container`}
+        className={`px-8 flex flex-col mt-20 mb-40 gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-6xl lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 skill__card__container`}
       >
         {techStack.map(({ heading, text }, i) => (
           <section

@@ -16,8 +16,12 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Poppins:wght@500;700;900&display=swap"
             rel="stylesheet"
           ></link> */}
-          <link
+          {/* <link
             href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@500;700;900&display=swap"
+            rel="stylesheet"
+          ></link> */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@500;700;900&display=swap"
             rel="stylesheet"
           ></link>
           <Favicon />

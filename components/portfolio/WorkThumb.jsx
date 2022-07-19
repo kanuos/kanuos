@@ -74,7 +74,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
     <motion.div
       viewport={{ once: true }}
       onMouseLeave={() => setHovered(false)}
-      className={`w-full snap-center h-auto md:min-h-[50vh]`}
+      className={`w-full snap-center h-auto md:min-h-[50vh] max-w-6xl mx-auto`}
     >
       <motion.article
         variants={i % 2 === 0 ? variants.projectLeft : variants.projectRight}
@@ -142,7 +142,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
           }`}
         >
           <Image
-            className={`h-full w-full max-w-2xl object-cover block filter transition-all`}
+            className={`h-full w-full max-w-xl object-cover block filter transition-all`}
             loader={({ src, width }) => `${src}?w=${width}&q=100`}
             priority={true}
             src={project.design.thumbnail}

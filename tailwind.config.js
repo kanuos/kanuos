@@ -11,13 +11,14 @@ module.exports = {
       colors: {
         dark: "#171738",
         dark__light: "hsl(240, 30%, 25%)",
+        dark__light_light: "hsl(240, 10%, 75%)",
         light: "#FFFFFF",
         primary: "#FF0066",
         secondary: "#00BFB3",
       },
       fontFamily: {
         title: ["Bebas Neue", "monospace"],
-        sans: ["Poppins", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
       },
     },
   },

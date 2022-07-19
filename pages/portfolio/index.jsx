@@ -4,6 +4,8 @@ import { useContext, useState, useCallback, memo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Markdown from "react-markdown";
 
+import { HiOutlineLocationMarker } from "react-icons/hi";
+
 // import : internal
 import { getPortfolio } from "../../database/user";
 
@@ -99,28 +101,34 @@ const PortfolioPage = ({ metadata }) => {
         content="Check out my full stack web developer portfolio website"
         navType="portfolio"
       >
-        <main className="w-full h-screen">
-          <StyledHeader
-            styledText={metadata.adminLabel}
-            isDarkMode={isDarkMode}
-          >
+        <main className="min-h-screen">
+          <header className="h-screen px-8 flex flex-col items-center justify-center">
             <>
-              <span className="text-sm md:text-base font-bold">Hi, I am</span>
-              <h1 className="heading--primary--max w-min">
-                {metadata.fullName}
+              <p className="flex items-center justify-center my-1 gap-x-1 opacity-75">
+                <HiOutlineLocationMarker className="animate-bounce" />
+                <span className="text-xs font-bold">Ithaca, NY</span>
+              </p>
+              <h1
+                className={`heading__portfolio ${
+                  isDarkMode
+                    ? "heading__portfolio--dark-mode"
+                    : "heading__portfolio--light-mode"
+                }`}
+              >
+                Hi, I'm {metadata.fullName.split(" ")[0]}
               </h1>
-              <Markdown className="content--main markdown-editor-wrapper mt-4">
-                {metadata.about}
-              </Markdown>
-              <div className="mt-10">
+              <div className="max-w-lg text-center w-fit mt-6 mx-auto opacity-75">
+                <Markdown>{metadata.about}</Markdown>
+              </div>
+              <div className="mt-20">
                 <CTA
-                  label="Let's talk"
+                  label="Say hi"
                   href={PORTFOLIO_LINKS["contact me"].url}
                   isDarkMode={isDarkMode}
                 />
               </div>
             </>
-          </StyledHeader>
+          </header>
 
           <Showcase
             works={metadata.portfolio}

@@ -31,7 +31,15 @@ export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
         showScroll={false}
       >
         <section className="mt-10 max-w-4xl mx-auto w-full">
-          <h2 className="heading--main">{CONTENT.heading}</h2>
+          <h2
+            className={`heading__portfolio w-max mr-auto ${
+              !isDarkMode
+                ? "heading__portfolio--dark-mode"
+                : "heading__portfolio--light-mode"
+            }`}
+          >
+            {CONTENT.heading}
+          </h2>
           <p className="content--secondary my-10 max-w-xl text-justify">
             {CONTENT.content}
           </p>

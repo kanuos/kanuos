@@ -30,11 +30,19 @@ export const Showcase = ({
       id={PORTFOLIO_LINKS["selected works"].name}
       className="h-auto w-full max-w-6xl mx-auto"
     >
-      <div className="p-10 max-w-4xl mx-auto">
-        <h1 className="heading--primary">Works</h1>
-        <h2 className="heading--sub opacity-75 mb-4">
-          Selected projects and designs
+      <div className="p-8 max-w-4xl mx-auto">
+        <h2
+          className={`heading__portfolio w-max mr-auto ${
+            isDarkMode
+              ? "heading__portfolio--dark-mode"
+              : "heading__portfolio--light-mode"
+          }`}
+        >
+          Works
         </h2>
+        <h3 className="heading--sub opacity-75 mb-4">
+          Showing some of my favorite projects
+        </h3>
         <ul className="flex gap-y-4 gap-x-2 items-center justify-start my-8 flex-wrap">
           {CATEGORIES.map((el, i) => (
             <li key={i} className="w-fit">
@@ -51,7 +59,7 @@ export const Showcase = ({
         </ul>
       </div>
       <AnimatePresence exitBeforeEnter={true}>
-        <motion.section className="py-6 sm:py-20 w-full sm:p-10 flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory">
+        <motion.section className="py-6 sm:py-20 w-full flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory">
           {filteredWork.map((project, i) => (
             <WorkThumb
               project={project}
