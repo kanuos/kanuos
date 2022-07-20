@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/fonts.css";
 import "prismjs/themes/prism-okaidia.css";
 import ThemeContextProvider from "../contexts/ThemeContext";
 import { AnimatePresence, motion } from "framer-motion";

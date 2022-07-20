@@ -74,7 +74,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
     <motion.div
       viewport={{ once: true }}
       onMouseLeave={() => setHovered(false)}
-      className={`w-full snap-center h-auto md:min-h-[50vh] max-w-6xl mx-auto`}
+      className={`w-full snap-center h-auto md:min-h-[50vh] max-w-4xl mx-auto`}
     >
       <motion.article
         variants={i % 2 === 0 ? variants.projectLeft : variants.projectRight}
@@ -108,7 +108,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
           </motion.legend>
           <motion.h3
             variants={variants.content}
-            className={`text-2xl lg:text-3xl my-1 font-black max-w-xs w-max break-words transition-all px-2 delay-100 origin-center capitalize bg-gradient-to-r ${
+            className={`text-2xl lg:text-3xl my-1 font-title max-w-xs w-max break-words transition-all px-2 delay-100 origin-center capitalize bg-gradient-to-r ${
               i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
             }`}
           >

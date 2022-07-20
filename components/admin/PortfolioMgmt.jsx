@@ -91,13 +91,13 @@ export const PortfolioMgmt = ({
           <table className="w-full mx-auto table-auto">
             <thead className="">
               <tr className="capitalize">
-                <th className="border p-2 text-sm text-left font-black">
+                <th className="border p-2 text-sm text-left font-bold">
                   <small>Project</small>
                 </th>
-                <th className="border p-2 text-sm text-left font-black">
+                <th className="border p-2 text-sm text-left font-bold">
                   <small>Design</small>
                 </th>
-                <th className="border p-2 text-sm text-left font-black">
+                <th className="border p-2 text-sm text-left font-bold">
                   <small>Action</small>
                 </th>
               </tr>
