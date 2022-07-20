@@ -20,7 +20,7 @@ export const AdminListLayout = ({
       metaTitle={`ADMIN : All ${type}`}
       metaDesc={PUBLIC_LIST_TYPES[type]?.desc || ""}
     >
-      <div className="px-8 pt-20 lg:px-0 max-w-2xl mx-auto select-text">
+      <div className="px-8 pt-10 lg:px-0 max-w-2xl mx-auto select-text">
         <PublicHeader
           adminMode={true}
           data={{

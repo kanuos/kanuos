@@ -29,7 +29,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         </div>
       </div>
       <article
-        className={`px-8 flex flex-col mt-20 mb-40 gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-6xl lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 skill__card__container`}
+        className={`px-8 flex flex-col mt-20 pb-40 lg:pb-0 lg:mb-40 gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-6xl lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 skill__card__container`}
       >
         {techStack.map(({ heading, text }, i) => (
           <section

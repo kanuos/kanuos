@@ -128,7 +128,7 @@ const HomePage = ({ allTags }) => {
             )}
 
             {status === STATUSES.loading && (
-              <section className="w-full max-w-3xl mx-auto">
+              <section className="w-full max-w-3xl mx-auto grid place-items-center">
                 <LoadSpinner />
               </section>
             )}

@@ -173,14 +173,14 @@ export const DesignDetailBody = ({ design = null }) => {
                 artists and links to their accounts!
               </p>
             </div>
-            <ul className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-20 md:gap-x-6 md:gap-y-12 w-full px-6 place-items-center">
+            <ul className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-20 md:gap-x-6 md:gap-y-12 w-full place-items-center">
               {design.externalResources.map(
                 ({ poster, courtesy, photographer }, i) => (
                   <li
                     key={i}
                     className="flex flex-col w-full max-w-xs even:ml-auto odd:mr-auto md:even:ml-0 md:odd:mr-0 items-start group gap-6"
                   >
-                    <div className="bg-light w-full h-72 aspect-square overflow-hidden p-2.5 filter shadow-xl group-hover:shadow-2xl group-hover:drop-shadow-2xl transition-all group-hover:even:rotate-1 group-hover:odd:-rotate-1 md:group-hover:scale-110">
+                    <div className="w-full h-96 aspect-video overflow-hidden rounded-md filter shadow-xl group-hover:shadow-2xl group-hover:drop-shadow-2xl transition-all group-hover:even:rotate-1 group-hover:odd:-rotate-1 md:group-hover:scale-110 relative">
                       <figure className="relative w-full h-full group">
                         <Image
                           loader={({ src, width }) => `${src}?w=${width}&q=100`}
@@ -189,9 +189,14 @@ export const DesignDetailBody = ({ design = null }) => {
                           src={poster}
                           objectFit="cover"
                           priority={true}
-                          className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                          className="h-full w-full object-cover grayscale-0 group-hover:grayscale transition-all"
                         />
-                        <figcaption className="absolute inset-0 grid place-items-center bg-light bg-opacity-75 z-20 scale-0 group-hover:scale-100 transition-all">
+                      </figure>
+                      <figcaption className="absolute bg-light bg-opacity-90 inset-0 grid place-items-center z-20 translate-y-full group-hover:translate-y-0 transition-all group-hover:pointer-events-auto pointer-events-none">
+                        <div className="flex flex-col items-center justify-center gap-2">
+                          <p className="text-xs opacity-75">
+                            <small>Photo Credit</small>
+                          </p>
                           <div
                             className="w-max"
                             title={`Go to ${titleCase(photographer)}'s profile`}
@@ -202,8 +207,8 @@ export const DesignDetailBody = ({ design = null }) => {
                               href={courtesy}
                             />
                           </div>
-                        </figcaption>
-                      </figure>
+                        </div>
+                      </figcaption>
                     </div>
                   </li>
                 )

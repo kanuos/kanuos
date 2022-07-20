@@ -4,6 +4,7 @@ import { CTA } from "./CTA";
 import { PORTFOLIO_LINKS, SOCIAL } from "../../utils";
 import { StyledHeader } from "./StyledHeader";
 import { Footer } from "../public/Footer";
+import { MarkdownStep } from "../public/PageStepComponent";
 
 export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
   const CONTENT = portfolioMode
@@ -21,7 +22,7 @@ export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
   return (
     <div
       id={PORTFOLIO_LINKS["contact me"].name}
-      className={`min-h-[95vh] flex pt-10 flex-col items-start w-full ${
+      className={`h-full flex flex-col items-start w-full ${
         isDarkMode ? "nav-light" : "nav-dark"
       }`}
     >
@@ -30,19 +31,13 @@ export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
         styledText={CONTENT.styledText}
         showScroll={false}
       >
-        <section className="mt-10 max-w-4xl mx-auto w-full">
-          <h2
-            className={`heading__portfolio w-max mr-auto ${
-              !isDarkMode
-                ? "heading__portfolio--dark-mode"
-                : "heading__portfolio--light-mode"
-            }`}
-          >
+        <section className="max-w-4xl mx-auto w-full">
+          <h2 className={`heading--primary w-max mr-auto `}>
             {CONTENT.heading}
           </h2>
-          <p className="content--secondary my-10 max-w-xl text-justify">
-            {CONTENT.content}
-          </p>
+          <div className="my-10">
+            <MarkdownStep text={CONTENT.content} />
+          </div>
           <CTA
             isDarkMode={!isDarkMode}
             externalLink={true}
@@ -55,10 +50,10 @@ export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
             }
           />
         </section>
+        <div className="mt-auto mb-2 w-full">
+          <Footer detailMode={true} />
+        </div>
       </StyledHeader>
-      <div className="mt-20 mb-2 w-full">
-        <Footer />
-      </div>
     </div>
   );
 };

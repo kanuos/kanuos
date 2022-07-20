@@ -3,9 +3,13 @@ import { SOCIAL_LINKS } from "../../utils";
 import { SocialIcons } from "../portfolio/SocialIcons";
 import img from "../../public/android-chrome-512x512.png";
 
-export const Footer = () => {
+export const Footer = ({ detailMode = false }) => {
   return (
-    <footer className="mt-auto w-full grid place-items-center pb-6">
+    <footer
+      className={`mt-auto w-full grid place-items-center ${
+        detailMode ? "" : "pb-6"
+      }`}
+    >
       <Image
         alt="Sounak's logo"
         height={40}

@@ -39,7 +39,7 @@ const PublicLayout = (props) => {
         } transition-all scroll-smooth`}
       >
         <div
-          className={`w-full pt-10 scroll-smooth ${
+          className={`w-full scroll-smooth ${
             isDarkMode
               ? "scrollbar-track-dark scrollbar-thumb-secondary"
               : "scrollbar-track-light scrollbar-thumb-primary"

@@ -111,7 +111,7 @@ export const PageComponents = ({
                 {index + 1}
                 &nbsp;&mdash;&nbsp;
               </strong>
-              <span className={`text-left heading--secondary`}>
+              <span className={`text-left heading--main`}>
                 {titleCase(segment.heading)}
               </span>
             </p>

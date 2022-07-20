@@ -14,7 +14,7 @@ export const PublicListLayout = ({
   return (
     <Fragment>
       <PublicLayout metaTitle={pageTitle} metaDesc={pageDesc}>
-        <div className="px-8 md:py-8 lg:px-0 max-w-2xl mx-auto select-text">
+        <div className="px-8 pt-10 md:py-8 lg:px-0 max-w-2xl mx-auto select-text">
           <PublicHeader
             data={data}
             searchText={searchText}
