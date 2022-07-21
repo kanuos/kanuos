@@ -1,19 +1,14 @@
 // Home/Landing
-
+import dynamic from "next/dynamic";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 
 // import : internal
 import { getAllTags } from "../database/tags";
 import { API_ROUTES } from "../utils/admin";
-import dynamic from "next/dynamic";
-import { Tag } from "../components/public/Tag";
-import { StyledHeader } from "../components/portfolio/StyledHeader";
 import PublicLayout from "../components/Layouts/PublicLayout";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { CTA } from "../components/portfolio/CTA";
 import { PUBLIC_URLS } from "../utils";
-import { Footer } from "../components/public/Footer";
 
 const STATUSES = {
   initial: "initial",
@@ -21,6 +16,21 @@ const STATUSES = {
   complete: "complete",
 };
 
+const StickyWrapper = dynamic(() =>
+  import("../components/public/StickyWrapper").then((m) => m.StickyWrapper)
+);
+const StyledHeader = dynamic(() =>
+  import("../components/portfolio/StyledHeader").then((m) => m.StyledHeader)
+);
+const CTA = dynamic(() =>
+  import("../components/portfolio/CTA").then((m) => m.CTA)
+);
+const Footer = dynamic(() =>
+  import("../components/public/Footer").then((m) => m.Footer)
+);
+const Tag = dynamic(() =>
+  import("../components/public/Tag").then((m) => m.Tag)
+);
 const LoadSpinner = dynamic(() =>
   import("../components/public/Loader").then((m) => m.LoadSpinner)
 );
@@ -91,21 +101,23 @@ const HomePage = ({ allTags }) => {
           You can search blogs, designs and projects by tags. For ease of
           navigation, I tag them accordingly. Enjoy!
         </p>
-        <div className="mt-10">
-          <CTA
-            isDarkMode={isDarkMode}
-            href={
-              tagAvailability
-                ? `${PUBLIC_URLS.home.url}#${SEARCH_ID}`
-                : PUBLIC_URLS.portfolio.url
-            }
-            label={
-              tagAvailability
-                ? "Available list of tags"
-                : "Check out my portfolio"
-            }
-          />
-        </div>
+        <StickyWrapper>
+          <div className="mt-10">
+            <CTA
+              isDarkMode={isDarkMode}
+              href={
+                tagAvailability
+                  ? `${PUBLIC_URLS.home.url}#${SEARCH_ID}`
+                  : PUBLIC_URLS.portfolio.url
+              }
+              label={
+                tagAvailability
+                  ? "Available list of tags"
+                  : "Check out my portfolio"
+              }
+            />
+          </div>
+        </StickyWrapper>
       </StyledHeader>
       {tagAvailability && (
         <>

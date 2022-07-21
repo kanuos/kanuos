@@ -13,7 +13,10 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
 
 import PublicLayout from "../../components/Layouts/PublicLayout";
-import { StickyWrapper } from "../../components/public/StickyWrapper";
+
+const StickyWrapper = dynamic(() =>
+  import("../../components/public/StickyWrapper").then((m) => m.StickyWrapper)
+);
 
 const Showcase = dynamic(() =>
   import("../../components/portfolio/Showcase").then((m) => m.Showcase)
@@ -58,12 +61,18 @@ const PortfolioPage = ({ metadata }) => {
       >
         <main className="h-screen w-screen grid place-items-center">
           <StyledHeader
-            styledText="Sounak Portfolio•page"
+            styledText="Sounak mukherjee"
             isDarkMode={isDarkMode}
             showScroll={false}
           >
             <div className="flex flex-col items-start justify-center">
-              <h1 className={`heading--primary--max w-min max-w-xs`}>
+              <h1
+                className={`heading__portfolio ${
+                  isDarkMode
+                    ? "heading__portfolio--dark-mode"
+                    : "heading__portfolio--light-mode"
+                }`}
+              >
                 Coming Soon
               </h1>
               <p className="content--main mb-10 mt-4 text-justify">
@@ -72,11 +81,13 @@ const PortfolioPage = ({ metadata }) => {
                 blogs, projects and designs in my website. Please follow the
                 link below to the visit my work.
               </p>
-              <CTA
-                href={PUBLIC_URLS.home.url}
-                label="Go to HomePage"
-                isDarkMode={isDarkMode}
-              />
+              <StickyWrapper>
+                <CTA
+                  href={PUBLIC_URLS.home.url}
+                  label="Go to HomePage"
+                  isDarkMode={isDarkMode}
+                />
+              </StickyWrapper>
             </div>
           </StyledHeader>
         </main>
