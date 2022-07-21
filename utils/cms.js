@@ -18,9 +18,9 @@ const PROFILE_CMS = [
     split: false,
   },
   {
-    name: "adminLabel",
+    name: "location",
     type: "string",
-    placeholder: "Admin label",
+    placeholder: "Current location",
     split: false,
   },
   {

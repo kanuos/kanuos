@@ -107,7 +107,7 @@ const PortfolioPage = ({ metadata }) => {
             <>
               <p className="flex items-center justify-center my-1 gap-x-1 opacity-75">
                 <HiOutlineLocationMarker className="animate-bounce" />
-                <span className="text-xs font-bold">Ithaca, NY</span>
+                <span className="text-xs font-bold">{metadata.location}</span>
               </p>
               <h1
                 className={`heading__portfolio ${

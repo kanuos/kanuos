@@ -239,9 +239,9 @@ export const UserSchema = new Schema({
   about: {
     type: String,
   },
-  adminLabel: {
+  location: {
     type: String,
-    default: "Full stack web developer",
+    default: "Ithaca, NY",
   },
   skills: {
     type: String,
