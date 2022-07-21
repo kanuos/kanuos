@@ -4,13 +4,26 @@ export const CloseBtn = ({ isOpen, cb, isDarkMode }) => {
   return (
     <motion.div
       onClick={cb}
+      initial={{
+        borderRadius: "25%",
+        opacity: 0.75,
+      }}
+      whileHover={{
+        opacity: 1,
+        rotateY: isOpen ? 0 : 180,
+        transition: {
+          duration: 0.5,
+          ease: "easeInOut",
+          type: "spring",
+        },
+      }}
       className={
-        "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-4 right-4 rounded-full group transition-colors drop-shadow-xl " +
+        "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-4 right-6 group transition-colors drop-shadow-xl " +
         (isOpen
-          ? "opacity-50 hover:opacity-100"
-          : isDarkMode
-          ? "bg-dark__light"
-          : "bg-light")
+          ? ""
+          : `${
+              isDarkMode ? "bg-dark__light" : "bg-light"
+            } hover:drop-shadow-2xl`)
       }
     >
       <motion.span
@@ -27,7 +40,7 @@ export const CloseBtn = ({ isOpen, cb, isDarkMode }) => {
                 transition: { type: "spring", stiffness: 400 },
               }
         }
-        className={`w-6 rounded h-0.5 transition-colors ${
+        className={`w-5 rounded h-0.5 ${
           isOpen
             ? isDarkMode
               ? "bg-light group-hover:bg-primary"
@@ -51,7 +64,7 @@ export const CloseBtn = ({ isOpen, cb, isDarkMode }) => {
                 transition: { type: "spring", stiffness: 400 },
               }
         }
-        className={`w-6 rounded h-0.5 transition-colors ${
+        className={`w-5 rounded h-0.5 ${
           isOpen
             ? isDarkMode
               ? "bg-light group-hover:bg-primary"

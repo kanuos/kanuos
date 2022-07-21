@@ -13,10 +13,10 @@ export const CTA = ({
   tiny = false,
   scroll = false,
 }) => {
-  const wrapper = `text-xs ${
-    tiny ? "" : "lg:text-sm"
+  const wrapper = `text-sm ${
+    tiny ? "" : "lg:text-base"
   } relative inline-block group overflow-hidden hover:shadow-2xl transition-all p-px`;
-  const content = `z-10 border-2 w-full h-full block py-1.5 ${
+  const content = `z-10 border-2 w-full h-full block font-bold py-1.5 ${
     tiny ? "px-4" : "px-6"
   } relative rounded-full transition-all ${
     isDarkMode

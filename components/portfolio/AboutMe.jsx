@@ -7,6 +7,9 @@ const CTA = dynamic(() => import("./CTA").then((m) => m.CTA));
 const MarkdownStep = dynamic(() =>
   import("../public/PageStepComponent").then((m) => m.MarkdownStep)
 );
+const StickyWrapper = dynamic(() =>
+  import("../public/StickyWrapper").then((m) => m.StickyWrapper)
+);
 
 export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
   return (
@@ -58,17 +61,19 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         ))}
       </article>
       <div className="w-max mx-auto pb-20">
-        <CTA
-          btnMode={true}
-          isDarkMode={isDarkMode}
-          label={
-            <div className="inline-flex items-center justify-center gap-1">
-              <IoCloudDownloadOutline className="group-hover:scale-110 group-hover:rotate-[360deg] transition-all" />
-              My Resume
-            </div>
-          }
-          cb={() => alert(new Date().toLocaleString())}
-        />
+        <StickyWrapper>
+          <CTA
+            btnMode={true}
+            isDarkMode={isDarkMode}
+            label={
+              <div className="inline-flex items-center justify-center gap-1">
+                <IoCloudDownloadOutline className="group-hover:scale-110 group-hover:rotate-[360deg] transition-all" />
+                My Resume
+              </div>
+            }
+            cb={() => alert(new Date().toLocaleString())}
+          />
+        </StickyWrapper>
       </div>
     </section>
   );

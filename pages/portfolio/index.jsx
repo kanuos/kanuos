@@ -13,6 +13,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
 
 import PublicLayout from "../../components/Layouts/PublicLayout";
+import { StickyWrapper } from "../../components/public/StickyWrapper";
 
 const Showcase = dynamic(() =>
   import("../../components/portfolio/Showcase").then((m) => m.Showcase)
@@ -121,11 +122,13 @@ const PortfolioPage = ({ metadata }) => {
                 <Markdown>{metadata.about}</Markdown>
               </div>
               <div className="mt-20">
-                <CTA
-                  label="Say hi"
-                  href={PORTFOLIO_LINKS["contact me"].url}
-                  isDarkMode={isDarkMode}
-                />
+                <StickyWrapper>
+                  <CTA
+                    label="Say Hi!"
+                    href={PORTFOLIO_LINKS["contact me"].url}
+                    isDarkMode={isDarkMode}
+                  />
+                </StickyWrapper>
               </div>
             </>
           </header>

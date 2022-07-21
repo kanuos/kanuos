@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { CTA } from "./CTA";
+import { StickyWrapper } from "../public/StickyWrapper";
 
 export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
   const variants = {
@@ -74,7 +75,9 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
     <motion.div
       viewport={{ once: true }}
       onMouseLeave={() => setHovered(false)}
-      className={`w-full snap-center h-auto md:min-h-[50vh] max-w-4xl mx-auto`}
+      className={`w-full snap-center h-auto md:min-h-[50vh] max-w-4xl mx-auto ${
+        i % 2 === 0 ? "md:pl-8" : "md:pr-8"
+      }`}
     >
       <motion.article
         variants={i % 2 === 0 ? variants.projectLeft : variants.projectRight}
@@ -85,7 +88,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
         onMouseEnter={() => setHovered(true)}
         onTap={() => setHovered(true)}
         className={
-          "relative snap-top w-full flex flex-col-reverse md:items-center md:gap-x-6 peer " +
+          "relative snap-top w-full flex flex-col-reverse md:items-center peer md:gap-x-4 " +
           (i % 2 === 0 ? "md:flex-row-reverse mr-auto" : "md:flex-row ml-auto")
         }
       >
@@ -93,8 +96,8 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
           className={
             "flex flex-col mt-8 max-w-md px-8 md:px-10 " +
             (i % 2 === 0
-              ? "items-start mr-auto md:mr-0"
-              : "items-end ml-auto md:ml-0 md:items-start")
+              ? "items-start mr-auto md:mr-0 md:pl-0"
+              : "items-end ml-auto md:ml-0 md:items-start md:pr-0")
           }
         >
           <motion.legend className="text-xs px-2">
@@ -152,24 +155,26 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
         </motion.figure>
       </motion.article>
 
-      <motion.div
-        className={`w-fit my-10 px-8 md:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
-          i % 2 === 0 ? "mr-auto md:" : "ml-auto md:"
-        } ${
-          hovered
-            ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
-            : "opacity-0 scale-0 pointer-events-none translate-y-full"
-        }`}
-      >
-        <CTA
-          label="View details"
-          tiny={true}
-          btnMode={true}
-          cb={() => cb(project)}
-          isDarkMode={isDarkMode}
-          scroll={true}
-        />
-      </motion.div>
+      <StickyWrapper>
+        <motion.div
+          className={`w-fit my-10 px-8 md:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
+            i % 2 === 0 ? "mr-auto md:" : "ml-auto md:"
+          } ${
+            hovered
+              ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
+              : "opacity-0 scale-0 pointer-events-none translate-y-full"
+          }`}
+        >
+          <CTA
+            label="View details"
+            tiny={true}
+            btnMode={true}
+            cb={() => cb(project)}
+            isDarkMode={isDarkMode}
+            scroll={true}
+          />
+        </motion.div>
+      </StickyWrapper>
     </motion.div>
   );
 };
