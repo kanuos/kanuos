@@ -91,9 +91,7 @@ button:focus {
 
 .navStyleLink:hover {
   display: inline-block;
-  font-family: "Inter";
-  text-transform: lowercase;
-  transform: translate(0, -5px);
+  transform: translate(0, -3px);
   transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
