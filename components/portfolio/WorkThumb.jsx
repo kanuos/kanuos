@@ -131,7 +131,8 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
               i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
             } ${hovered ? "opacity-90" : "opacity-60"} `}
           >
-            {project.project.desc}
+            {project.project.desc.slice(0, 100)}{" "}
+            {project.project.desc.length >= 100 ? "..." : ""}
           </motion.p>
         </motion.section>
 

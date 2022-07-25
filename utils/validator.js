@@ -138,7 +138,7 @@ const DesignValidator = CommonFields.keys({
       poster: Joi.string().trim().uri().required(),
       photographer: Joi.string().trim().required(),
       courtesy: Joi.string().trim().uri().required(),
-    }).required()
+    })
   ),
 });
 
@@ -163,6 +163,16 @@ export const PortfolioProjectValidator = Joi.object({
   user: Joi.any(),
   project: Joi.any(),
   metadata: Joi.string().trim().required(),
+  role: Joi.array()
+    .items(
+      Joi.object({
+        _id: Joi.any(),
+        __v: Joi.any(),
+        text: Joi.string().trim().required().max(50),
+      }).required()
+    )
+    .min(1)
+    .required(),
   priority: Joi.number().max(3).min(1).default(1),
   isShowcased: Joi.bool().default(false),
 });

@@ -14,6 +14,8 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { CTA } from "../portfolio/CTA";
 import { NavContext } from "../../contexts/NavContext";
 import { CloseBtn } from "./CloseBtn";
+import { StickyWrapper } from "./StickyWrapper";
+import { PageLink } from "../portfolio/PageLink";
 
 export const NavBar = ({ type = "public" }) => {
   const { showMenu, toggleNavMenu } = useContext(NavContext);
@@ -130,6 +132,13 @@ const NavMenu = ({ type = "public" }) => {
     }
   }
 
+  const classes = {
+    cta: "font-title",
+    specialLink: "font-title text-2xl text-center mt-20 block transition-all",
+    activeLink:
+      "opacity-100 tracking-wider font-title text-lg after:absolute after:bottom-0 relative block after:left-0 after:w-full after:bg-secondary after:h-0.5",
+  };
+
   return (
     <AnimatePresence>
       <motion.section
@@ -138,7 +147,7 @@ const NavMenu = ({ type = "public" }) => {
         initial="exit"
         exit="exit"
         animate={showMenu ? "show" : "exit"}
-        className={`h-screen overflow-hidden w-full flex flex-col items-center justify-between py-10 fixed right-0 top-0 z-30 sm:max-w-md ${
+        className={`h-screen overflow-hidden w-full grid grid-cols-3 py-10 fixed right-0 top-0 z-30 sm:max-w-md ${
           showMenu
             ? isDarkMode
               ? "light-shadow"
@@ -148,115 +157,56 @@ const NavMenu = ({ type = "public" }) => {
       >
         <motion.ul
           variants={variants.mainUL}
-          className={`w-full flex flex-col justify-center h-3/4 gap-y-8 items-start`}
+          className={`w-max mx-auto flex flex-col justify-center h-3/4 col-start-2 col-end-3 gap-y-8 items-start`}
         >
           {Object.entries(URLS).map(([key, valueObj]) => {
             const label = valueObj.name.replace("-", " ");
-
+            const isSpecialLink = ["main-website", "portfolio"].includes(
+              valueObj.name.toLowerCase()
+            );
+            const isActiveLink = isActive(valueObj);
             return (
               <motion.li
                 variants={variants.li}
                 onClick={toggleNavMenu}
                 key={key}
-                className="w-full"
               >
-                {["main-website", "portfolio"].includes(
-                  valueObj.name.toLowerCase()
-                ) ? (
-                  <div
-                    className={`grid grid-cols-3 place-items-center gap-0 group ${
-                      valueObj.type === "work" ? "" : "my-20"
-                    }`}
-                  >
-                    <span className="transition-all opacity-0 w-full -translate-x-full group-hover:translate-x-0 col-span-1 h-0.5 bg-gradient-to-r from-primary to-secondary origin-left duration-150 group-hover:opacity-100"></span>
-                    <Link href={valueObj.url}>
-                      <a
-                        className={`text-sm uppercase tracking-wide col-start-2 w-full ${
-                          valueObj.type === "work"
-                            ? "col-end-4 pl-2 text-left"
-                            : "col-end-3 pl-6"
-                        }`}
-                      >
-                        {label.split("").map((el, k) => {
-                          if (el !== " ") {
-                            return (
-                              <span
-                                className={`navStyleLink font-bold`}
-                                key={k}
-                              >
-                                {el}
-                              </span>
-                            );
-                          }
-                          return (
-                            <span className="text-transparent" key={k}>
-                              {el}
-                            </span>
-                          );
-                        })}
-                      </a>
-                    </Link>
+                {isSpecialLink ? (
+                  <div className="w-full">
+                    <StickyWrapper>
+                      <Link href={valueObj.url}>
+                        <a className={classes.specialLink}>{label}</a>
+                      </Link>
+                    </StickyWrapper>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-3 place-items-center gap-0">
-                    <Link
-                      scroll={valueObj.type !== "portfolio"}
-                      href={valueObj.url}
-                    >
-                      <a
-                        className={`text-sm tracking-wide col-start-2 col-end-3 w-full flex items-center gap-x-4 transition-all ${
-                          valueObj.type !== "portfolio" && isActive(valueObj)
-                            ? "opacity-100"
-                            : "opacity-40 hover:opacity-100"
-                        } `}
+                  <>
+                    {isActiveLink ? (
+                      <Link
+                        scroll={valueObj.type !== "portfolio"}
+                        href={valueObj.url}
                       >
-                        <div className="flex flex-col items-center justify-center animate-spin gap-px">
-                          <span
-                            className={
-                              (valueObj.type !== "portfolio" &&
-                              isActive(valueObj)
-                                ? "bg-secondary"
-                                : "bg-transparent") +
-                              " text-lg h-2 w-2 rounded-full block"
-                            }
-                          ></span>
-                          <span
-                            className={
-                              (valueObj.type !== "portfolio" &&
-                              isActive(valueObj)
-                                ? "bg-primary"
-                                : "bg-transparent") +
-                              " text-lg h-2 w-2 rounded-full block"
-                            }
-                          ></span>
-                        </div>
-                        <span
-                          className={`relative font-bold transition-all block after:absolute after:h-0.5 after:-bottom-1 after:left-0 ${
-                            valueObj.type !== "portfolio" && isActive(valueObj)
-                              ? ""
-                              : "after:bg-secondary after:w-0 hover:after:w-6 after:transition-all after:origin-left"
-                          } `}
-                        >
-                          {label?.toUpperCase()}
-                        </span>
-                      </a>
-                    </Link>
-                  </div>
+                        <a className={classes.activeLink}>{label}</a>
+                      </Link>
+                    ) : (
+                      <PageLink href={valueObj.url} label={label} />
+                    )}
+                  </>
                 )}
               </motion.li>
             );
           })}
         </motion.ul>
 
-        <motion.ul
+        <motion.div
           variants={variants.btnBox}
-          className="mt-auto flex items-center justify-around gap-4"
+          className="mt-auto col-span-full flex items-center justify-center gap-4"
         >
           {type === "admin" && (
             <CTA
               btnMode={true}
               cb={handleLogout}
-              label="Logout"
+              label={<span className={classes.cta}>Logout</span>}
               isDarkMode={isDarkMode}
               isActive={true}
             />
@@ -264,10 +214,10 @@ const NavMenu = ({ type = "public" }) => {
           <CTA
             btnMode={true}
             cb={toggleTheme}
-            label="Toggle theme"
+            label={<span className={classes.cta}>Toggle theme</span>}
             isDarkMode={isDarkMode}
           />
-        </motion.ul>
+        </motion.div>
       </motion.section>
     </AnimatePresence>
   );

@@ -92,7 +92,7 @@ export async function updateDesignByID(id, design, user) {
   // unique ID design might have non-unique slug upon edition
   // check whether the new data title and slug are unique
   const confictingData = await designUniqueConstraint(design);
-  if (confictingData) {
+  if (confictingData._id.toString() !== id) {
     throw `Design with title or slug exists ${JSON.stringify(confictingData)}`;
   }
 

@@ -14,9 +14,11 @@ export const Showcase = ({
 }) => {
   const CATEGORIES = works.map((el) => titleCase(el.project?.category));
 
-  CATEGORIES.unshift("All");
+  if (CATEGORIES.length > 1) {
+    CATEGORIES.unshift("All");
+  }
 
-  const [keyword, setKeyword] = useState("All");
+  const [keyword, setKeyword] = useState(CATEGORIES[0]);
 
   const filteredWork = useMemo(() => {
     if (["All", "all"].includes(keyword)) {
@@ -45,20 +47,22 @@ export const Showcase = ({
         <h3 className="heading--sub opacity-75 mb-4">
           Showing some of my favorite projects
         </h3>
-        <ul className="flex gap-y-4 gap-x-2 items-center justify-start my-8 flex-wrap">
-          {CATEGORIES.map((el, i) => (
-            <li key={i} className="w-fit">
-              <CTA
-                label={el}
-                btnMode={true}
-                tiny={true}
-                cb={() => setKeyword(() => el)}
-                isDarkMode={isDarkMode}
-                isActive={el === keyword}
-              />
-            </li>
-          ))}
-        </ul>
+        {CATEGORIES.length > 1 && (
+          <ul className="flex gap-y-4 gap-x-2 items-center justify-start my-8 flex-wrap">
+            {CATEGORIES.map((el, i) => (
+              <li key={i} className="w-fit">
+                <CTA
+                  label={el}
+                  btnMode={true}
+                  tiny={true}
+                  cb={() => setKeyword(() => el)}
+                  isDarkMode={isDarkMode}
+                  isActive={el === keyword}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <AnimatePresence exitBeforeEnter={true}>
         <motion.section className="py-6 sm:py-20 w-full flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory">

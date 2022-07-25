@@ -82,11 +82,6 @@ export async function deleteBlogFromDB(blogID, user) {
   return deletedBlog;
 }
 
-
-
-
-
-
 /**
  * @access private
  * @param blogData => sanitized blog data adhering to Joi's blog schema
@@ -104,12 +99,6 @@ export async function addBlogToDB(blogData) {
 
   return newBlog;
 }
-
-
-
-
-
-
 
 /**
  *
@@ -129,7 +118,7 @@ export async function editIndividualBlog(blogID, blogData, user) {
   // unique ID blog might have non-unique slug upon edition
   // check whether the new data title and slug are unique
   const confictingData = await blogUniqueConstraint(blogData);
-  if (confictingData) {
+  if (confictingData._id.toString() !== blogID) {
     throw `Blog with title or slug exists ${JSON.stringify(confictingData)}`;
   }
 

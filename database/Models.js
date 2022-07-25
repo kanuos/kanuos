@@ -21,7 +21,7 @@ export const BlogSchema = new Schema({
   desc: {
     type: String,
     required: true,
-    maxlength: 200,
+    maxlength: 600,
     trim: true,
   },
   tags: [
@@ -83,7 +83,7 @@ export const ProjectSchema = new Schema({
   desc: {
     type: String,
     required: true,
-    maxlength: 200,
+    maxlength: 600,
     trim: true,
   },
   tags: [
@@ -154,7 +154,7 @@ export const DesignSchema = new Schema({
   desc: {
     type: String,
     required: true,
-    maxlength: 200,
+    maxlength: 600,
     trim: true,
   },
   tags: [
@@ -283,6 +283,10 @@ export const PortfolioSchema = new Schema({
   },
   metadata: {
     type: String,
+    required: true,
+  },
+  role: {
+    type: Array,
     required: true,
   },
   isShowcased: {

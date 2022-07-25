@@ -128,7 +128,7 @@ export async function editIndividualProject(projectID, projectData, user) {
   // unique ID project might have non-unique slug upon edition
   // check whether the new data title and slug are unique
   const confictingData = await projectUniqueConstraint(projectData);
-  if (confictingData) {
+  if (confictingData._id.toString() !== projectID) {
     throw `Project with title or slug exists ${JSON.stringify(confictingData)}`;
   }
 

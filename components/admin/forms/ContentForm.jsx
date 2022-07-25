@@ -75,7 +75,7 @@ export const ContentCRUD_Form = ({
   const [pageMsg, setPageMsg] = useState("");
   const [pageErr, setPageErr] = useState(false);
 
-  const detailCls = `px-4 py-6 rounded-md text-sm block nav-light ${
+  const detailCls = `px-4 py-6 rounded-md text-sm block z-10 nav-light ${
     isDarkMode ? "light-shadow" : "drop-shadow-xl"
   }`;
 
@@ -119,22 +119,11 @@ export const ContentCRUD_Form = ({
     setTags(() => cms?.tags || []);
   }, [init]);
 
-  // hide the page error
-  useEffect(() => {
-    if (!pageMsg) return;
-    const t = setTimeout(() => {
-      setPageMsg("");
-    }, 2000);
-
-    return () => {
-      clearTimeout(t);
-    };
-  }, [pageMsg]);
-
   async function handleSubmitToServer() {
     try {
       // submit data
       let URL = API_ROUTES[type + "s"] + action;
+      console.log({ URL, method });
       const { data, err } = (
         await axios({
           url: URL,
@@ -158,9 +147,10 @@ export const ContentCRUD_Form = ({
       // redirect to admin blog list
       router.push(ADMIN_URLS[type + "s"].url);
     } catch (error) {
+      console.log(error);
       setPageErr(true);
       setPageMsg(error);
-      errorRef.current.scrollIntoView();
+      errorRef.current?.scrollIntoView();
     }
   }
 
@@ -177,11 +167,11 @@ export const ContentCRUD_Form = ({
         }
         setContent(() => value);
         setPreviewMode(true);
-        errorRef.current.scrollIntoView();
+        errorRef.current?.scrollIntoView();
         setPageMsg("Valid data. Can be sent");
         setPageErr(false);
       } catch (error) {
-        errorRef.current.scrollIntoView();
+        errorRef.current?.scrollIntoView();
         setPageMsg(error);
         setPageErr(true);
       }
@@ -201,12 +191,13 @@ export const ContentCRUD_Form = ({
         <h1 className="heading--main block">{heading}</h1>
         <p
           ref={errorRef}
-          className={`p-4 text-light text-xs font-bold w-full rounded-md ${
+          className={`p-4 text-light text-xs font-bold items-center justify-between flex w-full rounded-md ${
             pageMsg.trim().length > 0 &&
             (pageErr ? "bg-primary" : "bg-secondary")
           }`}
         >
           <small>{pageMsg}</small>
+          <button onClick={() => setPageMsg("")}>&times;</button>
         </p>
         <div className="w-full after-line flex flex-col items-stretch gap-y-4 mb-10">
           {/* content type */}

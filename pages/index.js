@@ -93,16 +93,30 @@ const HomePage = ({ allTags }) => {
         isDarkMode={isDarkMode}
         showScroll={allTags.length > 0}
       >
-        <h1 className="heading--primary">Hello world!</h1>
-        <span className="text-sm md:text-base font-bold my-2">
-          I&apos;m Sounak. Welcome to my tech journal
-        </span>
-        <p className="content--main">
-          You can search blogs, designs and projects by tags. For ease of
-          navigation, I tag them accordingly. Enjoy!
-        </p>
+        {tagAvailability ? (
+          <>
+            <h1 className="heading--primary">Hello world!</h1>
+            <span className="text-sm md:text-base font-bold my-2">
+              I&apos;m Sounak. Welcome to my tech journal
+            </span>
+            <p className="content--main">
+              You can search blogs, designs and projects by tags. For ease of
+              navigation, I tag them accordingly. Enjoy!
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="heading--primary">Yo buddy!</h1>
+            <p className="content--main">
+              It appears that you&apos;re one of the early viewers of my site. I
+              am yet to create content as of yet. Please come back later. For
+              your ease of use, I&apos;ll categorize my contents viz. blogs,
+              designs and projects into appropriate tags.
+            </p>
+          </>
+        )}
         <StickyWrapper>
-          <div className="mt-10">
+          <div className="my-10">
             <CTA
               isDarkMode={isDarkMode}
               href={

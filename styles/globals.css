@@ -91,16 +91,10 @@ button:focus {
 
 .navStyleLink:hover {
   display: inline-block;
-  animation: zoom 2s ease-out infinite;
-}
-
-@keyframes zoom {
-  from {
-    @apply -translate-y-0.5;
-  }
-  to {
-    @apply translate-y-0.5;
-  }
+  font-family: "Inter";
+  text-transform: lowercase;
+  transform: translate(0, -5px);
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .light-shadow {
