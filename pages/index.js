@@ -8,7 +8,6 @@ import { getAllTags } from "../database/tags";
 import { API_ROUTES } from "../utils/admin";
 import PublicLayout from "../components/Layouts/PublicLayout";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { PUBLIC_URLS } from "../utils";
 
 const STATUSES = {
   initial: "initial",
@@ -16,14 +15,8 @@ const STATUSES = {
   complete: "complete",
 };
 
-const StickyWrapper = dynamic(() =>
-  import("../components/public/StickyWrapper").then((m) => m.StickyWrapper)
-);
 const StyledHeader = dynamic(() =>
   import("../components/portfolio/StyledHeader").then((m) => m.StyledHeader)
-);
-const CTA = dynamic(() =>
-  import("../components/portfolio/CTA").then((m) => m.CTA)
 );
 const Footer = dynamic(() =>
   import("../components/public/Footer").then((m) => m.Footer)
@@ -91,7 +84,7 @@ const HomePage = ({ allTags }) => {
       <StyledHeader
         styledText={tagAvailability ? "search by tags" : "sounak mukherjee"}
         isDarkMode={isDarkMode}
-        showScroll={allTags.length > 0}
+        showScroll={false}
       >
         {tagAvailability ? (
           <>
@@ -115,57 +108,43 @@ const HomePage = ({ allTags }) => {
             </p>
           </>
         )}
-        <StickyWrapper>
-          <div className="my-10">
-            <CTA
-              isDarkMode={isDarkMode}
-              href={
-                tagAvailability
-                  ? `${PUBLIC_URLS.home.url}#${SEARCH_ID}`
-                  : PUBLIC_URLS.portfolio.url
-              }
-              label={
-                tagAvailability
-                  ? "Available list of tags"
-                  : "Check out my portfolio"
-              }
-            />
-          </div>
-        </StickyWrapper>
+        {status === STATUSES.initial && (
+          <section className="w-full my-10">
+            <div className="flex flex-col items-start w-full">
+              <h2 className="heading--sub font-bold">
+                Total tags : {allTags.length}
+              </h2>
+            </div>
+            <ul className="flex flex-wrap items-center mt-6 justify-start gap-4 gap-y-3 w-full">
+              {allTags.map((tag) => (
+                <li key={tag._id}>
+                  <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {tagAvailability && (
+          <>
+            <div id={SEARCH_ID} className="w-full mb-20">
+              {status === STATUSES.loading && (
+                <section className="w-full max-w-3xl mx-auto grid place-items-center">
+                  <LoadSpinner />
+                </section>
+              )}
+
+              {status === STATUSES.complete && data && (
+                <>
+                  <TagDetailList {...data} close={handleInitialState} />
+                  <div className="mt-20">
+                    <Footer />
+                  </div>
+                </>
+              )}
+            </div>
+          </>
+        )}
       </StyledHeader>
-      {tagAvailability && (
-        <>
-          <div id={SEARCH_ID} className="w-full p-8 mb-40">
-            {status === STATUSES.initial && (
-              <section className="w-full max-w-3xl mx-auto">
-                <div className="flex flex-col items-start w-full">
-                  <h2 className="heading--sub font-bold">
-                    Total tags : {allTags.length}
-                  </h2>
-                </div>
-                <ul className="flex flex-wrap items-center my-10 justify-start gap-4 gap-y-3 w-full">
-                  {allTags.map((tag) => (
-                    <li key={tag._id}>
-                      <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {status === STATUSES.loading && (
-              <section className="w-full max-w-3xl mx-auto grid place-items-center">
-                <LoadSpinner />
-              </section>
-            )}
-
-            {status === STATUSES.complete && data && (
-              <TagDetailList {...data} close={handleInitialState} />
-            )}
-          </div>
-          <Footer />
-        </>
-      )}
     </PublicLayout>
   );
 };

@@ -17,10 +17,12 @@ export const Footer = ({ detailMode = false }) => {
         src={img}
         objectFit="contain"
       />
-      <p className="font-bold content--sub text-center">
-        <small>Designed and developed by Sounak Mukherjee</small>
+      <p className="text-center my-3">
+        <small className="font-bold">
+          Designed and developed by Sounak Mukherjee
+        </small>
       </p>
-      <ul className="flex flex-wrap items-center justify-center gap-3 mt-4">
+      <ul className="flex flex-wrap items-center justify-center gap-3">
         {Object.entries(SOCIAL_LINKS).map(([social, url]) => (
           <li
             key={social}

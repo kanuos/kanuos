@@ -16,8 +16,8 @@ export const CTA = ({
   const wrapper = `text-sm ${
     tiny ? "" : "lg:text-base"
   } relative inline-block group overflow-hidden hover:shadow-2xl transition-all p-px`;
-  const content = `z-10 border-2 w-full h-full block font-bold py-1.5 ${
-    tiny ? "px-4" : "px-6"
+  const content = `z-10 border-2 w-full h-full block font-bold ${
+    tiny ? "px-4 py-1" : "px-6 py-1.5"
   } relative rounded-full transition-all ${
     isDarkMode
       ? !isActive

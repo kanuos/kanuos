@@ -16,7 +16,7 @@ export const StyledHeader = ({
 
   return (
     <header
-      className={`h-screen w-full mx-auto relative mb-6 pt-16 grid ${
+      className={`h-screen w-full mx-auto relative pt-12 grid ${
         showScroll ? "grid-rows-2" : "grid-rows-1"
       }`}
     >

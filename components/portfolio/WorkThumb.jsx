@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { CTA } from "./CTA";
 import { StickyWrapper } from "../public/StickyWrapper";
+import { Tag } from "../public/Tag";
 
 export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
   const variants = {
@@ -141,12 +142,23 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
           whileInView="show"
           initial="hide"
           viewport={{ once: true }}
-          className={`h-[35vh] relative overflow-hidden filter rounded-md z-10 drop-shadow-2xl shadow-2xl w-11/12 mx-auto md:mx-0 md:w-full max-w-xl grow ${
+          className={`h-[35vh] relative filter z-10 drop-shadow-2xl shadow-2xl w-11/12 mx-auto md:mx-0 md:w-full max-w-xl grow ${
             hovered ? "grayscale-0" : "grayscale"
           }`}
         >
+          <motion.ul
+            className={`absolute left-0 -top-10 z-10 gap-4 flex items-center flex-wrap ${
+              i % 2 === 0 ? "justify-start" : "justify-end"
+            } ${hovered ? "visible" : "invisible"}`}
+          >
+            {project.project.tags.slice(0, 3).map((tag) => (
+              <motion.li key={tag._id}>
+                <Tag tag={tag} isActive={true} />
+              </motion.li>
+            ))}
+          </motion.ul>
           <Image
-            className={`h-full w-full max-w-xl object-cover block filter transition-all`}
+            className={`h-full w-full max-w-xl object-cover block filter transition-all rounded-md overflow-hidden`}
             loader={({ src, width }) => `${src}?w=${width}&q=100`}
             priority={true}
             src={project.design.thumbnail}

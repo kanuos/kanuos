@@ -94,6 +94,9 @@ export const ContentCRUD_Form = ({
   }, [router]);
 
   function resetSession() {
+    setType("");
+    setStep(0);
+    setTags([]);
     sessionStorage.removeItem(SESSION_NAME);
     sessionStorage.removeItem(CONTENT_NAME);
   }
@@ -123,7 +126,6 @@ export const ContentCRUD_Form = ({
     try {
       // submit data
       let URL = API_ROUTES[type + "s"] + action;
-      console.log({ URL, method });
       const { data, err } = (
         await axios({
           url: URL,
@@ -142,15 +144,13 @@ export const ContentCRUD_Form = ({
       setPageMsg("Blog submitted successfully");
       setPageErr(false);
       // clear the session storage
-      sessionStorage.removeItem(SESSION_NAME);
-      sessionStorage.removeItem(CONTENT_NAME);
       // redirect to admin blog list
+      resetSession();
       router.push(ADMIN_URLS[type + "s"].url);
     } catch (error) {
       console.log(error);
       setPageErr(true);
       setPageMsg(error);
-      errorRef.current?.scrollIntoView();
     }
   }
 
@@ -167,11 +167,9 @@ export const ContentCRUD_Form = ({
         }
         setContent(() => value);
         setPreviewMode(true);
-        errorRef.current?.scrollIntoView();
         setPageMsg("Valid data. Can be sent");
         setPageErr(false);
       } catch (error) {
-        errorRef.current?.scrollIntoView();
         setPageMsg(error);
         setPageErr(true);
       }
@@ -189,16 +187,24 @@ export const ContentCRUD_Form = ({
     <main className="h-full min-h-screen p-8">
       <div className="container max-w-prose mx-auto">
         <h1 className="heading--main block">{heading}</h1>
-        <p
+        <div
           ref={errorRef}
-          className={`p-4 text-light text-xs font-bold items-center justify-between flex w-full rounded-md ${
-            pageMsg.trim().length > 0 &&
-            (pageErr ? "bg-primary" : "bg-secondary")
+          className={`z-50 h-screen flex flex-col items-center justify-center gap-10 p-8 fixed top-0 left-0 right-0 bg-dark__light text-light bg-opacity-95 transition-transform ${
+            Boolean(pageMsg.trim()) ? "translate-y-0" : "-translate-y-full"
           }`}
         >
-          <small>{pageMsg}</small>
-          <button onClick={() => setPageMsg("")}>&times;</button>
-        </p>
+          <>
+            <p className="w-full text-center max-w-2xl mx-auto font-title text-2xl">
+              {pageMsg}
+            </p>
+            <CTA
+              isDarkMode={true}
+              btnMode={true}
+              cb={() => setPageMsg("")}
+              label="Close Modal"
+            />
+          </>
+        </div>
         <div className="w-full after-line flex flex-col items-stretch gap-y-4 mb-10">
           {/* content type */}
           <details className={detailCls}>

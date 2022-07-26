@@ -35,7 +35,7 @@ export const DetailHeader = ({
               />
             </figure>
             {figcaption && (
-              <figcaption className="text-xs italic opacity-75 capitalize text-center mt-2">
+              <figcaption className="text-xs opacity-75 capitalize text-center mt-2">
                 <small>{figcaption}</small>
               </figcaption>
             )}

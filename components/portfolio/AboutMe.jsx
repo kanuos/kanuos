@@ -68,7 +68,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
             label={
               <div className="inline-flex items-center justify-center gap-1">
                 <IoCloudDownloadOutline className="group-hover:scale-110 group-hover:rotate-[360deg] transition-all" />
-                My Resume
+                <strong className="font-bold">My Resume</strong>
               </div>
             }
             cb={() => alert(new Date().toLocaleString())}
