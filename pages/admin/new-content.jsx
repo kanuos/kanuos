@@ -2,10 +2,11 @@ import dynamic from "next/dynamic";
 import { useContext } from "react";
 // import : internal
 import { getAllTags } from "../../database/tags";
-import { ADMIN_ACCOUNT } from "../../utils";
+import { ADMIN_ACCOUNT, ADMIN_URLS } from "../../utils";
 import { isAdminMiddleware } from "../../utils/authLib";
 import PublicLayout from "../../components/Layouts/PublicLayout";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { useRouter } from "next/router";
 
 const ContentCRUD_Form = dynamic(() =>
   import("../../components/admin/forms/ContentForm").then(
@@ -15,6 +16,10 @@ const ContentCRUD_Form = dynamic(() =>
 
 const ContentCMS = ({ allTags }) => {
   const { isDarkMode } = useContext(ThemeContext);
+  const r = useRouter();
+  if (JSON.parse(allTags).length === 0) {
+    r?.push(ADMIN_URLS.tags.url);
+  }
   return (
     <PublicLayout metaTitle="Admin | Content CMS" navType="admin">
       <ContentCRUD_Form
@@ -48,6 +53,7 @@ export async function getServerSideProps({ req, res }) {
       },
     };
   } catch (error) {
+    console.log("new content error", error);
     allTags = [];
     return {
       props: {

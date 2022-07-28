@@ -76,10 +76,12 @@ export const WorkDetailModal = ({
             },
           ]}
         />
-        <section className="px-8 pt-16 max-w-4xl mx-auto">
-          <h2 className="heading--main text-center">User Flow</h2>
-          <UserFlow steps={design.userFlowSteps} isDarkMode={isDarkMode} />
-        </section>
+        {design.userFlowSteps.length > 1 && (
+          <section className="px-8 pt-16 max-w-4xl mx-auto">
+            <h2 className="heading--main text-center">User Flow</h2>
+            <UserFlow steps={design.userFlowSteps} isDarkMode={isDarkMode} />
+          </section>
+        )}
 
         <section className="h-auto mx-auto">
           <Screens steps={design.userFlowSteps} isDarkMode={isDarkMode} />

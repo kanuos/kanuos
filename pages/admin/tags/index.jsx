@@ -114,6 +114,8 @@ export async function getServerSideProps({ req, res }) {
       },
     };
   } catch (error) {
+    console.log("tags error", error);
+
     allTags = [];
     return {
       props: {

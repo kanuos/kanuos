@@ -31,6 +31,10 @@ const EditCMS = ({ allTags, data, contentType }) => {
   const { isDarkMode } = useContext(ThemeContext);
   const router = useRouter();
 
+  if (JSON.parse(allTags).length === 0) {
+    router?.push(ADMIN_URLS.tags.url);
+  }
+
   async function handleDeleteContent() {
     try {
       const verificationCode = prompt(
@@ -130,6 +134,8 @@ export async function getServerSideProps(ctx) {
       },
     };
   } catch (error) {
+    console.log("edit content error", error);
+
     allTags = [];
     data = {};
     return {

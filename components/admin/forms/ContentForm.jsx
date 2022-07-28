@@ -73,7 +73,6 @@ export const ContentCRUD_Form = ({
   const [content, setContent] = useState(init);
   const [previewMode, setPreviewMode] = useState(false);
   const [pageMsg, setPageMsg] = useState("");
-  const [pageErr, setPageErr] = useState(false);
 
   const detailCls = `px-4 py-6 rounded-md text-sm block z-10 nav-light ${
     isDarkMode ? "light-shadow" : "drop-shadow-xl"
@@ -142,14 +141,12 @@ export const ContentCRUD_Form = ({
       }
 
       setPageMsg("Blog submitted successfully");
-      setPageErr(false);
       // clear the session storage
       // redirect to admin blog list
       resetSession();
       router.push(ADMIN_URLS[type + "s"].url);
     } catch (error) {
       console.log(error);
-      setPageErr(true);
       setPageMsg(error);
     }
   }
@@ -168,10 +165,8 @@ export const ContentCRUD_Form = ({
         setContent(() => value);
         setPreviewMode(true);
         setPageMsg("Valid data. Can be sent");
-        setPageErr(false);
       } catch (error) {
         setPageMsg(error);
-        setPageErr(true);
       }
     },
     [type, tags, isPublic]

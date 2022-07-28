@@ -15,11 +15,11 @@ export const PortfolioMgmt = ({
   getEditData,
   editMode,
 }) => {
-  const [showForm, setShowForm] = useState(
-    portfolioProjects.length === 0 || editMode
-  );
   const [availableDesigns, setAvailableDesigns] = useState([]);
   const [availableProjects, setAvailableProjects] = useState([]);
+  const [showForm, setShowForm] = useState(
+    editMode || Boolean(availableDesigns.length * availableProjects.length)
+  );
 
   useEffect(() => {
     const portfolioDesignID = portfolioProjects.map((item) => item.design._id);
@@ -61,7 +61,7 @@ export const PortfolioMgmt = ({
           Portfolio Management &nbsp;&mdash;&nbsp;{" "}
           <small className="font-sans">({portfolioProjects.length})</small>
         </h1>
-        {Boolean(availableDesigns.length * availableProjects.length) && (
+        {showForm && (
           <button
             type="button"
             onClick={() => setShowForm((prev) => !prev)}
@@ -73,8 +73,7 @@ export const PortfolioMgmt = ({
         )}
       </div>
 
-      {(showForm ||
-        Boolean(availableDesigns.length * availableProjects.length)) && (
+      {showForm && (
         <PortfolioForm
           init={init}
           key={JSON.stringify({ init, portfolioProjects })}

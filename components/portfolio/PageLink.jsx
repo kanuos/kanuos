@@ -9,9 +9,23 @@ export const PageLink = ({
 }) => {
   const cls = `opacity-50 hover:opacity-100 navStyleLink inline-block font-title text-lg`;
 
+  const ToolTip = (
+    <p className="text-xs">
+      <small className="absolute px-2 py-1 bg-dark__light text-light w-max max-w-xs rounded left-0 top-full invisible group-hover:visible z-20 transition-all delay-1000 font-mono">
+        Go to {label} page {href}.
+      </small>
+    </p>
+  );
+
   if (isExternal) {
     return (
-      <a target="_blank" rel="noopener noreferrer" href={href}>
+      <a
+        className="relative group"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={href}
+      >
+        {ToolTip}
         {label.split("").map((el, i) => {
           if (el === " ") {
             return <span key={i}>&nbsp;</span>;
@@ -28,7 +42,8 @@ export const PageLink = ({
 
   return (
     <Link href={href} scroll={scrollToTop}>
-      <a>
+      <a className="relative group">
+        {ToolTip}
         {label.split("").map((el, i) => {
           if (el === " ") {
             return <span key={i}>&nbsp;</span>;
@@ -39,30 +54,7 @@ export const PageLink = ({
             </span>
           );
         })}
-        {/* <small className="font-bold">{label}</small> */}
       </a>
     </Link>
   );
 };
-
-// const classes = {
-//   cta: "font-title",
-//   specialLink:
-//     "font-title text-2xl text-center mt-20 block bg-gradient-to-r from-primary to-secondary bg-clip-text hover:text-transparent transition-color",
-//   activeLink:
-//     "opacity-100 tracking-wider font-title text-lg after:absolute after:bottom-0 relative block after:left-0 after:w-full after:bg-secondary after:h-0.5",
-//   inActiveLink:
-//     "opacity-50 hover:opacity-100 navStyleLink inline-block font-title text-lg",
-// };
-
-{
-  /* <a className={isActiveLink ? classes.activeLink : ""}>
-  {isActiveLink
-    ? label
-    : label.split("").map((el, i) => (
-        <span className={classes.inActiveLink} key={i}>
-          {el}
-        </span>
-      ))}
-</a>; */
-}
