@@ -122,6 +122,11 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       >
         <small className="font-bold">Project : #{index}</small>
       </p>
+      {!data.isPublic && (
+        <p className={`text-xs transition-all text-primary`}>
+          <small className="font-bold">Admin Only</small>
+        </p>
+      )}
       <h3
         className={`font-bold transition-all text-2xl md:text-3xl ${
           index % 2 === 0 ? "text-right" : "text-left"

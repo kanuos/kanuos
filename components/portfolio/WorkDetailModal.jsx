@@ -17,6 +17,9 @@ const UserFlow = dynamic(() =>
 const Screens = dynamic(() =>
   import("../content/UserFlow").then((m) => m.Screens)
 );
+const MarkdownStep = dynamic(() =>
+  import("../public/PageStepComponent").then((m) => m.MarkdownStep)
+);
 
 export const WorkDetailModal = ({
   isDarkMode,
@@ -60,7 +63,6 @@ export const WorkDetailModal = ({
           title={project.title}
           thumbnail={design.thumbnail}
           figcaption={design.caption}
-          desc={work.metadata}
           items={[
             {
               heading: "role",
@@ -76,6 +78,9 @@ export const WorkDetailModal = ({
             },
           ]}
         />
+        <div className="w-full px-8 max-w-4xl mx-auto my-20">
+          <MarkdownStep text={work.metadata} firstLetter={true} />
+        </div>
         {design.userFlowSteps.length > 1 && (
           <section className="px-8 pt-16 max-w-4xl mx-auto">
             <h2 className="heading--main text-center">User Flow</h2>

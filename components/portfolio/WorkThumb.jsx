@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { CTA } from "./CTA";
 import { StickyWrapper } from "../public/StickyWrapper";
-import { Tag } from "../public/Tag";
 
 export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
   const variants = {
@@ -146,17 +145,6 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
             hovered ? "grayscale-0" : "grayscale"
           }`}
         >
-          <motion.ul
-            className={`absolute left-0 -top-10 z-10 gap-4 flex items-center flex-wrap ${
-              i % 2 === 0 ? "justify-start" : "justify-end"
-            } ${hovered ? "visible" : "invisible"}`}
-          >
-            {project.project.tags.slice(0, 3).map((tag) => (
-              <motion.li key={tag._id}>
-                <Tag tag={tag} isActive={true} />
-              </motion.li>
-            ))}
-          </motion.ul>
           <Image
             className={`h-full w-full max-w-xl object-cover block filter transition-all rounded-md overflow-hidden`}
             loader={({ src, width }) => `${src}?w=${width}&q=100`}

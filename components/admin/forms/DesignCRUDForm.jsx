@@ -195,6 +195,7 @@ export const DesignCRUDForm = ({
         <StringInput
           name="caption"
           value={design.caption}
+          specialField={true}
           setValue={(v) => handleUpdate("caption", v)}
           placeholder="Design caption"
           split={true}
@@ -219,6 +220,7 @@ export const DesignCRUDForm = ({
         <ImageInput
           name="thumbnail"
           value={design.thumbnail}
+          specialField={true}
           setValue={(v) => handleUpdate("thumbnail", v)}
           placeholder="Design thumbnail"
           isDarkMode={isDarkMode}

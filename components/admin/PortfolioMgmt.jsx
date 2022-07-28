@@ -35,6 +35,12 @@ export const PortfolioMgmt = ({
     );
   }, [portfolioProjects, allDesigns, allProjects]);
 
+  useEffect(() => {
+    setShowForm(
+      editMode || Boolean(availableDesigns.length * availableProjects.length)
+    );
+  }, [availableDesigns, availableProjects]);
+
   function handleDeleteProjectFromPortfolio(portfolio) {
     const { _id } = portfolio;
     if (
@@ -61,16 +67,16 @@ export const PortfolioMgmt = ({
           Portfolio Management &nbsp;&mdash;&nbsp;{" "}
           <small className="font-sans">({portfolioProjects.length})</small>
         </h1>
-        {showForm && (
-          <button
-            type="button"
-            onClick={() => setShowForm((prev) => !prev)}
-            title={`${showForm ? "Hide" : "Show"} form`}
-            className="text-xl hover:text-secondary transition-all"
-          >
-            <MdOutlineFingerprint />
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => setShowForm((prev) => !prev)}
+          title={`${showForm ? "Hide" : "Show"} form`}
+          className={`text-xl transition-all ${
+            showForm ? "cursor-pointer" : "cursor-not-allowed"
+          }`}
+        >
+          <MdOutlineFingerprint />
+        </button>
       </div>
 
       {showForm && (

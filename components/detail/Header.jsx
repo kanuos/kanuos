@@ -14,7 +14,7 @@ export const DetailHeader = ({
     <>
       <header>
         <section className="p-8 max-w-4xl mx-auto grid grid-cols-10 h-auto">
-          <div className={(aboutMe ? "" : "mb-28") + " col-span-full"}>
+          <div className={(aboutMe ? "" : "mb-20") + " col-span-full"}>
             <p className="text-xs text-primary w-max">{caption}</p>
             <h1 className={`heading--primary w-full uppercase mt-1`}>
               {title}

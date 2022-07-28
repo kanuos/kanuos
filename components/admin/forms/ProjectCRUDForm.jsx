@@ -156,6 +156,7 @@ export const ProjectCRUDForm = ({
           value={project.title}
           setValue={(v) => handleUpdate("title", v)}
           placeholder="project title"
+          specialField={true}
           split={true}
         />
         <StringInput
@@ -188,6 +189,7 @@ export const ProjectCRUDForm = ({
         <StringInput
           name="category"
           value={project.category}
+          specialField={true}
           setValue={(v) => handleUpdate("category", v)}
           placeholder="project category"
           split={true}

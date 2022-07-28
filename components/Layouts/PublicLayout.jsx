@@ -39,7 +39,7 @@ const PublicLayout = (props) => {
         } transition-all scroll-smooth`}
       >
         <div
-          className={`w-full scroll-smooth ${
+          className={`w-full scroll-smooth overflow-x-hidden ${
             navType === "admin" ? "pt-6" : ""
           } ${
             isDarkMode
@@ -48,7 +48,7 @@ const PublicLayout = (props) => {
           }
           ${
             errorPage
-              ? "overflow-hidden h-screen"
+              ? "overflow-y-hidden h-screen"
               : "overflow-y-auto h-auto min-h-screen scrollbar"
           }
             `}

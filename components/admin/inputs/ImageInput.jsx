@@ -11,6 +11,7 @@ export const ImageInput = ({
   placeholder = "",
   name = "",
   isDarkMode = false,
+  specialField = false,
 }) => {
   const [typedURL, setTypedURL] = useState(value);
   const [previewMode, setPreviewMode] = useState(false);
@@ -24,7 +25,7 @@ export const ImageInput = ({
   return (
     <section className={`col-span-full w-full flex flex-col items-start gap-2`}>
       <label htmlFor={name} className="content--sub capitalize font-bold">
-        {name}
+        {name} {specialField ? <span className="text-primary">*</span> : <></>}
       </label>
 
       <article className="w-full relative">

@@ -6,6 +6,7 @@ export const StringInput = ({
   split = false,
   placeholder = "",
   name = "",
+  specialField = false,
 }) => {
   return (
     <section
@@ -15,6 +16,7 @@ export const StringInput = ({
     >
       <label htmlFor={name} className="content--sub capitalize font-bold">
         {name}
+        {specialField ? <span className="text-primary">*</span> : <></>}
       </label>
 
       <Textarea
