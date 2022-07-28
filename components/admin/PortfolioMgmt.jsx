@@ -39,7 +39,7 @@ export const PortfolioMgmt = ({
     setShowForm(
       editMode || Boolean(availableDesigns.length * availableProjects.length)
     );
-  }, [availableDesigns, availableProjects]);
+  }, [availableDesigns, availableProjects, editMode]);
 
   function handleDeleteProjectFromPortfolio(portfolio) {
     const { _id } = portfolio;

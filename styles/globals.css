@@ -14,12 +14,10 @@
 
 body {
   min-height: 100vh !important;
-  min-height: -webkit-fill-available !important;
   scroll-behavior: smooth;
 }
 
 html {
-  height: -webkit-fill-available !important;
   scroll-behavior: smooth;
 }
 

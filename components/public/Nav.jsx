@@ -147,7 +147,7 @@ const NavMenu = ({ type = "public" }) => {
         initial="exit"
         exit="exit"
         animate={showMenu ? "show" : "exit"}
-        className={`h-screen overflow-hidden w-full grid grid-cols-3 py-10 fixed right-0 top-0 z-30 sm:max-w-md ${
+        className={`h-full overflow-hidden w-full grid grid-cols-3 py-10 fixed right-0 top-0 bottom-0 z-30 sm:max-w-md ${
           showMenu
             ? isDarkMode
               ? "light-shadow"
@@ -157,7 +157,7 @@ const NavMenu = ({ type = "public" }) => {
       >
         <motion.ul
           variants={variants.mainUL}
-          className={`w-max mx-auto flex flex-col justify-center h-3/4 col-start-2 col-end-3 gap-y-8 items-start`}
+          className={`w-max mx-auto flex flex-col justify-center h-auto col-start-2 col-end-3 gap-y-8 items-start`}
         >
           {Object.entries(URLS).map(([key, valueObj]) => {
             const label = valueObj.name.replace("-", " ");
