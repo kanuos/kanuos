@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import { MdOutlineFingerprint } from "react-icons/md";
+import { AiOutlineFormatPainter, AiOutlineLoading } from "react-icons/ai";
 import { CTA } from "../portfolio/CTA";
 
 const PortfolioForm = dynamic(() => import("./forms/PortfolioForm"));
@@ -17,9 +17,7 @@ export const PortfolioMgmt = ({
 }) => {
   const [availableDesigns, setAvailableDesigns] = useState([]);
   const [availableProjects, setAvailableProjects] = useState([]);
-  const [showForm, setShowForm] = useState(
-    editMode || Boolean(availableDesigns.length * availableProjects.length)
-  );
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const portfolioDesignID = portfolioProjects.map((item) => item.design._id);
@@ -67,32 +65,36 @@ export const PortfolioMgmt = ({
           Portfolio Management &nbsp;&mdash;&nbsp;{" "}
           <small className="font-sans">({portfolioProjects.length})</small>
         </h1>
-        <button
-          type="button"
-          onClick={() => setShowForm((prev) => !prev)}
-          title={`${showForm ? "Hide" : "Show"} form`}
-          className={`text-xl transition-all ${
-            showForm ? "cursor-pointer" : "cursor-not-allowed"
-          }`}
-        >
-          <MdOutlineFingerprint />
-        </button>
+        {editMode ||
+          (Boolean(availableDesigns.length * availableProjects.length) && (
+            <button
+              type="button"
+              onClick={() => setShowForm((prev) => !prev)}
+              title={`${showForm ? "Hide" : "Show"} form`}
+              className={`text-xl transition-all`}
+            >
+              <AiOutlineFormatPainter />
+            </button>
+          ))}
       </div>
 
       {showForm && (
         <PortfolioForm
           init={init}
+          editMode={editMode}
           key={JSON.stringify({ init, portfolioProjects })}
           getData={submitToServer}
           isDarkMode={isDarkMode}
           availableDesigns={availableDesigns}
           availableProjects={availableProjects}
+          allProjects={allProjects}
+          allDesigns={allDesigns}
         />
       )}
 
       {/* portfolio lists */}
       {portfolioProjects.length > 0 ? (
-        <section className="w-full">
+        <section className="w-full pb-6">
           <ul className="flex flex-col items-start gap-2 my-6">
             <li className="flex items-center justify-start gap-x-4 text-xs">
               <span className="w-10 h-1 bg-secondary block rounded-full"></span>
@@ -137,40 +139,59 @@ export const PortfolioMgmt = ({
               {portfolioProjects.map((portfolio) => (
                 <tr
                   key={portfolio._id}
-                  className={
-                    portfolio.isShowcased ? "bg-secondary" : "bg-primary"
-                  }
+                  className={`
+                  ${portfolio.isShowcased ? "bg-secondary" : "bg-primary"}
+                    ${
+                      init?._id === portfolio._id
+                        ? "bg-opacity-20 cursor-not-allowed"
+                        : ""
+                    }
+                  `}
                 >
                   <td
-                    className={`p-2 text-sm capitalize text-center`}
+                    className={`p-2 text-sm capitalize text-center ${
+                      init?._id === portfolio._id ? "line-through" : ""
+                    }`}
                     title={portfolio.project._id}
                   >
                     {portfolio.project.title}
                   </td>
                   <td
-                    className={`p-2 text-sm capitalize text-center`}
+                    className={`p-2 text-sm capitalize text-center ${
+                      init?._id === portfolio._id ? "line-through" : ""
+                    }`}
                     title={portfolio.design._id}
                   >
                     {portfolio.design.title}
                   </td>
-                  <td className={`p-2 text-sm capitalize text-center`}>
+                  <td
+                    className={`p-2 text-sm capitalize text-center ${
+                      init?._id === portfolio._id ? "line-through" : ""
+                    }`}
+                  >
                     {priority[portfolio.priority]}
                   </td>
                   <td
                     className={`p-2 text-sm flex items-center justify-center flex-col md:flex-row capitalize text-center`}
                   >
-                    <CTA
-                      tiny={true}
-                      btnMode={true}
-                      cb={() => getEditData(portfolio)}
-                      label="Edit"
-                    />
-                    <CTA
-                      tiny={true}
-                      btnMode={true}
-                      cb={() => handleDeleteProjectFromPortfolio(portfolio)}
-                      label="Delete"
-                    />
+                    {init?._id === portfolio._id ? (
+                      <AiOutlineLoading className="text-2xl m-4 animate-spin origin-center" />
+                    ) : (
+                      <>
+                        <CTA
+                          tiny={true}
+                          btnMode={true}
+                          cb={() => getEditData(portfolio)}
+                          label="Edit"
+                        />
+                        <CTA
+                          tiny={true}
+                          btnMode={true}
+                          cb={() => handleDeleteProjectFromPortfolio(portfolio)}
+                          label="Delete"
+                        />
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}

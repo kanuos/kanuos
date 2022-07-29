@@ -2,7 +2,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { CTA } from "./CTA";
-import { StickyWrapper } from "../public/StickyWrapper";
 
 export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
   const variants = {
@@ -156,26 +155,24 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
         </motion.figure>
       </motion.article>
 
-      <StickyWrapper>
-        <motion.div
-          className={`w-fit my-10 px-8 md:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
-            i % 2 === 0 ? "mr-auto md:" : "ml-auto md:"
-          } ${
-            hovered
-              ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
-              : "opacity-0 scale-0 pointer-events-none translate-y-full"
-          }`}
-        >
-          <CTA
-            label="View details"
-            tiny={true}
-            btnMode={true}
-            cb={() => cb(project)}
-            isDarkMode={isDarkMode}
-            scroll={true}
-          />
-        </motion.div>
-      </StickyWrapper>
+      <motion.div
+        className={`w-fit my-10 px-8 md:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
+          i % 2 === 0 ? "mr-auto md:" : "ml-auto md:"
+        } ${
+          hovered
+            ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
+            : "opacity-0 scale-0 pointer-events-none translate-y-full"
+        }`}
+      >
+        <CTA
+          label="View details"
+          tiny={true}
+          btnMode={true}
+          cb={() => cb(project)}
+          isDarkMode={isDarkMode}
+          scroll={true}
+        />
+      </motion.div>
     </motion.div>
   );
 };

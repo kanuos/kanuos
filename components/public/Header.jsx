@@ -23,9 +23,9 @@ export const PublicHeader = ({
           </strong>
           <input
             type="search"
-            className={`w-full will-change-transform transition-all px-3 py-2.5 border-2 rounded-full bg-transparent opacity-70 focus:opacity-100 scrollbar-none outline-none focus:outline-none mt-4 mb-10 border-current content--secondary font-bold placeholder:font-normal ${
+            className={`w-full will-change-transform transition-all px-3 py-2.5 border-2 rounded-md bg-transparent opacity-70 focus:opacity-100 scrollbar-none outline-none focus:outline-none mt-4 mb-10 border-current content--secondary font-bold placeholder:font-normal ${
               Boolean(searchText.trim())
-                ? "border-solid focus:border-secondary"
+                ? "border-solid"
                 : "border-dashed focus:border-solid"
             } `}
             value={searchText}

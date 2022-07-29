@@ -37,10 +37,7 @@ export const BlogDetailBody = ({ blog = null }) => {
           {
             heading: "author",
             content: (
-              <PageLink
-                href={PUBLIC_URLS.portfolio.url}
-                label="Sounak Mukherjee"
-              />
+              <PageLink href={PUBLIC_URLS.portfolio.url} label="Sounak" />
             ),
           },
           {

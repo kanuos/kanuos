@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState, Fragment, useCallback, useEffect } from "react";
+import { useState, Fragment, useEffect } from "react";
 
 import { CTA } from "../../portfolio/CTA";
 
@@ -22,8 +22,11 @@ const PortfolioForm = ({
   init = null,
   availableProjects,
   availableDesigns,
+  allProjects,
+  allDesigns,
   isDarkMode,
   getData,
+  editMode,
 }) => {
   const [portfolio, setPortfolio] = useState({
     project: init?.project._id || "",
@@ -103,15 +106,19 @@ const PortfolioForm = ({
         {/* project field , design field, priority */}
         <SelectInput
           init={portfolio.project}
+          editMode={editMode}
           setValue={(v) => handleUpdate("project", v)}
           name="project"
           list={generateSelectListOptions(availableProjects)}
+          sampleSpace={allProjects}
         />
         <SelectInput
           init={portfolio.design}
+          editMode={editMode}
           setValue={(v) => handleUpdate("design", v)}
           name="design"
           list={generateSelectListOptions(availableDesigns)}
+          sampleSpace={allDesigns}
         />
         <SelectInput
           init={portfolio.priority}

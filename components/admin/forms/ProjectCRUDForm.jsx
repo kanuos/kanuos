@@ -183,6 +183,7 @@ export const ProjectCRUDForm = ({
         <MarkdownInput
           name="desc"
           value={project.desc}
+          specialField={true}
           setValue={(v) => handleUpdate("desc", v)}
           placeholder="project desc"
         />

@@ -28,29 +28,30 @@ const PublicLayout = (props) => {
             className="object-cover block w-screen h-full pointer-events-none"
           />
         </div>
+        <div
+          className={`absolute inset-0 h-full w-full ${
+            isDarkMode ? "bg-dark" : "bg-light"
+          } bg-opacity-90`}
+        ></div>
       </div>
       <main
         className={`${
-          isDarkMode ? "bg-dark text-light" : "bg-light text-dark"
-        } bg-opacity-90 h-screen flex flex-col items-stretch z-0 overflow-hidden ${
+          isDarkMode ? "text-light" : "text-dark"
+        } h-screen flex flex-col items-stretch z-0 overflow-hidden ${
           showMenu
             ? "blur-[1.5px] grayscale brightness-50 pointer-events-none"
             : "blur-0 grayscale-0 brightness-100 pointer-events-auto"
         } transition-all scroll-smooth`}
       >
         <div
-          className={`w-full scroll-smooth overflow-x-hidden ${
+          className={`w-full scroll-smooth overflow-x-hidden h-full ${
             navType === "admin" ? "pt-6" : ""
           } ${
             isDarkMode
               ? "scrollbar-track-dark scrollbar-thumb-secondary"
               : "scrollbar-track-light scrollbar-thumb-primary"
           }
-          ${
-            errorPage
-              ? "overflow-y-hidden h-screen"
-              : "overflow-y-auto h-auto min-h-screen scrollbar"
-          }
+          ${errorPage ? "overflow-y-hidden" : "overflow-y-auto scrollbar"}
             `}
         >
           {children}

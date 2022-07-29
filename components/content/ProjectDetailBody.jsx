@@ -81,10 +81,7 @@ export const ProjectDetailBody = ({ project = null }) => {
           {
             heading: "author",
             content: (
-              <PageLink
-                href={PUBLIC_URLS.portfolio.url}
-                label="Sounak Mukherjee"
-              />
+              <PageLink href={PUBLIC_URLS.portfolio.url} label="Sounak" />
             ),
           },
           {

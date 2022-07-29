@@ -1,5 +1,21 @@
-export const SelectInput = ({ init = "", setValue, name = "", list = {} }) => {
-  const entries = Object.entries(list);
+export const SelectInput = ({
+  init = "",
+  setValue,
+  name = "",
+  list = {},
+  sampleSpace = [],
+  editMode = false,
+}) => {
+  const allList = {};
+  sampleSpace.forEach((el) => {
+    allList[el.title] = el._id;
+  });
+
+  const entries =
+    init && sampleSpace.length > 0
+      ? Object.entries(allList)
+      : Object.entries(list);
+
   return entries.length === 0 ? (
     <></>
   ) : (
@@ -8,6 +24,7 @@ export const SelectInput = ({ init = "", setValue, name = "", list = {} }) => {
         {name}
       </label>
       <select
+        disabled={editMode}
         id={name}
         onChange={(e) => setValue(e.target.value)}
         className="w-full p-2 border-2 rounded-md block capitalize"

@@ -48,7 +48,7 @@ const AdminDashboard = ({ data }) => {
         })
       ).data;
       if (error) throw data;
-      alert("Updated successfully!");
+      alert("Profile Updated successfully!");
       setAdminData(data);
     } catch (error) {
       alert("Err: " + error);
@@ -86,6 +86,7 @@ const AdminDashboard = ({ data }) => {
 
       if (method === "delete") {
         setPortfolios((prev) => prev.filter((el) => el._id !== data._id));
+        alert(`Portfolio ${method}ed successfully`);
         return;
       }
 
@@ -93,6 +94,7 @@ const AdminDashboard = ({ data }) => {
         setPortfolios((prev) => [...prev, data]);
         setEditData(null);
         setEditMode(false);
+        alert(`Portfolio ${method}ed successfully`);
         return;
       }
 
@@ -107,6 +109,7 @@ const AdminDashboard = ({ data }) => {
         );
         setEditData(null);
         setEditMode(false);
+        alert(`Portfolio ${method}ed successfully`);
         return;
       }
     } catch (error) {
