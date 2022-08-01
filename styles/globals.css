@@ -198,15 +198,7 @@ pre {
 }
 
 .heading__portfolio {
-  @apply text-center bg-clip-text text-transparent font-title bg-gradient-to-r;
-}
-
-.heading__portfolio--light-mode {
-  @apply from-dark__light_light to-dark;
-}
-
-.heading__portfolio--dark-mode {
-  @apply from-dark__light to-light;
+  @apply text-center text-primary;
 }
 
 .heading--main {

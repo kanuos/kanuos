@@ -2,9 +2,6 @@
 import dynamic from "next/dynamic";
 import { useContext, useState, useCallback, memo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Markdown from "react-markdown";
-
-import { HiOutlineLocationMarker } from "react-icons/hi";
 
 // import : internal
 import { getPortfolio } from "../../database/user";
@@ -14,18 +11,15 @@ import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
 
 import PublicLayout from "../../components/Layouts/PublicLayout";
 
-const StickyWrapper = dynamic(() =>
-  import("../../components/public/StickyWrapper").then((m) => m.StickyWrapper)
-);
+import { PortfolioHeader } from "../../components/portfolio/PortfolioHeader";
 
 const Showcase = dynamic(() =>
   import("../../components/portfolio/Showcase").then((m) => m.Showcase)
 );
-const CTA = dynamic(() =>
-  import("../../components/portfolio/CTA").then((m) => m.CTA)
-);
-const StyledHeader = dynamic(() =>
-  import("../../components/portfolio/StyledHeader").then((m) => m.StyledHeader)
+const PortfolioLoader = dynamic(() =>
+  import("../../components/portfolio/PortfolioLoader").then(
+    (m) => m.PortfolioLoader
+  )
 );
 const ContactMe = dynamic(() =>
   import("../../components/portfolio/ContactMe").then((m) => m.ContactMe)
@@ -47,6 +41,7 @@ const PortfolioPage = ({ metadata }) => {
   const validPortfolioMetadata = metadata?.portfolio?.length;
 
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const selectProject = useCallback((p) => {
     setSelectedProject(() => p);
@@ -60,40 +55,21 @@ const PortfolioPage = ({ metadata }) => {
         navType="portfolio"
       >
         <main className="h-screen w-screen grid place-items-center">
-          <StyledHeader
-            styledText="Sounak mukherjee"
+          <PortfolioHeader
+            heading="Coming soon"
+            text={`Hi there, I am Sounak. The portfolio page you are trying to visit is currently being maintained. You can still visit my blogs, projects and designs in my website. Please follow the link below to the visit my work.`}
+            href={PUBLIC_URLS.home.url}
+            label="Go to HomePage"
             isDarkMode={isDarkMode}
-            showScroll={false}
-          >
-            <div className="flex flex-col items-start justify-center">
-              <h1
-                className={`heading__portfolio ${
-                  isDarkMode
-                    ? "heading__portfolio--dark-mode"
-                    : "heading__portfolio--light-mode"
-                }`}
-              >
-                Coming Soon
-              </h1>
-              <p className="content--main mb-10 mt-4 text-justify">
-                Hi there, I am Sounak. The portfolio page you are trying to
-                visit is currently being maintained. You can still visit my
-                blogs, projects and designs in my website. Please follow the
-                link below to the visit my work.
-              </p>
-              <StickyWrapper>
-                <CTA
-                  href={PUBLIC_URLS.home.url}
-                  label="Go to HomePage"
-                  isDarkMode={isDarkMode}
-                />
-              </StickyWrapper>
-            </div>
-          </StyledHeader>
+          />
         </main>
       </PublicLayout>
     );
   }
+
+  const hideLoader = useCallback(() => {
+    setIsLoading(() => false);
+  }, []);
 
   return (
     <>
@@ -111,51 +87,40 @@ const PortfolioPage = ({ metadata }) => {
       <PublicLayout
         metaTitle="Sounak Mukherjee | Portfolio"
         content="Check out my full stack web developer portfolio website"
-        navType="portfolio"
+        navType={isLoading ? undefined : "portfolio"}
       >
-        <main className="min-h-screen">
-          <header className="h-screen px-8 flex flex-col items-center justify-center">
-            <>
-              <p className="flex items-center justify-center my-1 gap-x-1 opacity-75">
-                <HiOutlineLocationMarker className="animate-bounce" />
-                <span className="text-xs font-bold">{metadata.location}</span>
-              </p>
-              <h1
-                className={`heading__portfolio ${
-                  isDarkMode
-                    ? "heading__portfolio--dark-mode"
-                    : "heading__portfolio--light-mode"
-                }`}
-              >
-                Hi, I&apos;m {metadata.fullName.split(" ")[0]}
-              </h1>
-              <div className="max-w-lg text-center w-fit mt-6 mx-auto opacity-75">
-                <Markdown>{metadata.about}</Markdown>
-              </div>
-              <div className="mt-20">
-                <StickyWrapper>
-                  <CTA
-                    label="Say Hi!"
-                    href={PORTFOLIO_LINKS["contact me"].url}
-                    isDarkMode={isDarkMode}
-                  />
-                </StickyWrapper>
-              </div>
-            </>
-          </header>
+        <PortfolioLoader
+          isDarkMode={isDarkMode}
+          hide={hideLoader}
+          isLoading={isLoading}
+        />
+        {!isLoading && (
+          <motion.main
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <PortfolioHeader
+              location={metadata.location}
+              heading={`Hi I'm ${metadata.fullName.split(" ")[0]}`}
+              isDarkMode={isDarkMode}
+              text={metadata.about}
+              href={PORTFOLIO_LINKS["contact me"].url}
+              label="Say Hi!"
+            />
 
-          <Showcase
-            works={metadata.portfolio}
-            isDarkMode={isDarkMode}
-            handleSelectProject={selectProject}
-          />
-          <AboutMe
-            skills={metadata.skills}
-            techStack={metadata.techStack}
-            isDarkMode={isDarkMode}
-          />
-          <ContactMe isDarkMode={isDarkMode} />
-        </main>
+            <Showcase
+              works={metadata.portfolio}
+              isDarkMode={isDarkMode}
+              handleSelectProject={selectProject}
+            />
+            <AboutMe
+              skills={metadata.skills}
+              techStack={metadata.techStack}
+              isDarkMode={isDarkMode}
+            />
+            <ContactMe isDarkMode={isDarkMode} />
+          </motion.main>
+        )}
       </PublicLayout>
     </>
   );

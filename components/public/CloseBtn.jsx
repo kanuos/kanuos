@@ -18,7 +18,7 @@ export const CloseBtn = ({ isOpen, cb, isDarkMode }) => {
         },
       }}
       className={
-        "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-2 right-2 lg:top-4 lg:right-6 group transition-colors drop-shadow-xl " +
+        "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-2 right-4 lg:top-4 lg:right-6 group transition-colors drop-shadow-xl " +
         (isOpen
           ? ""
           : `${
