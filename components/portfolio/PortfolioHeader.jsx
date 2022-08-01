@@ -98,6 +98,7 @@ export const PortfolioHeader = ({
       initial="initial"
       exit="initial"
       whileInView="final"
+      viewport={{ once: true }}
       className="h-screen px-8 flex flex-col items-center justify-center"
     >
       <div className="grid grid-rows-3 w-full">
