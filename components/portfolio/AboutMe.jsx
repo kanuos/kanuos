@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { PORTFOLIO_LINKS } from "../../utils";
 import { IoCloudDownloadOutline } from "react-icons/io5";
-import Markdown from "react-markdown";
+import { motion } from "framer-motion";
 
 const CTA = dynamic(() => import("./CTA").then((m) => m.CTA));
 const MarkdownStep = dynamic(() =>
@@ -11,56 +11,153 @@ const StickyWrapper = dynamic(() =>
   import("../public/StickyWrapper").then((m) => m.StickyWrapper)
 );
 
+const VARIANTS = {
+  wrapper: {
+    initial: { opacity: 0.25, scale: 0.25 },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      transition: { staggerChildren: 0.25, when: "beforeChildren" },
+    },
+  },
+  header: {
+    initial: { opacity: 0, scaleY: 0.25 },
+    animate: {
+      opacity: 1,
+      scaleY: 1,
+      transition: { staggerChildren: 0.25, when: "beforeChildren" },
+    },
+  },
+  desc: {
+    initial: { opacity: 0, scaleY: 0.25 },
+    animate: {
+      opacity: 1,
+      scaleY: 1,
+      transition: { staggerChildren: 0.25, when: "beforeChildren" },
+    },
+  },
+  li: {
+    initial: { opacity: 0, scale: 0 },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      transition: { staggerChildren: 0.25, when: "beforeChildren" },
+    },
+  },
+  lg_ul: {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: { staggerChildren: 0.5, when: "beforeChildren" },
+    },
+  },
+  btn: {
+    initial: {
+      scale: 0,
+      opacity: 0,
+    },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 500,
+      },
+    },
+  },
+};
+
 export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
   return (
-    <section
+    <motion.section
+      variants={VARIANTS.wrapper}
       id={PORTFOLIO_LINKS["about me"].name}
       className={`min-h-screen mt-40 flex flex-col items-start justify-center w-full h-auto`}
     >
-      <div className="px-8 w-full max-w-2xl mx-auto">
-        <h2
-          className={`heading__portfolio ${
-            isDarkMode
-              ? "heading__portfolio--dark-mode"
-              : "heading__portfolio--light-mode"
-          }`}
-        >
+      <motion.div
+        variants={VARIANTS.wrapper}
+        whileInView="animate"
+        initial="initial"
+        viewport={{ once: true }}
+        className="px-8 w-full max-w-2xl mx-auto"
+      >
+        <motion.h2 variants={VARIANTS.header} className={`heading__portfolio`}>
           About Me
-        </h2>
-        <div className="mt-10">
-          <MarkdownStep text={skills} />
-        </div>
-      </div>
-      <article
-        className={`px-8 flex flex-col mt-20 pb-40 lg:pb-0 lg:mb-40 gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-6xl lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 skill__card__container`}
+        </motion.h2>
+        <motion.div variants={VARIANTS.desc} className="mt-10">
+          <div className="opacity-75">
+            <MarkdownStep text={skills} />
+          </div>
+        </motion.div>
+      </motion.div>
+
+      <motion.article
+        variants={VARIANTS.li}
+        className={`px-8 flex flex-col mt-20 pb-40 lg:pb-0 lg:mb-40 gap-y-10 after-line--center lg:hidden`}
       >
         {techStack.map(({ heading, text }, i) => (
-          <section
+          <motion.section
+            initial="initial"
+            whileInView="animate"
+            variants={VARIANTS.li}
+            viewport={{ once: true }}
             key={i}
-            className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform skill__card ${
-              i % 2
-                ? "ml-auto lg:ml-0 lg:translate-y-6"
-                : "mr-auto lg:mr-0 lg:-translate-y-6"
+            className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform ${
+              i % 2 ? "ml-auto" : "mr-auto"
             } max-w-lg rounded-md drop-shadow-2xl ${
               isDarkMode ? "bg-dark__light text-light" : "bg-light text-dark"
             }`}
           >
             <strong
-              className={`heading--sub capitalize font-bold break-words bg-gradient-to-r group-odd:from-primary group-even:from-secondary bg-clip-text lg:group-hover:text-transparent will-change-transform ${
-                isDarkMode ? "to-light" : "to-dark"
-              }`}
+              className={`text-2xl font-title capitalize font-bold break-words bg-gradient-to-r will-change-transform ${
+                isDarkMode ? "lg:to-light" : "lg:to-dark"
+              } mb-4 block`}
             >
               {heading}
             </strong>
-            <div className="opacity-50 lg:group-hover:opacity-80 transition-all will-change-transform">
-              <Markdown className="markdown-editor--small my-4">
-                {text}
-              </Markdown>
+            <div className="opacity-75">
+              <MarkdownStep text={text} />
             </div>
-          </section>
+          </motion.section>
         ))}
-      </article>
-      <div className="w-max mx-auto pb-20">
+      </motion.article>
+
+      <motion.article
+        initial="initial"
+        whileInView="animate"
+        variants={VARIANTS.lg_ul}
+        viewport={{ once: true }}
+        className={`hidden px-8 lg:flex my-28 w-full mx-auto max-w-screen-xl flex-row justify-center items-stretch h-auto gap-6 skill__card__container`}
+      >
+        {techStack.map(({ heading, text }, i) => (
+          <motion.section
+            key={i}
+            variants={VARIANTS.lg_ul}
+            className={`p-6 z-10 w-full group max-w-lg hover:scale-105 transition-all will-change-transform skill__card ${
+              i % 2 ? "ml-0 translate-y-6" : "mr-0 -translate-y-6"
+            } max-w-lg rounded-md drop-shadow-2xl ${
+              isDarkMode ? "bg-dark__light text-light" : "bg-light text-dark"
+            }`}
+          >
+            <strong
+              className={`text-2xl font-title capitalize font-bold break-words bg-gradient-to-r group-hover:group-odd:text-primary group-hover:group-even:text-secondary will-change-transform mb-6 block`}
+            >
+              {heading}
+            </strong>
+            <div className="opacity-75 group-hover:opacity-100">
+              <MarkdownStep text={text} />
+            </div>
+          </motion.section>
+        ))}
+      </motion.article>
+
+      <motion.div
+        variants={VARIANTS.btn}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true }}
+        className="w-max mx-auto pb-20"
+      >
         <StickyWrapper>
           <CTA
             btnMode={true}
@@ -74,7 +171,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
             cb={() => alert(new Date().toLocaleString())}
           />
         </StickyWrapper>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };

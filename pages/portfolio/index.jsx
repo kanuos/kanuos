@@ -1,7 +1,7 @@
 // Portfolio page
 import dynamic from "next/dynamic";
 import { useContext, useState, useCallback, memo } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 // import : internal
 import { getPortfolio } from "../../database/user";
@@ -95,10 +95,7 @@ const PortfolioPage = ({ metadata }) => {
           isLoading={isLoading}
         />
         {!isLoading && (
-          <motion.main
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
+          <>
             <PortfolioHeader
               location={metadata.location}
               heading={`Hi I'm ${metadata.fullName.split(" ")[0]}`}
@@ -119,7 +116,7 @@ const PortfolioPage = ({ metadata }) => {
               isDarkMode={isDarkMode}
             />
             <ContactMe isDarkMode={isDarkMode} />
-          </motion.main>
+          </>
         )}
       </PublicLayout>
     </>

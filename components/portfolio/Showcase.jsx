@@ -22,11 +22,13 @@ export const Showcase = ({
 
   const filteredWork = useMemo(() => {
     if (["All", "all"].includes(keyword)) {
-      return works;
+      return works.sort((a, b) => a.priority - b.priority);
     }
-    return works.filter(
-      (el) => el.project?.category?.toLowerCase() === keyword?.toLowerCase()
-    );
+    return works
+      .filter(
+        (el) => el.project?.category?.toLowerCase() === keyword?.toLowerCase()
+      )
+      .sort((a, b) => a.priority - b.priority);
   }, [keyword, works]);
 
   return (
@@ -35,18 +37,12 @@ export const Showcase = ({
       className="h-auto w-full max-w-6xl mx-auto"
     >
       <div className="p-8 max-w-4xl mx-auto">
-        <h2
-          className={`heading__portfolio w-max mr-auto ${
-            isDarkMode
-              ? "heading__portfolio--dark-mode"
-              : "heading__portfolio--light-mode"
-          }`}
-        >
-          Works
-        </h2>
-        <h3 className="heading--sub opacity-75 mb-4">
-          Showing some of my favorite projects
-        </h3>
+        <h2 className={`heading__portfolio w-max mr-auto`}>Works</h2>
+        <p className="content--main mb-4">
+          <span className="opacity-75">
+            Showing some of my favorite projects
+          </span>
+        </p>
         {CATEGORIES.length > 1 && (
           <ul className="flex gap-y-4 gap-x-2 items-center justify-start my-8 flex-wrap">
             {CATEGORIES.map((el, i) => (
@@ -73,7 +69,7 @@ export const Showcase = ({
               cb={handleSelectProject}
               key={project._id}
               isDarkMode={isDarkMode}
-              caption={`Project ${i + 1} of ${filteredWork.length}`}
+              caption={`${i + 1} — ${filteredWork.length}`}
             />
           ))}
         </motion.section>
