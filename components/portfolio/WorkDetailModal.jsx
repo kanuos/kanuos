@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const InfoGroup = dynamic(() =>
   import("../public/InfoGroup").then((m) => m.InfoGroup)
@@ -20,6 +20,77 @@ const Screens = dynamic(() =>
 const MarkdownStep = dynamic(() =>
   import("../public/PageStepComponent").then((m) => m.MarkdownStep)
 );
+
+const variants = {
+  modal: {
+    initial: {
+      y: "100vh",
+      opacity: 0,
+      scale: 0,
+      borderRadius: "50%",
+    },
+    animate: {
+      y: "0vh",
+      opacity: 1,
+      scale: 1,
+      borderRadius: "0%",
+      transition: {
+        type: "spring",
+        ease: "easeIn",
+        when: "beforeChildren",
+        staggerChildren: 0.25,
+      },
+    },
+    exit: {
+      y: "100vh",
+      opacity: 0.5,
+      borderRadius: "50%",
+      transition: {
+        type: "spring",
+        duration: 1.5,
+      },
+    },
+  },
+  child: {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        type: "linear",
+        ease: "easeIn",
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        type: "linear",
+      },
+    },
+  },
+  text: {
+    initial: {
+      opacity: 0.5,
+      scale: 0.5,
+    },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "linear",
+        duration: 1,
+      },
+    },
+    exit: {
+      opacity: 0.5,
+      scale: 0.5,
+      transition: {
+        type: "linear",
+      },
+    },
+  },
+};
 
 export const WorkDetailModal = ({
   isDarkMode,
@@ -45,19 +116,29 @@ export const WorkDetailModal = ({
   ].some(Boolean);
 
   return (
-    <section
-      className={`fixed inset-0 z-50 h-screen w-screen ${
+    <motion.section
+      variants={variants.modal}
+      initial="initial"
+      exit="exit"
+      animate="animate"
+      className={`fixed inset-0 z-50 h-screen w-screen drop-shadow-2xl ${
         isDarkMode ? "nav-dark" : "nav-light"
       }`}
     >
-      <div className="fixed top-2 right-2 z-20">
+      <motion.div
+        variants={variants.child}
+        className="fixed top-2 right-2 z-20"
+      >
         <CloseBtn
           cb={() => handleSelectProject(null)}
           isOpen={true}
           isDarkMode={isDarkMode}
         />
-      </div>
-      <section className="absolute inset-0 z-10 h-auto min-h-screen w-full overflow-y-auto scrollbar-none pt-10">
+      </motion.div>
+      <motion.section
+        variants={variants.child}
+        className="absolute inset-0 z-10 h-auto min-h-screen w-full overflow-y-auto scrollbar-none pt-10"
+      >
         <DetailHeader
           caption={caption}
           title={project.title}
@@ -78,21 +159,40 @@ export const WorkDetailModal = ({
             },
           ]}
         />
-        <div className="w-full px-8 max-w-4xl mx-auto my-20">
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          variants={variants.text}
+          className="w-full px-8 max-w-4xl mx-auto my-20"
+        >
           <MarkdownStep text={work.metadata} firstLetter={true} />
-        </div>
-        {design.userFlowSteps.length > 1 && (
-          <section className="px-8 pt-16 max-w-4xl mx-auto">
-            <h2 className="heading--main text-center">User Flow</h2>
-            <UserFlow steps={design.userFlowSteps} isDarkMode={isDarkMode} />
-          </section>
-        )}
-
-        <section className="h-auto mx-auto">
-          <Screens steps={design.userFlowSteps} isDarkMode={isDarkMode} />
-        </section>
-
-        <section className="px-8 py-16 max-w-4xl mx-auto">
+        </motion.div>
+        <AnimatePresence>
+          {design.userFlowSteps.length > 1 && (
+            <motion.section
+              initial="initial"
+              whileInView="animate"
+              variants={variants.child}
+              className="pt-16"
+            >
+              <motion.h2 className="heading--main text-center">
+                User Flow
+              </motion.h2>
+              <div className="max-w-4xl mx-auto px-8">
+                <UserFlow
+                  steps={design.userFlowSteps}
+                  isDarkMode={isDarkMode}
+                />
+              </div>
+              <Screens steps={design.userFlowSteps} isDarkMode={isDarkMode} />
+            </motion.section>
+          )}
+        </AnimatePresence>
+        <motion.section
+          variants={variants.child}
+          whileInView="animate"
+          className="px-8 py-16 max-w-4xl mx-auto"
+        >
           <InfoGroup
             items={[
               {
@@ -122,54 +222,8 @@ export const WorkDetailModal = ({
               },
             ]}
           />
-        </section>
-      </section>
-    </section>
+        </motion.section>
+      </motion.section>
+    </motion.section>
   );
 };
-
-/*
-export const UserFlow = ({ steps = [], isDarkMode }) => {
-  return (
-    <div className="relative w-full pt-20 mb-20 after-line--center">
-      <ul className={`w-full flex flex-col`}>
-        {steps.map(({ about, title }, i) => (
-          <motion.li
-            key={i}
-            className={`my-6 last:mb-0 max-w-3xl mx-auto w-full h-auto z-10 group grid grid-rows-6 grid-cols-6 ${
-              isDarkMode ? "nav-dark" : "nav-light"
-            }`}
-          >
-            <div
-              className={`group-last:border-0 border-2 border-secondary group-odd:col-start-4 group-odd:col-end-7 group-even:col-start-1 group-even:col-end-4 group-even:border-r-0 group-odd:border-l-0 row-start-4 row-end-7 z-10 h-full w-full animate-pulse ${
-                isDarkMode ? "nav-dark" : "nav-light"
-              } group-odd:rounded-r-md group-even:rounded-l-md`}
-            ></div>
-            <section
-              className={`row-start-1 w-full z-20 px-4 py-6 rounded-md ${
-                isDarkMode ? "nav-dark--light" : "nav-light"
-              } drop-shadow-2xl ${
-                steps.length === 1
-                  ? "col-span-full row-end-7"
-                  : "row-end-6 group-odd:col-start-1 group-even:col-start-2  group-odd:col-end-6 group-even:col-end-7"
-              }`}
-            >
-              {steps.length > 1 && (
-                <p className="text-xs mb-2">
-                  <small className="px-2 py-1 bg-primary bg-opacity-10 rounded-sm font-bold text-primary">
-                    Step {i + 1} - {steps.length}
-                  </small>
-                </p>
-              )}
-              <h3 className="heading--sub mb-4">{titleCase(title)}</h3>
-              <p className="content--sub">{about}</p>
-            </section>
-          </motion.li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-
- */

@@ -194,15 +194,15 @@ pre {
 
 .heading--primary,
 .heading__portfolio {
-  @apply font-bold block my-2.5 selection:bg-transparent selection:text-primary;
+  @apply font-bold block my-2.5 selection:bg-transparent selection:text-primary  md:text-8xl;
 }
 
 .heading--primary {
-  @apply text-6xl md:text-8xl font-title leading-[.85];
+  @apply text-6xl font-title leading-[.85];
 }
 
 .heading__portfolio {
-  @apply text-center tracking-tighter text-7xl md:text-9xl leading-10 py-2;
+  @apply text-center tracking-tighter text-7xl leading-10 py-2;
 }
 
 .heading--main {

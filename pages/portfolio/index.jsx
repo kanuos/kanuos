@@ -66,16 +66,16 @@ const PortfolioPage = ({ metadata }) => {
 
   return (
     <>
-      {selectedProject && (
-        <AnimatePresence>
+      <AnimatePresence>
+        {selectedProject && (
           <MemoizedWorkModal
             handleSelectProject={(p) => setSelectedProject(() => p)}
             work={selectedProject}
             isDarkMode={isDarkMode}
             allProjects={metadata.portfolio}
           />
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
 
       <PublicLayout
         metaTitle="Sounak Mukherjee | Portfolio"

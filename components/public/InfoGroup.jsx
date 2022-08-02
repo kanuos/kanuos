@@ -1,31 +1,63 @@
-import React from "react";
+import { motion } from "framer-motion";
+
+const variant = {
+  initial: {
+    opacity: 0,
+    scaleY: 0,
+  },
+  animate: {
+    opacity: 1,
+    scaleY: 1,
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.25,
+      ease: "easeIn",
+      type: "linear",
+    },
+  },
+  exit: {
+    opacity: 0,
+    scaleY: 0,
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.25,
+      staggerDirection: -1,
+      ease: "easeIn",
+      type: "linear",
+    },
+  },
+};
 
 export const InfoGroup = ({ items = [] }) => {
   return (
-    <ul className="col-span-full flex items-start justify-between">
+    <motion.ul className="col-span-full flex items-start justify-between">
       {items.map(({ heading, content }, i) => (
-        <li
+        <motion.li
+          variants={variant}
           key={i}
           className="flex flex-col items-start gap-y-2 grow last-of-type:items-end"
         >
-          <p className="opacity-50 text-xs">
+          <motion.p className="opacity-50 text-xs">
             <small className="font-bold uppercase">{heading}</small>
-          </p>
+          </motion.p>
           {Array.isArray(content) ? (
-            <ul className="text-sm flex items-start flex-col">
+            <motion.ul
+              variants={variant}
+              className="text-sm flex items-start flex-col"
+            >
               {content.map((el, k) => (
-                <li key={k}>
-                  <small className="capitalize">{el}</small>
-                </li>
+                <motion.li key={k}>
+                  <motion.small className="capitalize">{el}</motion.small>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           ) : (
-            <p className="text-sm">
-              <small className="capitalize">{content}</small>
-            </p>
+            <motion.p className="text-sm">
+              <motion.small className="capitalize">{content}</motion.small>
+            </motion.p>
           )}
-        </li>
+        </motion.li>
       ))}
-    </ul>
+    </motion.ul>
   );
 };

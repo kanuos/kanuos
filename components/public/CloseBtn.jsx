@@ -10,7 +10,7 @@ export const CloseBtn = ({ isOpen, cb, isDarkMode }) => {
       }}
       whileHover={{
         borderRadius: ["25%", "25%"],
-        rotate: [90, 0],
+        rotate: [180, 0],
         opacity: [1, 1],
         transition: {
           duration: 0.5,
