@@ -72,19 +72,18 @@ const variants = {
   text: {
     initial: {
       opacity: 0.5,
-      scale: 0.5,
+      x: 100,
     },
     animate: {
       opacity: 1,
-      scale: 1,
+      x: 0,
       transition: {
-        type: "linear",
-        duration: 1,
+        type: "tween",
       },
     },
     exit: {
       opacity: 0.5,
-      scale: 0.5,
+      x: -100,
       transition: {
         type: "linear",
       },
