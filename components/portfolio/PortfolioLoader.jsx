@@ -27,13 +27,13 @@ export const PortfolioLoader = ({ isDarkMode, hide, isLoading }) => {
       clearInterval(t);
       clearInterval(p);
     };
-  }, []);
+  }, [texts.length]);
 
   useEffect(() => {
     if (percentage === 100) {
       hide();
     }
-  }, [percentage]);
+  }, [percentage, hide]);
 
   const variants = {
     container: {

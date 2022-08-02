@@ -17,7 +17,7 @@ const PublicLayout = (props) => {
   return (
     <>
       <HeadComponent title={metaTitle} content={metaDesc} />
-      {navType !== undefined && <NavBar type={navType} />}
+      {navType !== "loadScreen" && <NavBar type={navType} />}
       <div className="fixed top-0 left-0 right-0 h-screen w-screen -z-10">
         <div className="relative w-full h-full block">
           <Image
@@ -51,7 +51,7 @@ const PublicLayout = (props) => {
               ? "scrollbar-track-dark scrollbar-thumb-secondary"
               : "scrollbar-track-light scrollbar-thumb-primary"
           }
-          ${errorPage ? "overflow-y-hidden" : "overflow-y-auto scrollbar"}
+          ${errorPage ? "overflow-y-hidden" : "overflow-y-auto scrollbar-thin"}
             `}
         >
           {children}

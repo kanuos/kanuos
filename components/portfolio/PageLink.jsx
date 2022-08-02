@@ -7,25 +7,13 @@ export const PageLink = ({
   isExternal = false,
   scrollToTop = true,
 }) => {
-  const cls = `opacity-50 hover:opacity-100 navStyleLink inline-block font-title text-lg`;
+  const cls = `navStyleLink inline-block font-title text-lg`;
 
-  const ToolTip = (
-    <p className="text-xs">
-      <small className="absolute px-2 py-1 bg-dark__light text-light w-max max-w-xs rounded left-0 top-full invisible group-hover:visible z-20 transition-all delay-1000 font-mono">
-        Go to {label} page {href}.
-      </small>
-    </p>
-  );
+  const base = `relative group w-fit mx-auto flex items-center justify-center after:absolute after:h-[1.25px] after:block after:bg-gradient-to-r after:from-primary after:to-secondary after:left-0 after:right-0 after:bottom-0.5 after:origin-center after:w-full after:scale-0 hover:after:scale-100 after:transition-all`;
 
   if (isExternal) {
     return (
-      <a
-        className="relative group"
-        target="_blank"
-        rel="noopener noreferrer"
-        href={href}
-      >
-        {ToolTip}
+      <a className={base} target="_blank" rel="noopener noreferrer" href={href}>
         {label.split("").map((el, i) => {
           if (el === " ") {
             return <span key={i}>&nbsp;</span>;
@@ -42,8 +30,7 @@ export const PageLink = ({
 
   return (
     <Link href={href} scroll={scrollToTop}>
-      <a className="relative group">
-        {ToolTip}
+      <a className={base}>
         {label.split("").map((el, i) => {
           if (el === " ") {
             return <span key={i}>&nbsp;</span>;

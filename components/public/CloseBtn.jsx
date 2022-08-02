@@ -5,12 +5,13 @@ export const CloseBtn = ({ isOpen, cb, isDarkMode }) => {
     <motion.div
       onClick={cb}
       initial={{
-        borderRadius: "25%",
+        borderRadius: "10%",
         opacity: 0.75,
       }}
       whileHover={{
-        opacity: 1,
-        rotateY: isOpen ? 0 : 180,
+        borderRadius: ["25%", "25%"],
+        rotate: [90, 0],
+        opacity: [1, 1],
         transition: {
           duration: 0.5,
           ease: "easeInOut",

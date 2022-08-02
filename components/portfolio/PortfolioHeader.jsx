@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import Markdown from "react-markdown";
@@ -101,20 +102,30 @@ export const PortfolioHeader = ({
       viewport={{ once: true }}
       className="h-screen px-8 flex flex-col items-center justify-center"
     >
-      <div className="grid grid-rows-3 w-full">
+      <div className="grid grid-flow-row w-full">
         <motion.div
           variants={childrenVariants}
           className="row-start-2 row-end-4"
         >
           <motion.h1
             variants={headingVariants}
-            className={`heading__portfolio`}
+            className={`flex items-center flex-wrap justify-center gap-x-4 md:gap-x-8 group`}
           >
-            {heading}
+            {heading.split(" ").map((el, k) => (
+              <Fragment key={k}>
+                {el.match(/sounak/gi) ? (
+                  <span className="heading__portfolio text-primary group-hover:-rotate-3 group-hover:scale-105 border-b-2 border-transparent group-hover:text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text block transition-all group-hover:drop-shadow-xl">
+                    {el}
+                  </span>
+                ) : (
+                  <span className="heading__portfolio">{el}</span>
+                )}
+              </Fragment>
+            ))}
           </motion.h1>
           <motion.div
             variants={childrenVariants}
-            className="max-w-lg text-center w-fit mb-auto mx-auto opacity-50 mt-6"
+            className="max-w-sm md:max-w-lg text-justify md:text-center w-fit mb-auto mx-auto opacity-75 mt-6"
           >
             <Markdown>{text}</Markdown>
           </motion.div>
@@ -123,10 +134,10 @@ export const PortfolioHeader = ({
         {Boolean(location) && (
           <motion.p
             variants={locationVariants}
-            className="flex items-center justify-center my-1 gap-x-1 row-start-1 mt-auto"
+            className="flex items-center justify-center my-1 gap-x-0.5 row-start-1 mt-auto"
           >
             <motion.span variants={locationVariants}>
-              <HiOutlineLocationMarker className="animate-bounce text-primary" />
+              <HiOutlineLocationMarker className="mb-1" />
             </motion.span>
             <motion.span
               variants={childrenVariants}

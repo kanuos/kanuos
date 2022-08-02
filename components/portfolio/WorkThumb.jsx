@@ -8,7 +8,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
     projectLeft: {
       show: {
         x: 0,
-        opacity: 1,
+        scale: 1,
         transition: {
           type: "spring",
           duration: 0.25,
@@ -17,7 +17,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
       },
       hide: {
         x: "-100",
-        opacity: 0,
+        scale: 0,
         transition: {
           type: "spring",
           staggerChildren: 0.25,
@@ -28,7 +28,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
     projectRight: {
       show: {
         x: 0,
-        opacity: 1,
+        scale: 1,
         transition: {
           type: "spring",
           duration: 0.25,
@@ -37,7 +37,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
       },
       hide: {
         x: "100",
-        opacity: 0,
+        scale: 0,
         transition: {
           type: "spring",
           staggerChildren: 0.25,
@@ -47,7 +47,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
     },
     content: {
       show: {
-        opacity: 1,
+        scaleY: 1,
         transition: {
           type: "linear",
           staggerChildren: 0.25,
@@ -55,10 +55,24 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
         },
       },
       hide: {
-        opacity: 0,
+        scaleY: 0,
         transition: {
           staggerChildren: 0.25,
           when: "afterChildren",
+        },
+      },
+    },
+    image: {
+      show: {
+        scaleY: 1,
+        transition: {
+          type: "spring",
+        },
+      },
+      hide: {
+        scaleY: 0,
+        transition: {
+          type: "spring",
         },
       },
     },
@@ -72,7 +86,9 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
 
   return (
     <motion.div
-      viewport={{ once: true }}
+      variants={variants.content}
+      whileInView="show"
+      initial="hide"
       onMouseLeave={() => setHovered(false)}
       className={`w-full snap-center h-auto md:min-h-[50vh] max-w-4xl mx-auto ${
         i % 2 === 0 ? "md:pl-8" : "md:pr-8"
@@ -80,10 +96,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
     >
       <motion.article
         variants={i % 2 === 0 ? variants.projectLeft : variants.projectRight}
-        whileInView="show"
-        initial="hide"
         key={project._id}
-        viewport={{ once: true }}
         onMouseEnter={() => setHovered(true)}
         onTap={() => setHovered(true)}
         className={
@@ -92,6 +105,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
         }
       >
         <motion.section
+          variants={variants.content}
           className={
             "flex flex-col mt-8 max-w-md px-8 md:px-10 " +
             (i % 2 === 0
@@ -99,33 +113,32 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
               : "items-end ml-auto md:ml-0 md:items-start md:pr-0")
           }
         >
-          <motion.legend className="text-xs px-2">
-            <small
-              className={`${
-                hovered ? "text-primary" : "text-current opacity-60"
-              } font-bold transition-all`}
-            >
-              {caption}
-            </small>
+          <motion.legend
+            variants={variants.content}
+            className={`${
+              hovered ? "text-primary" : "text-current opacity-60"
+            } transition-all text-xs px-2`}
+          >
+            <motion.small>{caption}</motion.small>
           </motion.legend>
           <motion.h3
             variants={variants.content}
-            className={`text-2xl lg:text-3xl my-1 font-title max-w-xs w-max break-words transition-all px-2 delay-100 origin-center capitalize bg-gradient-to-r ${
+            className={`text-2xl lg:text-3xl my-1 font-title font-bold max-w-xs w-max break-words transition-all px-2 delay-100 origin-center capitalize bg-gradient-to-r ${
               i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
             }`}
           >
             {project.project.title}
           </motion.h3>
-          <p className="text-xs px-2 mb-3">
-            <small
-              className={`${
-                hovered ? "text-current" : "text-primary"
-              } uppercase font-bold`}
-            >
-              {project.project.category}
-            </small>
-          </p>
           <motion.p
+            variants={variants.content}
+            className={`text-primary uppercase text-xs px-2 mb-3`}
+          >
+            <motion.small className="font-bold">
+              {project.project.category}
+            </motion.small>
+          </motion.p>
+          <motion.p
+            variants={variants.content}
             className={`px-2 text-sm tracking-tighter w-full max-w-sm ${
               i % 2 === 0 ? "text-left md:text-left" : "text-right md:text-left"
             } ${hovered ? "opacity-90" : "opacity-60"} `}
@@ -136,11 +149,11 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
         </motion.section>
 
         <motion.figure
-          variants={variants.content}
+          variants={variants.image}
           whileInView="show"
           initial="hide"
           viewport={{ once: true }}
-          className={`h-[35vh] relative filter z-10 drop-shadow-2xl shadow-2xl w-11/12 mx-auto md:mx-0 md:w-full max-w-xl grow ${
+          className={`h-[45vh] md:h-[35vh] relative filter z-10 drop-shadow-2xl shadow-2xl w-11/12 mx-auto md:mx-0 md:w-full md:max-w-xl grow ${
             hovered ? "grayscale-0" : "grayscale"
           }`}
         >
@@ -156,16 +169,17 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
       </motion.article>
 
       <motion.div
+        variants={variants.content}
         className={`w-fit my-10 px-8 md:px-10 md:w-full md:mt-16 md:grid md:place-items-center transition-all ${
           i % 2 === 0 ? "mr-auto md:" : "ml-auto md:"
         } ${
           hovered
-            ? "peer-hover:opacity-100 peer-hover:pointer-events-auto peer-hover:translate-y-0 peer-hover:scale-100"
-            : "opacity-0 scale-0 pointer-events-none translate-y-full"
+            ? "md:peer-hover:opacity-100 md:peer-hover:pointer-events-auto md:peer-hover:translate-y-0 md:peer-hover:scale-100"
+            : "md:opacity-0 md:scale-0 md:pointer-events-none md:translate-y-full"
         }`}
       >
         <CTA
-          label="View details"
+          label="Expand Project"
           tiny={true}
           btnMode={true}
           cb={() => cb(project)}

@@ -170,6 +170,7 @@ const NavMenu = ({ type = "public" }) => {
                 variants={variants.li}
                 onClick={toggleNavMenu}
                 key={key}
+                className="w-full md:w-fit"
               >
                 {isSpecialLink ? (
                   <div className="w-full">

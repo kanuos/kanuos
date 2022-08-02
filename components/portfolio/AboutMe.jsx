@@ -39,9 +39,15 @@ const VARIANTS = {
   li: {
     initial: { opacity: 0, scale: 0 },
     animate: {
-      opacity: 1,
-      scale: 1,
-      transition: { staggerChildren: 0.25, when: "beforeChildren" },
+      opacity: [1, 1],
+      scale: [0.5, 1],
+      rotate: [180, 0],
+      transition: {
+        staggerChildren: 0.25,
+        when: "beforeChildren",
+        stiffness: 300,
+        type: "spring",
+      },
     },
   },
   lg_ul: {
@@ -81,8 +87,12 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         viewport={{ once: true }}
         className="px-8 w-full max-w-2xl mx-auto"
       >
-        <motion.h2 variants={VARIANTS.header} className={`heading__portfolio`}>
-          About Me
+        <motion.h2
+          variants={VARIANTS.header}
+          className={`flex items-center justify-center gap-2 md:gap-6`}
+        >
+          <span className="heading--primary">About</span>
+          <span className="heading--primary">Me</span>
         </motion.h2>
         <motion.div variants={VARIANTS.desc} className="mt-10">
           <div className="opacity-75">
@@ -93,7 +103,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
 
       <motion.article
         variants={VARIANTS.li}
-        className={`px-8 flex flex-col mt-20 pb-40 lg:pb-0 lg:mb-40 gap-y-10 after-line--center lg:hidden`}
+        className={`px-8 flex flex-col mt-10 pb-40 lg:pb-0 lg:mb-40 gap-y-16 mx-auto after-line--center lg:hidden`}
       >
         {techStack.map(({ heading, text }, i) => (
           <motion.section
@@ -102,14 +112,12 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
             variants={VARIANTS.li}
             viewport={{ once: true }}
             key={i}
-            className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform ${
+            className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform drop-shadow-lg ${
               i % 2 ? "ml-auto" : "mr-auto"
-            } max-w-lg rounded-md drop-shadow-2xl ${
-              isDarkMode ? "bg-dark__light text-light" : "bg-light text-dark"
-            }`}
+            } max-w-lg rounded-md ${isDarkMode ? "nav-dark" : "nav-light"}`}
           >
             <strong
-              className={`text-2xl font-title capitalize font-bold break-words bg-gradient-to-r will-change-transform ${
+              className={`text-xl font-title capitalize font-bold break-words bg-gradient-to-r will-change-transform ${
                 isDarkMode ? "lg:to-light" : "lg:to-dark"
               } mb-4 block`}
             >
@@ -127,7 +135,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         whileInView="animate"
         variants={VARIANTS.lg_ul}
         viewport={{ once: true }}
-        className={`hidden px-8 lg:flex my-28 w-full mx-auto max-w-screen-xl flex-row justify-center items-stretch h-auto gap-6 skill__card__container`}
+        className={`hidden px-8 lg:flex my-28 w-full mx-auto max-w-7xl flex-row justify-center items-stretch h-auto gap-6 skill__card__container`}
       >
         {techStack.map(({ heading, text }, i) => (
           <motion.section

@@ -1,6 +1,6 @@
 // Portfolio page
 import dynamic from "next/dynamic";
-import { useContext, useState, useCallback, memo } from "react";
+import { useContext, useState, memo } from "react";
 import { AnimatePresence } from "framer-motion";
 
 // import : internal
@@ -43,10 +43,7 @@ const PortfolioPage = ({ metadata }) => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const selectProject = useCallback((p) => {
-    setSelectedProject(() => p);
-  }, []);
-
+  // renders
   if (!validPortfolioMetadata) {
     return (
       <PublicLayout
@@ -67,16 +64,12 @@ const PortfolioPage = ({ metadata }) => {
     );
   }
 
-  const hideLoader = useCallback(() => {
-    setIsLoading(() => false);
-  }, []);
-
   return (
     <>
       {selectedProject && (
         <AnimatePresence>
           <MemoizedWorkModal
-            handleSelectProject={selectProject}
+            handleSelectProject={(p) => setSelectedProject(() => p)}
             work={selectedProject}
             isDarkMode={isDarkMode}
             allProjects={metadata.portfolio}
@@ -87,18 +80,18 @@ const PortfolioPage = ({ metadata }) => {
       <PublicLayout
         metaTitle="Sounak Mukherjee | Portfolio"
         content="Check out my full stack web developer portfolio website"
-        navType={isLoading ? undefined : "portfolio"}
+        navType={isLoading ? "loadScreen" : "portfolio"}
       >
         <PortfolioLoader
           isDarkMode={isDarkMode}
-          hide={hideLoader}
+          hide={() => setIsLoading(() => false)}
           isLoading={isLoading}
         />
         {!isLoading && (
           <>
             <PortfolioHeader
               location={metadata.location}
-              heading={`Hi I'm ${metadata.fullName.split(" ")[0]}`}
+              heading={`Hello I'm ${metadata.fullName.split(" ")[0]}`}
               isDarkMode={isDarkMode}
               text={metadata.about}
               href={PORTFOLIO_LINKS["contact me"].url}
@@ -108,7 +101,7 @@ const PortfolioPage = ({ metadata }) => {
             <Showcase
               works={metadata.portfolio}
               isDarkMode={isDarkMode}
-              handleSelectProject={selectProject}
+              handleSelectProject={(p) => setSelectedProject(() => p)}
             />
             <AboutMe
               skills={metadata.skills}
