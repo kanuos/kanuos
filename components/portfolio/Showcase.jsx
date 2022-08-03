@@ -106,13 +106,16 @@ export const Showcase = ({
 
       <AnimatePresence>
         {showWorks && (
-          <motion.section className="py-6 sm:py-20 w-full flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory">
+          <motion.section
+            key={filteredWork.length}
+            className="py-6 sm:py-20 w-full flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory"
+          >
             {filteredWork.map((project, i) => (
               <WorkThumb
                 project={project}
                 i={i}
                 cb={handleSelectProject}
-                key={project._id}
+                key={i}
                 isDarkMode={isDarkMode}
                 caption={`${i + 1} — ${filteredWork.length}`}
               />

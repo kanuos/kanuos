@@ -85,7 +85,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         whileInView="animate"
         initial="initial"
         viewport={{ once: true }}
-        className="px-8 w-full max-w-2xl mx-auto"
+        className="p-8 w-full max-w-3xl mx-auto"
       >
         <motion.h2
           variants={VARIANTS.header}
@@ -135,7 +135,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         whileInView="animate"
         variants={VARIANTS.lg_ul}
         viewport={{ once: true }}
-        className={`hidden px-8 lg:flex my-28 w-full mx-auto max-w-7xl flex-row justify-center items-stretch h-auto gap-6 skill__card__container`}
+        className={`hidden px-8 lg:flex my-28 w-full mx-auto max-w-6xl flex-row justify-center items-stretch h-auto gap-6 skill__card__container`}
       >
         {techStack.map(({ heading, text }, i) => (
           <motion.section

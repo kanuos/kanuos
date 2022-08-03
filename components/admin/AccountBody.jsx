@@ -167,7 +167,7 @@ const AccountBody = ({ type, cb, heading, btnLabel }) => {
         heading={heading}
         init={{}}
         layout={Layout.ACCOUNT_CMS[type]}
-        isDarkMode={isDarkMode}
+        isDarkMode={false}
         getFormData={cb}
         btnLabel={btnLabel}
       />

@@ -1,5 +1,5 @@
 // built in imports
-import { useState, useContext } from "react";
+import { useState, useContext, useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -20,17 +20,18 @@ import { PageLink } from "../portfolio/PageLink";
 export const NavBar = ({ type = "public" }) => {
   const { showMenu, toggleNavMenu } = useContext(NavContext);
   const { isDarkMode } = useContext(ThemeContext);
+  const r = useRouter();
 
   return (
     <motion.nav className={`z-40`}>
       <CloseBtn cb={toggleNavMenu} isOpen={showMenu} isDarkMode={isDarkMode} />
-      <NavMenu type={type} />
+      <NavMenu type={type} key={r?.asPath || ""} router={r} />
     </motion.nav>
   );
 };
 
-const NavMenu = ({ type = "public" }) => {
-  const [currentPath] = useState(useRouter());
+const NavMenu = ({ type = "public", router }) => {
+  const [currentPath] = useState(router);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const { showMenu, toggleNavMenu } = useContext(NavContext);
 
@@ -105,28 +106,30 @@ const NavMenu = ({ type = "public" }) => {
     },
   };
 
-  function isActive(path) {
-    if (
-      currentPath.asPath === PUBLIC_URLS.home.url &&
-      PUBLIC_URLS.home.url === path.base
-    ) {
-      return true;
-    }
-    if (
-      currentPath.asPath.startsWith(path.base) &&
-      path.base !== PUBLIC_URLS.home.url
-    )
-      return true;
-    return false;
-  }
-
-  const r = useRouter();
+  const isActive = useCallback(
+    function (path) {
+      if (!currentPath) return false;
+      if (
+        currentPath.asPath === PUBLIC_URLS.home.url &&
+        PUBLIC_URLS.home.url === path.base
+      ) {
+        return true;
+      }
+      if (
+        currentPath.asPath.startsWith(path.base) &&
+        path.base !== PUBLIC_URLS.home.url
+      )
+        return true;
+      return false;
+    },
+    [currentPath]
+  );
 
   async function handleLogout() {
     try {
       await axios.get(AUTH_ROUTES.logout);
       toggleNavMenu();
-      r.push(ADMIN_ACCOUNT);
+      router?.push(ADMIN_ACCOUNT);
     } catch (error) {
       alert(error);
     }
@@ -156,6 +159,7 @@ const NavMenu = ({ type = "public" }) => {
         } ${!isDarkMode ? "nav-light" : "nav-dark"}`}
       >
         <motion.ul
+          key={router?.asPath || ""}
           variants={variants.mainUL}
           className={`w-max mx-auto flex flex-col justify-center h-auto col-start-2 col-end-3 gap-y-8 items-start`}
         >

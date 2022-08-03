@@ -134,8 +134,6 @@ export async function getServerSideProps(ctx) {
       },
     };
   } catch (error) {
-    console.log("edit content error", error);
-
     allTags = [];
     data = {};
     return {

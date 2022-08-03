@@ -146,7 +146,6 @@ export const ContentCRUD_Form = ({
       resetSession();
       router.push(ADMIN_URLS[type + "s"].url);
     } catch (error) {
-      console.log(error);
       setPageMsg(error);
     }
   }

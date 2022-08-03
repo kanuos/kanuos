@@ -53,7 +53,6 @@ export async function getServerSideProps({ req, res }) {
       },
     };
   } catch (error) {
-    console.log("new content error", error);
     allTags = [];
     return {
       props: {
