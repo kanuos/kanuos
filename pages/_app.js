@@ -8,7 +8,7 @@ import NavContextProvider from "../contexts/NavContext";
 function MyApp({ Component, pageProps, router }) {
   return (
     <ThemeContextProvider>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence exitBeforeEnter={true}>
         <motion.div
           key={router.route}
           initial={{ opacity: 0.25 }}
