@@ -4,10 +4,15 @@ import { useState, useEffect } from "react";
 export const PortfolioLoader = ({ isDarkMode, hide, isLoading }) => {
   const texts = [
     "UI-UX",
-    "Front End",
-    "Back End",
-    "Full stack",
-    "API & Microservices",
+    "API",
+    "Micro Services",
+    "MERN Stack",
+    "MEVN Stack",
+    "JAM Stack",
+    "Django",
+    "Python",
+    "JavaScript",
+    "TypeScript",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,7 +26,7 @@ export const PortfolioLoader = ({ isDarkMode, hide, isLoading }) => {
     const p = setInterval(() => {
       const adder = Math.round(Math.random() * 10);
       setPercentage((prev) => Math.min(prev + adder, 100));
-    }, 200);
+    }, 250);
 
     return () => {
       clearInterval(t);
@@ -116,7 +121,7 @@ export const PortfolioLoader = ({ isDarkMode, hide, isLoading }) => {
           >
             <motion.h4
               variants={variants.text}
-              className="heading--main text-center w-full mx-auto"
+              className="heading--primary text-center w-full mx-auto"
             >
               {texts[currentIndex]}
             </motion.h4>
@@ -134,7 +139,7 @@ export const PortfolioLoader = ({ isDarkMode, hide, isLoading }) => {
             </motion.div>
             <motion.h4
               variants={variants.text}
-              className="heading--main text-center w-full mx-auto"
+              className="heading--primary text-center w-full mx-auto"
             >
               developer
             </motion.h4>
