@@ -22,10 +22,8 @@ export const StringInput = ({
       <Textarea
         id={name}
         placeholder={placeholder}
-        className={`w-full will-change-transform transition-all p-3 border-2 rounded-md content--secondary bg-transparent scrollbar-none outline-none focus:outline-none ${
-          Boolean(value.trim())
-            ? "focus:border-secondary border-current"
-            : "focus:border-primary"
+        className={`w-full will-change-transform transition-all p-3 border-2 border-current rounded-md content--secondary bg-transparent scrollbar-none outline-none focus:outline-none ${
+          Boolean(value.trim()) ? "focus:border-secondary" : "focus:scale-x-105"
         } ${split ? "resize-none overflow-hidden" : "min-h-[5rem] resize-y "}`}
         value={value}
         onChange={(e) => setValue(e.target.value)}

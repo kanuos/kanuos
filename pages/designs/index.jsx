@@ -1,10 +1,11 @@
 // design LIST PAGE
 import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 // import : internal
 import { PUBLIC_LIST_TYPES } from "../../utils";
 import { getAllDesigns } from "../../database/designs";
 import { PublicListLayout } from "../../components/Layouts/PublicListLayout";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const DesignThumbnail = dynamic(() =>
   import("../../components/content/DesignThumbnail").then(
@@ -15,6 +16,9 @@ const DesignThumbnail = dynamic(() =>
 const DesignList = ({ designList, totalCount }) => {
   designList = JSON.parse(designList) || [];
   totalCount = JSON.parse(totalCount) || 0;
+
+  const { isDarkMode } = useContext(ThemeContext);
+
   const [searchText, setSearchText] = useState("");
   const [count, setCount] = useState(totalCount);
 
@@ -37,8 +41,13 @@ const DesignList = ({ designList, totalCount }) => {
       }}
       searchText={searchText}
       setSearchText={(x) => setSearchText(x)}
+      isDarkMode={isDarkMode}
     >
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-20 p-4 w-full mb-20 max-w-6xl mx-auto justify-center items-center">
+      <main
+        className={`grid grid-cols-1 ${
+          count > 1 ? "md:grid-cols-2 lg:grid-cols-3" : ""
+        } place-items-center gap-20 w-full mb-20 max-w-6xl mx-auto justify-center items-center`}
+      >
         {count > 0 ? (
           <>
             {designList
@@ -54,17 +63,7 @@ const DesignList = ({ designList, totalCount }) => {
               ))}
           </>
         ) : (
-          <>
-            {totalCount > 0 ? (
-              <p className="content--sub font-bold">
-                No design with{" "}
-                <span className="text-primary text-lg">{searchText}</span>{" "}
-                keyword found!{" "}
-              </p>
-            ) : (
-              <></>
-            )}
-          </>
+          <p className="content--secondary text-center">No results found</p>
         )}
       </main>
     </PublicListLayout>

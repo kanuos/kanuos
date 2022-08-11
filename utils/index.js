@@ -154,17 +154,17 @@ export const NAV_METADATA = {
 
 export const PUBLIC_LIST_TYPES = {
   blogs: {
-    title: "My Blogs",
+    title: "Blogs",
     desc: `Here's a list of all my blogs, code solutions, programming solutions and concepts and more..`,
     type: "blogs",
   },
   projects: {
-    title: "My Projects",
+    title: "Projects",
     desc: `Here's a list of all my front-end projects, CSS UI/UX recreations, static page creations, full stack projects, backend projects, API creation and lot more`,
     type: "projects",
   },
   designs: {
-    title: "My Designs",
+    title: "Designs",
     desc: `Here's a list of all my UI/UX designs for landing pages, website designs, app designs, different products and more`,
     type: "designs",
   },

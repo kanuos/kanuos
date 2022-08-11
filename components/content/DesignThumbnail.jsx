@@ -25,11 +25,11 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
     >
       {/* admin tag */}
 
-      {adminMode && (
+      {adminMode && !data.isPublic && (
         <p
           className={`absolute top-4 z-10 left-0 w-fit mx-auto font-bold content--sub text-center bg-dark text-light p-4`}
         >
-          {!data.isPublic ? "Private" : "Public"}
+          Private
         </p>
       )}
 

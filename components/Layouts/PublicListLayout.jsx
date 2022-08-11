@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { PUBLIC_URLS } from "../../utils";
 import { CTA } from "../portfolio/CTA";
-import { Footer } from "../public/Footer";
 import { PublicHeader } from "../public/Header";
 import PublicLayout from "./PublicLayout";
 
@@ -12,12 +11,13 @@ export const PublicListLayout = ({
   children,
   searchText,
   setSearchText,
+  isDarkMode,
 }) => {
   return (
     <Fragment>
       {data.searchMode ? (
         <PublicLayout metaTitle={pageTitle} metaDesc={pageDesc}>
-          <div className="px-8 pt-10 md:py-8 lg:px-0 max-w-2xl mx-auto select-text">
+          <div className="px-8 pt-20 lg:px-0 max-w-3xl mx-auto select-text">
             <PublicHeader
               data={data}
               searchText={searchText}
@@ -25,11 +25,8 @@ export const PublicListLayout = ({
               searchMode={data.searchMode}
             />
           </div>
-          <div className="px-8 w-full min-h-[85vh] pb-8 grow mx-auto flex flex-col justify-start items-stretch">
+          <div className="p-8 w-full h-auto pb-8 grow mx-auto flex flex-col justify-start items-stretch">
             {children}
-          </div>
-          <div className="mt-auto">
-            <Footer />
           </div>
         </PublicLayout>
       ) : (
@@ -38,7 +35,11 @@ export const PublicListLayout = ({
             <div className="flex flex-col items-start justify-center gap-4 px-8 w-full max-w-3xl">
               <div className="relative">
                 <h2 className="heading--primary">{data.type}</h2>
-                <small className="text-primary font-bold absolute left-0 -top-6 bg-primary bg-opacity-10 py-0.5 px-2 animate-bounce">
+                <small
+                  className={`font-bold rounded-sm absolute left-0 -top-6 bg-primary  py-0.5 px-2 animate-bounce ${
+                    isDarkMode ? "text-light" : "text-primary bg-opacity-10"
+                  }`}
+                >
                   404
                 </small>
               </div>
@@ -52,6 +53,7 @@ export const PublicListLayout = ({
                 <CTA
                   label="Go to home"
                   tiny={true}
+                  isDarkMode={isDarkMode}
                   href={PUBLIC_URLS.home.url}
                 />
               </div>

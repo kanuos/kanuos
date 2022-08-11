@@ -140,9 +140,8 @@ export const ContentCRUD_Form = ({
         throw JSON.stringify(data);
       }
 
-      setPageMsg("Blog submitted successfully");
+      setPageMsg(`${type} submitted successfully`);
       // clear the session storage
-      // redirect to admin blog list
       resetSession();
       router.push(ADMIN_URLS[type + "s"].url);
     } catch (error) {

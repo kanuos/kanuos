@@ -1,15 +1,18 @@
 // Project LIST PAGE
 
 // import : built in
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // import : internal components
 import { PUBLIC_LIST_TYPES } from "../../utils";
 import { ProjectThumbnail } from "../../components/content/ProjectThumbnail";
 import { getAllProjects } from "../../database/projects";
 import { PublicListLayout } from "../../components/Layouts/PublicListLayout";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const ProjectList = ({ projectList, totalCount }) => {
+  const { isDarkMode } = useContext(ThemeContext);
+
   projectList = JSON.parse(projectList);
   totalCount = parseInt(JSON.parse(totalCount));
 
@@ -36,6 +39,7 @@ const ProjectList = ({ projectList, totalCount }) => {
       }}
       searchText={searchText}
       setSearchText={(x) => setSearchText(x)}
+      isDarkMode={isDarkMode}
     >
       <main className="flex flex-col mb-20 gap-20 items-stretch w-full max-w-4xl mx-auto">
         {count > 0 ? (

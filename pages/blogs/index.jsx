@@ -1,12 +1,14 @@
 // BLOG LIST PAGE
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 // import : internal
 import { PUBLIC_LIST_TYPES } from "../../utils";
 import { BlogThumbnail } from "../../components/content/BlogThumbnail";
 import { getAllBlogs } from "../../database/blogs";
 import { PublicListLayout } from "../../components/Layouts/PublicListLayout";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const BlogList = ({ blogList, totalCount }) => {
+  const { isDarkMode } = useContext(ThemeContext);
   blogList = JSON.parse(blogList);
   totalCount = JSON.parse(totalCount);
 
@@ -31,6 +33,7 @@ const BlogList = ({ blogList, totalCount }) => {
         count,
         searchMode: totalCount > 0,
       }}
+      isDarkMode={isDarkMode}
       searchText={searchText}
       setSearchText={(x) => setSearchText(x)}
     >

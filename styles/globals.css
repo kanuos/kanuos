@@ -120,11 +120,11 @@ pre {
 }
 
 .markdown-editor.firstLetter > p:first-of-type {
-  @apply first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:-mt-2 first-letter:float-left first-letter:text-7xl text-justify;
+  @apply first-letter:font-title first-letter:font-bold first-letter:mr-2 first-letter:-mt-2 first-letter:float-left first-letter:text-7xl;
 }
 
 .markdown-editor {
-  @apply flex flex-col items-stretch text-sm;
+  @apply flex flex-col items-stretch text-sm md:text-base;
   overflow-wrap: break-word !important;
 }
 
@@ -159,7 +159,7 @@ pre {
   @apply block my-2;
 }
 .markdown-editor blockquote > * {
-  @apply break-words pl-4 border-l-[6px] border-primary font-bold text-base lg:text-lg;
+  @apply break-words pl-4 border-l-[6px] border-primary font-bold text-base md:text-lg;
 }
 
 .markdown-editor > a,
@@ -198,7 +198,7 @@ pre {
 }
 
 .heading--primary {
-  @apply text-6xl font-title leading-[.85];
+  @apply text-6xl md:text-7xl font-title leading-[.85];
 }
 
 .heading__portfolio {
@@ -206,7 +206,7 @@ pre {
 }
 
 .heading--main {
-  @apply text-xl md:text-2xl font-black font-title my-4 w-full block leading-none;
+  @apply text-xl md:text-2xl font-black my-4 w-full block leading-none;
 }
 
 .heading--secondary {
@@ -219,7 +219,7 @@ pre {
 
 .content--main,
 .content--secondary {
-  @apply text-sm lg:text-base leading-snug;
+  @apply text-sm md:text-base leading-snug;
 }
 
 .content--main {

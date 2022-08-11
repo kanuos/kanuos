@@ -164,7 +164,7 @@ export const DesignDetailBody = ({ design = null }) => {
           <section className="w-full max-w-4xl mx-auto px-8">
             <div className="flex flex-col items-start mb-10 gap-y-2 md:gap-y-6">
               <h2 className="heading--main capitalize">external resources</h2>
-              <p className="content--secondary text-justify">
+              <p className="content--secondary">
                 This project uses {design.externalResources.length} assets in
                 its design. Here&apos;s a list of all the assets along with the
                 artists and links to their accounts!

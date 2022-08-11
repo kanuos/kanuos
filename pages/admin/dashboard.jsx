@@ -123,7 +123,7 @@ const AdminDashboard = ({ data }) => {
       metaDesc="Sounak Mukherjee AKA Kanuos"
       navType="admin"
     >
-      <div className="min-h-screen px-8">
+      <div className="min-h-screen px-8 py-10">
         <div className="flex items-center justify-start w-full mb-6 container max-w-4xl mx-auto gap-4 scale-90 origin-left">
           <div>
             <CTA

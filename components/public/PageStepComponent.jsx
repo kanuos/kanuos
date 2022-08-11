@@ -13,9 +13,7 @@ import "prismjs/components/prism-django";
 export const MarkdownStep = ({ text, firstLetter = false }) => {
   return (
     <article
-      className={`markdown-editor-wrapper text-justify ${
-        firstLetter ? "firstLetter" : ""
-      }`}
+      className={`markdown-editor-wrapper ${firstLetter ? "firstLetter" : ""}`}
     >
       <Markdown>{text}</Markdown>
     </article>

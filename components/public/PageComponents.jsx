@@ -161,12 +161,12 @@ export const PageComponents = ({
                   </h3>
                 )}
                 {key === STEP_TYPE.markdown && (
-                  <div className="w-full text-justify markdown-editor-wrapper">
+                  <div className="w-full">
                     <MarkdownStep text={value} />
                   </div>
                 )}
                 {key === STEP_TYPE.code && (
-                  <div className="w-full text-justify">
+                  <div className="w-full">
                     <CodeStep
                       code={value.code}
                       file={value.file}

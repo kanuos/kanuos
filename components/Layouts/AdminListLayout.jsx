@@ -43,18 +43,9 @@ export const AdminListLayout = ({
           {list.length > 0 ? (
             <>{children}</>
           ) : (
-            <>
-              {" "}
-              {Boolean(totalSize) ? (
-                <p className="content--sub font-bold">
-                  No {type} with{" "}
-                  <span className="text-primary text-lg">{searchText}</span>{" "}
-                  keyword found!{" "}
-                </p>
-              ) : (
-                <></>
-              )}
-            </>
+            <p className="content--sub text-center font-bold">
+              No {type} found!{" "}
+            </p>
           )}
         </main>
       </div>
