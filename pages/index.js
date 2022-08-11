@@ -88,7 +88,7 @@ const HomePage = ({ allTags }) => {
       >
         {tagAvailability ? (
           <>
-            <h1 className="heading--primary">Hello world!</h1>
+            <h1 className="heading--primary pt-4">Hello world!</h1>
             <span className="text-sm md:text-base font-bold my-2">
               I&apos;m Sounak. Welcome to my tech journal
             </span>
@@ -109,7 +109,7 @@ const HomePage = ({ allTags }) => {
           </>
         )}
         {status === STATUSES.initial && (
-          <section className="w-full my-10">
+          <section className="w-full my-10 flex items-stretch flex-col h-full">
             <div className="flex flex-col items-start w-full">
               <h2 className="heading--sub font-bold">
                 Total tags : {allTags.length}
@@ -126,7 +126,10 @@ const HomePage = ({ allTags }) => {
         )}
         {tagAvailability && (
           <>
-            <div id={SEARCH_ID} className="w-full mb-20">
+            <div
+              id={SEARCH_ID}
+              className="w-full h-full flex flex-col items-stretch"
+            >
               {status === STATUSES.loading && (
                 <section className="w-full max-w-3xl mx-auto grid place-items-center">
                   <LoadSpinner />
@@ -136,9 +139,6 @@ const HomePage = ({ allTags }) => {
               {status === STATUSES.complete && data && (
                 <>
                   <TagDetailList {...data} close={handleInitialState} />
-                  <div className="mt-20">
-                    <Footer />
-                  </div>
                 </>
               )}
             </div>

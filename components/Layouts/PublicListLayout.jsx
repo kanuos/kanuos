@@ -1,4 +1,6 @@
 import { Fragment } from "react";
+import { PUBLIC_URLS } from "../../utils";
+import { CTA } from "../portfolio/CTA";
 import { Footer } from "../public/Footer";
 import { PublicHeader } from "../public/Header";
 import PublicLayout from "./PublicLayout";
@@ -33,11 +35,26 @@ export const PublicListLayout = ({
       ) : (
         <PublicLayout metaTitle={pageTitle} metaDesc={pageDesc}>
           <div className="h-screen w-full grid place-items-center">
-            <div className="flex flex-col items-center justify-center gap-4 px-8">
-              <h1 className="heading--primary">No {data.type} found!</h1>
-              <p className="content--secondary text-center w-11/12 mx-auto">
+            <div className="flex flex-col items-start justify-center gap-4 px-8 w-full max-w-3xl">
+              <div className="relative">
+                <h2 className="heading--primary">{data.type}</h2>
+                <small className="text-primary font-bold absolute left-0 -top-6 bg-primary bg-opacity-10 py-0.5 px-2 animate-bounce">
+                  404
+                </small>
+              </div>
+              <h2 className="heading--secondary">
+                No public {data.type} found at this time.
+              </h2>
+              <p className="content--main">
                 Please come back after some time. Hope to see you soon
               </p>
+              <div className="w-max mt-10">
+                <CTA
+                  label="Go to home"
+                  tiny={true}
+                  href={PUBLIC_URLS.home.url}
+                />
+              </div>
             </div>
           </div>
         </PublicLayout>

@@ -116,7 +116,7 @@ export const TagDetailList = (props) => {
 
       {!Boolean(project.length || blog.length || design.length) && (
         <p className="text-center flex items-start justify-center gap-1 w-full my-10">
-          <span>No content found for</span>
+          <span>No public content found for</span>
           <strong className="text-primary capitalize underline underline-offset-4 font-bold text-sm">
             {tag}
           </strong>

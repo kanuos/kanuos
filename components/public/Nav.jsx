@@ -139,7 +139,7 @@ const NavMenu = ({ type = "public", router }) => {
     cta: "font-title",
     specialLink: "font-title text-2xl text-center mt-20 block transition-all",
     activeLink:
-      "opacity-100 tracking-wider font-title text-lg after:absolute after:bottom-0 relative block after:left-0 after:w-full after:bg-secondary after:h-0.5",
+      "opacity-100 tracking-wider font-title text-lg after:absolute after:bottom-0 relative block after:left-0 after:w-full after:bg-secondary after:h-0.5 w-fit mx-auto",
   };
 
   return (

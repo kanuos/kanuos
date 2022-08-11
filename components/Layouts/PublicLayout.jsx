@@ -45,8 +45,6 @@ const PublicLayout = (props) => {
       >
         <div
           className={`w-full scroll-smooth overflow-x-hidden h-full ${
-            navType === "admin" ? "pt-6" : ""
-          } ${
             isDarkMode
               ? "scrollbar-track-dark scrollbar-thumb-secondary"
               : "scrollbar-track-light scrollbar-thumb-primary"
