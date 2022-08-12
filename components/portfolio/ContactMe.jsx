@@ -35,7 +35,7 @@ export const ContactMe = ({ isDarkMode, portfolioMode = true }) => {
           <h2 className={`heading--primary w-max mr-auto `}>
             {CONTENT.heading}
           </h2>
-          <div className="my-10">
+          <div className="my-10 content--main">
             <MarkdownStep text={CONTENT.content} />
           </div>
           <CTA

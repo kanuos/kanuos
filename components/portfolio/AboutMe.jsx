@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { PORTFOLIO_LINKS } from "../../utils";
-import { IoCloudDownloadOutline } from "react-icons/io5";
+import { FiDownload } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 const CTA = dynamic(() => import("./CTA").then((m) => m.CTA));
@@ -89,13 +89,16 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
       >
         <motion.h2
           variants={VARIANTS.header}
-          className={`flex items-center justify-center gap-2 md:gap-6`}
+          className={`flex items-center justify-start sm:justify-center gap-2 md:gap-6`}
         >
           <span className="heading--primary">About</span>
           <span className="heading--primary">Me</span>
         </motion.h2>
-        <motion.div variants={VARIANTS.desc} className="mt-10">
-          <div className="opacity-75">
+        <motion.div
+          variants={VARIANTS.desc}
+          className="mt-10 sm:w-11/12 mx-auto w-full"
+        >
+          <div className={`${isDarkMode ? "opacity-60" : "opacity-100"}`}>
             <MarkdownStep text={skills} />
           </div>
         </motion.div>
@@ -112,18 +115,18 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
             variants={VARIANTS.li}
             viewport={{ once: true }}
             key={i}
-            className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform drop-shadow-lg ${
+            className={`p-6 z-10 w-full sm:w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform drop-shadow-lg ${
               i % 2 ? "ml-auto" : "mr-auto"
             } max-w-lg rounded-md ${isDarkMode ? "nav-dark" : "nav-light"}`}
           >
             <strong
-              className={`text-xl font-title capitalize font-bold break-words bg-gradient-to-r will-change-transform ${
+              className={`text-xl text-center sm:text-left capitalize font-bold break-words bg-gradient-to-r will-change-transform ${
                 isDarkMode ? "lg:to-light" : "lg:to-dark"
               } mb-4 block`}
             >
               {heading}
             </strong>
-            <div className="opacity-75">
+            <div className={`mt-6 ${isDarkMode ? "opacity-60" : "opacity-75"}`}>
               <MarkdownStep text={text} />
             </div>
           </motion.section>
@@ -135,7 +138,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         whileInView="animate"
         variants={VARIANTS.lg_ul}
         viewport={{ once: true }}
-        className={`hidden px-8 lg:flex my-28 w-full mx-auto max-w-6xl flex-row justify-center items-stretch h-auto gap-6 skill__card__container`}
+        className={`hidden px-8 lg:flex my-28 w-full max-w-7xl mx-auto flex-row justify-center items-stretch h-auto gap-6 skill__card__container`}
       >
         {techStack.map(({ heading, text }, i) => (
           <motion.section
@@ -148,7 +151,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
             }`}
           >
             <strong
-              className={`text-2xl font-title capitalize font-bold break-words bg-gradient-to-r group-hover:group-odd:text-primary group-hover:group-even:text-secondary will-change-transform mb-6 block`}
+              className={`text-lg capitalize font-bold break-words bg-gradient-to-r group-hover:group-odd:text-primary group-hover:group-even:text-secondary will-change-transform mb-6 block`}
             >
               {heading}
             </strong>
@@ -164,7 +167,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         initial="initial"
         whileInView="animate"
         viewport={{ once: true }}
-        className="w-max mx-auto pb-20"
+        className="w-max mx-auto pb-20 lg:mt-20"
       >
         <StickyWrapper>
           <CTA
@@ -172,7 +175,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
             isDarkMode={isDarkMode}
             label={
               <div className="inline-flex items-center justify-center gap-1">
-                <IoCloudDownloadOutline className="group-hover:scale-110 group-hover:rotate-[360deg] transition-all" />
+                <FiDownload className="group-hover:scale-110 group-hover:rotate-[360deg] transition-all" />
                 <strong className="font-bold">My Resume</strong>
               </div>
             }

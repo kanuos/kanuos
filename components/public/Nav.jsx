@@ -1,5 +1,5 @@
 // built in imports
-import { useState, useContext, useCallback, useEffect } from "react";
+import { useState, useContext, useCallback } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -125,15 +125,18 @@ const NavMenu = ({ type = "public", router }) => {
     [currentPath]
   );
 
-  async function handleLogout() {
-    try {
-      await axios.get(AUTH_ROUTES.logout);
-      toggleNavMenu();
-      router?.push(ADMIN_ACCOUNT);
-    } catch (error) {
-      alert(error);
-    }
-  }
+  const handleLogout = useCallback(
+    async function () {
+      try {
+        await axios.get(AUTH_ROUTES.logout);
+        toggleNavMenu();
+        router?.push(ADMIN_ACCOUNT);
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [toggleNavMenu, router]
+  );
 
   const classes = {
     cta: "font-title",

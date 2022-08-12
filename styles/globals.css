@@ -41,7 +41,7 @@ button:focus {
 }
 
 .styledText {
-  @apply uppercase text-9xl font-title font-black bg-contain w-min max-w-sm md:max-w-md xl:max-w-lg break-words flex flex-col items-end justify-end p-6 text-right opacity-5 fixed h-screen top-0 bottom-0 right-0 bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
+  @apply uppercase text-7xl md:text-9xl font-title font-black bg-contain w-min max-w-sm md:max-w-md xl:max-w-lg break-words flex flex-col items-end justify-end p-6 text-right opacity-5 fixed h-screen top-0 bottom-0 right-0 bg-clip-text leading-[.85] sm:leading-[.85] lg:leading-[.85] xl:leading-[.85];
 }
 
 .styledText--light {
@@ -193,16 +193,21 @@ pre {
 }
 
 .heading--primary,
-.heading__portfolio {
-  @apply font-bold block my-2.5 selection:bg-transparent selection:text-primary  md:text-8xl;
+.heading__portfolio,
+.heading__portfolio--more {
+  @apply font-bold block my-2.5 selection:bg-transparent selection:text-primary;
 }
 
 .heading--primary {
-  @apply text-6xl md:text-7xl font-title leading-[.85];
+  @apply text-6xl md:text-7xl font-title leading-[.85] lg:text-8xl;
 }
 
 .heading__portfolio {
-  @apply text-center tracking-tighter text-7xl leading-10 py-2;
+  @apply text-center tracking-tighter text-6xl sm:text-7xl lg:text-8xl leading-8 py-2 xl:text-9xl;
+}
+
+.heading__portfolio--more {
+  @apply text-center tracking-tighter text-7xl lg:text-8xl leading-10 py-2 xl:text-9xl;
 }
 
 .heading--main {

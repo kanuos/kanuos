@@ -7,7 +7,7 @@ export const Footer = ({ detailMode = false }) => {
   return (
     <footer
       className={`mt-auto w-full grid place-items-center ${
-        detailMode ? "" : "pb-6"
+        detailMode ? "pb-4" : "pb-6"
       }`}
     >
       <Image
@@ -18,9 +18,7 @@ export const Footer = ({ detailMode = false }) => {
         objectFit="contain"
       />
       <p className="text-center my-3">
-        <small className="font-bold">
-          Designed and developed by Sounak Mukherjee
-        </small>
+        <small className="font-bold">Created by Sounak</small>
       </p>
       <ul className="flex flex-wrap items-center justify-center gap-3">
         {Object.entries(SOCIAL_LINKS).map(([social, url]) => (

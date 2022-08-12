@@ -197,7 +197,7 @@ export const UserProfileValidator = Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
         heading: Joi.string().trim().required(),
-        text: Joi.string().required().trim(),
+        text: Joi.string().required().trim().max(300),
       })
     ),
 });

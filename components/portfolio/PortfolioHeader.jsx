@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import { motion } from "framer-motion";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import Markdown from "react-markdown";
 import { StickyWrapper } from "../public/StickyWrapper";
 import { CTA } from "./CTA";
+import { MarkdownStep } from "../public/PageStepComponent";
 
 const variants = {
   initial: {
@@ -72,6 +72,9 @@ const btnVariants = {
   initial: {
     y: 20,
     opacity: 0,
+    transition: {
+      delay: 0.5,
+    },
   },
   final: {
     y: 0,
@@ -109,12 +112,12 @@ export const PortfolioHeader = ({
         >
           <motion.h1
             variants={headingVariants}
-            className={`flex items-center flex-wrap justify-center gap-x-4 md:gap-x-8 group`}
+            className={`flex items-center flex-wrap max-w-md md:max-w-none justify-start md:justify-center gap-x-4 md:gap-x-8 group`}
           >
             {heading.split(" ").map((el, k) => (
               <Fragment key={k}>
                 {el.match(/sounak/gi) ? (
-                  <span className="heading__portfolio text-primary group-hover:-rotate-3 group-hover:scale-105 border-b-2 border-transparent group-hover:text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text block transition-all group-hover:drop-shadow-xl">
+                  <span className="heading__portfolio--more group-hover:-rotate-3 group-hover:scale-105 border-b-2 border-transparent text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text block transition-all group-hover:drop-shadow-xl">
                     {el}
                   </span>
                 ) : (
@@ -125,16 +128,16 @@ export const PortfolioHeader = ({
           </motion.h1>
           <motion.div
             variants={childrenVariants}
-            className="max-w-sm md:max-w-lg text-justify md:text-center w-fit mb-auto mx-auto opacity-75 mt-6"
+            className="max-w-lg md:text-center w-11/12 mr-auto md:mx-auto mb-auto mt-10"
           >
-            <Markdown>{text}</Markdown>
+            <MarkdownStep text={text} />
           </motion.div>
         </motion.div>
 
         {Boolean(location) && (
           <motion.p
             variants={locationVariants}
-            className="flex items-center justify-center my-1 gap-x-0.5 row-start-1 mt-auto"
+            className="flex items-center justify-start md:justify-center my-1 gap-x-0.5 row-start-1 mt-auto"
           >
             <motion.span variants={locationVariants}>
               <HiOutlineLocationMarker className="mb-1" />
@@ -150,7 +153,7 @@ export const PortfolioHeader = ({
 
         <motion.div
           variants={btnVariants}
-          className="mt-20 w-max mx-auto row-start-4"
+          className="mt-20 w-max mr-auto md:mx-auto row-start-4"
         >
           <StickyWrapper>
             <CTA label={label} href={href} isDarkMode={isDarkMode} />

@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
-import { useState, useMemo } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState, useMemo, useEffect } from "react";
+import { motion } from "framer-motion";
 import { PORTFOLIO_LINKS, PUBLIC_URLS, titleCase } from "../../utils";
 
 const CTA = dynamic(() => import("./CTA").then((m) => m.CTA));
@@ -26,7 +26,7 @@ const VARIANTS = {
     },
   },
   btn: {
-    initial: { opacity: 0, scale: 0, y: 200 },
+    initial: { opacity: 0, scale: 0, y: -200 },
     animate: {
       opacity: 1,
       scale: 1,
@@ -48,7 +48,6 @@ export const Showcase = ({
   }
 
   const [keyword, setKeyword] = useState(CATEGORIES[0]);
-  const [showWorks, setShowWorks] = useState(false);
 
   const filteredWork = useMemo(() => {
     if (["All", "all"].includes(keyword)) {
@@ -62,6 +61,16 @@ export const Showcase = ({
       .slice(0, 6);
   }, [keyword, works]);
 
+  useEffect(() => {
+    function cb() {
+      if (window.innerWidth < 768) {
+        setKeyword("all");
+      }
+    }
+    window?.addEventListener("resize", cb);
+    return () => window?.removeEventListener("resize", cb);
+  }, []);
+
   return (
     <section
       id={PORTFOLIO_LINKS["selected works"].name}
@@ -72,13 +81,15 @@ export const Showcase = ({
         initial="initial"
         className="p-8 max-w-4xl mx-auto"
         whileInView="animate"
-        onAnimationComplete={() => setShowWorks(true)}
         viewport={{ once: true }}
       >
         <motion.h2 variants={VARIANTS.control} className={`w-max mr-auto`}>
           <span className="heading--primary">Works</span>
         </motion.h2>
-        <motion.p variants={VARIANTS.control} className="content--main mb-4">
+        <motion.p
+          variants={VARIANTS.control}
+          className="content--secondary mb-4"
+        >
           <span className="opacity-75">
             Showing some of my favorite projects
           </span>
@@ -86,7 +97,7 @@ export const Showcase = ({
         {CATEGORIES.length > 1 && (
           <motion.ul
             variants={VARIANTS.children}
-            className="flex gap-y-4 gap-x-2 items-center justify-start my-8 flex-wrap"
+            className="hidden md:flex gap-y-4 gap-x-2 items-center justify-start my-8 flex-wrap"
           >
             {CATEGORIES.map((el, i) => (
               <motion.li variants={VARIANTS.children} key={i} className="w-fit">
@@ -104,36 +115,33 @@ export const Showcase = ({
         )}
       </motion.div>
 
-      <AnimatePresence>
-        {showWorks && (
-          <motion.section
-            key={filteredWork.length}
-            className="py-6 sm:py-20 w-full flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory"
-          >
-            {filteredWork.map((project, i) => (
-              <WorkThumb
-                project={project}
-                i={i}
-                cb={handleSelectProject}
-                key={i}
-                isDarkMode={isDarkMode}
-                caption={`${i + 1} — ${filteredWork.length}`}
-              />
-            ))}
-          </motion.section>
-        )}
-        <motion.div
-          variants={VARIANTS.btn}
-          whileInView="animate"
-          initial="initial"
-          className="grid place-items-center mt-20"
-        >
-          <PageLink
-            label="Check out my other works"
-            href={PUBLIC_URLS.home.url}
+      <motion.section
+        key={filteredWork.length}
+        className="py-6 sm:py-20 w-full flex flex-col gap-y-16 md:gap-y-28 h-auto mx-auto snap-y snap-always snap-mandatory"
+      >
+        {filteredWork.map((project, i) => (
+          <WorkThumb
+            project={project}
+            i={i}
+            cb={handleSelectProject}
+            key={i}
+            isDarkMode={isDarkMode}
+            caption={`${i + 1} — ${filteredWork.length}`}
           />
-        </motion.div>
-      </AnimatePresence>
+        ))}
+      </motion.section>
+      <motion.div
+        viewport={{ once: true }}
+        variants={VARIANTS.btn}
+        whileInView="animate"
+        initial="initial"
+        className="grid place-items-center mt-20"
+      >
+        <PageLink
+          label="Check out my other works"
+          href={PUBLIC_URLS.home.url}
+        />
+      </motion.div>
     </section>
   );
 };
