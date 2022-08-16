@@ -91,7 +91,7 @@ const TAG_CMS = [
     name: "tag",
     type: "string",
     placeholder: "Tag name eg. React",
-    split: false,
+    split: true,
   },
 ];
 

@@ -76,8 +76,8 @@ const TagsAdminPage = ({ allTags }) => {
           isDarkMode={isDarkMode}
           getFormData={handleAddTag}
         />
-        <div className="block max-w-prose container mx-auto w-full">
-          <p className="content--sub">Total tags : {tags.length}</p>
+        <div className="block w-full">
+          <p className="content--secondary">Total tags : {tags.length}</p>
           <div className="flex flex-wrap gap-4 items-center justify-start w-full my-4">
             {tags
               .sort((a, b) => a._id - b._id)

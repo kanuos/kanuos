@@ -1,11 +1,9 @@
 // Default error page
 import { useContext } from "react";
 // import : internal
-import { PUBLIC_URLS } from "../utils";
 import PublicLayout from "../components/Layouts/PublicLayout";
-import { StyledHeader } from "../components/portfolio/StyledHeader";
-import { CTA } from "../components/portfolio/CTA";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { Page404 } from "../components/public/404";
 
 const ErrorPage = () => {
   const { isDarkMode } = useContext(ThemeContext);
@@ -16,30 +14,14 @@ const ErrorPage = () => {
       metaDesc="Page couldn't be found. Sounak Mukherjee's website"
       errorPage={true}
     >
-      <StyledHeader
-        styledText="page not found"
+      <Page404
         isDarkMode={isDarkMode}
-        showScroll={false}
-      >
-        <div className="flex items-center justify-start gap-x-px pt-6">
-          <h1 className="heading--primary">oops</h1>
-        </div>
-        <p className="content--secondary font-bold w-full pt-2">
-          Page not found
-        </p>
-        <p className="content--secondary opacity-80 w-full pt-2 max-w-md">
-          It seems that the page you are looking for doesn&apos;t exist or is
-          temporarily unavailable or it has been moved.
-        </p>
-        <div className="mt-20">
-          <CTA
-            tiny={true}
-            label="Go to Home"
-            href={PUBLIC_URLS.home.url}
-            isDarkMode={isDarkMode}
-          />
-        </div>
-      </StyledHeader>
+        heading="oops!"
+        subHeading="Page Not Found"
+        text={`It seems that the page you are looking for doesn't exist or is
+          temporarily unavailable. Sorry for the inconvenience`}
+        styledMsg="Error 404"
+      />
     </PublicLayout>
   );
 };

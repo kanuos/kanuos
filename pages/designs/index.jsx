@@ -44,9 +44,7 @@ const DesignList = ({ designList, totalCount }) => {
       isDarkMode={isDarkMode}
     >
       <main
-        className={`grid grid-cols-1 ${
-          count > 1 ? "md:grid-cols-2 lg:grid-cols-3" : ""
-        } place-items-center gap-20 w-full mb-20 max-w-6xl mx-auto justify-center items-center`}
+        className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-20 w-full mb-20 max-w-6xl mx-auto justify-center items-center`}
       >
         {count > 0 ? (
           <>
@@ -63,7 +61,19 @@ const DesignList = ({ designList, totalCount }) => {
               ))}
           </>
         ) : (
-          <p className="content--secondary text-center">No results found</p>
+          <>
+            {totalCount > 0 ? (
+              <p className="content--sub col-span-full font-bold text-center">
+                No design with{" "}
+                <span className="text-primary font-bold text-lg">
+                  {searchText}
+                </span>{" "}
+                keyword found!{" "}
+              </p>
+            ) : (
+              <></>
+            )}
+          </>
         )}
       </main>
     </PublicListLayout>

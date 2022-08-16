@@ -7,12 +7,15 @@ import { AnimatePresence } from "framer-motion";
 import { getPortfolio } from "../../database/user";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { PORTFOLIO_LINKS, PUBLIC_URLS } from "../../utils";
+import { PORTFOLIO_LINKS } from "../../utils";
 
 import PublicLayout from "../../components/Layouts/PublicLayout";
 
 import { PortfolioHeader } from "../../components/portfolio/PortfolioHeader";
 
+const Page404 = dynamic(() =>
+  import("../../components/public/404").then((m) => m.Page404)
+);
 const Showcase = dynamic(() =>
   import("../../components/portfolio/Showcase").then((m) => m.Showcase)
 );
@@ -51,15 +54,12 @@ const PortfolioPage = ({ metadata }) => {
         content="Check out my full stack web developer portfolio website"
         navType="portfolio"
       >
-        <main className="h-screen w-screen grid place-items-center">
-          <PortfolioHeader
-            heading="Coming soon"
-            text={`Hi there, I am Sounak. The portfolio page you are trying to visit is currently being maintained. You can still visit my blogs, projects and designs in my website. Please follow the link below to the visit my work.`}
-            href={PUBLIC_URLS.home.url}
-            label="Go to HomePage"
-            isDarkMode={isDarkMode}
-          />
-        </main>
+        <Page404
+          heading="Coming Soon"
+          subHeading="Portfolio is currently being maintained."
+          isDarkMode={isDarkMode}
+          styledMsg="Sounak Mukherjee"
+        />
       </PublicLayout>
     );
   }

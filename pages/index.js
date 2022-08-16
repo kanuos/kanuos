@@ -1,114 +1,110 @@
 // Home/Landing
 import dynamic from "next/dynamic";
-import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, memo, useContext, useCallback, useMemo } from "react";
 
 // import : internal
-import { getAllTags } from "../database/tags";
-import { API_ROUTES } from "../utils/admin";
+import { getAllDesigns } from "../database/designs";
+import { getAllProjects } from "../database/projects";
+import { getAllBlogs } from "../database/blogs";
+
 import PublicLayout from "../components/Layouts/PublicLayout";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { PUBLIC_URLS } from "../utils";
 
-const STATUSES = {
-  initial: "initial",
-  loading: "loading",
-  complete: "complete",
-};
-
+const Page404 = dynamic(() =>
+  import("../components/public/404").then((m) => m.Page404)
+);
 const StyledHeader = dynamic(() =>
   import("../components/portfolio/StyledHeader").then((m) => m.StyledHeader)
-);
-const Footer = dynamic(() =>
-  import("../components/public/Footer").then((m) => m.Footer)
 );
 const Tag = dynamic(() =>
   import("../components/public/Tag").then((m) => m.Tag)
 );
-const LoadSpinner = dynamic(() =>
-  import("../components/public/Loader").then((m) => m.LoadSpinner)
-);
-const TagDetailList = dynamic(() =>
-  import("../components/public/TagDetailList").then((m) => m.TagDetailList)
+const TagDetailList = memo(
+  dynamic(() =>
+    import("../components/public/TagDetailList").then((m) => m.TagDetailList)
+  )
 );
 
-const HomePage = ({ allTags }) => {
+const HomePage = ({ allContent }) => {
+  const { allTags, allBlogs, allDesigns, allProjects } = JSON.parse(allContent);
   const { isDarkMode } = useContext(ThemeContext);
-  allTags = JSON.parse(allTags);
-  const [selectedTag, setSelectedTag] = useState("");
-  const [status, setStatus] = useState(STATUSES.initial);
-  const [data, setData] = useState(null);
+  const [selectedTag, setSelectedTag] = useState(null);
 
-  useEffect(() => {
-    if (!selectedTag) return;
-    getTagRelatedData(selectedTag);
-  }, [selectedTag]);
-
-  async function getTagRelatedData(tag) {
-    try {
-      setStatus(STATUSES.loading);
-      const { data, error } = (
-        await axios({
-          url: API_ROUTES.tags + "/" + tag,
-          method: "GET",
-        })
-      ).data;
-
-      if (error) throw data;
-
-      let { blog, design, project, tag: t } = data[0];
-
-      blog = blog.filter((b) => b.isPublic);
-      design = design.filter((d) => d.isPublic);
-      project = project.filter((p) => p.isPublic);
-
-      setData({ blog, design, project, tag: t });
-      setStatus(STATUSES.complete);
-    } catch (error) {
-      setStatus(STATUSES.initial);
-    } finally {
-      setSelectedTag("");
+  const memoizedBlogs = useMemo(() => {
+    if (!selectedTag) {
+      return [];
     }
-  }
+    return allBlogs.filter(
+      (blog) =>
+        blog.tags.filter(({ _id }) => _id === selectedTag._id).length > 0
+    );
+  }, [selectedTag, allBlogs]);
 
-  function handleInitialState() {
-    setData(null);
-    setSelectedTag("");
-    setStatus(STATUSES.initial);
-  }
+  const memoizedDesigns = useMemo(() => {
+    if (!selectedTag) {
+      return [];
+    }
+    return allDesigns.filter(
+      (design) =>
+        design.tags.filter(({ _id }) => _id === selectedTag._id).length > 0
+    );
+  }, [selectedTag, allDesigns]);
 
-  const SEARCH_ID = "available-tags";
-  const tagAvailability = Boolean(allTags.length);
+  const memoizedProjects = useMemo(() => {
+    if (!selectedTag) {
+      return [];
+    }
+    return allProjects.filter(
+      (project) =>
+        project.tags.filter(({ _id }) => _id === selectedTag._id).length > 0
+    );
+  }, [selectedTag, allProjects]);
+
+  const handleInitialState = useCallback(function () {
+    setSelectedTag(null);
+  }, []);
+
+  if (!Boolean(allTags.length)) {
+    return (
+      <PublicLayout metaTitle="Welcome to Sounak's website">
+        <Page404
+          heading="Hi there!"
+          subHeading="Site is being maintained"
+          error={false}
+          text={`It appears that you're one of the early viewers of my site. The public contents are being maintained for the time being hence they are not available right now. Make sure to come back soon. Sorry for the inconvenience.`}
+          btnLabel="Check out my portfolio"
+          styledMsg="Sounak Mukherjee"
+          btnURL={PUBLIC_URLS.portfolio.url}
+        />
+      </PublicLayout>
+    );
+  }
 
   return (
     <PublicLayout metaTitle="Welcome to Sounak's website">
-      <StyledHeader
-        styledText={tagAvailability ? "search by tags" : "sounak mukherjee"}
-        isDarkMode={isDarkMode}
-        showScroll={false}
-      >
-        {tagAvailability ? (
-          <>
-            <h1 className="heading--primary pt-4">Hello world!</h1>
-            <span className="text-sm md:text-base font-bold my-2">
-              I&apos;m Sounak. Welcome to my tech journal
-            </span>
-            <p className="content--main">
-              You can search blogs, designs and projects by tags. For ease of
-              navigation, I tag them accordingly. Enjoy!
-            </p>
-          </>
-        ) : (
-          <>
-            <h1 className="heading--primary">Yo buddy!</h1>
-            <p className="content--main">
-              It appears that you&apos;re one of the early viewers of my site. I
-              am yet to create content as of yet. Please come back later. For
-              your ease of use, I&apos;ll categorize my contents viz. blogs,
-              designs and projects into appropriate tags.
-            </p>
-          </>
-        )}
-        {status === STATUSES.initial && (
+      {selectedTag ? (
+        <TagDetailList
+          tag={selectedTag.tag}
+          project={memoizedProjects}
+          blog={memoizedBlogs}
+          design={memoizedDesigns}
+          close={handleInitialState}
+        />
+      ) : (
+        <StyledHeader
+          styledText={"search by tags"}
+          isDarkMode={isDarkMode}
+          showScroll={false}
+        >
+          <h1 className="heading--primary pt-4">Hello world!</h1>
+          <span className="text-sm md:text-base font-bold my-2">
+            I&apos;m Sounak. Welcome to my tech journal
+          </span>
+          <p className="content--main">
+            I create entries for blogs, designs and projects. For ease of use, I
+            categorize my contents into appropriate tags.
+          </p>
           <section className="w-full my-10 flex items-stretch flex-col h-full">
             <div className="flex flex-col items-start w-full">
               <h2 className="heading--sub font-bold">
@@ -118,33 +114,18 @@ const HomePage = ({ allTags }) => {
             <ul className="flex flex-wrap items-center mt-6 justify-start gap-4 gap-y-3 w-full">
               {allTags.map((tag) => (
                 <li key={tag._id}>
-                  <Tag tag={tag} cb={() => setSelectedTag(tag._id)} />
+                  <Tag
+                    tag={tag}
+                    cb={() =>
+                      setSelectedTag(() => ({ _id: tag._id, tag: tag.tag }))
+                    }
+                  />
                 </li>
               ))}
             </ul>
           </section>
-        )}
-        {tagAvailability && (
-          <>
-            <div
-              id={SEARCH_ID}
-              className="w-full h-full flex flex-col items-stretch"
-            >
-              {status === STATUSES.loading && (
-                <section className="w-full max-w-3xl mx-auto grid place-items-center">
-                  <LoadSpinner />
-                </section>
-              )}
-
-              {status === STATUSES.complete && data && (
-                <>
-                  <TagDetailList {...data} close={handleInitialState} />
-                </>
-              )}
-            </div>
-          </>
-        )}
-      </StyledHeader>
+        </StyledHeader>
+      )}
     </PublicLayout>
   );
 };
@@ -153,10 +134,35 @@ export default HomePage;
 
 export async function getStaticProps() {
   try {
-    const p1 = new Promise((res) => res(getAllTags()));
-    const [allTags] = await Promise.allSettled([p1]);
+    const existingTags = [];
+    let [allBlogs, allDesigns, allProjects] = await Promise.allSettled([
+      Promise.resolve(getAllBlogs()),
+      Promise.resolve(getAllDesigns()),
+      Promise.resolve(getAllProjects()),
+    ]);
+
+    allBlogs = allBlogs.value;
+    allDesigns = allDesigns.value;
+    allProjects = allProjects.value;
+
+    const allTags = [...allBlogs, ...allDesigns, ...allProjects]
+      .flatMap((el) => el.tags)
+      .filter((el) => {
+        if (!existingTags.includes(el._id.toString())) {
+          existingTags.push(el._id.toString());
+          return el;
+        }
+      });
+
     return {
-      props: { allTags: JSON.stringify(allTags.value) },
+      props: {
+        allContent: JSON.stringify({
+          allTags,
+          allBlogs,
+          allDesigns,
+          allProjects,
+        }),
+      },
       revalidate: 1,
     };
   } catch (error) {}

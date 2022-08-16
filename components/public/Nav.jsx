@@ -5,10 +5,8 @@ import Link from "next/link";
 
 // external imports
 import { AnimatePresence, motion } from "framer-motion";
-import axios from "axios";
-
 // internal imports
-import { ADMIN_ACCOUNT, NAV_METADATA, PUBLIC_URLS } from "../../utils";
+import { ADMIN_NEW_CONTENT, NAV_METADATA, PUBLIC_URLS } from "../../utils";
 import { AUTH_ROUTES } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { CTA } from "../portfolio/CTA";
@@ -125,19 +123,6 @@ const NavMenu = ({ type = "public", router }) => {
     [currentPath]
   );
 
-  const handleLogout = useCallback(
-    async function () {
-      try {
-        await axios.get(AUTH_ROUTES.logout);
-        toggleNavMenu();
-        router?.push(ADMIN_ACCOUNT);
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [toggleNavMenu, router]
-  );
-
   const classes = {
     cta: "font-title",
     specialLink: "font-title text-2xl text-center mt-20 block transition-all",
@@ -211,20 +196,36 @@ const NavMenu = ({ type = "public", router }) => {
           className="mt-auto col-span-full flex items-center justify-center gap-4"
         >
           {type === "admin" && (
-            <CTA
-              btnMode={true}
-              cb={handleLogout}
-              label={<span className={classes.cta}>Logout</span>}
-              isDarkMode={isDarkMode}
-              isActive={true}
-            />
+            <form action={AUTH_ROUTES.logout} method="get">
+              <CTA
+                btnMode={true}
+                btnType="submit"
+                tiny={type === "admin"}
+                cb={() => null}
+                label={<span className={classes.cta}>Logout</span>}
+                isDarkMode={isDarkMode}
+              />
+            </form>
           )}
           <CTA
             btnMode={true}
+            tiny={type === "admin"}
             cb={toggleTheme}
             label={<span className={classes.cta}>Toggle theme</span>}
             isDarkMode={isDarkMode}
           />
+          {type === "admin" && (
+            <form action={ADMIN_NEW_CONTENT} method="get">
+              <CTA
+                btnType="submit"
+                btnMode={true}
+                cb={() => null}
+                tiny={type === "admin"}
+                label={<span className={classes.cta}>New content</span>}
+                isDarkMode={isDarkMode}
+              />
+            </form>
+          )}
         </motion.div>
       </motion.section>
     </AnimatePresence>

@@ -28,8 +28,6 @@ export const DesignDetailBody = ({ design = null }) => {
 
   if (!design) return <></>;
 
-  const colors = [...design.colorPalette, ...design.colorPalette];
-
   return (
     <div
       className={
@@ -64,11 +62,11 @@ export const DesignDetailBody = ({ design = null }) => {
 
       {/* user flow + screens */}
       <section
-        className={`relative h-full w-full my-10 py-20 ${
+        className={`relative h-full w-full mt-10 pt-20 ${
           isDarkMode ? "nav-dark" : "nav-light"
         }`}
       >
-        <div className="w-full max-w-4xl mx-auto mb-20 px-8">
+        <div className="w-full max-w-4xl mx-auto px-8 border-b pb-4">
           <MarkdownStep text={design.desc} firstLetter={true} />
         </div>
 
@@ -114,15 +112,15 @@ export const DesignDetailBody = ({ design = null }) => {
         {/* colors */}
         <section className="px-8 w-full max-w-4xl mx-auto pt-20">
           <h2 className="heading--main text-center">Color Palette</h2>
-          <div className="text-center w-max mb-4 mx-auto">
+          <div className="text-center w-max mb-4 mx-auto opacity-75">
             <MarkdownStep
-              text={`For this project **${colors.length}** colors were picked.`}
+              text={`For this project **${design.colorPalette?.length}** colors were picked.`}
             />
           </div>
           <ul
             className={`gap-6 mt-20 w-full transition-all flex flex-wrap items-center justify-center`}
           >
-            {colors.map(({ hex }, i) => (
+            {design.colorPalette?.map(({ hex }, i) => (
               <li
                 key={i}
                 className={`w-32 h-32 rounded-full grid place-items-center p-2 ${

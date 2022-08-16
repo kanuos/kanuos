@@ -1,10 +1,17 @@
 import { useEffect, useState, useContext } from "react";
+import dynamic from "next/dynamic";
 
-import { IoCloseOutline } from "react-icons/io5";
+import { BsXLg, BsSearch } from "react-icons/bs";
 
-import { BlogThumbnail } from "../content/BlogThumbnail";
-import { ProjectThumbnail } from "../content/ProjectThumbnail";
-import { DesignThumbnail } from "../content/DesignThumbnail";
+const BlogThumbnail = dynamic(() =>
+  import("../content/BlogThumbnail").then((m) => m.BlogThumbnail)
+);
+const ProjectThumbnail = dynamic(() =>
+  import("../content/ProjectThumbnail").then((m) => m.ProjectThumbnail)
+);
+const DesignThumbnail = dynamic(() =>
+  import("../content/DesignThumbnail").then((m) => m.DesignThumbnail)
+);
 
 import { CONTENT_TYPE } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -31,24 +38,22 @@ export const TagDetailList = (props) => {
   }, [project.length, blog.length, design.length]);
 
   return (
-    <section className="flex flex-col items-start gap-4">
+    <section className="flex flex-col items-start gap-4 pb-20">
       <div
-        className={`p-4 rounded-md flex items-center justify-between filter drop-shadow-xl mt-10 max-w-3xl mx-auto w-full ${
-          isDarkMode ? "nav-light" : "nav-dark"
+        className={`p-4 rounded-md flex items-center gap-4 justify-between filter drop-shadow-xl mt-10 max-w-3xl mx-auto w-full ${
+          !isDarkMode ? "nav-light" : "nav-dark"
         }`}
       >
-        <p className="text-xs">
-          Searching for{" "}
-          <span className="text-primary font-bold uppercase text-xs ml-1">
-            {tag}
-          </span>
+        <BsSearch className="shrink-0 opacity-50" />
+        <p className="text-sm grow shrink-0">
+          <span className="font-bold capitalize">{tag}</span>
         </p>
         <button
           onClick={close}
           title="Click to reset filter"
-          className="hover:rotate-90 hover:text-primary hover:scale-110 transition-all"
+          className="hover:opacity-100 opacity-50 hover:text-primary hover:scale-110 transition-all shrink-0"
         >
-          <IoCloseOutline />
+          <BsXLg />
         </button>
       </div>
       <ul className="max-w-3xl mx-auto w-full flex items-center mt-10 justify-center gap-4">

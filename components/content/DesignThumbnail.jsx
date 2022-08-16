@@ -21,7 +21,7 @@ export const DesignThumbnail = ({ data, adminMode = false, index = 0 }) => {
       whileHover={{
         scale: 1.05,
       }}
-      className="h-96 text-dark bg-light grid grid-rows-2 relative mx-auto max-w-md w-full flex-grow p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md transition-shadow"
+      className="h-96 text-dark bg-light grid grid-rows-2 relative mx-auto max-w-sm w-full flex-grow p-1.5 shadow-lg overflow-hidden hover:shadow-2xl rounded-md transition-shadow"
     >
       {/* admin tag */}
 

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 import { titleCase } from "../../utils";
@@ -37,69 +37,72 @@ const variants = {
 
 export const Screens = ({ steps = [] }) => {
   return (
-    <motion.ul
-      initial="initial"
-      whileInView="animate"
-      variants={variants}
-      className={`w-full gap-x-4 mx-auto flex flex-col relative`}
-    >
-      {steps.map(({ images }, k) => {
-        images = images.filter(Boolean);
-        const hasMultipleImages = images.length > 1;
-        return (
-          <motion.li
-            key={k}
-            className={`z-10 block drop-shadow-2xl w-full mx-auto`}
-          >
-            <motion.div className="w-full h-auto bg-dark__light py-10 lg:py-20">
-              {hasMultipleImages ? (
-                <motion.figure
-                  className={`relative h-auto w-full grid gap-10 max-w-6xl mx-auto px-8  ${
-                    images.length === 1
-                      ? "grid-cols-1"
-                      : images.length === 2
-                      ? "grid-cols-2"
-                      : "grid-cols-3"
-                  }
-                  `}
-                >
-                  {images.map((img, i) => (
-                    <Image
-                      key={i}
-                      layout="responsive"
-                      height="0%"
-                      width="100%"
-                      priority={true}
-                      alt={`image #${i + 1}`}
-                      src={img}
-                      objectFit="contain"
-                      loader={({ src, width }) => `${src}?w=${width}&q=100`}
-                      className="userflow-img drop-shadow-xl"
-                    />
-                  ))}
-                </motion.figure>
-              ) : (
-                <motion.figure
-                  className={`relative block h-auto w-full max-w-4xl mx-auto px-8`}
-                >
-                  <Image
-                    layout="responsive"
-                    height="0%"
-                    width="100%"
-                    priority={true}
-                    alt={`image #${k + 1}`}
-                    src={images[0]}
-                    objectFit="contain"
-                    loader={({ src, width }) => `${src}?w=${width}&q=100`}
-                    className="userflow-img"
-                  />
-                </motion.figure>
-              )}
-            </motion.div>
-          </motion.li>
-        );
-      })}
-    </motion.ul>
+    <section className="bg-dark__light w-full h-full">
+      <ul className={`w-full gap-x-4 mx-auto flex flex-col relative`}>
+        <AnimatePresence>
+          {steps.map(({ images }, k) => {
+            images = images.filter(Boolean);
+            const hasMultipleImages = images.length > 1;
+            return (
+              <motion.li
+                initial="initial"
+                whileInView="animate"
+                variants={variants}
+                exit="exit"
+                key={k}
+                className={`z-10 block drop-shadow-2xl w-full mx-auto group`}
+              >
+                <div className="w-full h-auto py-10 lg:py-20">
+                  {hasMultipleImages ? (
+                    <motion.figure
+                      className={`relative h-auto w-full grid gap-10 max-w-6xl mx-auto px-8  ${
+                        images.length === 1
+                          ? "grid-cols-1"
+                          : images.length === 2
+                          ? "grid-cols-2"
+                          : "grid-cols-3"
+                      }
+                    `}
+                    >
+                      {images.map((img, i) => (
+                        <Image
+                          key={i}
+                          layout="responsive"
+                          height="0%"
+                          width="100%"
+                          priority={true}
+                          alt={`image #${i + 1}`}
+                          src={img}
+                          objectFit="contain"
+                          loader={({ src, width }) => `${src}?w=${width}&q=100`}
+                          className="userflow-img drop-shadow-xl"
+                        />
+                      ))}
+                    </motion.figure>
+                  ) : (
+                    <motion.figure
+                      className={`relative block h-auto w-full max-w-4xl mx-auto px-8`}
+                    >
+                      <Image
+                        layout="responsive"
+                        height="0%"
+                        width="100%"
+                        priority={true}
+                        alt={`image #${k + 1}`}
+                        src={images[0]}
+                        objectFit="contain"
+                        loader={({ src, width }) => `${src}?w=${width}&q=100`}
+                        className="userflow-img"
+                      />
+                    </motion.figure>
+                  )}
+                </div>
+              </motion.li>
+            );
+          })}
+        </AnimatePresence>
+      </ul>
+    </section>
   );
 };
 

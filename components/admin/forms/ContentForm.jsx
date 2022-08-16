@@ -38,7 +38,6 @@ const DesignDetailBody = dynamic(() =>
     (module) => module.DesignDetailBody
   )
 );
-// import CMSForm from "./CMS";
 const BlogCRUDForm = dynamic(() =>
   import("./BlogCRUDForm").then((m) => m.BlogCRUDForm)
 );
@@ -74,7 +73,7 @@ export const ContentCRUD_Form = ({
   const [previewMode, setPreviewMode] = useState(false);
   const [pageMsg, setPageMsg] = useState("");
 
-  const detailCls = `px-4 py-6 rounded-md text-sm block z-10 nav-light ${
+  const detailCls = `p-6 rounded-md text-sm block z-10 nav-light ${
     isDarkMode ? "light-shadow" : "drop-shadow-xl"
   }`;
 
@@ -177,8 +176,8 @@ export const ContentCRUD_Form = ({
   }, []);
 
   return (
-    <main className="h-full min-h-screen p-8">
-      <div className="container max-w-prose mx-auto">
+    <main className="h-full min-h-screen py-8 px-4">
+      <div className="container max-w-4xl mx-auto">
         <h1 className="heading--main block">{heading}</h1>
         <div
           ref={errorRef}

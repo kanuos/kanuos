@@ -20,7 +20,7 @@ const ContentCRUD_Form = dynamic(() =>
 import { getIndividualProject } from "../../../database/projects";
 import { getIndividualBlog } from "../../../database/blogs";
 import { getAllTags } from "../../../database/tags";
-import { ADMIN_ACCOUNT, ADMIN_URLS } from "../../../utils";
+import { ADMIN_ACCOUNT, ADMIN_NEW_CONTENT, ADMIN_URLS } from "../../../utils";
 import { API_ROUTES, CONTENT_TYPE } from "../../../utils/admin";
 import { getIndividualDesign } from "../../../database/designs";
 import { isAdminMiddleware } from "../../../utils/authLib";
@@ -134,13 +134,10 @@ export async function getServerSideProps(ctx) {
       },
     };
   } catch (error) {
-    allTags = [];
-    data = {};
     return {
-      props: {
-        allTags: JSON.stringify(allTags),
-        data: JSON.stringify(data),
-        contentType: type,
+      redirect: {
+        destination: ADMIN_NEW_CONTENT,
+        permanent: false,
       },
     };
   }

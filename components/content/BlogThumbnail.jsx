@@ -10,7 +10,7 @@ const JoinLine = dynamic(() =>
 const CTA = dynamic(() => import("../portfolio/CTA").then((m) => m.CTA));
 
 // internal imports : utils & more
-import { PUBLIC_NAVIGATION_URLS } from "../../utils";
+import { PUBLIC_NAVIGATION_URLS, titleCase } from "../../utils";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
@@ -74,7 +74,7 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
             " font-bold opacity-75 group-hover:opacity-100 transition-all text-xl md:text-2xl group-odd:text-left group-even:text-right"
           }
         >
-          {data.title}
+          {titleCase(data.title)}
         </h3>
         <div className="filter grayscale group-hover:grayscale-0 transition-all">
           <JoinLine />

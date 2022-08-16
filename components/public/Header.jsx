@@ -24,7 +24,7 @@ export const PublicHeader = ({
         <StringInput
           value={searchText}
           split={true}
-          name={`Total ${type} : ${count}`}
+          name={`Showing ${type} : ${count}`}
           placeholder={`Search ${type} by title`}
           setValue={handleSearch}
         />
