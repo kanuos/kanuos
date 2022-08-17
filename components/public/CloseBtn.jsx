@@ -4,27 +4,13 @@ export const CloseBtn = ({ isOpen, cb, isDarkMode }) => {
   return (
     <motion.div
       onClick={cb}
-      initial={{
-        borderRadius: "10%",
-        opacity: 0.75,
-      }}
-      whileHover={{
-        borderRadius: ["25%", "25%"],
-        rotate: [180, 0],
-        opacity: [1, 1],
-        transition: {
-          duration: 0.5,
-          ease: "easeInOut",
-          type: "spring",
-        },
-      }}
       className={
-        "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-2 right-4 lg:top-4 lg:right-6 group transition-colors drop-shadow-xl " +
+        "z-40 flex flex-col items-center justify-center gap-y-1.5 cursor-pointer group h-12 w-12 fixed top-2 right-4 lg:top-4 lg:right-6 group transition-all " +
         (isOpen
           ? ""
           : `${
               isDarkMode ? "bg-dark__light" : "bg-light"
-            } hover:drop-shadow-2xl`)
+            } hover:rounded-lg rounded hover:-rotate-180 drop-shadow-2xl`)
       }
     >
       <motion.span
