@@ -8,7 +8,6 @@ import {
   UserSchema,
 } from "./Models";
 
-// const MONGO_URI = "mongodb://127.0.0.1:27017/sounak_official";
 const { MONGO_URI } = process.env;
 
 export function connectionFactory() {
