@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { PORTFOLIO_LINKS } from "../../utils";
+import { PORTFOLIO_LINKS, RESUME_PATH } from "../../utils";
 import { FiDownload } from "react-icons/fi";
 import { motion } from "framer-motion";
 
@@ -162,7 +162,9 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         ))}
       </motion.article>
 
-      <motion.div
+      <motion.form
+        action={RESUME_PATH}
+        method="GET"
         variants={VARIANTS.btn}
         initial="initial"
         whileInView="animate"
@@ -172,6 +174,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         <StickyWrapper>
           <CTA
             btnMode={true}
+            btnType="submit"
             isDarkMode={isDarkMode}
             label={
               <div className="inline-flex items-center justify-center gap-1">
@@ -179,10 +182,9 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
                 <strong className="font-bold">My Resume</strong>
               </div>
             }
-            cb={() => alert(new Date().toLocaleString())}
           />
         </StickyWrapper>
-      </motion.div>
+      </motion.form>
     </motion.section>
   );
 };

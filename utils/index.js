@@ -10,8 +10,7 @@ export const SOCIAL_LINKS = {
   github: "https://www.github.com/kanuos",
   gitlab: "https://www.gitlab.com/kanuos",
   stackoverflow: "https://stackoverflow.com/users/10822859/kanuos?tab=profile",
-  // twitter: "https://www.twitter.com/__kanuos__",
-  // instagram: "https://www.instagram.com/_kanuos/",
+  twitter: "https://www.twitter.com/__kanuos__",
 };
 
 export const PUBLIC_URLS = {
@@ -52,6 +51,8 @@ export const PUBLIC_NAVIGATION_URLS = {
   blogs: "/blogs",
   designs: "/designs",
 };
+
+export const RESUME_PATH = "/resume.pdf";
 
 const ADMIN_PATH = "/admin";
 export const ADMIN_NEW_CONTENT = ADMIN_PATH + "/new-content";

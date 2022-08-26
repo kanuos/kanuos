@@ -102,6 +102,7 @@ export const WorkThumb = ({ project = null, i, caption, isDarkMode, cb }) => {
         initial="hide"
         exit="hide"
         whileInView="show"
+        viewport={{ once: true }}
         variants={i % 2 === 0 ? variants.projectLeft : variants.projectRight}
         onMouseLeave={() => setHovered(false)}
         className={`w-full snap-center h-auto md:min-h-[50vh] max-w-4xl mx-auto ${

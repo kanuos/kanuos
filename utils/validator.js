@@ -37,7 +37,7 @@ const CommonFields = Joi.object().keys({
   __v: Joi.any(),
   title: Joi.string().required().trim().min(1).max(60),
   desc: Joi.string().required().trim().min(1).max(600),
-  category: Joi.string().required().trim().min(1).max(15),
+  category: Joi.string().required().trim().min(1).max(20),
   date: Joi.date().allow("").default(Date.now()),
   tags: Joi.array().items(TagValidator).min(1).required(),
   isPublic: Joi.bool().default(false),
@@ -123,7 +123,7 @@ const DesignValidator = CommonFields.keys({
       Joi.object({
         _id: Joi.any(),
         __v: Joi.any(),
-        images: Joi.array().items(Joi.string().trim().uri().required()).max(3),
+        images: Joi.array().items(Joi.string().trim().uri().required()),
         title: Joi.string().trim().required(),
         about: Joi.string().trim().required(),
       }).required()
