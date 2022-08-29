@@ -2,7 +2,6 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useContext } from "react";
 // import : external
-import { motion } from "framer-motion";
 
 // import : internal
 import { PUBLIC_URLS, titleCase } from "../../utils";
@@ -79,12 +78,16 @@ export const DesignDetailBody = ({ design = null }) => {
           <h2 className="heading--main text-center pb-6">Typography</h2>
 
           <article
-            className={`px-8 mt-8 flex flex-col gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-none lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 skill__card__container`}
+            className={`px-8 mt-8 flex flex-col gap-y-10 after-line--center lg:after:hidden w-full max-w-3xl mx-auto lg:max-w-none lg:flex-row lg:justify-center lg:items-stretch h-auto lg:gap-6 ${
+              design.typography.length > 1 ? "skill__card__container" : ""
+            }`}
           >
             {design.typography.map(({ family, desc }, i) => (
               <section
                 key={i}
-                className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform skill__card ${
+                className={`p-6 z-10 w-5/6 lg:w-full group max-w-lg lg:hover:scale-105 transition-all will-change-transform ${
+                  design.typography.length > 1 ? "skill__card" : ""
+                } ${
                   i % 2
                     ? "ml-auto lg:ml-0 lg:translate-y-6"
                     : "mr-auto lg:mr-0 lg:-translate-y-6"
@@ -95,15 +98,13 @@ export const DesignDetailBody = ({ design = null }) => {
                 }`}
               >
                 <strong
-                  className={`heading--sub capitalize font-bold break-words bg-gradient-to-r group-odd:from-primary group-even:from-secondary bg-clip-text lg:group-hover:text-transparent will-change-transform ${
+                  className={`heading--secondary capitalize font-bold break-words bg-gradient-to-r group-odd:from-primary group-even:from-secondary bg-clip-text lg:group-hover:text-transparent will-change-transform ${
                     isDarkMode ? "to-light" : "to-dark"
                   }`}
                 >
                   {family}
                 </strong>
-                <div className="opacity-50 lg:group-hover:opacity-80 transition-all will-change-transform mt-4 text-xs">
-                  <p className="content--sub">{desc}</p>
-                </div>
+                <MarkdownStep text={desc} />
               </section>
             ))}
           </article>
@@ -148,9 +149,9 @@ export const DesignDetailBody = ({ design = null }) => {
 
         <div className="mt-10">
           <h2 className="heading--main text-center">All pages</h2>
-          <p className="content--secondary opacity-75 w-3/4 max-w-lg mx-auto mb-10 text-center">
-            {titleCase(design.title)} has {design.userFlowSteps.length} pages
-            and are listed below.
+          <p className="text-xs opacity-40 w-3/4 max-w-lg mx-auto mb-10 text-center">
+            Here&apos;s a list of all the screens and pages for{" "}
+            {titleCase(design.title)}
           </p>
           <Screens steps={design.userFlowSteps} isDarkMode={isDarkMode} />
         </div>

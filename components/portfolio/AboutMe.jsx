@@ -162,9 +162,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
         ))}
       </motion.article>
 
-      <motion.form
-        action={RESUME_PATH}
-        method="GET"
+      <motion.div
         variants={VARIANTS.btn}
         initial="initial"
         whileInView="animate"
@@ -173,8 +171,8 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
       >
         <StickyWrapper>
           <CTA
-            btnMode={true}
-            btnType="submit"
+            resumeMode={true}
+            href={RESUME_PATH}
             isDarkMode={isDarkMode}
             label={
               <div className="inline-flex items-center justify-center gap-1">
@@ -184,7 +182,7 @@ export const AboutMe = ({ isDarkMode, skills = "", techStack = [] }) => {
             }
           />
         </StickyWrapper>
-      </motion.form>
+      </motion.div>
     </motion.section>
   );
 };
