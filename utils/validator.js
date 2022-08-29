@@ -37,7 +37,7 @@ const CommonFields = Joi.object().keys({
   __v: Joi.any(),
   title: Joi.string().required().trim().min(1).max(60),
   desc: Joi.string().required().trim().min(1).max(600),
-  category: Joi.string().required().trim().min(1).max(20),
+  category: Joi.string().required().trim().min(1).max(40),
   date: Joi.date().allow("").default(Date.now()),
   tags: Joi.array().items(TagValidator).min(1).required(),
   isPublic: Joi.bool().default(false),

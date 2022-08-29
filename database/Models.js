@@ -50,7 +50,6 @@ export const BlogSchema = new Schema({
   category: {
     type: String,
     required: true,
-    maxlength: 15,
   },
   repo: {
     type: Object,
@@ -121,7 +120,6 @@ export const ProjectSchema = new Schema({
   category: {
     type: String,
     required: true,
-    maxlength: 15,
   },
   repo: {
     type: Object,
@@ -170,7 +168,6 @@ export const DesignSchema = new Schema({
   category: {
     type: String,
     required: true,
-    maxlength: 15,
   },
   slug: {
     type: String,
