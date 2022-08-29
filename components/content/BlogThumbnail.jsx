@@ -9,6 +9,8 @@ const JoinLine = dynamic(() =>
 );
 const CTA = dynamic(() => import("../portfolio/CTA").then((m) => m.CTA));
 
+import { MarkdownStep } from "../public/PageStepComponent";
+
 // internal imports : utils & more
 import { PUBLIC_NAVIGATION_URLS, titleCase } from "../../utils";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
@@ -79,16 +81,17 @@ export const BlogThumbnail = ({ data, index, adminMode = false }) => {
         <div className="filter grayscale group-hover:grayscale-0 transition-all">
           <JoinLine />
         </div>
-        <p
+        <div
           className={`content--secondary ${
             isEven ? "text-right" : "text-left"
           }`}
         >
-          {data.desc?.slice(0, 250)}{" "}
-          {data.desc?.length > 250 && (
-            <span className="text-primary font-bold">.....</span>
-          )}
-        </p>
+          <MarkdownStep
+            text={
+              data.desc?.slice(0, 250) + (data.desc.length > 250 ? "..." : "")
+            }
+          />
+        </div>
         <ul className="text-sm mt-2 group-even:text-right group-odd:text-left">
           <li className="text-xs font-bold opacity-75">
             <small>Published on</small>

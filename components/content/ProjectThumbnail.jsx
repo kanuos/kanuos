@@ -6,6 +6,7 @@ import { IoCubeOutline, IoChevronDown } from "react-icons/io5";
 import { CTA } from "../portfolio/CTA";
 import { ADMIN_EDIT_URL } from "../../utils/admin";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { MarkdownStep } from "../public/PageStepComponent";
 
 export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
   const [hovered, setHovered] = useState(false);
@@ -140,13 +141,17 @@ export const ProjectThumbnail = ({ data, index, adminMode = false }) => {
       <div className={`filter ${hovered ? "grayscale-0" : "grayscale"}`}>
         <JoinLine />
       </div>
-      <p
-        className={`text-sm ${index % 2 === 0 ? "text-right" : "text-left"} ${
-          hovered ? "opacity-75" : "opacity-70"
-        } leading-relaxed`}
+      <div
+        className={`content--secondary ${
+          index % 2 === 0 ? "text-right" : "text-left"
+        }`}
       >
-        {data.desc?.slice(0, 150)}
-      </p>
+        <MarkdownStep
+          text={
+            data.desc?.slice(0, 250) + (data.desc.length > 250 ? "..." : "")
+          }
+        />
+      </div>
       <section className="bg-white rounded-md p-4 pb-0 w-full mt-4 filter shadow-lg">
         <div
           onClick={() => setShowMD((prev) => !prev)}
