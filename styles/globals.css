@@ -138,7 +138,7 @@ pre {
 }
 
 .markdown-editor code {
-  @apply inline-block mx-1 px-2 py-0.5 rounded-sm font-bold tracking-wide text-current text-light bg-dark__light drop-shadow-md;
+  @apply inline-block m-1 px-2 py-0.5 rounded-sm font-bold tracking-wide text-current text-light bg-dark__light drop-shadow-md;
 }
 
 .bg-dark .markdown-editor-wrapper strong,
